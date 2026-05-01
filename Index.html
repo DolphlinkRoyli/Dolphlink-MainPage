@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DOLPHLINK | Baiwu Unified Strategic Nexus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --baiwu-blue: #0059B3;      
+            --baiwu-blue-soft: rgba(0, 89, 179, 0.05);
+            --text-main: #1D2129;      
+            --text-sec: #4E5969;  
+            --soft-border: #E5E6EB;
+            --white: #FFFFFF;
+            --font-main: 'Inter', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        /* --- 01. PRELOADER --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white); z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .load-bar { width: 240px; height: 2px; background: var(--soft-border); position: relative; overflow: hidden; }
+        .load-progress { position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: var(--baiwu-blue); transition: width 0.4s; }
+
+        /* --- 02. CORE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        body { 
+            background: var(--white); color: var(--text-main); font-family: var(--font-main); 
+            overflow-x: hidden; -webkit-font-smoothing: antialiased; line-height: 1.6;
+        }
+        
+        #core-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.6; pointer-events: none; }
+        
+        nav { 
+            position: fixed; top: 0; width: 100%; z-index: 1100; padding: 20px 6%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid var(--soft-border);
+        }
+        .logo { font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; color: var(--baiwu-blue); text-transform: uppercase; }
+        .logo span { color: var(--text-main); }
+
+        .wrapper { position: relative; z-index: 10; width: 100%; }
+
+        /* HERO - 国际政企版 */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; background: radial-gradient(circle at 85% 15%, var(--baiwu-blue-soft), transparent 45%); }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.2rem); font-weight: 900; line-height: 1.1; margin-bottom: 25px; color: var(--text-main); letter-spacing: -2px; }
+        .hero p { max-width: 700px; font-size: 1.2rem; color: var(--text-sec); margin-bottom: 45px; border-left: 4px solid var(--baiwu-blue); padding-left: 30px; }
+        .cta-btn { display: inline-block; padding: 16px 45px; background: var(--baiwu-blue); color: var(--white); text-decoration: none; font-weight: 700; border-radius: 4px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 89, 179, 0.3); }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 89, 179, 0.4); }
+
+        /* 产品目录与政企方案 */
+        section { padding: 100px 10%; }
+        .sec-bg { background: var(--baiwu-grey-bg); }
+        .label { color: var(--baiwu-blue); font-family: var(--font-code); font-size: 0.8rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px; display: block; }
+        .sec-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 50px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: #fff; border: 1px solid var(--soft-border); padding: 45px; border-radius: 8px; transition: 0.4s; }
+        .card:hover { border-color: var(--baiwu-blue); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .card h3 { font-size: 1.4rem; margin-bottom: 20px; color: var(--baiwu-blue); }
+        .card ul { list-style: none; }
+        .card li { font-size: 0.95rem; color: var(--text-sec); margin-bottom: 12px; position: relative; padding-left: 20px; }
+        .card li::before { content: "→"; position: absolute; left: 0; color: var(--baiwu-blue); }
+
+        /* FOOTER */
+        footer { background: #fff; padding: 100px 10% 50px; border-top: 1px solid var(--soft-border); display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; }
+        .f-col h5 { font-size: 1.1rem; margin-bottom: 30px; font-weight: 900; }
+        .f-col p, .f-col address { font-style: normal; color: var(--text-sec); font-size: 0.95rem; line-height: 2; margin-bottom: 15px; }
+        .f-col a { color: var(--baiwu-blue); text-decoration: none; font-weight: 700; border-bottom: 2px solid var(--baiwu-blue); }
+        .copyright { grid-column: 1 / -1; text-align: center; padding-top: 50px; border-top: 1px solid var(--soft-border); color: #86909C; font-size: 0.8rem; letter-spacing: 5px; }
+
+        @media (max-width: 1024px) { footer { grid-template-columns: 1fr; } .hero h1 { font-size: 3.2rem; } }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="load-bar"><div class="load-progress" id="p-bar"></div></div>
+    </div>
+
+    <canvas id="core-canvas"></canvas>
+
+    <nav>
+        <div class="logo">DOLPH<span>LINK</span></div>
+        <div class="sys-status">SINGAPORE STRATEGIC HUB // 99.999% SLA</div>
+    </nav>
+
+    <div class="wrapper">
+        <!-- 01 HERO -->
+        <section class="hero">
+            <span class="label">Architecture of Unified Intelligence</span>
+            <h1>智慧引领<br>万物互联</h1>
+            <p>Dolphlink orchestrates the digital infrastructure under <b>Baiwu Technology Group</b>. We bridge the chasm between Industrial Zones, Native Clouds, and Global Sovereign Systems through standardized neural protocols.</p>
+            <a href="#" class="cta-btn">Initiate Audit</a>
+        </section>
+
+        <!-- 02 FULL PRODUCT SUITE (全量产品) -->
+        <section>
+            <span class="label">Comprehensive Product Portfolio</span>
+            <h2 class="sec-title">Global Connectivity Stack</h2>
+            <div class="grid">
+                <!-- 5G & Messaging -->
+                <div class="card">
+                    <h3>Messaging Suite</h3>
+                    <ul>
+                        <li><b>5G Messaging:</b> Rich media interaction & vertical application integration.</li>
+                        <li><b>International SMS:</b> Direct global routing in 220+ territories.</li>
+                        <li><b>95/400 Voice:</b> Sovereign enterprise-level caller ID & SIP Trunking.</li>
+                        <li><b>IoT SMS:</b> High-concurrency machine-to-machine telemetry protocols.</li>
+                    </ul>
+                </div>
+                <!-- Cloud & Platform -->
+                <div class="card">
+                    <h3>Platform & Intelligence</h3>
+                    <ul>
+                        <li><b>Unified Communications (UC):</b> All-in-one PaaS orchestration.</li>
+                        <li><b>Dolphlink Smart:</b> Neural microservice brain for logic standardization.</li>
+                        <li><b>Dolphlink Touch:</b> Sensory layer for WhatsApp/Telegram/YouTube APIs.</li>
+                        <li><b>Compliance Hub:</b> Automated GDPR/ISO regional regulation auditing.</li>
+                    </ul>
+                </div>
+                <!-- Industrial & Network -->
+                <div class="card">
+                    <h3>Industrial & Edge</h3>
+                    <ul>
+                        <li><b>Industrial Area Hub:</b> Edge-to-Cloud IoT telemetry for global zones.</li>
+                        <li><b>YouTube Live Sync:</b> Real-time AI insight rendering into live video streams.</li>
+                        <li><b>Native Cloud Hub:</b> Absolute synchronization with AWS, Azure, & GCP.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 ENTERPRISE SOLUTIONS (政企方案) -->
+        <section class="sec-bg">
+            <span class="label">Sovereign Enterprise Solutions</span>
+            <h2 class="sec-title">Strategic Vertical Matrix</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Finance & FinTech</h3>
+                    <p>Secure OTP, multi-factor identity confirmed through anti-fraud neural insights, and automated debt repayment workflows.</p>
+                </div>
+                <div class="card">
+                    <h3>Logistics & Supply</h3>
+                    <p>Unified inbox management for global telemetry tracking and real-time delivery orchestration via messaging nodes.</p>
+                </div>
+                <div class="card">
+                    <h3>Public Sector (Gov)</h3>
+                    <p>Mission-critical 99.999% SLA emergency notifications, secure citizen engagement, and transparent YouTube Live gov-reporting.</p>
+                </div>
+                <div class="card">
+                    <h3>Healthcare & Retail</h3>
+                    <p>Minimizing appointment no-shows and driving hyper-personalized conversational commerce journeys at global scale.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 FOOTER -->
+        <footer>
+            <div class="f-col">
+                <h5>Global HQ</h5>
+                <address>
+                    9 Raffles Place #29-04,<br>
+                    Republic Plaza, Singapore 048619.<br>
+                    <strong>Baiwu Technology Strategic Hub.</strong>
+                </address>
+                <p>Standardizing global intelligence with absolute logic fidelity.</p>
+            </div>
+            <div class="f-col">
+                <h5>Contact Port</h5>
+                <p>Global Sales: <a href="mailto:Salesmarketing@dolphlink.com">Salesmarketing@dolphlink.com</a></p>
+                <p>Strategic Support: <a href="mailto:Joycetsam@dolphlink.com">Joycetsam@dolphlink.com</a></p>
+            </div>
+            <div class="f-col">
+                <h5>Compliance</h5>
+                <p>99.999% Enterprise SLA</p>
+                <p>ISO 27001 / GDPR / Zero Trust</p>
+            </div>
+            <div class="copyright">
+                COPYRIGHT © 2026 BY DOLPHLINK. ALL RIGHTS RESERVED. POWERED BY BAIWU.
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // --- PRELOADER ---
+        let prg = 0; const b = document.getElementById('p-bar');
+        const int = setInterval(() => { if(prg < 100) { prg += 10; b.style.width = prg + '%'; } }, 50);
+        window.onload = () => { clearInterval(int); b.style.width = '100%'; setTimeout(() => { document.getElementById('preloader').style.opacity = '0'; setTimeout(() => document.getElementById('preloader').style.display = 'none', 600); }, 100); };
+
+        // --- BAIWU BLUE CANVAS ---
+        const canvas = document.getElementById('core-canvas'); const ctx = canvas.getContext('2d');
+        let w, h, nodes = []; let mouse = { x: undefined, y: undefined };
+        function init() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; nodes = []; for (let i = 0; i < 120; i++) nodes.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5), vy: (Math.random() - 0.5), size: 2 }); }
+        function draw() { ctx.clearRect(0, 0, w, h); ctx.fillStyle = "#0059B3"; nodes.forEach((n, i) => { n.x += n.vx; n.y += n.vy; if (n.x < 0 || n.x > w) n.vx *= -1; if (n.y < 0 || n.y > h) n.vy *= -1; let dx = mouse.x - n.x; let dy = mouse.y - n.y; let dist = Math.sqrt(dx*dx + dy*dy); if (dist < 150) { n.x -= dx / 50; n.y -= dy / 50; } ctx.beginPath(); ctx.arc(n.x, n.y, n.size, 0, Math.PI * 2); ctx.fill(); for (let j = i + 1; j < nodes.length; j++) { let n2 = nodes[j]; let d = Math.hypot(n.x - n2.x, n.y - n2.y); if (d < 150) { ctx.strokeStyle = `rgba(0, 89, 179, ${1 - d / 150})`; ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(n2.x, n2.y); ctx.stroke(); } } }); requestAnimationFrame(draw); }
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }); window.addEventListener('resize', init); init(); draw();
+    </script>
+</body>
+</html>
