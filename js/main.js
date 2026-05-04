@@ -101,56 +101,141 @@ window.addEventListener('load', function () {
     });
   });
 
-  // Hero stat-strip 交互
-  const statDetail = document.getElementById('stat-detail');
-  const statPlaceholder = '<span class="placeholder">Select a metric to inspect details</span>';
-  document.querySelectorAll('.stat-card').forEach(card => {
-    card.addEventListener('click', function () {
-      const wasActive = this.classList.contains('active');
-      document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('active'));
-      if (!statDetail) return;
-      if (wasActive) {
-        statDetail.innerHTML = statPlaceholder;
-      } else {
-        this.classList.add('active');
-        statDetail.textContent = this.getAttribute('data-detail') || '';
-      }
-    });
-  });
-
-  // Hero video — 中央播放按钮 (点击启用声音 0.3)
-  const heroVideo = document.querySelector('.v-frame video');
-  const playBtn = document.querySelector('.v-play-btn');
-  if (heroVideo) heroVideo.volume = 0.3;
-  if (heroVideo && playBtn) {
-    playBtn.addEventListener('click', () => {
-      heroVideo.muted = !heroVideo.muted;
-      playBtn.classList.toggle('on', !heroVideo.muted);
-      if (!heroVideo.muted) {
-        heroVideo.volume = 0.3;
-        // Ensure playback (autoplay may have been blocked)
-        const p = heroVideo.play();
-        if (p && typeof p.catch === 'function') p.catch(() => {});
-      }
-    });
+  // Reveal-on-scroll: 主要 section 入场淡入上移
+  const revealEls = document.querySelectorAll('.reveal');
+  if (revealEls.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('revealed'));
   }
 
-  // Portfolio strip 交互（与 stat-strip 同模式）
-  const portfolioDetail = document.getElementById('portfolio-detail');
-  const portfolioPlaceholder = '<span class="placeholder">Select a portfolio to inspect details</span>';
-  document.querySelectorAll('.btn-portfolio').forEach(card => {
-    card.addEventListener('click', function () {
-      const wasActive = this.classList.contains('active');
-      document.querySelectorAll('.btn-portfolio').forEach(c => c.classList.remove('active'));
-      if (!portfolioDetail) return;
-      if (wasActive) {
-        portfolioDetail.innerHTML = portfolioPlaceholder;
+  // 通用卡片切换器：点击展开 detail，再次点击收起
+  function setupCardToggle(cardSelector, detailId, placeholderText) {
+    const detail = document.getElementById(detailId);
+    if (!detail) return;
+    const placeholderHTML = `<span class="placeholder">${placeholderText}</span>`;
+    const cards = document.querySelectorAll(cardSelector);
+    cards.forEach(card => {
+      card.addEventListener('click', function () {
+        const wasActive = this.classList.contains('active');
+        cards.forEach(c => c.classList.remove('active'));
+        if (wasActive) {
+          detail.innerHTML = placeholderHTML;
+        } else {
+          this.classList.add('active');
+          detail.textContent = this.getAttribute('data-detail') || '';
+        }
+      });
+    });
+  }
+  setupCardToggle('.stat-card', 'stat-detail', 'Select a metric to inspect details');
+  setupCardToggle('.btn-portfolio', 'portfolio-detail', 'Select a portfolio to inspect details');
+
+  // Hero video — Play/Pause toggle + 不循环 + 结束回到开始
+  const heroVideo = document.querySelector('.v-frame video');
+  const playBtn = document.querySelector('.v-play-btn');
+  if (heroVideo && playBtn) {
+    heroVideo.volume = 0.3;
+
+    const syncBtn = () => {
+      const isPlaying = !heroVideo.paused && !heroVideo.ended;
+      playBtn.classList.toggle('playing', isPlaying);
+    };
+
+    // 视频播放/暂停状态变化时同步按钮
+    heroVideo.addEventListener('play', syncBtn);
+    heroVideo.addEventListener('pause', syncBtn);
+
+    // 视频结束后回到开头并显示播放按钮（不循环）
+    heroVideo.addEventListener('ended', () => {
+      heroVideo.currentTime = 0;
+      syncBtn();
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (heroVideo.paused || heroVideo.ended) {
+        // 第一次点击同时解除静音（autoplay 限制需要静音启动）
+        heroVideo.muted = false;
+        heroVideo.volume = 0.3;
+        const p = heroVideo.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
       } else {
-        this.classList.add('active');
-        portfolioDetail.textContent = this.getAttribute('data-detail') || '';
+        heroVideo.pause();
       }
     });
-  });
+
+    syncBtn(); // 初始化
+
+    // 音量滑块（默认 0.3）
+    const volSlider = document.querySelector('.v-vol-slider');
+    const muteBtn = document.querySelector('.v-mute-btn');
+    const fullBtn = document.querySelector('.v-full-btn');
+
+    const syncMuteIcon = () => {
+      if (!muteBtn) return;
+      const effectivelyMuted = heroVideo.muted || heroVideo.volume === 0;
+      muteBtn.classList.toggle('muted', effectivelyMuted);
+    };
+
+    if (volSlider) {
+      volSlider.value = '0.3';
+      volSlider.addEventListener('input', () => {
+        const v = parseFloat(volSlider.value);
+        heroVideo.volume = v;
+        if (v === 0) heroVideo.muted = true;
+        else if (heroVideo.muted) heroVideo.muted = false;
+        syncMuteIcon();
+      });
+    }
+
+    if (muteBtn) {
+      muteBtn.addEventListener('click', () => {
+        if (heroVideo.muted) {
+          heroVideo.muted = false;
+          if (heroVideo.volume === 0) {
+            heroVideo.volume = 0.3;
+            if (volSlider) volSlider.value = '0.3';
+          }
+        } else {
+          heroVideo.muted = true;
+        }
+        syncMuteIcon();
+      });
+    }
+
+    heroVideo.addEventListener('volumechange', syncMuteIcon);
+    syncMuteIcon();
+
+    // 全屏切换（兼容 webkit）
+    if (fullBtn) {
+      fullBtn.addEventListener('click', () => {
+        const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+        if (fsEl) {
+          (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        } else {
+          const target = heroVideo;
+          const req = target.requestFullscreen
+            || target.webkitRequestFullscreen
+            || target.webkitEnterFullscreen;
+          if (req) req.call(target);
+        }
+      });
+      const syncFullIcon = () => {
+        const fs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        fullBtn.classList.toggle('fullscreen', fs);
+      };
+      document.addEventListener('fullscreenchange', syncFullIcon);
+      document.addEventListener('webkitfullscreenchange', syncFullIcon);
+    }
+  }
 
   const mapEl = document.getElementById('global-map');
   const ecoEl = document.getElementById('eco-chart');
@@ -166,8 +251,9 @@ window.addEventListener('load', function () {
     textStyle: { fontFamily: CHART_FONT, fontWeight: 500 },
     geo: {
       map: 'world',
-      zoom: 1.5,
-      top: '10%',
+      // 用 layoutCenter + layoutSize 让地图自动上下左右居中
+      layoutCenter: ['50%', '50%'],
+      layoutSize: '210%',
       roam: false,
       label: { show: false },
       emphasis: {
@@ -247,15 +333,15 @@ window.addEventListener('load', function () {
   };
 
   const sectorsData = [
-    { name: 'Banking & FinTech', color: '#0059B3', desc: 'Financial-grade SLA & Authentication' },
-    { name: 'Healthcare', color: '#10B981', desc: '5G RCS Reports & IoT Alerts' },
-    { name: 'Gov & Public', color: '#F59E0B', desc: 'Emergency Alerts & Sovereign Encryption' },
-    { name: 'E-commerce', color: '#6366F1', desc: 'Global Logistics & Identity Auth' },
-    { name: 'Manufacturing', color: '#EC4899', desc: 'IoV Commands & Monitoring' },
-    { name: 'SaaS & Digital', color: '#8B5CF6', desc: 'API Integration & Compliance' },
-    { name: 'Education', color: '#14B8A6', desc: 'Identity Verification & High Delivery' },
-    { name: 'Energy & Mining', color: '#F43F5E', desc: 'Safety Warnings & Low Latency' },
-    { name: 'Smart Operations', color: '#0059B3', desc: 'Agentic AI & Digital Cockpit' }
+    { name: 'BANKING & FINTECH', color: '#0059B3', desc: 'Financial-grade SLA & Authentication' },
+    { name: 'HEALTHCARE', color: '#10B981', desc: '5G RCS Reports & IoT Alerts' },
+    { name: 'GOV & PUBLIC', color: '#F59E0B', desc: 'Emergency Alerts & Sovereign Encryption' },
+    { name: 'E-COMMERCE', color: '#6366F1', desc: 'Global Logistics & Identity Auth' },
+    { name: 'MANUFACTURING', color: '#EC4899', desc: 'IoV Commands & Monitoring' },
+    { name: 'SAAS & DIGITAL', color: '#8B5CF6', desc: 'API Integration & Compliance' },
+    { name: 'EDUCATION', color: '#14B8A6', desc: 'Identity Verification & High Delivery' },
+    { name: 'ENERGY & MINING', color: '#F43F5E', desc: 'Safety Warnings & Low Latency' },
+    { name: 'SMART OPERATIONS', color: '#0059B3', desc: 'Agentic AI & Digital Cockpit' }
   ];
 
   const drawEco = () => {
@@ -267,8 +353,11 @@ window.addEventListener('load', function () {
     let nodes = [{
       name: 'DOLPHLINK', x: cx, y: cy, fixed: true, symbolSize: 64,
       itemStyle: {
-        color: '#0059B3', shadowBlur: 36, shadowColor: 'rgba(56, 189, 248, 0.55)',
-        borderWidth: 2, borderColor: '#FFFFFF'
+        color: '#0059B3',
+        shadowBlur: 38,
+        shadowColor: 'rgba(56, 189, 248, 0.6)',
+        borderWidth: 2,
+        borderColor: '#FFFFFF'
       },
       label: {
         show: true,
@@ -294,7 +383,7 @@ window.addEventListener('load', function () {
       else { align = 'center'; pos = Math.sin(angle) > 0 ? 'bottom' : 'top'; }
 
       nodes.push({
-        name: s.name, x: x, y: y, fixed: true, symbolSize: 30,
+        name: s.name, x: x, y: y, fixed: true, symbolSize: 46,
         itemStyle: {
           color: 'rgba(255,255,255,0.95)', borderColor: s.color,
           borderWidth: 2, shadowBlur: 10, shadowColor: s.color
@@ -353,16 +442,26 @@ window.addEventListener('load', function () {
   };
 
   const renderMap = () => mapChart.setOption(mapOption);
+  const finishLoader = () => {
+    if (window.__dolphlinkLoaderFinish) window.__dolphlinkLoaderFinish();
+  };
+  if (window.__dolphlinkLoader) window.__dolphlinkLoader.set(82, 'Connecting to global mesh');
   if (echarts.getMap && echarts.getMap('world')) {
     renderMap();
+    finishLoader();
   } else {
     fetch('https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json')
       .then(r => r.json())
       .then(geo => {
+        if (window.__dolphlinkLoader) window.__dolphlinkLoader.set(94, 'Mounting world geometry');
         echarts.registerMap('world', geo);
         renderMap();
+        finishLoader();
       })
-      .catch(err => console.error('Failed to load world map GeoJSON:', err));
+      .catch(err => {
+        console.error('Failed to load world map GeoJSON:', err);
+        finishLoader();
+      });
   }
 
   drawEco();

@@ -10,6 +10,54 @@
  <script src="js/main.js" defer></script>
 </head>
 <body>
+ <!-- High-tech boot loader — hides when all resources ready -->
+ <div id="page-loader" aria-hidden="true">
+ <div class="loader-content">
+ <img src="media/icon/3D/logo.png" class="loader-logo" alt="" />
+ <div class="loader-brand">DOLPHLINK</div>
+ <div class="loader-status" id="loader-status">Initializing sovereign core</div>
+ <div class="loader-bar"><div class="loader-bar-fill" id="loader-fill"></div></div>
+ <div class="loader-meta">
+ <span class="loader-tag">SECURE BOOT · ONECORE</span>
+ <span class="loader-pct" id="loader-pct">0%</span>
+ </div>
+ </div>
+ </div>
+ <script>
+ (function () {
+   var fill = document.getElementById('loader-fill');
+   var pct = document.getElementById('loader-pct');
+   var statusEl = document.getElementById('loader-status');
+   var loader = document.getElementById('page-loader');
+   var current = 0;
+   var L = window.__dolphlinkLoader = {
+     set: function (n, label) {
+       current = Math.max(current, Math.min(100, n));
+       if (fill) fill.style.width = current + '%';
+       if (pct) pct.textContent = Math.round(current) + '%';
+       if (statusEl && label) statusEl.textContent = label;
+     },
+     done: function () {
+       L.set(100, 'Sovereign core online');
+       setTimeout(function () {
+         loader.classList.add('done');
+         setTimeout(function () { if (loader && loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
+       }, 280);
+     }
+   };
+   L.set(8, 'Resolving sovereign endpoint');
+   document.addEventListener('DOMContentLoaded', function () { L.set(28, 'Parsing architecture'); });
+   if (document.fonts && document.fonts.ready) {
+     document.fonts.ready.then(function () { L.set(48, 'Loading typography'); });
+   }
+   window.addEventListener('load', function () {
+     L.set(70, 'Loading 3D assets');
+     // safety timeout: 不论 main.js 钩子是否触发，最长 4 秒后强制完成
+     var safety = setTimeout(function () { L.done(); }, 4000);
+     window.__dolphlinkLoaderFinish = function () { clearTimeout(safety); L.done(); };
+   });
+ })();
+ </script>
  <canvas id="bg-canvas" aria-hidden="true"></canvas>
  <nav>
  <a href="#h-sec" data-scroll-to="h-sec" class="brand">
@@ -23,7 +71,7 @@
  <a href="#a-sec" data-scroll-to="a-sec" class="menu-item">Security</a>
  <a href="https://www.baiwutong.com" target="_blank" rel="noopener noreferrer" class="menu-item">Baiwu Group</a>
  </div>
- <a href="mailto:Sales@dolphlink.com" class="nav-cta">
+ <a href="mailto:Sales@dolphlink.com?cc=Joycetsam@dolphlink.com" class="nav-cta">
  Contact Sales
  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
  </a>
@@ -40,24 +88,45 @@
  </svg>
  Sovereign Governance Infrastructure
  </span>
- <h1>Standardizing<br><span class="h1-accent">The Digital Core.</span></h1>
+ <h1>Standardize<br><span class="h1-accent">the Digital Core.</span></h1>
  <p>OneCore by Dolphlink: Orchestrating the next generation of government and enterprise communication through a unified, sovereign architecture.</p>
  <div class="hero-cta">
  <a href="#n-sec" data-scroll-to="n-sec" class="btn btn-primary">Explore Architecture</a>
- <a href="mailto:Sales@dolphlink.com" class="btn btn-ghost">Contact Sales</a>
+ <a href="mailto:Sales@dolphlink.com?cc=Joycetsam@dolphlink.com" class="btn-link">Contact sales <span aria-hidden="true">→</span></a>
  </div>
  </div>
  <div class="v-frame">
  <span class="v-cine-tag">FEATURE PRESENTATION</span>
- <video autoplay muted loop playsinline><source src="media/video/current.mp4" type="video/mp4"></video>
- <button type="button" class="v-play-btn" aria-label="Play with sound">
+ <div class="v-controls">
+ <button type="button" class="v-control-btn v-mute-btn" aria-label="Toggle mute">
+ <svg class="v-icon-vol-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/>
+ <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+ </svg>
+ <svg class="v-icon-vol-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/>
+ <line x1="22" y1="9" x2="16" y2="15"/>
+ <line x1="16" y1="9" x2="22" y2="15"/>
+ </svg>
+ </button>
+ <input type="range" class="v-vol-slider" min="0" max="1" step="0.05" value="0.3" aria-label="Volume" />
+ <button type="button" class="v-control-btn v-full-btn" aria-label="Toggle fullscreen">
+ <svg class="v-icon-full-enter" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M3 9V3h6"/><path d="M21 9V3h-6"/><path d="M3 15v6h6"/><path d="M21 15v6h-6"/>
+ </svg>
+ <svg class="v-icon-full-exit" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M9 3v6H3"/><path d="M15 3v6h6"/><path d="M9 21v-6H3"/><path d="M15 21v-6h6"/>
+ </svg>
+ </button>
+ </div>
+ <video autoplay muted playsinline><source src="media/video/current.mp4" type="video/mp4"></video>
+ <button type="button" class="v-play-btn" aria-label="Play or pause">
  <svg class="v-icon-play" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
  <polygon points="6 4 22 12 6 20 6 4"/>
  </svg>
- <svg class="v-icon-sound" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
- <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/>
- <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
- <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+ <svg class="v-icon-pause" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+ <rect x="6" y="5" width="4" height="14" rx="0.5"/>
+ <rect x="14" y="5" width="4" height="14" rx="0.5"/>
  </svg>
  </button>
  <div class="v-caption">
@@ -72,43 +141,47 @@
 
  <!-- Reliability Matrix - dedicated section -->
  <section class="section-row reliability-section">
- <div class="stat-strip-wrap">
+ <div class="stat-strip-wrap reveal">
  <div class="stat-strip-header">
  <span class="strip-tag">Reliability Matrix</span>
  <span class="strip-rule"></span>
- <span class="strip-status"><span class="dot"></span>Live</span>
+ <span class="strip-status"><span class="dot"></span>Q1 · 2026 SLA</span>
  </div>
  <div class="stat-strip">
  <button type="button" class="stat-card" data-stat="sla"
  data-detail="Distributed node architecture ensuring mission-critical 99.9% availability for enterprise communication.">
- <span class="stat-icon-wrap"><img src="media/icon/3D/a.png" alt="" class="stat-icon" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/resilience.png" alt="" class="stat-icon" /></span>
  <span class="stat-meta">
  <span class="stat-value">99.9%</span>
  <span class="stat-label">Stability</span>
+ <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
  </span>
  </button>
  <button type="button" class="stat-card" data-stat="loc"
  data-detail="Global coverage across 220+ countries, enabling seamless international connectivity through local gateways.">
- <span class="stat-icon-wrap"><img src="media/icon/3D/t.png" alt="" class="stat-icon" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/territories.png" alt="" class="stat-icon" /></span>
  <span class="stat-meta">
  <span class="stat-value">220+</span>
  <span class="stat-label">Territories</span>
+ <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
  </span>
  </button>
  <button type="button" class="stat-card" data-stat="lat"
  data-detail="Optimized proprietary backbone for sub-10ms delivery, ensuring real-time response in high-stakes environments.">
- <span class="stat-icon-wrap"><img src="media/icon/3D/v.png" alt="" class="stat-icon" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/velocity.png" alt="" class="stat-icon" /></span>
  <span class="stat-meta">
  <span class="stat-value">&lt;10ms</span>
  <span class="stat-label">Latency</span>
+ <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
  </span>
  </button>
  <button type="button" class="stat-card" data-stat="ain"
  data-detail="AI-Native traffic prediction and intelligent routing powered by OneCore's autonomous decision layer.">
- <span class="stat-icon-wrap"><img src="media/icon/3D/d.png" alt="" class="stat-icon" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/human-ai.png" alt="" class="stat-icon" /></span>
  <span class="stat-meta">
  <span class="stat-value">AI-N</span>
  <span class="stat-label">Decision</span>
+ <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
  </span>
  </button>
  </div>
@@ -119,41 +192,40 @@
  </section>
 
  <section id="n-sec" class="section-row infra-section">
- <div class="stat-strip-wrap">
+ <div class="stat-strip-wrap reveal">
  <div class="stat-strip-header">
  <span class="strip-tag">Industrial Portfolios</span>
  <span class="strip-rule"></span>
- <span class="strip-status">06 Modules</span>
  </div>
  <div class="portfolio-strip">
  <button type="button" class="btn-portfolio" data-portfolio="gov"
  data-detail="Automated AI handling within sovereign secure boundaries for government and enterprise digital services.">
- <span class="portfolio-icon-wrap"><img src="media/icon/2D/1.svg" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/solution.png" alt="" class="portfolio-icon" /></span>
  <span class="portfolio-label">Gov-AI</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="sms"
  data-detail="Encrypted high-throughput global SMS delivery for mission-critical alerts and verification.">
- <span class="portfolio-icon-wrap"><img src="media/icon/2D/2.svg" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/touch.png" alt="" class="portfolio-icon" /></span>
  <span class="portfolio-label">SMS Hub</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="api"
  data-detail="Programmable voice mesh with global redundancy and high-fidelity routing.">
- <span class="portfolio-icon-wrap"><img src="media/icon/2D/3.svg" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/oneAPI.png" alt="" class="portfolio-icon" /></span>
  <span class="portfolio-label">Voice API</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="did"
  data-detail="Global virtual numbering services for unified international business presence.">
- <span class="portfolio-icon-wrap"><img src="media/icon/2D/4.svg" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/cross.png" alt="" class="portfolio-icon" /></span>
  <span class="portfolio-label">Global DID</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="omni"
  data-detail="Standardized orchestration across all digital channels including WhatsApp, Email, and App.">
- <span class="portfolio-icon-wrap"><img src="media/icon/2D/5.svg" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/smartlink.png" alt="" class="portfolio-icon" /></span>
  <span class="portfolio-label">Omni-Link</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="rcs"
  data-detail="Next-gen 5G rich messaging for immersive and interactive enterprise communication.">
- <span class="portfolio-icon-wrap"><img src="media/icon/2D/6.svg" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/combine.png" alt="" class="portfolio-icon" /></span>
  <span class="portfolio-label">5G Msg</span>
  </button>
  </div>
@@ -164,12 +236,46 @@
  </section>
 
  <section id="a-sec" class="audit-section">
- <h2 class="sec-title">Security Audit Center</h2>
- <div class="audit-grid">
- <div class="audit-box"><h3>Sovereignty</h3><p>Physically isolated node management specifically architected for sensitive government data.</p></div>
- <div class="audit-box"><h3>Full Audit</h3><p>Real-time automated evaluation against regional regulatory frameworks (GDPR, ISO 27001).</p></div>
- <div class="audit-box"><h3>Threat Scan</h3><p>Proprietary AI heuristics monitoring global traffic for zero-leak secure paths.</p></div>
- <div class="audit-box"><h3>RBAC Control</h3><p>Precision role-based access management across the entire OneCore control layer.</p></div>
+ <h2 class="sec-title">Security Audit Center<span class="audit-stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></span></h2>
+ <div class="audit-grid reveal">
+ <div class="audit-box">
+ <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z"/>
+ </svg>
+ <h3>Sovereignty</h3>
+ <p>Physically isolated node management specifically architected for sensitive government data.</p>
+ </div>
+ <div class="audit-box">
+ <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M14 2 H6 a2 2 0 0 0 -2 2 v16 a2 2 0 0 0 2 2 h12 a2 2 0 0 0 2 -2 V8 Z"/>
+ <polyline points="14 2 14 8 20 8"/>
+ <polyline points="9 14 11 16 15 12"/>
+ </svg>
+ <h3>Full Audit</h3>
+ <p>Real-time automated evaluation against regional regulatory frameworks (GDPR, ISO 27001).</p>
+ </div>
+ <div class="audit-box">
+ <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <circle cx="12" cy="12" r="9"/>
+ <circle cx="12" cy="12" r="5"/>
+ <line x1="12" y1="3" x2="12" y2="6"/>
+ <line x1="12" y1="18" x2="12" y2="21"/>
+ <line x1="3" y1="12" x2="6" y2="12"/>
+ <line x1="18" y1="12" x2="21" y2="12"/>
+ </svg>
+ <h3>Threat Scan</h3>
+ <p>Proprietary AI heuristics monitoring global traffic for zero-leak secure paths.</p>
+ </div>
+ <div class="audit-box">
+ <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <circle cx="8" cy="14" r="4"/>
+ <line x1="11" y1="11" x2="22" y2="2"/>
+ <line x1="17" y1="7" x2="20" y2="10"/>
+ <line x1="14" y1="10" x2="17" y2="13"/>
+ </svg>
+ <h3>RBAC Control</h3>
+ <p>Precision role-based access management across the entire OneCore control layer.</p>
+ </div>
  </div>
  </section>
 
@@ -192,7 +298,7 @@
  </div>
  <div class="f-col">
  <h6>BRAND MISSION</h6>
- <p style="color:var(--text-sub); font-weight:500;">Dedicated to sovereign digital governance and AI-native orchestration.</p>
+ <p class="f-col-mission">Dedicated to sovereign digital governance and AI-native orchestration.</p>
  </div>
  <div class="f-col">
  <h6>LOCATION</h6>
@@ -200,13 +306,17 @@
  </div>
  <div class="f-col">
  <h6>CONNECTIVITY</h6>
- <a href="mailto:Sales@dolphlink.com">Sales@dolphlink.com</a>
+ <a href="mailto:Sales@dolphlink.com?cc=Joycetsam@dolphlink.com">Sales@dolphlink.com</a>
  <a href="https://www.baiwutong.com" target="_blank" rel="noopener noreferrer">Official Website</a>
  </div>
  </div>
  <div class="f-bottom-bar">
+ <div class="f-bottom-legal">
+ <a href="#">Terms of Service</a>
+ <a href="#">Privacy Policy</a>
+ <a href="#">Cookie Policy</a>
+ </div>
  <span>© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED.</span>
- <div><a href="#">Privacy Policy</a><a href="#">Security Audit</a></div>
  </div>
  </footer>
  </div>
