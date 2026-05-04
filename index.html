@@ -6,6 +6,82 @@
  <title>DOLPHLINK | Sovereign Governance Infrastructure</title>
  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="css/style.css">
+ <style>
+  /* CRITICAL: Loader 关键样式内联，确保外部 CSS 加载前 loader 也能正确渲染 */
+  #page-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: radial-gradient(ellipse at center, #002D5C 0%, #00091A 100%);
+    display: grid; place-items: center;
+    overflow: hidden;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+  #page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+  #page-loader::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+    background-size: 48px 48px; opacity: 0.55;
+  }
+  .loader-content {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 22px;
+    max-width: 380px; padding: 0 24px;
+    text-align: center;
+  }
+  .loader-logo {
+    width: 96px; height: auto; display: block;
+    filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.5));
+  }
+  .loader-brand {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: #FFFFFF; letter-spacing: -0.5px; line-height: 1;
+  }
+  .loader-status {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem; font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.6px; line-height: 1.4;
+    text-align: center;
+  }
+  .loader-bar {
+    width: 280px; max-width: 76vw; height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1px; overflow: hidden; position: relative;
+  }
+  .loader-bar-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #0059B3, #38BDF8);
+    border-radius: 1px;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+    transition: width 0.5s ease;
+  }
+  .loader-meta {
+    display: flex; width: 280px; max-width: 76vw;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 1.6px;
+    color: #0059B3;
+    text-transform: uppercase;
+  }
+  .loader-pct { color: rgba(255, 255, 255, 0.85); }
+  @media (max-width: 640px) {
+    .loader-logo { width: 68px; }
+    .loader-brand { font-size: 1.25rem; }
+    .loader-status { font-size: 0.66rem; }
+    .loader-bar, .loader-meta { width: min(240px, 76vw); }
+    .loader-meta { font-size: 0.58rem; letter-spacing: 1.2px; }
+  }
+  @media (max-width: 380px) {
+    .loader-logo { width: 56px; }
+    .loader-brand { font-size: 1.1rem; }
+    .loader-bar, .loader-meta { width: min(200px, 72vw); }
+    .loader-meta { font-size: 0.55rem; }
+  }
+ </style>
  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
  <script src="js/main.js" defer></script>
 </head>
@@ -311,11 +387,6 @@
  </div>
  </div>
  <div class="f-bottom-bar">
- <div class="f-bottom-legal">
- <a href="#">Terms of Service</a>
- <a href="#">Privacy Policy</a>
- <a href="#">Cookie Policy</a>
- </div>
  <span>© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED.</span>
  </div>
  </footer>

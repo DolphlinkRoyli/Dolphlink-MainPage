@@ -139,6 +139,28 @@
      animation: none;
    }
  }
+ /* Loader 移动端响应式 */
+ @media (max-width: 640px) {
+   #page-loader::before { background-size: 32px 32px; opacity: 0.35; }
+   .loader-content { gap: 16px; padding: 0 24px; max-width: 100%; }
+   .loader-logo { width: 68px; }
+   .loader-brand { font-size: 1.25rem; letter-spacing: -0.3px; }
+   .loader-status {
+     font-size: 0.66rem; line-height: 1.4;
+     max-width: 280px;
+   }
+   .loader-bar { width: min(240px, 76vw); }
+   .loader-meta {
+     width: min(240px, 76vw);
+     font-size: 0.58rem; letter-spacing: 1.2px;
+   }
+ }
+ @media (max-width: 380px) {
+   .loader-logo { width: 56px; }
+   .loader-brand { font-size: 1.1rem; }
+   .loader-bar { width: min(200px, 72vw); }
+   .loader-meta { width: min(200px, 72vw); font-size: 0.55rem; }
+ }
  body {
  background-color: var(--baiwu-white);
  color: var(--text-main);
@@ -1165,23 +1187,9 @@
     =========================== */
  .f-bottom-bar {
    display: flex;
-   justify-content: space-between;    /* 改为左右分布 */
+   justify-content: flex-end;
    align-items: center;
-   gap: 20px;
  }
- .f-bottom-legal {
-   display: flex; gap: 18px;
-   font-size: var(--fs-xs);
-   font-weight: 600;
-   letter-spacing: 0.4px;
-   text-transform: none;              /* 法律链不大写 */
- }
- .f-bottom-legal a {
-   color: var(--text-sub);
-   text-decoration: none;
-   transition: color 0.2s ease;
- }
- .f-bottom-legal a:hover { color: var(--baiwu-blue-primary); }
 
 
  /* ===========================
@@ -1223,8 +1231,7 @@
  }
  @media (max-width: 640px) {
    .footer-main { grid-template-columns: 1fr; }
-   .f-bottom-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
-   .f-bottom-legal { flex-wrap: wrap; gap: 12px; }
+   .f-bottom-bar { justify-content: center; }
  }
 
  @media (prefers-reduced-motion: reduce) {
