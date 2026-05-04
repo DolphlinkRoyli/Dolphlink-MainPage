@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>DOLPHLINK | Sovereign Governance Infrastructure</title>
+ <meta name="description" content="DOLPHLINK · Sovereign governance infrastructure for regulated industries. 99.9% SLA, 220+ territories, sub-10ms latency, AI-N decision engine. Built for banking, government, healthcare and critical operations.">
+ <meta name="keywords" content="sovereign governance, digital infrastructure, IM8, enterprise SLA, AI governance, sovereign cloud, Singapore, Baiwu Technology">
+ <meta name="author" content="Baiwu Technology Group">
+ <meta name="theme-color" content="#0059B3">
+ <link rel="canonical" href="https://dolphlink.com/">
+
+ <!-- Open Graph -->
+ <meta property="og:type" content="website">
+ <meta property="og:title" content="DOLPHLINK | Sovereign Governance Infrastructure">
+ <meta property="og:description" content="Standardize the digital core. 99.9% SLA across 220+ territories with AI-N decision intelligence.">
+ <meta property="og:url" content="https://dolphlink.com/">
+ <meta property="og:image" content="https://dolphlink.com/media/img/hero-bg.jpg">
+ <meta property="og:site_name" content="DOLPHLINK">
+
+ <!-- Twitter -->
+ <meta name="twitter:card" content="summary_large_image">
+ <meta name="twitter:title" content="DOLPHLINK | Sovereign Governance Infrastructure">
+ <meta name="twitter:description" content="Standardize the digital core. 99.9% SLA · 220+ territories · AI-N decision intelligence.">
+ <meta name="twitter:image" content="https://dolphlink.com/media/img/hero-bg.jpg">
+
+ <!-- Preconnect / preload 关键资源 -->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+ <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+ <link rel="preload" as="image" href="media/img/hero-bg.webp" type="image/webp" fetchpriority="high">
+
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="css/style.css">
+ <style>
+  /* CRITICAL: Loader 关键样式内联，确保外部 CSS 加载前 loader 也能正确渲染 */
+  #page-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: radial-gradient(ellipse at center, #002D5C 0%, #00091A 100%);
+    display: grid; place-items: center;
+    overflow: hidden;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+  #page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+  #page-loader::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+    background-size: 48px 48px; opacity: 0.55;
+  }
+  .loader-content {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 22px;
+    max-width: 380px; padding: 0 24px;
+    text-align: center;
+  }
+  .loader-logo {
+    width: 96px; height: auto; display: block;
+    filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.5));
+  }
+  .loader-brand {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: #FFFFFF; letter-spacing: -0.5px; line-height: 1;
+  }
+  .loader-status {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem; font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.6px; line-height: 1.4;
+    text-align: center;
+  }
+  .loader-bar {
+    width: 280px; max-width: 76vw; height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1px; overflow: hidden; position: relative;
+  }
+  .loader-bar-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #0059B3, #38BDF8);
+    border-radius: 1px;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+    transition: width 0.5s ease;
+  }
+  .loader-meta {
+    display: flex; width: 280px; max-width: 76vw;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 1.6px;
+    color: #0059B3;
+    text-transform: uppercase;
+  }
+  .loader-pct { color: rgba(255, 255, 255, 0.85); }
+  @media (max-width: 640px) {
+    .loader-logo { width: 68px; }
+    .loader-brand { font-size: 1.25rem; }
+    .loader-status { font-size: 0.66rem; }
+    .loader-bar, .loader-meta { width: min(240px, 76vw); }
+    .loader-meta { font-size: 0.58rem; letter-spacing: 1.2px; }
+  }
+  @media (max-width: 380px) {
+    .loader-logo { width: 56px; }
+    .loader-brand { font-size: 1.1rem; }
+    .loader-bar, .loader-meta { width: min(200px, 72vw); }
+    .loader-meta { font-size: 0.55rem; }
+  }
+ </style>
+ <!-- ECharts 改为懒加载（charts 区进入视口时才注入），减少首屏 JS 209 KiB -->
+ <script src="js/main.js" defer></script>
+
+ <!-- Structured Data: Organization -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "Organization",
+   "name": "DOLPHLINK",
+   "alternateName": "Baiwu Technology Group",
+   "url": "https://dolphlink.com/",
+   "logo": "https://dolphlink.com/media/icon/3D/logo.webp",
+   "description": "Sovereign governance infrastructure for regulated industries — 99.9% SLA across 220+ territories.",
+   "address": {
+     "@type": "PostalAddress",
+     "addressCountry": "SG",
+     "addressLocality": "Singapore"
+   },
+   "sameAs": []
+ }
+ </script>
+</head>
+<body>
+ <!-- High-tech boot loader — hides when all resources ready -->
+ <div id="page-loader" aria-hidden="true">
+ <div class="loader-content">
+ <img src="media/icon/3D/logo.webp" class="loader-logo" alt="" width="80" height="80" />
+ <div class="loader-brand">DOLPHLINK</div>
+ <div class="loader-status" id="loader-status">Initializing sovereign core</div>
+ <div class="loader-bar"><div class="loader-bar-fill" id="loader-fill"></div></div>
+ <div class="loader-meta">
+ <span class="loader-tag">SECURE BOOT · ONECORE</span>
+ <span class="loader-pct" id="loader-pct">0%</span>
+ </div>
+ </div>
+ </div>
+ <script>
+ (function () {
+   var fill = document.getElementById('loader-fill');
+   var pct = document.getElementById('loader-pct');
+   var statusEl = document.getElementById('loader-status');
+   var loader = document.getElementById('page-loader');
+   var current = 0;
+   var L = window.__dolphlinkLoader = {
+     set: function (n, label) {
+       current = Math.max(current, Math.min(100, n));
+       if (fill) fill.style.width = current + '%';
+       if (pct) pct.textContent = Math.round(current) + '%';
+       if (statusEl && label) statusEl.textContent = label;
+     },
+     done: function () {
+       L.set(100, 'Sovereign core online');
+       setTimeout(function () {
+         loader.classList.add('done');
+         setTimeout(function () { if (loader && loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
+       }, 280);
+     }
+   };
+   L.set(8, 'Resolving sovereign endpoint');
+   document.addEventListener('DOMContentLoaded', function () { L.set(28, 'Parsing architecture'); });
+   if (document.fonts && document.fonts.ready) {
+     document.fonts.ready.then(function () { L.set(48, 'Loading typography'); });
+   }
+   window.addEventListener('load', function () {
+     L.set(75, 'Loading 3D assets');
+     // ECharts 改为懒加载，loader 不再等图表 — DOM/字体/图片 ready 后短暂收尾即关
+     setTimeout(function () { L.set(95, 'Sealing sovereign perimeter'); }, 220);
+     setTimeout(function () { L.done(); }, 480);
+   });
+ })();
+ </script>
+ <canvas id="bg-canvas" aria-hidden="true"></canvas>
+ <nav>
+ <a href="#h-sec" data-scroll-to="h-sec" class="brand">
+ <img src="media/icon/3D/logo.webp" alt="DOLPHLINK logo" class="brand-logo" width="72" height="72" />
+ <span class="brand-name">DOLPHLINK</span>
+ </a>
+ <div class="nav-right">
+ <div class="fixed-menu">
+ <a href="#h-sec" data-scroll-to="h-sec" class="menu-item">Governance</a>
+ <a href="#n-sec" data-scroll-to="n-sec" class="menu-item">Infrastructure</a>
+ <a href="#a-sec" data-scroll-to="a-sec" class="menu-item">Security</a>
+ <a href="https://www.baiwutong.com" target="_blank" rel="noopener noreferrer" class="menu-item">Baiwu Group</a>
+ </div>
+ <a href="mailto:Sales@dolphlink.com?cc=Joycetsam@dolphlink.com" class="nav-cta">
+ Contact Sales
+ <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+ </a>
+ </div>
+ </nav>
+
+ <div class="wrapper">
+ <section id="h-sec" class="section-row hero">
+ <div class="hero-content">
+ <span class="eyebrow">
+ <svg class="eyebrow-icon" width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+ <path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+ <path d="M8.5 12 L11 14.5 L15.5 9.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+ </svg>
+ Sovereign Governance Infrastructure
+ </span>
+ <h1>Standardize<br><span class="h1-accent">the Digital Core.</span></h1>
+ <p>OneCore by Dolphlink: Orchestrating the next generation of government and enterprise communication through a unified, sovereign architecture.</p>
+ <div class="hero-cta">
+ <a href="#n-sec" data-scroll-to="n-sec" class="btn btn-primary">Explore Architecture</a>
+ <a href="mailto:Sales@dolphlink.com?cc=Joycetsam@dolphlink.com" class="btn-link">Contact sales <span aria-hidden="true">→</span></a>
+ </div>
+ </div>
+ <div class="v-frame">
+ <span class="v-cine-tag">FEATURE PRESENTATION</span>
+ <div class="v-controls">
+ <button type="button" class="v-control-btn v-mute-btn" aria-label="Toggle mute">
+ <svg class="v-icon-vol-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/>
+ <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+ </svg>
+ <svg class="v-icon-vol-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/>
+ <line x1="22" y1="9" x2="16" y2="15"/>
+ <line x1="16" y1="9" x2="22" y2="15"/>
+ </svg>
+ </button>
+ <input type="range" class="v-vol-slider" min="0" max="1" step="0.05" value="0.3" aria-label="Volume" />
+ <button type="button" class="v-control-btn v-full-btn" aria-label="Toggle fullscreen">
+ <svg class="v-icon-full-enter" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M3 9V3h6"/><path d="M21 9V3h-6"/><path d="M3 15v6h6"/><path d="M21 15v6h-6"/>
+ </svg>
+ <svg class="v-icon-full-exit" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M9 3v6H3"/><path d="M15 3v6h6"/><path d="M9 21v-6H3"/><path d="M15 21v-6h6"/>
+ </svg>
+ </button>
+ </div>
+ <video preload="metadata" poster="media/img/video-poster.webp" muted playsinline><source src="media/video/current.mp4" type="video/mp4"></video>
+ <button type="button" class="v-play-btn" aria-label="Play or pause">
+ <svg class="v-icon-play" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+ <polygon points="6 4 22 12 6 20 6 4"/>
+ </svg>
+ <svg class="v-icon-pause" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+ <rect x="6" y="5" width="4" height="14" rx="0.5"/>
+ <rect x="14" y="5" width="4" height="14" rx="0.5"/>
+ </svg>
+ </button>
+ <div class="v-caption">
+ <div class="v-caption-text">
+ <h4>Eliminate Systemic Friction</h4>
+ <p>Unifying fragmented digital infrastructure into one sovereign core.</p>
+ </div>
+ <span class="v-caption-meta">DOLPHLINK / ONECORE</span>
+ </div>
+ </div>
+ </section>
+
+ <!-- Reliability Matrix - dedicated section -->
+ <section class="section-row reliability-section">
+ <div class="stat-strip-wrap reveal">
+ <div class="stat-strip-header">
+ <span class="strip-tag">Reliability Matrix</span>
+ <span class="strip-rule"></span>
+ <span class="strip-status"><span class="dot"></span>Q1 · 2026 SLA</span>
+ </div>
+ <div class="stat-strip">
+ <button type="button" class="stat-card" data-stat="sla"
+ data-detail="Distributed node architecture ensuring mission-critical 99.9% availability for enterprise communication.">
+ <span class="stat-icon-wrap"><img src="media/icon/3D/resilience.webp" alt="" class="stat-icon" width="88" height="88" /></span>
+ <span class="stat-meta">
+ <span class="stat-value">99.9%</span>
+ <span class="stat-label">Stability</span>
+ <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
+ </span>
+ </button>
+ <button type="button" class="stat-card" data-stat="loc"
+ data-detail="Global coverage across 220+ countries, enabling seamless international connectivity through local gateways.">
+ <span class="stat-icon-wrap"><img src="media/icon/3D/territories.webp" alt="" class="stat-icon" width="88" height="88" /></span>
+ <span class="stat-meta">
+ <span class="stat-value">220+</span>
+ <span class="stat-label">Territories</span>
+ <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
+ </span>
+ </button>
+ <button type="button" class="stat-card" data-stat="lat"
+ data-detail="Optimized proprietary backbone for sub-10ms delivery, ensuring real-time response in high-stakes environments.">
+ <span class="stat-icon-wrap"><img src="media/icon/3D/velocity.webp" alt="" class="stat-icon" width="88" height="88" /></span>
+ <span class="stat-meta">
+ <span class="stat-value">&lt;10ms</span>
+ <span class="stat-label">Latency</span>
+ <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
+ </span>
+ </button>
+ <button type="button" class="stat-card" data-stat="ain"
+ data-detail="AI-Native traffic prediction and intelligent routing powered by OneCore's autonomous decision layer.">
+ <span class="stat-icon-wrap"><img src="media/icon/3D/human-ai.webp" alt="" class="stat-icon" width="88" height="88" /></span>
+ <span class="stat-meta">
+ <span class="stat-value">AI-N</span>
+ <span class="stat-label">Decision</span>
+ <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
+ </span>
+ </button>
+ </div>
+ <div class="stat-detail" id="stat-detail">
+ <span class="placeholder">Select a metric to inspect details</span>
+ </div>
+ </div>
+ </section>
+
+ <section id="n-sec" class="section-row infra-section">
+ <div class="stat-strip-wrap reveal">
+ <div class="stat-strip-header">
+ <span class="strip-tag">Industrial Portfolios</span>
+ <span class="strip-rule"></span>
+ </div>
+ <div class="portfolio-strip">
+ <button type="button" class="btn-portfolio" data-portfolio="gov"
+ data-detail="Automated AI handling within sovereign secure boundaries for government and enterprise digital services.">
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/solution.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
+ <span class="portfolio-label">Gov-AI</span>
+ </button>
+ <button type="button" class="btn-portfolio" data-portfolio="sms"
+ data-detail="Encrypted high-throughput global SMS delivery for mission-critical alerts and verification.">
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/touch.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
+ <span class="portfolio-label">SMS Hub</span>
+ </button>
+ <button type="button" class="btn-portfolio" data-portfolio="api"
+ data-detail="Programmable voice mesh with global redundancy and high-fidelity routing.">
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/oneAPI.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
+ <span class="portfolio-label">Voice API</span>
+ </button>
+ <button type="button" class="btn-portfolio" data-portfolio="did"
+ data-detail="Global virtual numbering services for unified international business presence.">
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/cross.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
+ <span class="portfolio-label">Global DID</span>
+ </button>
+ <button type="button" class="btn-portfolio" data-portfolio="omni"
+ data-detail="Standardized orchestration across all digital channels including WhatsApp, Email, and App.">
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/smartlink.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
+ <span class="portfolio-label">Omni-Link</span>
+ </button>
+ <button type="button" class="btn-portfolio" data-portfolio="rcs"
+ data-detail="Next-gen 5G rich messaging for immersive and interactive enterprise communication.">
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/combine.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
+ <span class="portfolio-label">5G Msg</span>
+ </button>
+ </div>
+ <div class="stat-detail" id="portfolio-detail">
+ <span class="placeholder">Select a portfolio to inspect details</span>
+ </div>
+ </div>
+ </section>
+
+ <section id="a-sec" class="audit-section">
+ <h2 class="sec-title">Security Audit Center<span class="audit-stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></span></h2>
+ <div class="audit-grid reveal">
+ <div class="audit-box">
+ <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z"/>
+ </svg>
+ <h3>Sovereignty</h3>
+ <p>Physically isolated node management specifically architected for sensitive government data.</p>
+ </div>
+ <div class="audit-box">
+ <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <path d="M14 2 H6 a2 2 0 0 0 -2 2 v16 a2 2 0 0 0 2 2 h12 a2 2 0 0 0 2 -2 V8 Z"/>
+ <polyline points="14 2 14 8 20 8"/>
+ <polyline points="9 14 11 16 15 12"/>
+ </svg>
+ <h3>Full Audit</h3>
+ <p>Real-time automated evaluation against regional regulatory frameworks (GDPR, ISO 27001).</p>
+ </div>
+ <div class="audit-box">
+ <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <circle cx="12" cy="12" r="9"/>
+ <circle cx="12" cy="12" r="5"/>
+ <line x1="12" y1="3" x2="12" y2="6"/>
+ <line x1="12" y1="18" x2="12" y2="21"/>
+ <line x1="3" y1="12" x2="6" y2="12"/>
+ <line x1="18" y1="12" x2="21" y2="12"/>
+ </svg>
+ <h3>Threat Scan</h3>
+ <p>Proprietary AI heuristics monitoring global traffic for zero-leak secure paths.</p>
+ </div>
+ <div class="audit-box">
+ <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+ <circle cx="8" cy="14" r="4"/>
+ <line x1="11" y1="11" x2="22" y2="2"/>
+ <line x1="17" y1="7" x2="20" y2="10"/>
+ <line x1="14" y1="10" x2="17" y2="13"/>
+ </svg>
+ <h3>RBAC Control</h3>
+ <p>Precision role-based access management across the entire OneCore control layer.</p>
+ </div>
+ </div>
+ </section>
+
+ <div class="charts-row">
+ <div class="chart-card">
+ <div class="chart-label">Standardization Ecosystem</div>
+ <div id="eco-chart" class="chart-container"></div>
+ </div>
+ <div class="chart-card">
+ <div class="chart-label">Global Connectivity Map</div>
+ <div id="global-map" class="chart-container"></div>
+ </div>
+ </div>
+
+ <footer class="footer">
+ <div class="footer-main">
+ <div class="f-col brand-col">
+ <h2>DOLPHLINK</h2>
+ <p>A flagship brand of Baiwu Technology Group. Orchestrating secure global communication for a sovereign future.</p>
+ </div>
+ <div class="f-col">
+ <h6>BRAND MISSION</h6>
+ <p class="f-col-mission">Dedicated to sovereign digital governance and AI-native orchestration.</p>
+ </div>
+ <div class="f-col">
+ <h6>LOCATION</h6>
+ <p>Republic Plaza,<br>Singapore 048619</p>
+ </div>
+ <div class="f-col">
+ <h6>CONNECTIVITY</h6>
+ <a href="mailto:Sales@dolphlink.com?cc=Joycetsam@dolphlink.com">Sales@dolphlink.com</a>
+ <a href="https://www.baiwutong.com" target="_blank" rel="noopener noreferrer">Official Website</a>
+ </div>
+ </div>
+ <div class="f-bottom-bar">
+ <span>© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED.</span>
+ </div>
+ </footer>
+ </div>
+</body>
+</html>
