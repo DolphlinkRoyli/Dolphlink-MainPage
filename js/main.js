@@ -143,7 +143,7 @@ window.addEventListener('load', function () {
   const heroVideo = document.querySelector('.v-frame video');
   const playBtn = document.querySelector('.v-play-btn');
   if (heroVideo && playBtn) {
-    heroVideo.volume = 0.3;
+    heroVideo.volume = 0.12;
 
     const syncBtn = () => {
       const isPlaying = !heroVideo.paused && !heroVideo.ended;
@@ -164,7 +164,7 @@ window.addEventListener('load', function () {
       if (heroVideo.paused || heroVideo.ended) {
         // 第一次点击同时解除静音（autoplay 限制需要静音启动）
         heroVideo.muted = false;
-        heroVideo.volume = 0.3;
+        heroVideo.volume = 0.12;
         const p = heroVideo.play();
         if (p && typeof p.catch === 'function') p.catch(() => {});
       } else {
@@ -186,7 +186,7 @@ window.addEventListener('load', function () {
     };
 
     if (volSlider) {
-      volSlider.value = '0.3';
+      volSlider.value = '0.12';
       volSlider.addEventListener('input', () => {
         const v = parseFloat(volSlider.value);
         heroVideo.volume = v;
@@ -201,7 +201,7 @@ window.addEventListener('load', function () {
         if (heroVideo.muted) {
           heroVideo.muted = false;
           if (heroVideo.volume === 0) {
-            heroVideo.volume = 0.3;
+            heroVideo.volume = 0.12;
             if (volSlider) volSlider.value = '0.3';
           }
         } else {
