@@ -109,7 +109,7 @@
     .loader-meta { font-size: 0.55rem; }
   }
  </style>
- <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+ <!-- ECharts 改为懒加载（charts 区进入视口时才注入），减少首屏 JS 209 KiB -->
  <script src="js/main.js" defer></script>
 
  <!-- Structured Data: Organization -->
@@ -120,7 +120,7 @@
    "name": "DOLPHLINK",
    "alternateName": "Baiwu Technology Group",
    "url": "https://dolphlink.com/",
-   "logo": "https://dolphlink.com/media/icon/3D/logo.png",
+   "logo": "https://dolphlink.com/media/icon/3D/logo.webp",
    "description": "Sovereign governance infrastructure for regulated industries — 99.9% SLA across 220+ territories.",
    "address": {
      "@type": "PostalAddress",
@@ -135,7 +135,7 @@
  <!-- High-tech boot loader — hides when all resources ready -->
  <div id="page-loader" aria-hidden="true">
  <div class="loader-content">
- <img src="media/icon/3D/logo.png" class="loader-logo" alt="" />
+ <img src="media/icon/3D/logo.webp" class="loader-logo" alt="" width="80" height="80" />
  <div class="loader-brand">DOLPHLINK</div>
  <div class="loader-status" id="loader-status">Initializing sovereign core</div>
  <div class="loader-bar"><div class="loader-bar-fill" id="loader-fill"></div></div>
@@ -173,17 +173,17 @@
      document.fonts.ready.then(function () { L.set(48, 'Loading typography'); });
    }
    window.addEventListener('load', function () {
-     L.set(70, 'Loading 3D assets');
-     // safety timeout: 不论 main.js 钩子是否触发，最长 4 秒后强制完成
-     var safety = setTimeout(function () { L.done(); }, 4000);
-     window.__dolphlinkLoaderFinish = function () { clearTimeout(safety); L.done(); };
+     L.set(75, 'Loading 3D assets');
+     // ECharts 改为懒加载，loader 不再等图表 — DOM/字体/图片 ready 后短暂收尾即关
+     setTimeout(function () { L.set(95, 'Sealing sovereign perimeter'); }, 220);
+     setTimeout(function () { L.done(); }, 480);
    });
  })();
  </script>
  <canvas id="bg-canvas" aria-hidden="true"></canvas>
  <nav>
  <a href="#h-sec" data-scroll-to="h-sec" class="brand">
- <img src="media/icon/3D/logo.png" alt="DOLPHLINK logo" class="brand-logo" />
+ <img src="media/icon/3D/logo.webp" alt="DOLPHLINK logo" class="brand-logo" width="72" height="72" />
  <span class="brand-name">DOLPHLINK</span>
  </a>
  <div class="nav-right">
@@ -241,7 +241,7 @@
  </svg>
  </button>
  </div>
- <video preload="metadata" poster="media/img/video-poster.jpg" muted playsinline><source src="media/video/current.mp4" type="video/mp4"></video>
+ <video preload="metadata" poster="media/img/video-poster.webp" muted playsinline><source src="media/video/current.mp4" type="video/mp4"></video>
  <button type="button" class="v-play-btn" aria-label="Play or pause">
  <svg class="v-icon-play" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
  <polygon points="6 4 22 12 6 20 6 4"/>
@@ -272,7 +272,7 @@
  <div class="stat-strip">
  <button type="button" class="stat-card" data-stat="sla"
  data-detail="Distributed node architecture ensuring mission-critical 99.9% availability for enterprise communication.">
- <span class="stat-icon-wrap"><img src="media/icon/3D/resilience.png" alt="" class="stat-icon" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/resilience.webp" alt="" class="stat-icon" width="88" height="88" /></span>
  <span class="stat-meta">
  <span class="stat-value">99.9%</span>
  <span class="stat-label">Stability</span>
@@ -281,7 +281,7 @@
  </button>
  <button type="button" class="stat-card" data-stat="loc"
  data-detail="Global coverage across 220+ countries, enabling seamless international connectivity through local gateways.">
- <span class="stat-icon-wrap"><img src="media/icon/3D/territories.png" alt="" class="stat-icon" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/territories.webp" alt="" class="stat-icon" width="88" height="88" /></span>
  <span class="stat-meta">
  <span class="stat-value">220+</span>
  <span class="stat-label">Territories</span>
@@ -290,7 +290,7 @@
  </button>
  <button type="button" class="stat-card" data-stat="lat"
  data-detail="Optimized proprietary backbone for sub-10ms delivery, ensuring real-time response in high-stakes environments.">
- <span class="stat-icon-wrap"><img src="media/icon/3D/velocity.png" alt="" class="stat-icon" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/velocity.webp" alt="" class="stat-icon" width="88" height="88" /></span>
  <span class="stat-meta">
  <span class="stat-value">&lt;10ms</span>
  <span class="stat-label">Latency</span>
@@ -299,7 +299,7 @@
  </button>
  <button type="button" class="stat-card" data-stat="ain"
  data-detail="AI-Native traffic prediction and intelligent routing powered by OneCore's autonomous decision layer.">
- <span class="stat-icon-wrap"><img src="media/icon/3D/human-ai.png" alt="" class="stat-icon" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/human-ai.webp" alt="" class="stat-icon" width="88" height="88" /></span>
  <span class="stat-meta">
  <span class="stat-value">AI-N</span>
  <span class="stat-label">Decision</span>
@@ -322,32 +322,32 @@
  <div class="portfolio-strip">
  <button type="button" class="btn-portfolio" data-portfolio="gov"
  data-detail="Automated AI handling within sovereign secure boundaries for government and enterprise digital services.">
- <span class="portfolio-icon-wrap"><img src="media/icon/3D/solution.png" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/solution.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
  <span class="portfolio-label">Gov-AI</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="sms"
  data-detail="Encrypted high-throughput global SMS delivery for mission-critical alerts and verification.">
- <span class="portfolio-icon-wrap"><img src="media/icon/3D/touch.png" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/touch.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
  <span class="portfolio-label">SMS Hub</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="api"
  data-detail="Programmable voice mesh with global redundancy and high-fidelity routing.">
- <span class="portfolio-icon-wrap"><img src="media/icon/3D/oneAPI.png" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/oneAPI.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
  <span class="portfolio-label">Voice API</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="did"
  data-detail="Global virtual numbering services for unified international business presence.">
- <span class="portfolio-icon-wrap"><img src="media/icon/3D/cross.png" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/cross.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
  <span class="portfolio-label">Global DID</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="omni"
  data-detail="Standardized orchestration across all digital channels including WhatsApp, Email, and App.">
- <span class="portfolio-icon-wrap"><img src="media/icon/3D/smartlink.png" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/smartlink.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
  <span class="portfolio-label">Omni-Link</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="rcs"
  data-detail="Next-gen 5G rich messaging for immersive and interactive enterprise communication.">
- <span class="portfolio-icon-wrap"><img src="media/icon/3D/combine.png" alt="" class="portfolio-icon" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/combine.webp" alt="" class="portfolio-icon" width="88" height="88" /></span>
  <span class="portfolio-label">5G Msg</span>
  </button>
  </div>
