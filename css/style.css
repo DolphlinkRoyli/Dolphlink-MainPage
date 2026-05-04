@@ -697,14 +697,23 @@
    display: block;
    position: relative; z-index: 1;
    pointer-events: none; user-select: none; -webkit-user-drag: none;
+   /* 径向遮罩：中心可见 → 边缘渐变透明（让圆形边缘融入卡片）*/
+   -webkit-mask-image: radial-gradient(circle at center, #000 50%, transparent 78%);
+   mask-image: radial-gradient(circle at center, #000 50%, transparent 78%);
+ }
+ /* stat-icon 已重染为品牌蓝纯色，不需要 multiply（multiply 会把蓝色叠到白卡上变浅消失）*/
+ .stat-icon {
+   transition: transform 0.3s ease;
+   filter: drop-shadow(0 4px 10px rgba(0, 89, 179, 0.18));
+ }
+ /* portfolio-icon 仍是浅色 PNG，保留 multiply 融入白卡 + 收紧遮罩 */
+ .portfolio-icon {
    mix-blend-mode: multiply;
    filter: contrast(1.08);
-   /* 径向遮罩：中心可见 → 边缘渐变透明（融入白卡 + 形状统一化）*/
+   transition: transform 0.3s ease, filter 0.25s ease;
    -webkit-mask-image: radial-gradient(circle at center, #000 38%, transparent 72%);
    mask-image: radial-gradient(circle at center, #000 38%, transparent 72%);
  }
- .stat-icon { transition: transform 0.3s ease; }
- .portfolio-icon { transition: transform 0.3s ease, filter 0.25s ease; }
  .stat-card:hover .stat-icon { transform: scale(1.05); }
 
  .stat-meta {
@@ -1052,7 +1061,7 @@
    .btn-portfolio:nth-child(1), .btn-portfolio:nth-child(2), .btn-portfolio:nth-child(3) { border-bottom: 1px solid var(--border-line); }
    .portfolio-icon-wrap { width: 100px; height: 100px; }
    .portfolio-icon { width: 88px; height: 88px; }
-   .chart-card { height: 300px; }
+   .chart-card { height: 380px; padding: 20px 3%; }
    .audit-section { padding: 28px 4%; }
    .sec-title { font-size: var(--fs-xl); }
    /* Video frame 移动端 */
@@ -1149,6 +1158,9 @@
    .stat-icon { width: 60px; height: 60px; }
    .portfolio-icon-wrap { width: 72px; height: 72px; }
    .portfolio-icon { width: 60px; height: 60px; }
+   /* 极窄屏图表再略压缩高度 */
+   .chart-card { height: 340px; padding: 18px 2%; }
+   .chart-card h3 { font-size: var(--fs-sm); }
  }
  /* ===========================
     Audit icons

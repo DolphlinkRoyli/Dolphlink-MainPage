@@ -247,89 +247,109 @@ window.addEventListener('load', function () {
   // 全局字体配置，与站点 Inter 主字体保持一致
   const CHART_FONT = "Inter, 'Helvetica Neue', Arial, sans-serif";
 
-  const mapOption = {
-    textStyle: { fontFamily: CHART_FONT, fontWeight: 500 },
-    geo: {
-      map: 'world',
-      // 用 layoutCenter + layoutSize 让地图自动上下左右居中
-      layoutCenter: ['50%', '50%'],
-      layoutSize: '210%',
-      roam: false,
-      label: { show: false },
-      emphasis: {
+  // 根据视口宽度生成 map 配置（移动端缩小 layoutSize 防止溢出）
+  const buildMapOption = () => {
+    const w = mapChart.getWidth();
+    const isMobile = w < 560;
+    const isNarrow = w < 380;
+    const layoutSize = isNarrow ? '155%' : (isMobile ? '175%' : '210%');
+    const labelFontSize = isMobile ? 9 : 10;
+    const labelPad = isMobile ? [3, 5] : [4, 8];
+
+    return {
+      textStyle: { fontFamily: CHART_FONT, fontWeight: 500 },
+      geo: {
+        map: 'world',
+        layoutCenter: ['50%', '50%'],
+        layoutSize: layoutSize,
+        roam: false,
         label: { show: false },
-        itemStyle: { areaColor: '#264F78' }
-      },
-      itemStyle: {
-        areaColor: '#1E3A5F',
-        borderColor: '#38BDF8',
-        borderWidth: 0.5
-      }
-    },
-    series: [
-      {
-        type: 'effectScatter',
-        coordinateSystem: 'geo',
-        data: baiwuLocations,
-        symbolSize: (val, params) => params.data.isHQ ? 14 : 7,
-        rippleEffect: { brushType: 'stroke', scale: 3.5, period: 4 },
-        label: {
-          show: true,
-          position: 'top',
-          formatter: '{b}',
-          color: '#fff',
-          fontSize: 10,
-          fontWeight: '700',
-          fontFamily: CHART_FONT,
-          backgroundColor: 'rgba(5, 12, 26, 0.7)',
-          padding: [4, 8],
-          borderRadius: 4,
-          distance: 10,
-          textBorderColor: '#000',
-          textBorderWidth: 1
-        },
-        labelLayout: { hideOverlap: false, moveOverlap: 'shiftY' },
         emphasis: {
-          scale: true,
           label: { show: false },
-          itemStyle: {
-            shadowBlur: 20,
-            shadowColor: 'rgba(56, 189, 248, 0.6)'
-          }
+          itemStyle: { areaColor: '#264F78' }
         },
         itemStyle: {
-          color: (params) => params.data.isHQ ? '#F59E0B' : '#38BDF8',
-          shadowBlur: 10
-        },
-        zlevel: 2
+          areaColor: '#1E3A5F',
+          borderColor: '#38BDF8',
+          borderWidth: 0.5
+        }
       },
-      // Light beams from Singapore HQ to all other locations
-      {
-        type: 'lines',
-        coordinateSystem: 'geo',
-        zlevel: 1,
-        effect: {
-          show: true,
-          period: 5,
-          trailLength: 0.55,
-          symbolSize: 4,
-          color: '#FBBF24'
+      series: [
+        {
+          type: 'effectScatter',
+          coordinateSystem: 'geo',
+          data: baiwuLocations,
+          symbolSize: (val, params) => params.data.isHQ ? (isMobile ? 11 : 14) : (isMobile ? 6 : 7),
+          rippleEffect: { brushType: 'stroke', scale: 3.5, period: 4 },
+          label: {
+            show: true,
+            position: 'top',
+            formatter: '{b}',
+            color: '#fff',
+            fontSize: labelFontSize,
+            fontWeight: '700',
+            fontFamily: CHART_FONT,
+            backgroundColor: 'rgba(5, 12, 26, 0.7)',
+            padding: labelPad,
+            borderRadius: 4,
+            distance: isMobile ? 6 : 10,
+            textBorderColor: '#000',
+            textBorderWidth: 1
+          },
+          labelLayout: (params) => {
+            // 移动端裁掉超出边框的标签 + 智能左右挪
+            const x = params.rect.x + params.rect.width / 2;
+            const chartW = mapChart.getWidth();
+            const margin = isMobile ? 4 : 8;
+            let dx = 0;
+            if (x < params.labelRect.width / 2 + margin) {
+              dx = (params.labelRect.width / 2 + margin) - x;
+            } else if (x > chartW - params.labelRect.width / 2 - margin) {
+              dx = (chartW - params.labelRect.width / 2 - margin) - x;
+            }
+            return { dx: dx, hideOverlap: false, moveOverlap: 'shiftY' };
+          },
+          emphasis: {
+            scale: true,
+            label: { show: false },
+            itemStyle: {
+              shadowBlur: 20,
+              shadowColor: 'rgba(56, 189, 248, 0.6)'
+            }
+          },
+          itemStyle: {
+            color: (params) => params.data.isHQ ? '#F59E0B' : '#38BDF8',
+            shadowBlur: 10
+          },
+          zlevel: 2
         },
-        lineStyle: {
-          color: '#F59E0B',
-          width: 1,
-          opacity: 0.55,
-          curveness: 0.32
-        },
-        data: baiwuLocations
-          .filter(loc => !loc.isHQ)
-          .map(loc => ({
-            fromName: 'SINGAPORE',
-            toName: loc.name,
-            coords: [[103.8513, 1.2830], loc.value]
-          }))
-      }
-    ]
+        {
+          type: 'lines',
+          coordinateSystem: 'geo',
+          zlevel: 1,
+          effect: {
+            show: true,
+            period: 5,
+            trailLength: 0.55,
+            symbolSize: 4,
+            color: '#FBBF24'
+          },
+          lineStyle: {
+            color: '#F59E0B',
+            width: 1,
+            opacity: 0.55,
+            curveness: 0.32
+          },
+          data: baiwuLocations
+            .filter(loc => !loc.isHQ)
+            .map(loc => ({
+              fromName: 'SINGAPORE',
+              toName: loc.name,
+              coords: [[103.8513, 1.2830], loc.value]
+            }))
+        }
+      ]
+    };
   };
 
   const sectorsData = [
@@ -344,14 +364,34 @@ window.addEventListener('load', function () {
     { name: 'SMART OPERATIONS', color: '#0059B3', desc: 'Agentic AI & Digital Cockpit' }
   ];
 
+  // 长标签换行映射（移动端用）
+  const mobileLabelMap = {
+    'BANKING & FINTECH': 'BANKING\n& FINTECH',
+    'GOV & PUBLIC': 'GOV &\nPUBLIC',
+    'E-COMMERCE': 'E-COMMERCE',
+    'MANUFACTURING': 'MFG',
+    'SAAS & DIGITAL': 'SAAS &\nDIGITAL',
+    'EDUCATION': 'EDU',
+    'ENERGY & MINING': 'ENERGY\n& MINING',
+    'SMART OPERATIONS': 'SMART\nOPS',
+    'HEALTHCARE': 'HEALTH'
+  };
+
   const drawEco = () => {
     const w = ecoChart.getWidth(), h = ecoChart.getHeight();
+    const isMobile = w < 560;
+    const isNarrow = w < 380;
     const cx = w / 2, cy = h / 2;
-    const rx = w * 0.14;
-    const ry = h * 0.22;
+    // 移动端节点半径需要更大的间距（标签显示在节点旁，要留出空间）
+    const rx = isMobile ? w * 0.12 : w * 0.14;
+    const ry = isMobile ? h * 0.18 : h * 0.22;
+    const centerSize = isMobile ? (isNarrow ? 48 : 54) : 64;
+    const sectorSize = isMobile ? (isNarrow ? 32 : 36) : 46;
+    const labelFs = isMobile ? (isNarrow ? 8 : 9) : 10;
+    const centerFs = isMobile ? (isNarrow ? 9 : 10) : 10;
 
     let nodes = [{
-      name: 'DOLPHLINK', x: cx, y: cy, fixed: true, symbolSize: 64,
+      name: 'DOLPHLINK', x: cx, y: cy, fixed: true, symbolSize: centerSize,
       itemStyle: {
         color: '#0059B3',
         shadowBlur: 38,
@@ -363,7 +403,7 @@ window.addEventListener('load', function () {
         show: true,
         fontFamily: CHART_FONT,
         fontWeight: '900',
-        fontSize: 10,
+        fontSize: centerFs,
         letterSpacing: 0.5,
         color: '#FFFFFF'
       }
@@ -373,7 +413,10 @@ window.addEventListener('load', function () {
 
     sectorsData.forEach((s, i) => {
       const angle = (i * (360 / sectorsData.length) - 70) * (Math.PI / 180);
-      const offset = i % 2 === 0 ? 0.2 : 0.35;
+      // 移动端拉大相对偏移量，让节点远离中心避免重叠
+      const offsetEven = isMobile ? 0.85 : 0.2;
+      const offsetOdd = isMobile ? 0.95 : 0.35;
+      const offset = i % 2 === 0 ? offsetEven : offsetOdd;
       const x = cx + rx * Math.cos(angle) * offset;
       const y = cy + ry * Math.sin(angle) * offset;
 
@@ -382,8 +425,11 @@ window.addEventListener('load', function () {
       else if (Math.cos(angle) < -0.1) { align = 'right'; pos = 'left'; }
       else { align = 'center'; pos = Math.sin(angle) > 0 ? 'bottom' : 'top'; }
 
+      // 移动端用缩短/换行版标签
+      const displayName = isMobile ? (mobileLabelMap[s.name] || s.name) : s.name;
+
       nodes.push({
-        name: s.name, x: x, y: y, fixed: true, symbolSize: 46,
+        name: s.name, x: x, y: y, fixed: true, symbolSize: sectorSize,
         itemStyle: {
           color: 'rgba(255,255,255,0.95)', borderColor: s.color,
           borderWidth: 2, shadowBlur: 10, shadowColor: s.color
@@ -391,14 +437,16 @@ window.addEventListener('load', function () {
         label: {
           show: true,
           position: pos,
-          distance: 1,
+          distance: isMobile ? 2 : 1,
           color: '#FFFFFF',
           fontFamily: CHART_FONT,
           fontWeight: '700',
-          fontSize: 10,
+          fontSize: labelFs,
           align: align,
+          formatter: displayName,
+          lineHeight: labelFs + 3,
           backgroundColor: 'rgba(5, 12, 26, 0.7)',
-          padding: [4, 6],
+          padding: isMobile ? [3, 5] : [4, 6],
           borderRadius: 4,
           hideOverlap: false
         },
@@ -441,7 +489,7 @@ window.addEventListener('load', function () {
     }, true);
   };
 
-  const renderMap = () => mapChart.setOption(mapOption);
+  const renderMap = () => mapChart.setOption(buildMapOption(), true);
   const finishLoader = () => {
     if (window.__dolphlinkLoaderFinish) window.__dolphlinkLoaderFinish();
   };
@@ -469,6 +517,8 @@ window.addEventListener('load', function () {
   const onResize = debounce(() => {
     mapChart.resize();
     ecoChart.resize();
+    // 重新生成响应式配置（移动/桌面切换时 layoutSize、字号、节点位置都要变）
+    if (echarts.getMap && echarts.getMap('world')) renderMap();
     drawEco();
   }, 150);
   window.addEventListener('resize', onResize);
