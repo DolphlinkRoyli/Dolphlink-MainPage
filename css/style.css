@@ -763,13 +763,22 @@
    .f-bottom-bar a { margin-left: 0; margin-right: 16px; }
    .portfolio-strip { grid-template-columns: repeat(2, 1fr); }
    .stat-strip { grid-template-columns: 1fr; }
-   .stat-card { border-right: none !important; border-bottom: 1px solid var(--border-line); padding: 18px 16px; gap: 14px; }
+   .stat-card {
+     border-right: none !important;
+     border-bottom: 1px solid var(--border-line);
+     padding: 18px 16px;
+     gap: 16px;
+     justify-content: center;  /* 单列时 icon+meta 整组水平居中 */
+   }
    .stat-card:last-child { border-bottom: none; }
    .stat-icon-wrap { width: 64px; height: 64px; }
    .stat-icon { height: 58px; }
    .stat-value { font-size: 1.65rem; }
    .stat-label { font-size: 0.78rem; }
-   .stat-meta { padding-left: 14px; }
+   .stat-meta {
+     flex: 0 0 auto;       /* 不拉伸，紧贴 icon */
+     padding-left: 14px;
+   }
    .btn-portfolio { padding: 18px 8px 16px; min-height: 44px; }
    .btn-portfolio:nth-child(odd) { border-right: 1px solid var(--border-line); }
    .btn-portfolio:nth-child(even) { border-right: none !important; }
