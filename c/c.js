@@ -132,17 +132,20 @@
   if (member.department) metaBits.push(member.department);
   text($('m-meta'), metaBits.join(' · '));
 
+  // Optional avatar disc (only renders if those nodes exist in the HTML)
   const img = $('avatar-img');
   const init = $('avatar-initials');
-  if (member.photo) {
-   img.src = member.photo;
-   img.alt = member.name + ' portrait';
-   img.hidden = false;
-   init.hidden = true;
-  } else {
-   img.hidden = true;
-   init.hidden = false;
-   text(init, initialsOf(member.name));
+  if (img && init) {
+   if (member.photo) {
+    img.src = member.photo;
+    img.alt = member.name + ' portrait';
+    img.hidden = false;
+    init.hidden = true;
+   } else {
+    img.hidden = true;
+    init.hidden = false;
+    text(init, initialsOf(member.name));
+   }
   }
  }
 

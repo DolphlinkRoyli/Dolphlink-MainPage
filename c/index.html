@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://lh3.googleusercontent.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;800;900&display=swap">
 
-<link rel="stylesheet" href="c.css?v=9">
+<link rel="stylesheet" href="c.css?v=10">
 </head>
 <body>
 
@@ -47,8 +47,7 @@
 
  <!-- Skeleton state -->
  <div class="skeleton" id="skeleton" aria-hidden="true">
-  <div class="sk-avatar"></div>
-  <div class="sk-line sk-line-lg"></div>
+  <div class="sk-line sk-name"></div>
   <div class="sk-line sk-line-md"></div>
   <div class="sk-img"></div>
  </div>
@@ -63,22 +62,15 @@
    <span class="line"></span>
   </div>
 
-  <!-- Hero: avatar + name + title -->
+  <!-- Hero: name as the visual centerpiece (no avatar disc — the
+       letterpress style of private-banking / law-firm letterheads) -->
   <section class="hero">
-   <div class="avatar-orb">
-    <span class="orb-ring orb-ring-outer" aria-hidden="true"></span>
-    <span class="orb-ring orb-ring-inner" aria-hidden="true"></span>
-    <div class="avatar-wrap">
-     <img id="avatar-img" alt="" hidden decoding="async">
-     <div id="avatar-initials" class="avatar-initials">—</div>
-    </div>
-   </div>
-
-   <h1 id="m-name" class="hero-name">—</h1>
+   <span class="hero-mark" aria-hidden="true">&#x25C6;</span>
+   <h1 id="m-name" class="hero-name">&mdash;</h1>
 
    <div class="hero-title">
     <span class="rule rule-left" aria-hidden="true"></span>
-    <p id="m-title" class="hero-title-text">—</p>
+    <p id="m-title" class="hero-title-text">&mdash;</p>
     <span class="rule rule-right" aria-hidden="true"></span>
    </div>
 
