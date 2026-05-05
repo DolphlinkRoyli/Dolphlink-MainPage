@@ -994,26 +994,35 @@
       productsEl.hidden = false;
     } else { productsEl.hidden = true; }
 
-    // Three actions — only meaningful when the member has a designed card
-    // image on Drive. Hide the whole row otherwise so we don't show
-    // buttons that point at nothing.
-    const hasCard = !!(member && member.cardImage);
-    $('dlpk-card-namecard').hidden = !hasCard;
-    $('dlpk-card-copy').hidden     = !hasCard;
-    $('dlpk-card-share').hidden    = !hasCard;
-    if (hasCard) {
+    // Three actions:
+    //   - View My Designed Name Card  → download Drive image (owner's print
+    //     preview); only meaningful when member has a cardImage URL.
+    //   - Copy Link / Share           → always available; share the
+    //     enterprise landing page URL (/c/?u=<localpart>) so recipients land
+    //     on the branded page with full CTAs (save contact, view card,
+    //     schedule meeting, etc.) instead of jumping straight into Drive.
+    const hasCardImg = !!(member && member.cardImage);
+    $('dlpk-card-namecard').hidden = !hasCardImg;
+    if (hasCardImg) {
       $('dlpk-card-namecard').onclick = function () { downloadNameCard(member); };
-      $('dlpk-card-copy').onclick     = function () { copyCardLink(member); };
-      $('dlpk-card-share').onclick    = function () { shareCard(member); };
     }
+    $('dlpk-card-copy').hidden  = false;
+    $('dlpk-card-share').hidden = false;
+    $('dlpk-card-copy').onclick  = function () { copyCardLink(member); };
+    $('dlpk-card-share').onclick = function () { shareCard(member); };
   }
 
-  // The shareable URL is now strictly the member's designed Drive card.
-  // No on-site /cards/?u= fallback — that page has been retired.
-  // Returns '' when cardImage is missing; the calling buttons are hidden
-  // in that case (see paintCard).
+  // Shareable URL is the enterprise landing page for this member, NOT the
+  // Drive image. Recipients land on /c/?u=<localpart> which presents:
+  // Save to Contacts, View Designed Card, Schedule Meeting, Email/LinkedIn/
+  // WhatsApp, plus full company context. landingBase comes from
+  // cards.json -> config.landingBase (overridable per environment).
   function buildShareableCardURL(member) {
-    return (member && member.cardImage) || '';
+    if (!member || !member.email) return '';
+    const local = String(member.email).split('@')[0];
+    const base = (cardsDataCache && cardsDataCache.config && cardsDataCache.config.landingBase)
+      || (window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + 'c/');
+    return base + '?u=' + encodeURIComponent(local);
   }
 
   // Convert a Drive "/file/d/<ID>/view" share URL into a direct download URL.
@@ -1155,14 +1164,21 @@
         return;
       }
     }
-    // QR contents: always a vCard so any phone camera / scanner app
-    // immediately offers "Add to Contacts". When the member has a Drive
-    // cardImage, we embed its download URL inside the vCard's URL field —
-    // saved contacts get a one-tap link to the designed name-card image.
-    // Image download / copy / share are handled by the three action buttons
-    // below the QR so each action has its own clear entry point.
-    const cardURL = member.cardImage ? toDriveDownloadURL(member.cardImage) : '';
-    const text = buildVCardForQR(member, cardURL);
+    // QR contents: the enterprise landing page URL (/c/?u=<localpart>).
+    // Scanning opens the branded landing page where the visitor can:
+    //   - Save to Contacts (one-tap .vcf download)
+    //   - View Designed Name Card (Drive image)
+    //   - Schedule a Meeting (Calendly)
+    //   - Email / Call / LinkedIn / WhatsApp
+    // This two-step pattern (QR → landing → action) is what enterprise
+    // digital-card platforms (HiHello, Linq, Popl) use because it gives
+    // brand exposure, analytics, and lets contact info update over time
+    // without re-issuing the QR.
+    // If buildShareableCardURL returns empty (e.g. cards.json missing
+    // config.landingBase), fall back to a direct vCard so the QR is never
+    // useless.
+    let text = buildShareableCardURL(member);
+    if (!text) text = buildVCardForQR(member, '');
     const qr = window.qrcode(0, 'M');
     qr.addData(text);
     qr.make();

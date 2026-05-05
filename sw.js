@@ -12,20 +12,26 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v5';
+const CACHE_VERSION = 'dolphlink-v8';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
 
-// Files cached at install time — the minimum needed to render the homepage.
+// Files cached at install time — the minimum needed to render the homepage
+// AND the enterprise digital-card landing page (/c/?u=<localpart>).
 // The standalone /cards/ mini-app has been retired; the card view now lives
-// inside the main-page Request-Briefing modal (js/register.js).
+// inside the main-page Request-Briefing modal (js/register.js) and the
+// public-facing /c/ landing page (js: c/c.js).
 const PRECACHE = [
   SCOPE,
   SCOPE + 'index.html',
   SCOPE + 'css/style.css',
   SCOPE + 'js/main.js',
   SCOPE + 'js/register.js',
+  SCOPE + 'c/',
+  SCOPE + 'c/index.html',
+  SCOPE + 'c/c.css',
+  SCOPE + 'c/c.js',
   SCOPE + 'media/img/hero-bg.webp',
   SCOPE + 'media/img/og-image.jpg',
   SCOPE + 'media/icon/3D/logo.webp',
