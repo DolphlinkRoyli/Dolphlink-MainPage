@@ -1,19 +1,16 @@
 /* ============================================================================
  * DOLPHLINK Digital Card — Private-banking grade landing page
  *
- * Visual reference: Goldman Sachs private wealth, Hermès digital ID —
- * crisp paper-white surface, hairline brand-blue accents, Cormorant
- * Garamond italic title, deep ink text. No gradients. No neon. No accent
- * colour outside the DOLPHLINK signature blue.
+ * Visual reference: Goldman Sachs private wealth, Hermès digital ID.
  *
- * Color system (strict — only #0059B3 + neutral grayscale):
- *   --c-paper          page background (slate-50)
- *   --c-paper-deep     card surface (white)
- *   --c-ink            near-black, almost ink
- *   --c-ink-soft       muted prose
- *   --c-line           hairline rule color
- *   --c-brand          DOLPHLINK signature blue (#0059B3)
- *   --c-brand-edge     translucent brand for hairline ornaments
+ * Color responsibilities (strict):
+ *   GOLD   #C9A961   decorative HAIRLINES only — orb rings, frame corners,
+ *                    ornament diamond+lines, footer monogram, toast edge,
+ *                    error mark. Never used as fill or text color.
+ *   BLUE   #0059B3   ALL TEXT accents (hero name, meta tag, italic title
+ *                    rules, role label) and the primary CTA fill.
+ *   INK    #0F172A   body text, dark surfaces (avatar initials disc only).
+ *   PAPER  #F8FAFC   page background (cool, aligned with main site).
  * ========================================================================== */
 
 :root {
@@ -31,6 +28,11 @@
  --c-brand-soft:   rgba(0, 89, 179, 0.06);
  --c-brand-mid:    rgba(0, 89, 179, 0.18);
  --c-brand-edge:   rgba(0, 89, 179, 0.45);
+ --c-gold:         #BF9430;
+ --c-gold-deep:    #997626;
+ --c-gold-soft:    rgba(191, 148, 48, 0.16);
+ --c-gold-edge:    rgba(191, 148, 48, 0.55);
+ --c-gold-warm:    #D4AB45;
 
  --radius-md: 8px;
  --radius-lg: 12px;
@@ -40,7 +42,7 @@
  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
  --shadow-card:  0 18px 48px rgba(15, 23, 42, 0.10), 0 2px 6px rgba(15, 23, 42, 0.04);
- --shadow-cta:   0 6px 24px rgba(0, 89, 179, 0.28);
+ --shadow-cta:   0 8px 24px rgba(0, 89, 179, 0.32);
  --shadow-img:   0 24px 64px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 23, 42, 0.06);
 }
 
@@ -97,13 +99,14 @@ a { color: var(--c-brand); }
 .monogram-mark {
  width: 5px; height: 5px;
  border-radius: 50%;
- background: var(--c-brand-edge);
+ background: var(--c-gold);
 }
 .monogram-mark:nth-child(2) { background: var(--c-brand); }
-.monogram-mark:nth-child(3) { background: var(--c-brand-edge); }
+.monogram-mark:nth-child(3) { background: var(--c-gold); }
 .topbar-name {
- font-size: 13px; font-weight: 700;
+ font-size: 13px; font-weight: 800;
  letter-spacing: 2.4px;
+ color: var(--c-brand);
 }
 .topbar-locale {
  font-family: var(--font-display);
@@ -134,11 +137,11 @@ a { color: var(--c-brand); }
 .ornament .line {
  flex: 1;
  height: 1px;
- background: linear-gradient(90deg, transparent, var(--c-brand) 40%, var(--c-brand) 60%, transparent);
+ background: linear-gradient(90deg, transparent, var(--c-gold) 40%, var(--c-gold) 60%, transparent);
 }
 .ornament .diamond {
  width: 6px; height: 6px;
- background: var(--c-brand);
+ background: var(--c-gold);
  transform: rotate(45deg);
  flex-shrink: 0;
 }
@@ -157,39 +160,44 @@ a { color: var(--c-brand); }
  position: relative;
  width: 132px; height: 132px;
  margin: 0 auto 22px;
- display: grid; place-items: center;
 }
 .orb-ring {
  position: absolute;
  border-radius: 50%;
  pointer-events: none;
+ box-sizing: border-box;
 }
 .orb-ring-outer {
  inset: 0;
- border: 1px solid var(--c-brand);
- opacity: 0.55;
+ border: 1px solid var(--c-gold);
+ opacity: 0.65;
 }
 .orb-ring-inner {
- inset: 6px;
+ inset: 8px;
  border: 1px solid var(--c-line);
 }
 .avatar-wrap {
+ position: absolute;
+ top: 50%; left: 50%;
  width: 108px; height: 108px;
- position: relative;
+ transform: translate(-50%, -50%);
  z-index: 2;
+ border-radius: 50%;
+ overflow: hidden;
 }
 .avatar-wrap img {
  width: 100%; height: 100%;
  border-radius: 50%;
  object-fit: cover;
  background: var(--c-paper-deep);
+ display: block;
 }
 .avatar-initials {
  width: 100%; height: 100%;
  border-radius: 50%;
  background: var(--c-ink);
  color: var(--c-paper);
- display: grid; place-items: center;
+ display: flex; align-items: center; justify-content: center;
  font-family: var(--font-display);
  font-size: 44px; font-weight: 500;
  letter-spacing: -0.5px;
@@ -198,9 +206,9 @@ a { color: var(--c-brand); }
 .avatar-initials::after {
  content: '';
  position: absolute;
- inset: 4px;
+ inset: 5px;
  border-radius: 50%;
- border: 1px solid rgba(0, 89, 179, 0.30);
+ border: 1px solid var(--c-gold-edge);
  pointer-events: none;
 }
 
@@ -209,7 +217,7 @@ a { color: var(--c-brand); }
  font-size: 22px; font-weight: 700;
  letter-spacing: 4px;
  text-transform: uppercase;
- color: var(--c-ink);
+ color: var(--c-brand);
  margin: 0 0 18px;
  line-height: 1.2;
 }
@@ -221,14 +229,14 @@ a { color: var(--c-brand); }
 .hero-title .rule {
  width: 28px;
  height: 1px;
- background: var(--c-brand);
+ background: var(--c-gold);
 }
 .hero-title-text {
  font-family: var(--font-display);
  font-size: 17px;
  font-style: italic;
  font-weight: 500;
- color: var(--c-ink-soft);
+ color: var(--c-brand);
  letter-spacing: 0.3px;
  margin: 0;
  line-height: 1.4;
@@ -238,7 +246,7 @@ a { color: var(--c-brand); }
  font-weight: 600;
  letter-spacing: 2.2px;
  text-transform: uppercase;
- color: var(--c-ink-faint);
+ color: var(--c-brand-edge);
  margin: 0;
 }
 
@@ -266,7 +274,7 @@ a { color: var(--c-brand); }
  position: absolute; inset: 0;
  border-radius: inherit;
  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45),
-             inset 0 0 0 2px rgba(0, 89, 179, 0.30);
+             inset 0 0 0 2px rgba(191, 148, 48, 0.36);
  pointer-events: none;
 }
 #card-image-link:hover {
@@ -282,7 +290,7 @@ a { color: var(--c-brand); }
 .image-glow {
  position: absolute;
  inset: -40%;
- background: radial-gradient(circle at center, rgba(0, 89, 179, 0.12), transparent 55%);
+ background: radial-gradient(circle at center, rgba(191, 148, 48, 0.18), transparent 55%);
  pointer-events: none;
  z-index: -1;
  filter: blur(20px);
@@ -290,7 +298,7 @@ a { color: var(--c-brand); }
 .frame-corner {
  position: absolute;
  width: 18px; height: 18px;
- border: 1px solid var(--c-brand);
+ border: 1px solid var(--c-gold);
  z-index: 3;
  pointer-events: none;
 }
@@ -328,11 +336,11 @@ a { color: var(--c-brand); }
 }
 .act {
  position: relative;
- display: flex; flex-direction: column; align-items: center; gap: 8px;
- padding: 16px 8px;
+ display: flex; flex-direction: column; align-items: center; gap: 10px;
+ padding: 18px 8px;
  background: var(--c-paper-deep);
- color: var(--c-ink);
- border: 1px solid var(--c-line);
+ color: var(--c-brand);
+ border: 1.5px solid var(--c-gold);
  border-radius: var(--radius-md);
  cursor: pointer;
  font-family: var(--font-sans);
@@ -340,56 +348,68 @@ a { color: var(--c-brand); }
  letter-spacing: 1.4px;
  text-transform: uppercase;
  overflow: hidden;
- transition: border-color 0.24s ease, background 0.24s ease,
-             color 0.24s ease, transform 0.12s ease;
+ transition: background 0.24s ease, transform 0.12s ease,
+             box-shadow 0.24s ease;
 }
 .act::before {
  content: '';
  position: absolute;
- inset: -1px;
+ inset: -1.5px;
  border-radius: inherit;
- background: linear-gradient(120deg, transparent 30%, rgba(0, 89, 179, 0.20) 50%, transparent 70%);
+ background: linear-gradient(120deg, transparent 30%, rgba(212, 171, 69, 0.55) 50%, transparent 70%);
  transform: translateX(-110%);
  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
  pointer-events: none;
 }
 .act:hover::before { transform: translateX(110%); }
 .act-icon {
- width: 38px; height: 38px;
+ width: 42px; height: 42px;
  border-radius: 50%;
- background: var(--c-paper-tile);
- display: grid; place-items: center;
- transition: background 0.24s ease, color 0.24s ease;
+ background: var(--c-gold-soft);
+ display: flex; align-items: center; justify-content: center;
+ box-shadow: inset 0 0 0 1px var(--c-gold-edge);
+ transition: background 0.24s ease, box-shadow 0.24s ease;
 }
 .act-icon svg {
- width: 18px; height: 18px;
- color: var(--c-ink);
+ width: 19px; height: 19px;
+ color: var(--c-brand);
 }
 .act:hover {
- border-color: var(--c-brand);
  background: var(--c-paper);
+ box-shadow: 0 6px 18px rgba(191, 148, 48, 0.18);
 }
-.act:hover .act-icon { background: var(--c-brand-soft); }
 .act:active { transform: scale(0.98); }
 
+/* Primary action — same gold-framed white surface as the trio, but with
+ * a brand-blue icon disc, heavier border, and a soft gold floor shadow
+ * so it reads as the lead CTA without breaking the visual unity. */
 .act-primary {
- background: var(--c-ink);
- color: var(--c-paper);
- border-color: var(--c-ink);
- box-shadow: 0 8px 24px rgba(10, 22, 40, 0.20);
+ color: var(--c-brand);
+ background: var(--c-paper-deep);
+ border-width: 2px;
+ border-color: var(--c-gold);
+ box-shadow: 0 10px 24px rgba(191, 148, 48, 0.22);
 }
 .act-primary .act-icon {
- background: rgba(255, 255, 255, 0.10);
- box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+ background: var(--c-brand);
+ box-shadow:
+   inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+   0 0 0 1.5px var(--c-gold),
+   0 4px 12px rgba(0, 89, 179, 0.30);
 }
-.act-primary .act-icon svg { color: var(--c-paper); }
+.act-primary .act-icon svg { color: #FFFFFF; }
 .act-primary:hover {
- background: var(--c-brand-deep);
- border-color: var(--c-brand-deep);
- color: var(--c-paper);
+ background: var(--c-paper);
+ border-color: var(--c-gold-warm);
+ box-shadow: 0 14px 30px rgba(191, 148, 48, 0.28);
 }
-.act-primary:hover .act-icon { background: rgba(255, 255, 255, 0.14); }
-.act-primary:hover .act-icon svg { color: var(--c-paper); }
+.act-primary:hover .act-icon {
+ background: var(--c-brand-deep);
+}
+.act-primary .act-label {
+ font-weight: 800;
+ letter-spacing: 1.6px;
+}
 
 /* ============================================================================
  * Skeleton + Error
@@ -437,7 +457,7 @@ a { color: var(--c-brand); }
  display: block;
  font-family: var(--font-display);
  font-size: 36px;
- color: var(--c-brand);
+ color: var(--c-gold);
  margin-bottom: 14px;
  line-height: 1;
 }
@@ -459,15 +479,15 @@ a { color: var(--c-brand); }
 .link-back {
  display: inline-block;
  padding: 10px 22px;
- border: 1px solid var(--c-brand);
- color: var(--c-ink);
+ border: 1px solid var(--c-gold);
+ color: var(--c-brand);
  font-size: 11px; font-weight: 700;
  letter-spacing: 2.2px;
  text-transform: uppercase;
  text-decoration: none;
- transition: background 0.24s ease, color 0.24s ease;
+ transition: background 0.24s ease, color 0.24s ease, border-color 0.24s ease;
 }
-.link-back:hover { background: var(--c-brand); color: var(--c-paper); }
+.link-back:hover { background: var(--c-brand); border-color: var(--c-brand); color: #FFFFFF; }
 
 /* ============================================================================
  * Page footer — monogram + crest
@@ -484,7 +504,7 @@ a { color: var(--c-brand); }
  font-size: 14px;
  font-style: italic;
  letter-spacing: 6px;
- color: var(--c-brand);
+ color: var(--c-gold);
  padding: 0 14px;
  position: relative;
  margin-bottom: 14px;
@@ -494,8 +514,8 @@ a { color: var(--c-brand); }
  position: absolute;
  top: 50%;
  width: 28px; height: 1px;
- background: var(--c-brand);
- opacity: 0.6;
+ background: var(--c-gold);
+ opacity: 0.7;
 }
 .footer-mono::before { right: 100%; }
 .footer-mono::after  { left:  100%; }
@@ -537,7 +557,7 @@ a { color: var(--c-brand); }
  z-index: 100;
  white-space: nowrap;
  box-shadow: 0 12px 32px rgba(10, 22, 40, 0.32);
- border: 1px solid rgba(0, 89, 179, 0.35);
+ border: 1px solid rgba(191, 148, 48, 0.45);
 }
 .toast.show {
  opacity: 1;
