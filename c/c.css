@@ -156,60 +156,69 @@ a { color: var(--c-brand); }
  text-align: center;
  padding: 0;
 }
+/* ---------------------------------------------------------------------------
+ * Avatar orb — three concentric circles, plain flexbox.
+ * Sizes are explicit pixels to dodge sub-pixel rounding on mobile WebViews.
+ *   132 outer (gold ring)
+ *   116 inner (grey ring)
+ *   108 disc (ink fill + initials)
+ * No ::after pseudo, no transforms, no grid — just flex centering so it
+ * renders identically across every modern mobile browser.
+ * --------------------------------------------------------------------------- */
 .avatar-orb {
  position: relative;
  width: 132px; height: 132px;
  margin: 0 auto 22px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
 }
 .orb-ring {
  position: absolute;
  border-radius: 50%;
  pointer-events: none;
  box-sizing: border-box;
+ z-index: 1;
 }
 .orb-ring-outer {
- inset: 0;
- border: 1px solid var(--c-gold);
- opacity: 0.65;
+ top: 0; left: 0;
+ width: 132px; height: 132px;
+ border: 1.5px solid var(--c-gold);
 }
 .orb-ring-inner {
- inset: 8px;
+ top: 8px; left: 8px;
+ width: 116px; height: 116px;
  border: 1px solid var(--c-line);
 }
 .avatar-wrap {
- position: absolute;
- top: 50%; left: 50%;
+ position: relative;
  width: 108px; height: 108px;
- transform: translate(-50%, -50%);
  z-index: 2;
  border-radius: 50%;
  overflow: hidden;
+ flex-shrink: 0;
+ background: var(--c-ink);
+ box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 .avatar-wrap img {
- width: 100%; height: 100%;
+ width: 108px; height: 108px;
  border-radius: 50%;
  object-fit: cover;
- background: var(--c-paper-deep);
  display: block;
 }
 .avatar-initials {
- width: 100%; height: 100%;
+ width: 108px; height: 108px;
  border-radius: 50%;
  background: var(--c-ink);
  color: var(--c-paper);
- display: flex; align-items: center; justify-content: center;
- font-family: var(--font-display);
- font-size: 44px; font-weight: 500;
- letter-spacing: -0.5px;
- position: relative;
-}
-.avatar-initials::after {
- content: '';
- position: absolute;
- inset: 5px;
- border-radius: 50%;
- border: 1px solid var(--c-gold-edge);
- pointer-events: none;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+ font-size: 38px;
+ font-weight: 500;
+ letter-spacing: 0;
+ line-height: 1;
 }
 
 .hero-name {
@@ -351,6 +360,17 @@ a { color: var(--c-brand); }
  transition: background 0.24s ease, transform 0.12s ease,
              box-shadow 0.24s ease;
 }
+.act-label {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ line-height: 1.4;
+ min-height: 2.8em; /* exactly two lines high so all three align */
+}
+.act-label > span {
+ display: block;
+ white-space: nowrap;
+}
 .act::before {
  content: '';
  position: absolute;
@@ -380,9 +400,10 @@ a { color: var(--c-brand); }
 }
 .act:active { transform: scale(0.98); }
 
-/* Primary action — same gold-framed white surface as the trio, but with
- * a brand-blue icon disc, heavier border, and a soft gold floor shadow
- * so it reads as the lead CTA without breaking the visual unity. */
+/* Primary action — same gold-framed white surface as the trio, with a
+ * bright-gold icon disc to mark it as the lead CTA. Trio stays unified;
+ * lead button stands out through the gold disc + heavier border + soft
+ * floor shadow, not through a different background colour. */
 .act-primary {
  color: var(--c-brand);
  background: var(--c-paper-deep);
@@ -391,24 +412,24 @@ a { color: var(--c-brand); }
  box-shadow: 0 10px 24px rgba(191, 148, 48, 0.22);
 }
 .act-primary .act-icon {
- background: var(--c-brand);
+ background: var(--c-gold-warm);
  box-shadow:
-   inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+   inset 0 0 0 1px rgba(255, 255, 255, 0.45),
    0 0 0 1.5px var(--c-gold),
-   0 4px 12px rgba(0, 89, 179, 0.30);
+   0 4px 12px rgba(191, 148, 48, 0.36);
 }
-.act-primary .act-icon svg { color: #FFFFFF; }
+.act-primary .act-icon svg { color: var(--c-brand-deep); }
 .act-primary:hover {
  background: var(--c-paper);
  border-color: var(--c-gold-warm);
  box-shadow: 0 14px 30px rgba(191, 148, 48, 0.28);
 }
 .act-primary:hover .act-icon {
- background: var(--c-brand-deep);
+ background: #E5BC55; /* a little brighter on hover */
 }
 .act-primary .act-label {
- font-weight: 800;
- letter-spacing: 1.6px;
+ font-weight: 700;
+ letter-spacing: 1.4px;
 }
 
 /* ============================================================================
