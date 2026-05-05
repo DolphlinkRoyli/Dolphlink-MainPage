@@ -18,9 +18,11 @@
  <meta name="format-detection" content="telephone=no">
  <link rel="canonical" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/">
 
- <!-- Favicons (logo.webp natively supported by modern browsers) -->
+ <!-- Favicons + PWA icons -->
  <link rel="icon" type="image/webp" href="media/icon/3D/logo.webp">
- <link rel="apple-touch-icon" href="media/icon/3D/logo.webp">
+ <link rel="icon" type="image/png" sizes="192x192" href="media/icon/pwa/icon-192.png">
+ <link rel="icon" type="image/png" sizes="512x512" href="media/icon/pwa/icon-512.png">
+ <link rel="apple-touch-icon" sizes="180x180" href="media/icon/pwa/apple-touch-icon.png">
  <link rel="manifest" href="seo/site.webmanifest">
 
  <!-- Open Graph -->
@@ -48,94 +50,26 @@
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+ <!-- LCP critical: hero background image. fetchpriority=high tells the browser
+      to download it on the same priority lane as the HTML/CSS, so it lands
+      with the first paint instead of flashing in 200-500ms later. -->
+ <link rel="preload" as="image" type="image/webp"
+       href="media/img/hero-bg.webp" fetchpriority="high">
 
  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="css/style.css">
- <style>
-  /* CRITICAL: Loader styles inlined to render before external CSS arrives (prevents FOUC) */
-  #page-loader {
-    position: fixed; inset: 0; z-index: 9999;
-    background: radial-gradient(ellipse at center, #002D5C 0%, #00091A 100%);
-    display: grid; place-items: center;
-    overflow: hidden;
-    transition: opacity 0.7s ease, visibility 0.7s ease;
-  }
-  #page-loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
-  #page-loader::before {
-    content: ''; position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
-    background-size: 48px 48px; opacity: 0.55;
-  }
-  .loader-content {
-    position: relative; z-index: 2;
-    display: flex; flex-direction: column;
-    align-items: center; gap: 22px;
-    max-width: 380px; padding: 0 24px;
-    text-align: center;
-  }
-  .loader-logo {
-    width: 96px; height: auto; display: block;
-    filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.5));
-  }
-  .loader-brand {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 1.6rem; font-weight: 900;
-    color: #FFFFFF; letter-spacing: -0.5px; line-height: 1;
-  }
-  .loader-status {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 0.72rem; font-weight: 500;
-    color: rgba(255, 255, 255, 0.6);
-    letter-spacing: 0.6px; line-height: 1.4;
-    text-align: center;
-  }
-  .loader-bar {
-    width: 280px; max-width: 76vw; height: 2px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1px; overflow: hidden; position: relative;
-  }
-  .loader-bar-fill {
-    height: 100%; width: 0%;
-    background: linear-gradient(90deg, #0059B3, #38BDF8);
-    border-radius: 1px;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
-    transition: width 0.5s ease;
-  }
-  .loader-meta {
-    display: flex; width: 280px; max-width: 76vw;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 0.62rem; font-weight: 700;
-    letter-spacing: 1.6px;
-    color: #0059B3;
-    text-transform: uppercase;
-  }
-  .loader-pct { color: rgba(255, 255, 255, 0.85); }
-  @media (max-width: 640px) {
-    .loader-logo { width: 68px; }
-    .loader-brand { font-size: 1.25rem; }
-    .loader-status { font-size: 0.66rem; }
-    .loader-bar, .loader-meta { width: min(240px, 76vw); }
-    .loader-meta { font-size: 0.58rem; letter-spacing: 1.2px; }
-  }
-  @media (max-width: 380px) {
-    .loader-logo { width: 56px; }
-    .loader-brand { font-size: 1.1rem; }
-    .loader-bar, .loader-meta { width: min(200px, 72vw); }
-    .loader-meta { font-size: 0.55rem; }
-  }
- </style>
- <noscript>
-   <!-- No-JS fallback: hide loader, show built-in HTML content directly -->
-   <style>
-     #page-loader { display: none !important; }
-     [data-render] { /* render containers stay visible in fallback mode */ }
-   </style>
- </noscript>
  <!-- ECharts lazy-loaded (injected only when charts viewport intersects) — saves 209 KiB initial JS -->
  <script src="js/main.js" defer></script>
+ <!-- PWA service worker — enables "Add to Home Screen" install + offline caching -->
+ <script>
+   if ('serviceWorker' in navigator) {
+     window.addEventListener('load', function () {
+       navigator.serviceWorker.register('sw.js').catch(function (err) {
+         console.warn('[pwa] service worker registration failed:', err);
+       });
+     });
+   }
+ </script>
 
  <!-- Structured Data: Organization + WebSite graph (boosts rich-result eligibility) -->
  <script type="application/ld+json">
@@ -221,60 +155,129 @@
        "name": "DOLPHLINK",
        "publisher": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
        "inLanguage": "en"
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-sms",
+       "name": "DOLPHLINK SMS Platform",
+       "alternateName": "Global SMS API",
+       "serviceType": "SMS API",
+       "category": "Communications Platform as a Service",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "Direct connections to 600+ tier-1 mobile operators for global SMS in under 10 seconds. Developer-first API with comprehensive documentation, Pages mobile landing pages, Campaigns for personalized bulk messaging, two-way messaging via Short Codes and Long Numbers, TLS 1.3 encryption with priority OTP routing, and 24/7 NOC with automatic carrier failover."
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-voice",
+       "name": "DOLPHLINK Voice & SIP",
+       "alternateName": "Enterprise Voice",
+       "serviceType": "SIP Trunking and Programmable Voice",
+       "category": "Communications Platform as a Service",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "Geo-redundant SIP trunking with text-to-speech, audio notifications, call forwarding, DTMF input, fraud monitoring, WebRTC bridge for browser agents, full G.711/G.729/Opus codec support, tamper-proof call recording, real-time jitter and packet-loss metrics, and one-click DID porting."
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-numbers",
+       "name": "DOLPHLINK Phone Numbers",
+       "alternateName": "Global DID Numbers",
+       "serviceType": "DID Number Provisioning",
+       "category": "Communications Platform as a Service",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "Local, national, mobile, and toll-free numbers across 100+ countries. Alphanumeric Sender IDs, Short Codes, Hosted Numbers, built-in Compliance Intelligence, number porting in under 48 hours, vanity reservation, and centralized inventory dashboard."
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-touch",
+       "name": "Dolphlink Touch",
+       "alternateName": "Multi-Channel Hub",
+       "serviceType": "Omnichannel Customer Engagement Platform",
+       "category": "Customer Engagement",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "Unified business messaging hub across SMS, WhatsApp, RCS, Email, and emerging channels. Marketing-friendly templates, drag-and-drop campaign builder, intelligent automatic fallback, native WhatsApp Business Platform integration with template approval, dynamic segment targeting, and end-to-end conversion analytics."
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-api",
+       "name": "Dolphlink API",
+       "alternateName": "Developer Platform",
+       "serviceType": "Programmable Communications API",
+       "category": "Developer Tools",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "One programmable API across SMS, voice, WhatsApp, Email, and emerging channels. Drop-in SDK with intelligent automatic fallback. Five language SDKs (Node, Python, Go, Java, PHP), interactive sandbox with live test numbers, signed webhook delivery with automatic retry, and comprehensive request replay logs."
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-smart",
+       "name": "Dolphlink Smart",
+       "alternateName": "AI Chatbot Builder",
+       "serviceType": "No-Code Conversational AI",
+       "category": "AI / Conversational AI",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "No-code conversation builder for AI-Human workflows. Bots and human agents in seamless handoff, context-aware understanding, ISO 27001 / GDPR / RBAC built in, knowledge base ingestion from PDF/web/database, fine-tuning for domain terminology, multilingual conversation across 40+ languages, and sentiment-driven escalation."
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-nexus",
+       "name": "Dolphlink Nexus",
+       "alternateName": "AI Agent Orchestration",
+       "serviceType": "Sovereign AI Orchestration Platform",
+       "category": "AI Governance / Agent Orchestration",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "Sovereign command center for AI-Human orchestration. Unifies bots, RPA flows, custom models, and human reviewers into one auditable control plane. Built-in migration support, full data residency, RBAC, activity logs, visual workflow designer with conditional logic and approval gates, tamper-evident audit trails for regulator review."
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-console",
+       "name": "DOLPHLINK Operations Hub",
+       "alternateName": "Ops Analytics",
+       "serviceType": "Communications Operations and Analytics",
+       "category": "Analytics and Operations",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "Centralized API key management, full message log with status, content, and real-time costs. Aggregated insights, real-time trends, threshold-based alerts, monthly cost forecasting by channel and region, plus CSV and Webhook exports to BI, finance, and compliance pipelines."
+     },
+     {
+       "@type": "Service",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-custom",
+       "name": "DOLPHLINK AI-Digital Solutions",
+       "alternateName": "Custom Integration",
+       "serviceType": "Custom AI-Digital Migration Services",
+       "category": "Professional Services",
+       "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+       "areaServed": "Worldwide",
+       "description": "Tailored AI-Digital migration for existing infrastructure projects. Bespoke integrations between legacy systems and DOLPHLINK communications, AI orchestration, and compliance layers. Phased rollout with four-week discovery workshop, parallel-run pilots, gradual cutover, dedicated solution architect, 24/7 priority support, and custom SLA terms."
+     },
+     {
+       "@type": "ItemList",
+       "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#portfolio",
+       "name": "DOLPHLINK Portfolio",
+       "description": "Full DOLPHLINK CPaaS, AI governance, and digital solution portfolio.",
+       "numberOfItems": 9,
+       "itemListElement": [
+         { "@type": "ListItem", "position": 1, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-sms" } },
+         { "@type": "ListItem", "position": 2, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-voice" } },
+         { "@type": "ListItem", "position": 3, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-numbers" } },
+         { "@type": "ListItem", "position": 4, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-touch" } },
+         { "@type": "ListItem", "position": 5, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-api" } },
+         { "@type": "ListItem", "position": 6, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-smart" } },
+         { "@type": "ListItem", "position": 7, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-nexus" } },
+         { "@type": "ListItem", "position": 8, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-console" } },
+         { "@type": "ListItem", "position": 9, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-custom" } }
+       ]
      }
    ]
  }
  </script>
 </head>
 <body>
- <!-- High-tech boot loader — hides when all resources ready -->
- <div id="page-loader" aria-hidden="true">
- <div class="loader-content">
- <img src="media/icon/3D/logo.webp" class="loader-logo" alt="" width="80" height="80" />
- <div class="loader-brand">DOLPHLINK</div>
- <div class="loader-status" id="loader-status">Initializing sovereign core</div>
- <div class="loader-bar"><div class="loader-bar-fill" id="loader-fill"></div></div>
- <div class="loader-meta">
- <span class="loader-tag">SECURE BOOT · ONECORE</span>
- <span class="loader-pct" id="loader-pct">0%</span>
- </div>
- </div>
- </div>
- <script>
- (function () {
-   var fill = document.getElementById('loader-fill');
-   var pct = document.getElementById('loader-pct');
-   var statusEl = document.getElementById('loader-status');
-   var loader = document.getElementById('page-loader');
-   var current = 0;
-   var L = window.__dolphlinkLoader = {
-     set: function (n, label) {
-       current = Math.max(current, Math.min(100, n));
-       if (fill) fill.style.width = current + '%';
-       if (pct) pct.textContent = Math.round(current) + '%';
-       if (statusEl && label) statusEl.textContent = label;
-     },
-     done: function () {
-       L.set(100, 'Sovereign core online');
-       setTimeout(function () {
-         loader.classList.add('done');
-         setTimeout(function () { if (loader && loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
-       }, 280);
-     }
-   };
-   L.set(8, 'Resolving sovereign endpoint');
-   document.addEventListener('DOMContentLoaded', function () { L.set(28, 'Parsing architecture'); });
-   if (document.fonts && document.fonts.ready) {
-     document.fonts.ready.then(function () { L.set(48, 'Loading typography'); });
-   }
-   window.addEventListener('load', function () {
-     L.set(75, 'Loading 3D assets');
-     // ECharts is lazy-loaded; loader no longer waits for charts. Brief fade-out once DOM/fonts/images are ready.
-     setTimeout(function () { L.set(95, 'Sealing sovereign perimeter'); }, 220);
-     setTimeout(function () { L.done(); }, 480);
-   });
- })();
- </script>
  <canvas id="bg-canvas" aria-hidden="true"></canvas>
  <nav>
  <a href="#h-sec" data-scroll-to="h-sec" class="brand">
@@ -392,7 +395,7 @@
  </span>
  </button>
  <button type="button" class="stat-card" data-stat="ain">
- <span class="stat-icon-wrap"><img src="media/icon/3D/human-ai.webp" alt="" class="stat-icon" width="88" height="88" loading="lazy" /></span>
+ <span class="stat-icon-wrap"><img src="media/icon/3D/ai-h.webp" alt="" class="stat-icon" width="88" height="88" loading="lazy" /></span>
  <span class="stat-meta">
  <span class="stat-value">AI×H</span>
  <span class="stat-label">Lifecycle</span>
@@ -433,7 +436,7 @@
  <span class="portfolio-label">Voice &amp; SIP</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="numbers">
- <span class="portfolio-icon-wrap"><img src="media/icon/3D/territories.webp" alt="" class="portfolio-icon" width="88" height="88" loading="lazy" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/phone.webp" alt="" class="portfolio-icon" width="88" height="88" loading="lazy" /></span>
  <span class="portfolio-label">Phone Numbers</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="touch">
@@ -457,7 +460,7 @@
  <span class="portfolio-label">Operations Hub</span>
  </button>
  <button type="button" class="btn-portfolio" data-portfolio="custom">
- <span class="portfolio-icon-wrap"><img src="media/icon/3D/human-ai.webp" alt="" class="portfolio-icon" width="88" height="88" loading="lazy" /></span>
+ <span class="portfolio-icon-wrap"><img src="media/icon/3D/ai-h.webp" alt="" class="portfolio-icon" width="88" height="88" loading="lazy" /></span>
  <span class="portfolio-label">AI-Digital Solutions</span>
  </button>
  </div>
@@ -557,6 +560,9 @@
  </div>
  </footer>
  </div>
+
+ <!-- Mobile-only "Connect" floating button — fully isolated; desktop noop -->
+ <script src="js/register.js?v=14" defer></script>
 
 </body>
 </html>

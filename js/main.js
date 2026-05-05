@@ -129,7 +129,7 @@ function renderAudit(container, items) {
 
 // Content version — bump this when CSV/JSON changes so browsers bypass stale cache.
 // Ties together: cache-buster query param + visible version in <html data-content-version>.
-const CONTENT_VERSION = '20260505w';
+const CONTENT_VERSION = '20260505z';
 
 // Entry point — fetch content.json then patch the page
 async function loadAndRender() {

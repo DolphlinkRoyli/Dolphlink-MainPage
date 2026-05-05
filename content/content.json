@@ -74,7 +74,7 @@
       },
       {
         "key": "ain",
-        "icon": "human-ai",
+        "icon": "ai-h",
         "value": "AI×H",
         "label": "Lifecycle",
         "desc": "From assist to augment to autonomous, then seamless handoff back to human. DOLPHLINK manages the full AI-Human Lifecycle. Bots handle the routine, agents handle the nuance, and continuous learning improves every iteration. Built-in migration tooling moves legacy workflows to next-generation operations on your timeline, with full audit trails at every handoff."
@@ -100,7 +100,7 @@
       },
       {
         "key": "numbers",
-        "icon": "territories",
+        "icon": "phone",
         "label": "Phone Numbers",
         "tagline": "Global DID Numbers",
         "desc": "Instant access to local, national, mobile, and toll-free numbers across 100+ countries. Provision a number in one region and another in the next within the same console session.\n\nAlphanumeric Sender IDs, Short Codes, and Hosted Numbers (SMS and Voice on existing landlines without switching carriers) plug into your current operations. Built-in Compliance Intelligence automatically evaluates each region's regulatory requirements.\n\nNumber porting in under 48 hours where supported, plus vanity reservation and instant provisioning. A centralized inventory dashboard tracks usage, billing, and compliance status across every territory in one view."
@@ -142,7 +142,7 @@
       },
       {
         "key": "custom",
-        "icon": "human-ai",
+        "icon": "ai-h",
         "label": "AI-Digital Solutions",
         "tagline": "Custom Integration",
         "desc": "Tailored AI-Digital migration services for existing infrastructure projects. We meet your stack where it lives: on-prem, hybrid, or sovereign cloud.\n\nWe engineer bespoke integrations between your legacy systems and DOLPHLINK's communications, AI orchestration, and compliance layers, delivered on your timeline, your data residency, and your governance requirements.\n\nA phased rollout begins with a four-week discovery and architecture workshop, followed by parallel-run pilots and gradual cutover. A dedicated solution architect, 24/7 priority support, and custom SLA terms protect mission-critical workflows throughout."

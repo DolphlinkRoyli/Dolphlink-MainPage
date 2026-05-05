@@ -357,6 +357,18 @@
    background-size: cover, cover;
    background-position: center, center;
    background-repeat: no-repeat, no-repeat;
+   /* Soft 0.4s fade-in on first paint, so if the bg image lands a few hundred
+      milliseconds after the gradient layer, the transition is smooth instead
+      of a hard pop. Doesn't delay LCP because text + gradient are visible
+      from frame 1; only the background photo dissolves in. */
+   animation: hero-bg-fade-in 0.4s ease-out;
+ }
+ @keyframes hero-bg-fade-in {
+   from { background-color: rgba(0, 45, 92, 1); }
+   to   { background-color: transparent; }
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .hero { animation: none; }
  }
 
  /* hero::after removed — section ribbon below now handles the divider role */
