@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://dolphlinkroyli.github.io/Dolphlink-MainPage/</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/og-image.jpg</image:loc>
+      <image:title>DOLPHLINK Sovereign CPaaS and AI Governance Platform</image:title>
+      <image:caption>Singapore-based communications spine for governments and regulated enterprises</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/icon/3D/logo.webp</image:loc>
+      <image:title>DOLPHLINK Logo</image:title>
+    </image:image>
+  </url>
+</urlset>

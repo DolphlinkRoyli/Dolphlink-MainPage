@@ -1,0 +1,21 @@
+{
+  "name": "DOLPHLINK | Sovereign Governance Infrastructure",
+  "short_name": "DOLPHLINK",
+  "description": "Sovereign governance infrastructure for regulated industries — 99.9% SLA across 220+ territories.",
+  "start_url": "/Dolphlink-MainPage/",
+  "scope": "/Dolphlink-MainPage/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#002D5C",
+  "theme_color": "#0059B3",
+  "lang": "en",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "../media/icon/3D/logo.webp",
+      "sizes": "240x240",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}
