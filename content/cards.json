@@ -1,0 +1,73 @@
+{
+  "_comment": "DOLPHLINK team digital business cards. Email is the lookup key. The local part of the email (before @) determines BOTH the URL path (/c/?u=<local>) AND the photo filename in the Drive folder (<local>.jpg|png|webp). 'products' references portfolios.items[].key from content.json. Set active=false to hide a former member without losing git history.",
+  "config": {
+    "_comment": "Global config. ga4Id: paste your GA4 Measurement ID here (G-XXXXXXX) to enable analytics. landingBase: where the QR-decoded URL lives. cardBase: GitHub Pages root used to build absolute share URLs.",
+    "ga4Id": "",
+    "landingBase": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/c/",
+    "cardBase": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/"
+  },
+  "company": {
+    "name": "DOLPHLINK by Baiwu Technology Group",
+    "shortName": "DOLPHLINK",
+    "address": "9 Raffles Place #29-04, Republic Plaza, Singapore 048619",
+    "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/",
+    "tagline": "Singapore-based communications spine for governments and regulated enterprises",
+    "logo": "media/icon/3D/logo.webp"
+  },
+  "members": [
+    {
+      "email": "roygto2013@gmail.com",
+      "name": "Roy Li",
+      "title": "Regional President (Singapore)",
+      "department": "Commercial",
+      "phone": "+65 8086 4017",
+      "linkedin": "",
+      "whatsapp": "+6580864017",
+      "wechat": "",
+      "calendly": "",
+      "languages": [
+        "English",
+        "Mandarin",
+        "Cantonese"
+      ],
+      "products": [
+        "sms",
+        "touch",
+        "smart",
+        "console",
+        "custom"
+      ],
+      "bio": "Leads enterprise and government partnerships across ASEAN. Specialist in regulated industries.",
+      "cardImage": "https://drive.google.com/file/d/1WXCb64Uq3GYESyLy71kK3WyARRAujsN1/view?usp=drive_link",
+      "photo": "",
+      "active": true
+    },
+    {
+      "email": "Joycetsam@dolphlink.com",
+      "name": "Joyce Tsam",
+      "title": "Regional President (Singapore)",
+      "department": "Commercial",
+      "phone": "+65 8086 4017",
+      "linkedin": "",
+      "whatsapp": "+6580864017",
+      "wechat": "",
+      "calendly": "",
+      "languages": [
+        "English",
+        "Mandarin",
+        "Cantonese"
+      ],
+      "products": [
+        "sms",
+        "touch",
+        "smart",
+        "console",
+        "custom"
+      ],
+      "bio": "Leads enterprise and government partnerships across ASEAN. Specialist in regulated industries.",
+      "cardImage": "https://drive.google.com/file/d/1WXCb64Uq3GYESyLy71kK3WyARRAujsN1/view?usp=drive_link",
+      "photo": "",
+      "active": true
+    }
+  ]
+}

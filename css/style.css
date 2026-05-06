@@ -1,0 +1,2635 @@
+:root {
+ --baiwu-blue-primary: #0059B3;
+ --baiwu-blue-deep: #002D5C;
+ --baiwu-bg-light: #F1F5F9;
+ --baiwu-white: #FFFFFF;
+ --border-line: #E2E8F0;
+ --text-main: #0F172A;
+ --text-sub: #64748B;
+ --text-copyright: #1E293B;
+ --ui-font-size: 0.75rem;
+ --nav-height: 72px;
+ /* ==========================
+    Type scale (standard 8 steps)
+    ========================== */
+ --fs-2xs:  0.625rem;  /* 10px - micro tags */
+ --fs-xs:   0.75rem;   /* 12px - UI labels */
+ --fs-sm:   0.875rem;  /* 14px - small body */
+ --fs-base: 1rem;      /* 16px - body */
+ --fs-lg:   1.25rem;   /* 20px - brand */
+ --fs-xl:   1.5rem;    /* 24px - mobile heading */
+ --fs-2xl:  2rem;      /* 32px - stat / section title */
+ --fs-3xl:  3rem;      /* 48px - hero */
+ }
+
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+
+ /* ===========================
+    Boot loader — full-screen overlay
+    =========================== */
+ #page-loader {
+   position: fixed; inset: 0;
+   z-index: 9999;
+   background: radial-gradient(ellipse at center, #002D5C 0%, #00091A 100%);
+   display: grid; place-items: center;
+   transition: opacity 0.7s ease, visibility 0.7s ease;
+   overflow: hidden;
+ }
+ #page-loader.done {
+   opacity: 0;
+   visibility: hidden;
+   pointer-events: none;
+ }
+ /* Scanning grid */
+ #page-loader::before {
+   content: '';
+   position: absolute; inset: 0;
+   background-image:
+     linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+     linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+   background-size: 48px 48px;
+   animation: loader-grid-pan 14s linear infinite;
+   opacity: 0.55;
+ }
+ @keyframes loader-grid-pan {
+   to { background-position: 48px 48px; }
+ }
+ /* Vertical scan beam */
+ #page-loader::after {
+   content: '';
+   position: absolute; inset: 0;
+   background: linear-gradient(180deg, transparent 0%, rgba(56, 189, 248, 0.12) 50%, transparent 100%);
+   background-size: 100% 200%;
+   background-position: 0 -100%;
+   animation: loader-scan-beam 3.2s ease-in-out infinite;
+   pointer-events: none;
+ }
+ @keyframes loader-scan-beam {
+   to { background-position: 0 200%; }
+ }
+ .loader-content {
+   position: relative; z-index: 2;
+   display: flex; flex-direction: column;
+   align-items: center; gap: 22px;
+   max-width: 380px; padding: 0 24px;
+ }
+ .loader-logo {
+   width: 96px; height: auto; display: block;
+   filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.5)) contrast(1.05);
+   animation: loader-pulse 2.5s ease-in-out infinite;
+ }
+ @keyframes loader-pulse {
+   0%, 100% { transform: scale(1); filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.5)) contrast(1.05); }
+   50%      { transform: scale(1.04); filter: drop-shadow(0 0 36px rgba(56, 189, 248, 0.75)) contrast(1.05); }
+ }
+ .loader-brand {
+   font-family: 'Inter', sans-serif;
+   font-size: 1.6rem; font-weight: 900;
+   color: #FFFFFF; letter-spacing: -0.5px;
+   line-height: 1;
+ }
+ .loader-status {
+   font-family: 'JetBrains Mono', monospace;
+   font-size: 0.72rem; font-weight: 500;
+   color: rgba(255, 255, 255, 0.6);
+   letter-spacing: 0.6px;
+   min-height: 16px;
+   text-align: center;
+   transition: color 0.3s ease;
+ }
+ .loader-bar {
+   width: 280px; height: 2px;
+   background: rgba(255, 255, 255, 0.1);
+   border-radius: 1px;
+   overflow: hidden;
+   position: relative;
+ }
+ .loader-bar-fill {
+   height: 100%; width: 0%;
+   background: linear-gradient(90deg, var(--baiwu-blue-primary), #38BDF8);
+   border-radius: 1px;
+   transition: width 0.5s ease;
+   box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+   position: relative;
+ }
+ .loader-bar-fill::after {
+   content: '';
+   position: absolute; inset: 0;
+   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+   background-size: 50% 100%;
+   background-position: -50% 0;
+   background-repeat: no-repeat;
+   animation: loader-shimmer 1.5s linear infinite;
+ }
+ @keyframes loader-shimmer {
+   to { background-position: 150% 0; }
+ }
+ .loader-meta {
+   display: flex; width: 280px;
+   justify-content: space-between;
+   font-family: 'JetBrains Mono', monospace;
+   font-size: 0.62rem; font-weight: 700;
+   letter-spacing: 1.6px;
+   color: var(--baiwu-blue-primary);
+   text-transform: uppercase;
+ }
+ .loader-pct { color: rgba(255, 255, 255, 0.85); }
+ @media (prefers-reduced-motion: reduce) {
+   #page-loader::before, #page-loader::after, .loader-bar-fill::after, .loader-logo {
+     animation: none;
+   }
+ }
+ /* Loader — mobile responsive overrides */
+ @media (max-width: 640px) {
+   #page-loader::before { background-size: 32px 32px; opacity: 0.35; }
+   .loader-content { gap: 16px; padding: 0 24px; max-width: 100%; }
+   .loader-logo { width: 68px; }
+   .loader-brand { font-size: 1.25rem; letter-spacing: -0.3px; }
+   .loader-status {
+     font-size: 0.66rem; line-height: 1.4;
+     max-width: 280px;
+   }
+   .loader-bar { width: min(240px, 76vw); }
+   .loader-meta {
+     width: min(240px, 76vw);
+     font-size: 0.58rem; letter-spacing: 1.2px;
+   }
+ }
+ @media (max-width: 380px) {
+   .loader-logo { width: 56px; }
+   .loader-brand { font-size: 1.1rem; }
+   .loader-bar { width: min(200px, 72vw); }
+   .loader-meta { width: min(200px, 72vw); font-size: 0.55rem; }
+ }
+ body {
+ background-color: var(--baiwu-white);
+ color: var(--text-main);
+ font-family: 'Inter', sans-serif;
+ -webkit-font-smoothing: antialiased;
+ line-height: 1.2;
+ }
+
+ #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
+
+ /* ===========================
+    Header / Nav
+    =========================== */
+ nav {
+   position: fixed;
+   top: 0; left: 0; width: 100%;
+   z-index: 1100;
+   padding: 0 4%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   height: var(--nav-height);
+   background: var(--baiwu-white);
+   border-bottom: 1px solid var(--border-line);
+   box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02), 0 6px 18px rgba(15, 23, 42, 0.04);
+ }
+ .brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; transition: 0.2s ease; }
+ .brand:hover { transform: translateY(-1px); }
+ .brand-logo {
+   height: 72px;
+   width: auto;
+   display: block;
+   user-select: none;
+   -webkit-user-drag: none;
+   filter: contrast(1.05) brightness(1.02);
+ }
+ .brand-name { font-size: 1.75rem; font-weight: 900; color: var(--baiwu-blue-primary); letter-spacing: -0.8px; line-height: 1; }
+ .nav-right { display: flex; align-items: center; gap: 12px; }
+ .fixed-menu { display: flex; align-items: center; gap: 2px; }
+ .menu-item {
+   position: relative; display: flex; align-items: center;
+   padding: 0 14px; height: 34px;
+   text-decoration: none; color: var(--text-main);
+   font-size: var(--ui-font-size); font-weight: 800; letter-spacing: 0.5px;
+   text-transform: uppercase; border-radius: 4px; transition: 0.2s;
+ }
+ .menu-item::after {
+   content: ''; position: absolute; left: 50%; bottom: 4px;
+   width: 0; height: 2px; background: var(--baiwu-blue-primary);
+   transform: translateX(-50%); transition: width 0.25s ease; border-radius: 2px;
+ }
+ .menu-item:hover { color: var(--baiwu-blue-primary); background: rgba(0, 89, 179, 0.06); }
+ .menu-item:hover::after { width: calc(100% - 28px); }
+ .nav-cta {
+   display: inline-flex; align-items: center; gap: 7px;
+   padding: 0 16px; height: 34px;
+   font-size: var(--ui-font-size); font-weight: 800; letter-spacing: 0.7px;
+   text-transform: uppercase; text-decoration: none;
+   color: var(--baiwu-white); background: var(--baiwu-blue-primary);
+   border: 1px solid var(--baiwu-blue-primary); border-radius: 4px;
+   transition: 0.2s ease; box-shadow: 0 3px 12px rgba(0, 89, 179, 0.32);
+ }
+ .nav-cta svg { transition: transform 0.2s ease; }
+ .nav-cta:hover { background: var(--baiwu-blue-deep); border-color: var(--baiwu-blue-deep); box-shadow: 0 5px 16px rgba(0, 45, 92, 0.4); }
+ .nav-cta:hover svg { transform: translateX(3px); }
+
+ .wrapper { position: relative; z-index: 10; margin-top: var(--nav-height); width: 100%; }
+ .section-row { padding: 40px 4%; }
+
+ /* ===========================
+    Section dividers — laser emitter + bright flowing ribbon
+    =========================== */
+ .reliability-section,
+ .infra-section,
+ .audit-section,
+ .trust-section,
+ .industries-section,
+ .departments-section,
+ .charts-row,
+ .footer {
+   position: relative;
+ }
+ /* Single 1px line: subtle cyan base + animated white comet + cyan halo */
+ /* Shared geometry */
+ .reliability-section::before,
+ .infra-section::before,
+ .audit-section::before,
+ .trust-section::before,
+ .industries-section::before,
+ .departments-section::before,
+ .charts-row::before,
+ .footer::before {
+   content: '';
+   position: absolute;
+   top: 0; left: 0; right: 0;
+   height: 1px;
+   z-index: 5;
+   pointer-events: none;
+   background-size: 200% 100%, 100% 100%;
+   background-position: -100% 0, 0 0;
+   background-repeat: no-repeat, no-repeat;
+   animation: ribbon-flow 3.2s linear infinite;
+   /* Promote to composited layer (silences Lighthouse "non-composited animation" warning) */
+   will-change: background-position;
+   transform: translateZ(0);
+   contain: layout paint;
+ }
+ /* Light sections (reliability / infra / trust / departments) —
+    solid brand blue rule. NOTE: use `background-image` longhand +
+    explicit `background-color` so the upstream `background-size` /
+    `background-position` (which power the `ribbon-flow` comet
+    animation) are NOT reset by a shorthand. */
+ .reliability-section::before,
+ .infra-section::before,
+ .trust-section::before,
+ .departments-section::before {
+   background-image:
+     linear-gradient(90deg,
+       transparent 0%,
+       transparent 35%,
+       #FFFFFF 50%,
+       transparent 65%,
+       transparent 100%),
+     linear-gradient(var(--baiwu-blue-primary), var(--baiwu-blue-primary));
+   box-shadow: 0 0 6px rgba(0, 89, 179, 0.6), 0 0 14px rgba(0, 89, 179, 0.28);
+ }
+ /* (Trust → Reliability divider override removed — both sections are
+    now light, the standard light-section comet ribbon already
+    handles the transition cleanly.) */
+ /* Dark sections (audit / charts / industries / footer) — softer
+    cyan rule. Use `background-image` longhand so size/position from
+    shared rule survive (animation needs 200% sized first layer). */
+ .audit-section::before,
+ .industries-section::before,
+ .charts-row::before,
+ .footer::before {
+   background-image:
+     linear-gradient(90deg,
+       transparent 0%,
+       transparent 35%,
+       #FFFFFF 50%,
+       transparent 65%,
+       transparent 100%),
+     linear-gradient(rgba(56, 189, 248, 0.45), rgba(56, 189, 248, 0.45));
+   box-shadow: 0 0 6px rgba(56, 189, 248, 0.55), 0 0 14px rgba(56, 189, 248, 0.25);
+ }
+ @keyframes ribbon-flow {
+   0%   { background-position: -100% 0, 0 0; }
+   100% { background-position: 200% 0, 0 0; }
+ }
+
+ /* Vertical divider between chart cards — same simple style rotated */
+ .charts-row::after {
+   content: '';
+   position: absolute;
+   top: 0; bottom: 0;
+   left: 50%; width: 1px;
+   margin-left: 0;
+   z-index: 6;
+   pointer-events: none;
+   background:
+     linear-gradient(to bottom,
+       transparent 0%,
+       transparent 35%,
+       #FFFFFF 50%,
+       transparent 65%,
+       transparent 100%),
+     rgba(56, 189, 248, 0.45);
+   background-size: 100% 200%, 100% 100%;
+   background-position: 0 -100%, 0 0;
+   background-repeat: no-repeat, no-repeat;
+   animation: ribbon-flow-v 3.2s linear infinite;
+   box-shadow: 0 0 6px rgba(56, 189, 248, 0.55), 0 0 14px rgba(56, 189, 248, 0.25);
+   will-change: background-position;
+   transform: translateZ(0);
+   contain: layout paint;
+ }
+ @keyframes ribbon-flow-v {
+   0%   { background-position: 0 -100%, 0 0; }
+   100% { background-position: 0 200%, 0 0; }
+ }
+
+ @media (prefers-reduced-motion: reduce) {
+   .reliability-section::before,
+   .infra-section::before,
+   .audit-section::before,
+   .trust-section::before,
+   .industries-section::before,
+   .departments-section::before,
+   .charts-row::before,
+   .charts-row::after,
+   .footer::before { animation: none; }
+ }
+
+ /* ===========================
+    Hero - row layout
+    =========================== */
+ .hero {
+   position: relative;
+   display: flex;
+   align-items: center;
+   gap: 36px;
+   min-height: 460px;
+   padding: 56px 4%;
+   color: var(--baiwu-white);
+   overflow: hidden;
+   background-image:
+     linear-gradient(100deg,
+       rgba(0, 45, 92, 0.96) 0%,
+       rgba(0, 45, 92, 0.90) 28%,
+       rgba(0, 45, 92, 0.62) 55%,
+       rgba(0, 45, 92, 0.20) 82%,
+       rgba(0, 45, 92, 0.05) 100%),
+     url('../media/img/hero-bg.webp');
+   background-size: cover, cover;
+   background-position: center, center;
+   background-repeat: no-repeat, no-repeat;
+   /* Soft 0.4s fade-in on first paint, so if the bg image lands a few hundred
+      milliseconds after the gradient layer, the transition is smooth instead
+      of a hard pop. Doesn't delay LCP because text + gradient are visible
+      from frame 1; only the background photo dissolves in. */
+   animation: hero-bg-fade-in 0.4s ease-out;
+ }
+ @keyframes hero-bg-fade-in {
+   from { background-color: rgba(0, 45, 92, 1); }
+   to   { background-color: transparent; }
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .hero { animation: none; }
+ }
+
+ /* hero::after removed — section ribbon below now handles the divider role */
+
+ .hero-content { position: relative; z-index: 2; flex: 1; max-width: 640px; }
+
+ .eyebrow {
+   display: inline-flex; align-items: center; gap: 7px;
+   padding: 6px 14px 6px 11px; margin-bottom: 16px;
+   font-size: var(--fs-xs); font-weight: 800; letter-spacing: 1.6px;
+   text-transform: uppercase; color: var(--baiwu-white);
+   background: rgba(255, 255, 255, 0.1);
+   border: 1px solid rgba(255, 255, 255, 0.28);
+   border-radius: 999px;
+   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+ }
+ .eyebrow-icon { color: var(--baiwu-white); flex-shrink: 0; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.45)); }
+
+ .hero-content h1 {
+   font-size: var(--fs-3xl); font-weight: 900; letter-spacing: -0.05em;
+   color: var(--baiwu-white); margin-bottom: 14px; line-height: 1;
+   text-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
+ }
+ .hero-content h1 .h1-accent {
+   color: var(--baiwu-white); position: relative; display: inline-block;
+   padding-bottom: 3px; border-bottom: 3px solid var(--baiwu-blue-primary);
+ }
+ .hero-content p {
+   font-size: var(--fs-base); color: rgba(255, 255, 255, 0.94);
+   border-left: 3px solid var(--baiwu-blue-primary);
+   padding-left: 16px; line-height: 1.55; max-width: 520px;
+   font-weight: 500; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+ }
+ /* Hero secondary tagline — gold-accented blade, slightly smaller text,
+    introduces the "Compliance Intelligence" differentiator without
+    competing with the main h1 / tagline above it. */
+ .hero-content p.hero-sub {
+   font-size: var(--fs-sm);
+   color: rgba(255, 255, 255, 0.82);
+   border-left-color: #F59E0B;
+   margin-top: 10px;
+   font-weight: 600;
+   letter-spacing: 0.2px;
+ }
+ .hero-cta { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
+ .btn {
+   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+   padding: 12px 22px;
+   font-size: var(--fs-xs); font-weight: 800; letter-spacing: 1.1px; text-transform: uppercase;
+   text-decoration: none; border-radius: 4px; transition: 0.2s ease;
+   border: 1px solid transparent; cursor: pointer;
+ }
+ .btn svg { transition: transform .2s ease; flex-shrink: 0; }
+ .btn:hover svg { transform: translateX(2px); }
+ .btn-primary { background: var(--baiwu-blue-primary); color: var(--baiwu-white); box-shadow: 0 5px 16px rgba(0, 89, 179, 0.45); }
+ .btn-primary:hover { background: var(--baiwu-white); color: var(--baiwu-blue-primary); box-shadow: 0 6px 22px rgba(255, 255, 255, 0.25); }
+ .btn-ghost { background: rgba(255, 255, 255, 0.06); color: var(--baiwu-white); border-color: rgba(191, 148, 48, 0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+ .btn-ghost:hover { background: var(--baiwu-white); color: var(--baiwu-blue-deep); border-color: var(--baiwu-white); }
+
+ /* ===========================
+    Video frame — brand deep-blue mat with white accents
+    =========================== */
+ .v-frame {
+   position: relative; z-index: 2;
+   flex: 1.05;
+   padding: 0;
+   background: transparent;
+   border: none;
+   border-radius: 4px;
+   overflow: hidden;
+   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+ }
+ .v-frame video {
+   width: 100%; aspect-ratio: 16/9; object-fit: cover;
+   display: block; position: relative; z-index: 1;
+ }
+
+ /* Top-left FEATURE PRESENTATION tag (white only) */
+ .v-cine-tag {
+   position: absolute;
+   top: 16px; left: 16px;
+   z-index: 5;
+   padding: 4px 10px;
+   font-size: var(--fs-2xs); font-weight: 800;
+   letter-spacing: 2px;
+   color: var(--baiwu-white);
+   background: rgba(0, 0, 0, 0.6);
+   border: 1px solid rgba(255, 255, 255, 0.4);
+   text-transform: uppercase;
+   backdrop-filter: blur(6px);
+   -webkit-backdrop-filter: blur(6px);
+ }
+
+ /* Big center play / sound button */
+ .v-play-btn {
+   position: absolute;
+   top: 50%; left: 50%;
+   transform: translate(-50%, -50%);
+   z-index: 5;
+   width: 78px; height: 78px;
+   display: grid; place-items: center;
+   background: rgba(0, 0, 0, 0.55);
+   border: 2px solid rgba(255, 255, 255, 0.85);
+   border-radius: 50%;
+   color: var(--baiwu-white);
+   cursor: pointer;
+   transition: 0.25s ease;
+   backdrop-filter: blur(8px);
+   -webkit-backdrop-filter: blur(8px);
+   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+ }
+ .v-play-btn:hover {
+   background: rgba(0, 0, 0, 0.85);
+   border-color: var(--baiwu-white);
+   transform: translate(-50%, -50%) scale(1.08);
+   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75);
+ }
+ .v-play-btn .v-icon-play {
+   margin-left: 4px; /* optical centering of triangle */
+ }
+ .v-play-btn .v-icon-pause { display: none; }
+ .v-play-btn.playing .v-icon-pause { display: block; }
+ .v-play-btn.playing .v-icon-play { display: none; }
+ /* When playing, fade the button so video is visible; full opacity on hover */
+ .v-play-btn.playing { opacity: 0.4; }
+ .v-play-btn.playing:hover { opacity: 1; }
+
+ /* Bottom caption — pure dark gradient overlay, white text only */
+ .v-caption {
+   position: absolute;
+   left: 0; right: 0; bottom: 0;
+   z-index: 4;
+   padding: 14px 18px 12px;
+   display: flex; align-items: flex-end; gap: 16px;
+   background: linear-gradient(to top,
+     rgba(0, 0, 0, 0.95) 0%,
+     rgba(0, 0, 0, 0.78) 55%,
+     rgba(0, 0, 0, 0) 100%);
+ }
+ .v-caption-text { flex: 1; min-width: 0; }
+ .v-caption h4 {
+   font-size: var(--fs-sm); font-weight: 900;
+   letter-spacing: 1.4px;
+   text-transform: uppercase;
+   color: var(--baiwu-white);
+   margin-bottom: 4px;
+   line-height: 1.2;
+ }
+ .v-caption p {
+   font-size: var(--fs-xs); font-weight: 500;
+   color: rgba(255, 255, 255, 0.85);
+   line-height: 1.45;
+   margin: 0; border: none; padding: 0; max-width: none;
+   text-shadow: none;
+ }
+ .v-caption-meta {
+   font-family: 'JetBrains Mono', monospace;
+   font-size: var(--fs-xs); font-weight: 900;
+   letter-spacing: 1.8px;
+   text-transform: uppercase;
+   color: var(--baiwu-white);
+   white-space: nowrap;
+   align-self: flex-start;
+ }
+
+ /* ===========================
+    Video controls — top-right (mute / volume / fullscreen)
+    =========================== */
+ .v-controls {
+   position: absolute;
+   top: 16px; right: 16px;
+   z-index: 5;
+   display: flex; align-items: center; gap: 8px;
+   padding: 6px 12px;
+   background: rgba(0, 0, 0, 0.55);
+   border: 1px solid rgba(255, 255, 255, 0.28);
+   border-radius: 999px;
+   backdrop-filter: blur(8px);
+   -webkit-backdrop-filter: blur(8px);
+ }
+ .v-control-btn {
+   width: 26px; height: 26px;
+   display: grid; place-items: center;
+   background: transparent;
+   border: none; padding: 0;
+   color: var(--baiwu-white);
+   cursor: pointer;
+   transition: 0.15s ease;
+ }
+ .v-control-btn:hover { color: rgba(255, 255, 255, 0.65); }
+
+ /* Volume slider (range input) */
+ .v-vol-slider {
+   -webkit-appearance: none;
+   appearance: none;
+   width: 80px; height: 4px;
+   background: rgba(255, 255, 255, 0.25);
+   border-radius: 2px;
+   outline: none;
+   cursor: pointer;
+   transition: background 0.15s ease;
+ }
+ .v-vol-slider:hover { background: rgba(255, 255, 255, 0.4); }
+ .v-vol-slider::-webkit-slider-thumb {
+   -webkit-appearance: none;
+   appearance: none;
+   width: 12px; height: 12px;
+   background: var(--baiwu-white);
+   border-radius: 50%;
+   cursor: pointer;
+   box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+ }
+ .v-vol-slider::-moz-range-thumb {
+   width: 12px; height: 12px;
+   background: var(--baiwu-white);
+   border: none;
+   border-radius: 50%;
+   cursor: pointer;
+ }
+
+ /* Mute / fullscreen icon swapping */
+ .v-mute-btn .v-icon-vol-off { display: none; }
+ .v-mute-btn.muted .v-icon-vol-on { display: none; }
+ .v-mute-btn.muted .v-icon-vol-off { display: block; }
+ .v-full-btn .v-icon-full-exit { display: none; }
+ .v-full-btn.fullscreen .v-icon-full-enter { display: none; }
+ .v-full-btn.fullscreen .v-icon-full-exit { display: block; }
+
+ /* ===========================
+    Trust Layer — tier-1 carriers + regulators
+    Visual identity: GOLD trust layer. Outer card width / spacing identical
+    to .stat-strip-wrap below, so the two strips read as one column.
+    Animation: gold "pulse wave" travels left→right through carrier names,
+    right→left through compliance pills — like a current flowing through
+    a trust bus. Border + edge accents are gold; never blue chip fills.
+    Animation runs ALWAYS — the wave IS the message, so it must not be
+    suppressed by OS reduced-motion settings (we keep it tasteful: slow,
+    no flicker, no axis flip).
+    =========================== */
+ .trust-section {
+   /* Light section — same bg as reliability / infra / footer so the
+      trust strip flows visually into the rest of the light part of the
+      page (only audit-section + charts remain dark). */
+   background: var(--baiwu-bg-light);
+   padding: 40px 4%;
+   contain: paint;
+ }
+ /* Header IDENTICAL to .stat-strip-header (The Numbers card) — same
+    padding, same border-bottom hairline, same blue-tinted top fade.
+    Default `.strip-tag` brand-blue color + blue blade apply, no
+    overrides needed. The trust-card-specific gold rule fills the
+    horizontal space to the right of the title. */
+ .trust-strip-header {
+   display: flex; align-items: center;
+   padding: 22px 28px;
+   border-bottom: 1px solid var(--border-line);
+   background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
+ }
+ .trust-strip-header .strip-rule {
+   flex: 1; height: 1px;
+ }
+ .trust-strip-wrap {
+   position: relative;
+   /* TOP edge is clean (matches `.stat-strip-wrap`); LEFT / BOTTOM /
+      RIGHT carry a soft gold halo via Y-offset-biased box-shadows.
+      Now safe to add — the legacy `::before` / `::after` rails that
+      previously bled across the top edge have been removed, so the
+      top boundary stays untouched. */
+   background: var(--baiwu-white);
+   border: 1px solid var(--border-line);
+   border-radius: 8px;
+   box-shadow:
+     /* Bottom-prominent gold halo (Y +12, blur 32) */
+     0 12px 32px rgba(245, 158, 11, 0.32),
+     /* Left-bottom and right-bottom gold halos — Y offset pulls blur
+        downward so the top edge of the card receives no gold tint */
+     -10px 8px 22px rgba(245, 158, 11, 0.26),
+     10px 8px 22px rgba(245, 158, 11, 0.26),
+     /* Navy depth shadow underneath for grounding */
+     0 14px 40px rgba(0, 45, 92, 0.08),
+     0 2px 6px rgba(0, 45, 92, 0.04);
+   overflow: hidden;
+   contain: layout paint;
+ }
+ /* (Legacy gold inner rails removed — they were leftover from the
+    earlier dark-navy card design and were the actual source of the
+    "yellow lines" appearing 4px from the top + bottom edges of the
+    trust card.) */
+
+ /* The two row bands have the SAME deep-navy background as `.audit-box`
+    (the trust-layer cards lower on the page). White card header sits
+    above them; gold scroll content shines on dark. */
+ .trust-row {
+   display: flex; align-items: center; gap: 22px;
+   padding: 16px 24px;
+   position: relative;
+   min-height: 58px;
+   background: var(--baiwu-blue-deep);   /* #002D5C — matches audit-box  */
+ }
+ /* Internal row divider — matches the trust-strip-header's bottom
+    border + every other internal hairline on the site (`var(--border-line)`).
+    On the dark-navy row bg this still reads as a clean separation
+    without introducing yet another color. */
+ .trust-row + .trust-row { border-top: 1px solid var(--border-line); }
+ /* Sub-label typography. On dark navy = white text, gold blade left. */
+ .trust-row-label {
+   flex: 0 0 auto;
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: var(--fs-xs);
+   font-weight: 900;
+   letter-spacing: 1.8px;
+   text-transform: uppercase;
+   color: var(--baiwu-white);
+   padding-left: 14px;
+   border-left: 3px solid #F59E0B;
+   line-height: 1;
+   white-space: nowrap;
+ }
+ .trust-track {
+   flex: 1;
+   overflow: hidden;
+   position: relative;
+   /* Soft edge fade so wordmarks don't hard-cut at the strip ends */
+   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+           mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+   /* `contain: paint` only — isolates paint cost without locking the
+      element's size away from the flex parent. `contain: strict` was
+      too aggressive: it included `contain: size`, which combined with
+      an invalid `contain-intrinsic-size: 100%` collapsed the track
+      to zero width and made all wordmarks invisible. */
+   contain: paint;
+ }
+ .trust-loop {
+   /* `display: flex` + `width: max-content` is critical: inline-flex
+      can be shrunk by some engines below content width, breaking the
+      -50% math. max-content forces the loop to grow to full content
+      width regardless of parent constraints.
+      gap: 14px → tight spacing for the operator row whose connectors
+      provide the visual bridge. The compliance row keeps the same
+      gap; pills are visually distinct enough on their own. */
+   display: flex; align-items: center; gap: 14px;
+   width: max-content;
+   white-space: nowrap;
+   /* 22s = ~70 px/sec drift, clearly visible motion. Operators flow
+      LEFT → RIGHT (reverse animation direction means the keyframes
+      run from -50% → 0%, which translates visually as items emerging
+      from the left edge and exiting on the right). */
+   animation: trustScroll 22s linear infinite reverse !important;
+   will-change: transform;
+ }
+ .trust-row--reg .trust-loop {
+   animation-duration: 18s !important;
+   /* Compliance flows the opposite direction: RIGHT → LEFT. Two
+      counter-flowing currents = "trust bus" feel. */
+   animation-direction: normal !important;
+ }
+ /* Hover pause removed — user couldn't see motion when mouse parked
+    over the strip. */
+ @keyframes trustScroll {
+   /* keyframes describe a "shift left by half" — animation-direction
+      controls whether items appear to move right (reverse) or left
+      (normal). Using translate3d to keep this on the GPU compositor
+      layer so the scroll is butter-smooth, no main-thread layout. */
+   0%   { transform: translate3d(0, 0, 0); }
+   100% { transform: translate3d(-50%, 0, 0); }
+ }
+
+ /* Network connector between adjacent carrier wordmarks — a thin gold
+    horizontal line with a glowing node dot at the midpoint. Together
+    they read the row as a "carrier network bus" rather than 12
+    independently floating words. The connector also subtly pulses
+    in step with the wordmark wave by inheriting the same staggered
+    animation rhythm. */
+ .trust-link {
+   position: relative;
+   display: inline-block;
+   flex-shrink: 0;
+   width: 38px;
+   height: 1px;
+   background: linear-gradient(90deg,
+     transparent 0%,
+     rgba(245, 158, 11, 0.45) 30%,
+     rgba(245, 158, 11, 0.45) 70%,
+     transparent 100%);
+   /* Vertical centering inside the flex row */
+   align-self: center;
+ }
+ .trust-link::before {
+   /* Glowing node dot at the midpoint of the line */
+   content: '';
+   position: absolute;
+   left: 50%; top: 50%;
+   width: 6px; height: 6px;
+   background: #F59E0B;
+   border-radius: 50%;
+   transform: translate(-50%, -50%);
+   box-shadow:
+     0 0 4px rgba(245, 158, 11, 0.85),
+     0 0 10px rgba(245, 158, 11, 0.45);
+   /* Match the wave's overall rhythm — softer pulse than the wordmark
+      wave so the dots breathe without strobing */
+   animation: trustNodePulse 5.4s ease-in-out infinite;
+ }
+ @keyframes trustNodePulse {
+   0%, 75%, 100% {
+     background: #F59E0B;
+     box-shadow:
+       0 0 4px rgba(245, 158, 11, 0.85),
+       0 0 10px rgba(245, 158, 11, 0.45);
+   }
+   18% {
+     background: #FBBF24;
+     box-shadow:
+       0 0 6px rgba(251, 191, 36, 1),
+       0 0 14px rgba(251, 191, 36, 0.55);
+   }
+ }
+
+ /* Each wordmark — Inter, deep neutral by default. Wave animation steps
+    through items via animation-delay = i * 0.22s. Each mark warms to gold
+    when its turn arrives, with a soft glow halo, then dims again. The
+    cumulative effect is a gold "current" sweeping through the row. */
+ /* Carrier wordmarks on the dark-navy row band. Bright amber base for
+    legibility, slightly brighter peak with a tight glow halo (≤4px
+    inner) so letters never blur into a light blob. */
+ .trust-mark {
+   font-family: 'Inter', system-ui, sans-serif;
+   font-weight: 800;
+   font-size: 16px;
+   letter-spacing: 0.6px;
+   color: #F59E0B;
+   opacity: 1;
+   padding: 4px 2px;
+   text-shadow:
+     0 0 3px rgba(245, 158, 11, 0.4),
+     0 0 9px rgba(245, 158, 11, 0.15);
+   animation: trustPulse 5.4s ease-in-out infinite;
+   animation-delay: calc(var(--i, 0) * 0.26s);
+ }
+ @keyframes trustPulse {
+   0%, 75%, 100% {
+     color: #F59E0B;
+     text-shadow:
+       0 0 3px rgba(245, 158, 11, 0.4),
+       0 0 9px rgba(245, 158, 11, 0.15);
+   }
+   18% {
+     color: #FBBF24;
+     text-shadow:
+       0 0 4px rgba(251, 191, 36, 0.85),
+       0 0 12px rgba(251, 191, 36, 0.3);
+   }
+ }
+
+ /* Regulator pills — gold border by default, fill warm gold when the wave
+    arrives. Tighter step (0.28s) keeps the second-row pulse independently
+    visible from the first. */
+ /* Regulator pills on dark navy row: WHITE border + bright amber text.
+    Wave peak fills with gold gradient, text flips to dark navy for
+    maximum contrast. Halo around pills is softer so they don't
+    over-dominate the wordmark row above. */
+ .trust-row--reg .trust-mark {
+   font-size: 11px; font-weight: 900;
+   letter-spacing: 1.6px;
+   text-transform: uppercase;
+   padding: 6px 14px;
+   border: 1px solid rgba(255, 255, 255, 0.85);
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.05);
+   color: #F59E0B;
+   animation: trustPulseReg 5.4s ease-in-out infinite;
+   animation-delay: calc(var(--i, 0) * 0.32s);
+ }
+ @keyframes trustPulseReg {
+   0%, 75%, 100% {
+     color: #F59E0B;
+     border-color: rgba(255, 255, 255, 0.85);
+     background: rgba(255, 255, 255, 0.05);
+     box-shadow: none;
+   }
+   18% {
+     color: var(--baiwu-blue-deep);
+     border-color: var(--baiwu-white);
+     background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
+     box-shadow:
+       0 0 0 1px rgba(255, 255, 255, 0.5),
+       0 0 16px rgba(251, 191, 36, 0.55),
+       inset 0 1px 0 rgba(255, 255, 255, 0.5);
+   }
+ }
+
+ /* Five gold trophies on the right of the trust-strip-header — single
+    SVG path defined as <symbol>, instanced 5x via <use>. Each trophy
+    fades up sequentially (delay step 0.18s) so the row "lights up"
+    left to right once per cycle, matching the wordmark wave underneath. */
+ /* Trophy cluster — sits at the far right of the ALIGNED WITH row.
+    Bright gold base with permanent halo (visible on dark navy),
+    wave peak amplifies. */
+ .trust-rating {
+   display: inline-flex; align-items: center; gap: 5px;
+   line-height: 1; flex-shrink: 0;
+   margin-left: 14px;            /* breathing space from compliance pills */
+ }
+ .trust-trophy {
+   width: 22px; height: 22px;
+   color: #F59E0B;
+   filter:
+     drop-shadow(0 0 4px rgba(245, 158, 11, 0.55))
+     drop-shadow(0 0 10px rgba(245, 158, 11, 0.28));
+   animation: trustTrophyGlow 4.5s ease-in-out infinite;
+   transform-origin: center bottom;
+ }
+ /* SVG sprite moved out of .trust-rating, so trophies are now the
+    direct nth-children 1..5 (no offset). */
+ .trust-trophy:nth-child(1) { animation-delay: 0s; }
+ .trust-trophy:nth-child(2) { animation-delay: 0.18s; }
+ .trust-trophy:nth-child(3) { animation-delay: 0.36s; }
+ .trust-trophy:nth-child(4) { animation-delay: 0.54s; }
+ .trust-trophy:nth-child(5) { animation-delay: 0.72s; }
+ @keyframes trustTrophyGlow {
+   0%, 72%, 100% {
+     color: #F59E0B;
+     filter:
+       drop-shadow(0 0 4px rgba(245, 158, 11, 0.55))
+       drop-shadow(0 0 10px rgba(245, 158, 11, 0.28));
+     transform: scale(1);
+   }
+   18% {
+     color: #FBBF24;
+     filter:
+       drop-shadow(0 0 8px rgba(251, 191, 36, 0.95))
+       drop-shadow(0 0 16px rgba(251, 191, 36, 0.55));
+     transform: scale(1.12);
+   }
+ }
+
+ /* Note: we deliberately do NOT honour `prefers-reduced-motion: reduce`
+    or content-fits detection. The horizontal marquee + illumination
+    wave are the primary visual storytelling of the trust layer —
+    without them the strip is a static list of names that mean nothing.
+    Both animations are gentle (4-6s ease-in-out fades, ~26s linear
+    translation), well below flicker / vestibular concern thresholds. */
+
+ @media (max-width: 720px) {
+   .trust-section { padding: 28px 4% 0; }
+   .trust-strip-header { padding: 14px 16px; }
+   .trust-row { flex-direction: column; align-items: stretch; gap: 10px; padding: 14px 16px; min-height: 0; }
+   .trust-row-label {
+     padding-left: 10px;
+     font-size: 11px; letter-spacing: 1.4px;
+   }
+   .trust-mark { font-size: 14px; }
+   .trust-row--reg .trust-mark { font-size: 10px; padding: 5px 11px; }
+ }
+
+ /* ===========================
+    Reliability Matrix — Light enterprise panel (own section)
+    =========================== */
+ .reliability-section {
+   background: var(--baiwu-bg-light);
+   padding: 40px 4%;
+ }
+
+ .stat-strip-wrap {
+   position: relative;
+   padding: 0;
+   background: var(--baiwu-white);
+   border: 1px solid var(--border-line);
+   border-radius: 8px;
+   box-shadow: 0 14px 40px rgba(0, 45, 92, 0.08), 0 2px 6px rgba(0, 45, 92, 0.04);
+   overflow: hidden;
+ }
+ /* When the detail panel is open, collapse the cards strip entirely so the
+    wrap shrinks to fit just header + panel content — no excess white space. */
+ .stat-strip-wrap:has(.card-detail.open) > .stat-strip,
+ .stat-strip-wrap:has(.card-detail.open) > .portfolio-strip {
+   display: none;
+ }
+
+ .stat-strip-header {
+   display: flex; align-items: center;
+   padding: 22px 28px;
+   border-bottom: 1px solid var(--border-line);
+   background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
+ }
+ /* `.strip-tag` and `.sec-title` are visually identical — both render the
+    section's H2 at the same size, weight, letter-spacing, and blade
+    geometry. Only difference is parentage: .strip-tag lives inside a
+    strip-wrap card (Numbers / Portfolio / Trust); .sec-title sits
+    directly under the section. They MUST look like the same thing.
+    Sized at fs-xl (was fs-2xl) — more restrained, lets the content
+    breathe rather than the heading dominating the section. */
+ .strip-tag {
+   display: inline-flex; align-items: center;
+   font-size: var(--fs-xl); font-weight: 900; letter-spacing: -0.4px;
+   text-transform: uppercase;
+   color: var(--baiwu-blue-primary);
+   padding: 0 0 0 16px;
+   border: none;
+   position: relative;
+   line-height: 1;
+ }
+ /* Blade — matches `.sec-title`'s 6px solid blue blade exactly.
+    Implemented as a positioned ::before so .strip-tag can keep the
+    `display: inline-flex` layout for the optional status pill on its
+    right (Trust card has live indicator). */
+ .strip-tag::before {
+   content: '';
+   position: absolute;
+   left: 0; top: 0; bottom: 0;
+   width: 6px;
+   background: var(--baiwu-blue-primary);
+   box-shadow: 0 0 10px rgba(0, 89, 179, 0.42);
+ }
+ .strip-rule { flex: 1; }
+ .strip-status {
+   display: inline-flex; align-items: center; gap: 8px;
+   font-size: var(--fs-xs); font-weight: 900; letter-spacing: 1.8px;
+   text-transform: uppercase; color: #22C55E;
+   text-shadow: 0 0 8px rgba(34, 197, 94, 0.25);
+ }
+ .strip-status .dot {
+   width: 8px; height: 8px; border-radius: 50%;
+   background: #22C55E;
+   box-shadow: 0 0 10px #22C55E, 0 0 0 3px rgba(34, 197, 94, 0.16);
+   animation: pulse-dot 2s ease-in-out infinite;
+ }
+ @keyframes pulse-dot {
+   0%, 100% { opacity: 1; }
+   50% { opacity: 0.5; }
+ }
+ /* PWA install howto popup entrance */
+ @keyframes dlpkInstallPop {
+   from { opacity: 0; transform: translateY(8px); }
+   to   { opacity: 1; transform: translateY(0); }
+ }
+
+ .stat-strip {
+   display: grid;
+   /* minmax(0, 1fr) — without the explicit 0 minimum, grid items use
+      their min-content width which (with a 36px nowrap stat-value)
+      pushes the strip past the viewport. The 0 lets each column shrink
+      to exactly 1/N of the container regardless of content width.
+      5 columns on desktop ≥ 1024px (Uptime / Countries / Delivery /
+      Lifecycle / Open Rate), 3 columns 720-1023, 2 columns < 720,
+      1 column < 480. */
+   grid-template-columns: repeat(5, minmax(0, 1fr));
+   gap: 0;
+ }
+ @media (max-width: 1080px) {
+   .stat-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+ }
+
+ .stat-card {
+   position: relative;
+   /* 5 cards in a row need vertical stacking — horizontal layout's
+      icon (100px) + meta (110px+) per card was overflowing the
+      ~240px column width on 1280px viewports. Stack icon on top,
+      value/label/stars centered below. */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: flex-start;
+   gap: 10px;
+   padding: 22px 10px 28px;
+   background: var(--baiwu-white);
+   border: none;
+   border-right: 1px solid var(--border-line);
+   cursor: pointer;
+   transition: background 0.25s ease, box-shadow 0.25s ease;
+   text-align: center;
+   color: inherit;
+   font: inherit;
+   overflow: hidden;
+   min-width: 0;
+ }
+ .stat-card:last-child { border-right: none; }
+ .stat-card::after {
+   content: '';
+   position: absolute;
+   left: 0; bottom: 0;
+   width: 0; height: 3px;
+   background: var(--baiwu-blue-primary);
+   transition: width 0.3s ease;
+ }
+ .stat-card:hover { background: rgba(0, 89, 179, 0.04); }
+ .stat-card:hover::after { width: 100%; }
+ .stat-card:hover .stat-icon { transform: scale(1.05); }
+
+ .stat-icon-wrap {
+   flex-shrink: 0;
+   width: 76px; height: 76px;
+   display: grid; place-items: center;
+   background: transparent;
+   border: none;
+   position: relative;
+ }
+ .stat-icon-wrap::before {
+   content: '';
+   position: absolute;
+   inset: -2px;
+   background: radial-gradient(circle, rgba(0, 89, 179, 0.1) 0%, transparent 70%);
+   z-index: 0;
+   transition: 0.3s ease;
+ }
+
+ /* Shared 3D icon rendering. Stat icons run at 64px in the 5-up
+    vertical-stacked layout (down from the old 88px in the 4-up
+    horizontal layout). Portfolio icons stay at 72px (3-up grid). */
+ .stat-icon, .portfolio-icon {
+   width: 64px; height: 64px;
+   object-fit: contain;
+   display: block;
+   position: relative; z-index: 1;
+   pointer-events: none; user-select: none; -webkit-user-drag: none;
+   /* Radial mask: center visible → edges fade transparent (round shape blends into card) */
+   -webkit-mask-image: radial-gradient(circle at center, #000 50%, transparent 78%);
+   mask-image: radial-gradient(circle at center, #000 50%, transparent 78%);
+ }
+ /* stat-icon is recolored to solid brand blue — no multiply (would wash out on white card).
+    saturate + brightness lift the blue so it pops against the white card. */
+ .stat-icon {
+   transition: transform 0.3s ease;
+   filter: saturate(1.35) brightness(1.08) drop-shadow(0 4px 10px rgba(0, 89, 179, 0.22));
+ }
+ /* portfolio-icon: multiply blends into white. Sized smaller than stat
+    icons because the 3×3 grid has more cards per row — overly large
+    icons make the section feel inflated. Restrained colour boost. */
+ .portfolio-icon {
+   width: 72px; height: 72px;
+   mix-blend-mode: multiply;
+   filter: contrast(1.08) saturate(1.18) brightness(1.04);
+   transition: transform 0.3s ease, filter 0.25s ease;
+   -webkit-mask-image: radial-gradient(circle at center, #000 38%, transparent 72%);
+   mask-image: radial-gradient(circle at center, #000 38%, transparent 72%);
+ }
+ /* icon_14 (Phone Numbers) is rendered as an inline SVG by main.js
+    (PHONE_ICON_SVG) instead of the supplied outlined webp. The SVG is a
+    brand-blue gradient phone body that visually matches the other 8
+    solid-fill 3D portfolio icons. We override the shared multiply blend
+    + radial mask since SVG is already pure vector. */
+ .portfolio-icon-svg {
+   mix-blend-mode: normal;
+   filter: drop-shadow(0 4px 10px rgba(0, 89, 179, 0.22));
+   -webkit-mask-image: none;
+   mask-image: none;
+ }
+ .btn-portfolio:hover .portfolio-icon-svg { transform: scale(1.06); }
+
+ /* ---------------------------------------------------------------
+    "Click to view more" affordance — rendered by main.js into every
+    .stat-card and .btn-portfolio. Sits below the label so it doesn't
+    overlap, becomes solid + arrow slides on hover.
+    --------------------------------------------------------------- */
+ .stat-card,
+ .btn-portfolio {
+   position: relative;          /* anchor for absolute click-hint */
+ }
+ .btn-portfolio {
+   padding-bottom: 38px;        /* reserve room so click-hint sits well clear of the label */
+ }
+ .stat-card .click-hint,
+ .btn-portfolio .click-hint {
+   position: absolute;
+   left: 50%;
+   bottom: 8px;
+   transform: translateX(-50%);
+   display: inline-flex;
+   align-items: center;
+   gap: 4px;
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: 8.5px;
+   font-weight: 600;
+   letter-spacing: 1.4px;
+   text-transform: uppercase;
+   white-space: nowrap;
+   color: rgba(0, 89, 179, 0.32);
+   pointer-events: none;
+   transition: color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+               transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+               bottom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+   z-index: 2;
+ }
+ .stat-card .click-hint .hint-arrow,
+ .btn-portfolio .click-hint .hint-arrow {
+   display: inline-block;
+   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+ }
+ .stat-card:hover .click-hint,
+ .btn-portfolio:hover .click-hint,
+ .stat-card:focus-visible .click-hint,
+ .btn-portfolio:focus-visible .click-hint {
+   color: var(--baiwu-blue-primary);
+ }
+ .stat-card:hover .click-hint .hint-arrow,
+ .btn-portfolio:hover .click-hint .hint-arrow,
+ .stat-card:focus-visible .click-hint .hint-arrow,
+ .btn-portfolio:focus-visible .click-hint .hint-arrow {
+   transform: translateX(5px);
+ }
+ /* On stat-card the layout is horizontal (icon | meta), so put the hint
+    flush to the bottom right of the meta column instead of dead-center
+    so it doesn't fight the star row visually. */
+ /* Stat-card click-hint inherits the centered position from the shared
+    rule above. (Earlier override pinned it to right: 14px when the
+    layout was horizontal — now that cards stack vertically the centered
+    bottom position reads naturally.) */
+ .stat-card:hover .click-hint,
+ .stat-card:focus-visible .click-hint {
+   transform: none;
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .stat-card .click-hint, .btn-portfolio .click-hint,
+   .stat-card .click-hint .hint-arrow, .btn-portfolio .click-hint .hint-arrow {
+     transition: none;
+   }
+ }
+
+ /* Stat meta — vertical-stacked layout under the icon, fully centered.
+    Removed the left blue divider and left padding (these belonged to
+    the old horizontal icon-then-meta layout). */
+ .stat-meta {
+   display: flex; flex-direction: column; align-items: center; gap: 6px;
+   line-height: 1; min-width: 0;
+   transition: border-color 0.25s ease;
+   overflow: hidden;
+   width: 100%;
+ }
+
+ .stat-value {
+   font-family: 'JetBrains Mono', monospace;
+   font-size: var(--fs-lg); font-weight: 700;
+   color: var(--baiwu-blue-primary);
+   letter-spacing: -0.5px;
+   line-height: 1;
+   white-space: nowrap;
+   transition: color 0.25s ease;
+ }
+ .stat-label {
+   font-size: var(--fs-xs); font-weight: 800;
+   text-transform: uppercase; letter-spacing: 1.4px;
+   color: var(--baiwu-blue-primary);
+   transition: color 0.25s ease;
+   white-space: nowrap;
+ }
+ .stat-stars {
+   margin-top: 2px;
+   font-size: var(--fs-xs);
+   letter-spacing: 2px;
+   line-height: 1;
+   color: #F59E0B;
+   text-shadow: 0 0 8px rgba(245, 158, 11, 0.45);
+   white-space: nowrap;
+ }
+
+
+ /* ===========================
+    Industrial Portfolios — same panel style as stat-strip
+    =========================== */
+ .infra-section {
+   background: var(--baiwu-bg-light); padding: 40px 4%;
+   /* Content-visibility — section is huge (portfolio grid + detail panels);
+      skip layout/paint until it intersects viewport. */
+   content-visibility: auto;
+   contain-intrinsic-size: 1px 720px;
+ }
+
+ .portfolio-strip {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 0;
+ }
+ /* 9 cards lay out as 3×3 — kill border on row-end + bottom-row cards */
+ .btn-portfolio:nth-child(3n) { border-right: none; }
+ .btn-portfolio:nth-child(-n+6) { border-bottom: 1px solid var(--border-line); }
+ /* Tagline as a top-right pill badge — always-visible 1-line hint */
+ .portfolio-tagline {
+   position: absolute;
+   top: 8px; right: 8px;
+   z-index: 2;
+   font-size: 10.5px;
+   font-weight: 800;
+   letter-spacing: 0.3px;
+   text-transform: uppercase;
+   color: #FFFFFF;
+   background: var(--baiwu-blue-primary);
+   padding: 4px 10px;
+   border-radius: 4px;
+   border: none;
+   box-shadow: 0 1px 2px rgba(0, 45, 92, 0.12);
+   pointer-events: none;
+   line-height: 1.25;
+   max-width: calc(100% - 18px);
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+ }
+ /* Recommendation badge — sourced from content.json's `recommend` field
+    via main.js renderPortfolios. Replaces the old hardcoded NEW
+    selector so any product can carry FLAGSHIP / PROVEN / ESSENTIAL /
+    TOP PICK / DEV CHOICE / TRENDING / NEW / PRO / PREMIUM. */
+ .portfolio-badge {
+   position: absolute;
+   top: 8px; left: 8px;
+   z-index: 3;
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: 9px; font-weight: 900; letter-spacing: 1.2px;
+   text-transform: uppercase;
+   padding: 2.5px 7px;
+   border-radius: 3px;
+   pointer-events: none;
+   white-space: nowrap;
+ }
+ /* Tier palette — gold (premium / NEW / FLAGSHIP), blue (foundational
+    / PROVEN / ESSENTIAL / DEV CHOICE), green (TRENDING / TOP PICK). */
+ .portfolio-badge[data-tier="gold"] {
+   color: #F59E0B;
+   background: rgba(245, 158, 11, 0.12);
+   border: 1px solid rgba(245, 158, 11, 0.55);
+ }
+ .portfolio-badge[data-tier="blue"] {
+   color: var(--baiwu-blue-primary);
+   background: rgba(0, 89, 179, 0.1);
+   border: 1px solid rgba(0, 89, 179, 0.45);
+ }
+ .portfolio-badge[data-tier="green"] {
+   color: #059669;
+   background: rgba(5, 150, 105, 0.1);
+   border: 1px solid rgba(5, 150, 105, 0.45);
+ }
+
+ .btn-portfolio {
+   position: relative;
+   display: flex; flex-direction: column;
+   align-items: center; justify-content: center;
+   gap: 6px;
+   padding: 16px 12px 30px;     /* a touch of bottom space for click-hint */
+   background: var(--baiwu-white);
+   border: none;
+   border-right: 1px solid var(--border-line);
+   cursor: pointer;
+   transition: background 0.25s ease, box-shadow 0.25s ease;
+   text-align: center;
+   color: inherit;
+   font: inherit;
+   min-height: 142px;
+ }
+ .btn-portfolio:last-child { border-right: none; }
+ .btn-portfolio::after {
+   content: '';
+   position: absolute;
+   left: 0; bottom: 0;
+   width: 0; height: 3px;
+   background: var(--baiwu-blue-primary);
+   transition: width 0.3s ease;
+ }
+ .btn-portfolio:hover { background: rgba(0, 89, 179, 0.04); }
+ .btn-portfolio:hover::after { width: 100%; }
+ .btn-portfolio:hover .portfolio-icon { transform: scale(1.06); }
+
+ .portfolio-icon-wrap {
+   width: 76px; height: 76px;
+   display: grid; place-items: center;
+   position: relative;
+ }
+ .portfolio-icon-wrap::before {
+   content: '';
+   position: absolute;
+   inset: -2px;
+   background: radial-gradient(circle, rgba(0, 89, 179, 0.08) 0%, transparent 70%);
+   z-index: 0;
+   transition: 0.3s ease;
+ }
+ .btn-portfolio:hover .portfolio-icon-wrap::before {
+   background: radial-gradient(circle, rgba(0, 89, 179, 0.18) 0%, transparent 70%);
+ }
+
+ .portfolio-label {
+   font-size: var(--fs-sm); font-weight: 800;
+   text-transform: uppercase; letter-spacing: 1.6px;
+   color: var(--baiwu-blue-primary);
+   pointer-events: none;
+ }
+
+ /* ===========================
+    Inline card detail — overlays the clicked card's row, growing horizontally
+    out of the clicked card with a gold border. Other rows / page content stay
+    visible since panel is absolutely positioned over only that single row.
+    =========================== */
+ .stat-strip-wrap { position: relative; }
+
+ .card-detail {
+   /* Panel sits in the wrap's flow, replacing the cards strip when open.
+      That way the wrap auto-fits to header + panel content with no extra white. */
+   position: relative;
+   background: transparent;
+   border: none;
+   overflow: hidden;
+   visibility: hidden;
+   opacity: 0;
+   max-height: 0;
+   transform: scaleX(0);
+   transform-origin: var(--origin-x, 50%) center;
+   pointer-events: none;
+   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+               opacity 0.3s ease,
+               max-height 0.5s ease,
+               visibility 0s linear 0.5s;
+ }
+ .card-detail.open {
+   visibility: visible;
+   opacity: 1;
+   transform: scaleX(1);
+   max-height: 1200px;
+   pointer-events: auto;
+   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+               opacity 0.3s ease,
+               max-height 0.5s ease,
+               visibility 0s linear 0s;
+ }
+ .card-detail.open {
+   visibility: visible;
+   opacity: 1;
+   transform: scaleX(1);
+   pointer-events: auto;
+   /* On open, visibility flips immediately so the transform animation is seen */
+   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+               opacity 0.3s ease,
+               visibility 0s linear 0s;
+ }
+ /* Content fades in slightly after the panel finishes expanding */
+ .card-detail .card-detail-body {
+   opacity: 0;
+   transition: opacity 0.25s ease 0.32s;
+ }
+ .card-detail.open .card-detail-body { opacity: 1; }
+
+ .card-detail-close {
+   position: absolute;
+   top: 10px; right: 10px;
+   z-index: 3;
+   width: 30px; height: 30px;
+   display: grid; place-items: center;
+   border: none; border-radius: 50%;
+   background: rgba(0, 45, 92, 0.06);
+   color: var(--baiwu-blue-deep);
+   cursor: pointer;
+   transition: background 0.2s ease, color 0.2s ease;
+ }
+ .card-detail-close:hover {
+   background: var(--baiwu-blue-primary);
+   color: #FFFFFF;
+ }
+ .card-detail-body {
+   display: grid;
+   grid-template-columns: 112px 1fr;
+   gap: 32px;
+   padding: 28px 60px 28px 28px;
+   align-items: start;
+ }
+ .card-detail-icon-wrap {
+   display: grid; place-items: center;
+   align-self: start;
+   padding-top: 4px;
+ }
+ .card-detail-icon {
+   width: 104px; height: 104px;
+   object-fit: contain;
+   /* Lift saturation + brightness so the icon reads as bright brand blue
+      rather than a flat dark blob inside the detail panel. */
+   filter: saturate(1.35) brightness(1.06) drop-shadow(0 6px 18px rgba(0, 89, 179, 0.28));
+   -webkit-mask-image: radial-gradient(circle at center, #000 50%, transparent 78%);
+   mask-image: radial-gradient(circle at center, #000 50%, transparent 78%);
+ }
+ /* SVG variants for stat / portfolio / detail icons. Pure vectors carry
+    their own gradient + colours, so we strip the mask + multiply blend
+    (those existed only to soften raster webp edges) and just apply the
+    brand drop-shadow for that consistent floating look. */
+ .stat-icon-svg,
+ .portfolio-icon-svg,
+ .card-detail-icon-svg {
+   mix-blend-mode: normal;
+   -webkit-mask-image: none;
+   mask-image: none;
+ }
+ .stat-icon-svg {
+   filter: drop-shadow(0 4px 10px rgba(0, 89, 179, 0.22));
+ }
+ .portfolio-icon-svg {
+   filter: drop-shadow(0 4px 10px rgba(0, 89, 179, 0.22));
+ }
+ .card-detail-icon-svg {
+   filter: drop-shadow(0 6px 18px rgba(0, 89, 179, 0.28));
+ }
+ .card-detail-content { min-width: 0; align-self: start; }
+ .card-detail-eyebrow {
+   display: block;
+   font-size: var(--fs-2xs);
+   font-weight: 800;
+   letter-spacing: 2.2px;
+   text-transform: uppercase;
+   color: var(--baiwu-blue-primary);
+   margin-bottom: 8px;
+ }
+ .card-detail-title {
+   margin: 0 0 14px;
+   font-size: var(--fs-xl);
+   font-weight: 900;
+   letter-spacing: -0.4px;
+   text-transform: uppercase;
+   color: var(--baiwu-blue-primary);
+   line-height: 1.1;
+ }
+ .card-detail-text {
+   /* Container — paragraphs flow inside */
+   font-size: var(--fs-base);
+   color: #334155;
+ }
+ .card-detail-text p {
+   margin: 0 0 14px 0;
+   font-weight: 400;
+   line-height: 1.7;
+   letter-spacing: 0.005em;
+ }
+ .card-detail-text p:last-child { margin-bottom: 0; }
+ /* Lead paragraph — slightly bolder + darker for editorial feel */
+ .card-detail-text p:first-child {
+   font-size: 1.05em;
+   font-weight: 500;
+   color: #1E293B;
+ }
+
+ /* Visual highlight on the clicked card */
+ .stat-card.active,
+ .btn-portfolio.active {
+   background: rgba(0, 89, 179, 0.06);
+   box-shadow: inset 0 0 0 2px var(--baiwu-blue-primary);
+ }
+
+
+ /* Mobile: panel is set to cover the whole strip via JS. Layout switches to a
+    centered vertical stack, with scroll if the description is very long. */
+ .card-detail.is-mobile .card-detail-body {
+   grid-template-columns: 1fr;
+   gap: 16px;
+   padding: 24px 18px 22px;
+   align-content: start;
+   align-items: start;
+   overflow-y: auto;
+ }
+ .card-detail.is-mobile .card-detail-icon-wrap { justify-self: center; padding-top: 0; }
+ .card-detail.is-mobile .card-detail-icon { width: 84px; height: 84px; }
+ /* Mobile: icon already centered → keep eyebrow + title aligned with it for
+    a clean vertical axis. Body text stays left-aligned so paragraphs
+    remain readable (centered prose creates ragged left edges). */
+ .card-detail.is-mobile .card-detail-content { text-align: left; }
+ .card-detail.is-mobile .card-detail-eyebrow,
+ .card-detail.is-mobile .card-detail-title {
+   text-align: center;
+ }
+ .card-detail.is-mobile .card-detail-eyebrow::before,
+ .card-detail.is-mobile .card-detail-eyebrow::after {
+   /* If the eyebrow has decorative gold lines, keep them flanking the text */
+   margin-left: auto; margin-right: auto;
+ }
+ @media (max-width: 640px) {
+   .card-detail-title { font-size: var(--fs-base); margin-bottom: 10px; }
+   .card-detail-text { font-size: var(--fs-sm); line-height: 1.65; max-width: none; }
+   .card-detail-eyebrow { font-size: 11px; letter-spacing: 1.6px; margin-bottom: 6px; }
+ }
+
+
+ /* ===========================
+    Audit & Charts
+    =========================== */
+ /* Lifted from #002D5C to a lighter, more open navy so the page does not
+    feel so dark in the lower half. Still solid enough for white text. */
+ /* content-visibility: auto lets the browser skip layout/paint of these
+    below-fold sections until they intersect the viewport — major paint
+    cost reduction on initial load. contain-intrinsic-size reserves the
+    approximate scroll height so the scrollbar doesn't jump on enter. */
+ .audit-section {
+   background: #1E3A6B; color: var(--baiwu-white); padding: 40px 4%;
+   content-visibility: auto;
+   contain-intrinsic-size: 1px 800px;
+ }
+ .sec-title {
+   font-size: var(--fs-xl); font-weight: 900;
+   text-transform: uppercase; letter-spacing: -0.4px;
+   margin-bottom: 18px;
+   border-left: 6px solid var(--baiwu-blue-primary);
+   padding-left: 16px;
+   color: var(--baiwu-white);
+   line-height: 1;
+   display: flex; align-items: center; gap: 16px;
+ }
+ .audit-stars {
+   display: inline-flex;
+   align-items: center;
+   gap: 3px;
+   line-height: 1;
+ }
+ .audit-stars > span {
+   display: inline-block;
+   font-size: 1.5rem;
+   line-height: 1;
+   color: #FBBF24;
+   text-shadow:
+     0 0 8px rgba(251, 191, 36, 0.8),
+     0 0 18px rgba(251, 191, 36, 0.45);
+   animation: star-twinkle 1.8s ease-in-out infinite;
+   transform-origin: center;
+   will-change: transform, opacity;
+ }
+ /* 5 stars staggered for a wave-like sparkle */
+ .audit-stars > span:nth-child(1) { animation-delay: 0s; }
+ .audit-stars > span:nth-child(2) { animation-delay: 0.15s; }
+ .audit-stars > span:nth-child(3) { animation-delay: 0.3s; }
+ .audit-stars > span:nth-child(4) { animation-delay: 0.45s; }
+ .audit-stars > span:nth-child(5) { animation-delay: 0.6s; }
+
+ /* Animate only opacity + transform (compositor-friendly); keep text-shadow static */
+ .audit-stars > span {
+   text-shadow:
+     0 0 8px rgba(251, 191, 36, 0.7),
+     0 0 16px rgba(251, 191, 36, 0.35);
+   will-change: opacity, transform;
+ }
+ @keyframes star-twinkle {
+   0%, 100% {
+     opacity: 1;
+     transform: scale(1) rotate(0deg);
+   }
+   50% {
+     opacity: 0.6;
+     transform: scale(0.82) rotate(12deg);
+   }
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .audit-stars > span { animation: none; }
+ }
+ /* Audit cards — heavier gold border + staggered breathing glow */
+ .audit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; background: transparent; }
+ .audit-box {
+   position: relative;
+   background: var(--baiwu-blue-deep);
+   padding: 20px;
+   border: 2px solid #F59E0B;
+   box-shadow:
+     0 0 0 1px rgba(245, 158, 11, 0.28),
+     0 0 18px rgba(245, 158, 11, 0.45),
+     inset 0 0 22px rgba(245, 158, 11, 0.10);
+   animation: audit-glow 3.6s ease-in-out infinite;
+   animation-delay: calc(var(--idx, 0) * 0.6s);
+   transition: transform 0.3s ease, background 0.3s ease;
+   will-change: box-shadow, border-color, transform;
+ }
+ /* Hover — pause animation, lock to peak gold + lift + brighter inner ground */
+ .audit-box:hover {
+   animation-play-state: paused;
+   transform: translateY(-3px);
+   background: linear-gradient(180deg, var(--baiwu-blue-deep) 0%, #003673 100%);
+   border-color: #FBBF24;
+   box-shadow:
+     0 0 0 2px rgba(251, 191, 36, 0.7),
+     0 0 32px rgba(251, 191, 36, 0.85),
+     0 0 70px rgba(245, 158, 11, 0.45),
+     0 12px 32px rgba(0, 0, 0, 0.4),
+     inset 0 0 36px rgba(251, 191, 36, 0.22);
+ }
+ .audit-box:hover h3 { border-bottom-color: #FBBF24; }
+ .audit-grid > .audit-box:nth-child(1) { --idx: 0; }
+ .audit-grid > .audit-box:nth-child(2) { --idx: 1; }
+ .audit-grid > .audit-box:nth-child(3) { --idx: 2; }
+ .audit-grid > .audit-box:nth-child(4) { --idx: 3; }
+ @keyframes audit-glow {
+   0%, 100% {
+     border-color: #F59E0B;
+     box-shadow:
+       0 0 0 1px rgba(245, 158, 11, 0.28),
+       0 0 18px rgba(245, 158, 11, 0.45),
+       inset 0 0 22px rgba(245, 158, 11, 0.10);
+   }
+   50% {
+     border-color: #FBBF24;
+     box-shadow:
+       0 0 0 2px rgba(251, 191, 36, 0.55),
+       0 0 28px rgba(251, 191, 36, 0.7),
+       0 0 56px rgba(245, 158, 11, 0.35),
+       inset 0 0 28px rgba(251, 191, 36, 0.18);
+   }
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .audit-box { animation: none; }
+ }
+ .audit-box h3 { font-size: var(--fs-sm); font-weight: 900; color: var(--baiwu-white); margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 2px solid var(--baiwu-blue-primary); padding-bottom: 6px; display: inline-block; }
+ .audit-box p { font-size: var(--fs-sm); color: var(--baiwu-white); line-height: 1.6; font-weight: 500; }
+
+ /* ===========================
+    Industries + Departments — TWO sections sharing the same visual
+    grammar. Both are LIGHT (var(--baiwu-bg-light) bg), use the same
+    `.sec-title` heading style as "THE TRUST LAYER", same intro
+    paragraph treatment, same white-card-with-blue-blade card design.
+    Visual differences are intentional and minimal: industries cards
+    are taller (have compliance chips), departments cards are flatter.
+    =========================== */
+ .industries-section,
+ .departments-section {
+   background: var(--baiwu-bg-light);
+   padding: 40px 4%;             /* match `.section-row` / `.audit-section`
+                                    standard so titles align horizontally */
+ }
+ /* Wraps no longer apply max-width — content spans the same section-content
+    box as `.audit-section`'s heading + grid so left edges of every section's
+    sec-title line up at the same 4% from viewport edge. */
+ .industries-wrap,
+ .departments-wrap {
+   width: 100%;
+ }
+
+ /* Light-variant of `.sec-title` — same blade + size + weight + uppercase
+    treatment as "THE TRUST LAYER" header, but text colour switches to
+    brand-blue (instead of white) for legibility on a light section. */
+ .sec-title.sec-title--light {
+   color: var(--baiwu-blue-primary);
+ }
+
+ /* Section intro paragraph — sits directly under the .sec-title with
+    a 3px gold blade left, same indent as the `.sec-title` blade so
+    both align to the same vertical line. UNIFORM font-size across
+    all sections (light + dark variants only swap colour). */
+ .sec-intro {
+   font-size: var(--fs-sm);
+   color: var(--text-sub);
+   line-height: 1.6;
+   max-width: 760px;
+   margin: 14px 0 32px;
+   padding-left: 18px;
+   border-left: 3px solid #F59E0B;
+   font-weight: 500;
+ }
+ /* Dark-section variant (e.g. inside .map-section over the navy bg) —
+    same font-size, line-height, blade — only the body colour flips
+    so the paragraph stays legible against the dark background. */
+ .sec-intro.sec-intro--dark {
+   color: rgba(255, 255, 255, 0.78);
+ }
+
+ /* ----- Industries grid ----- */
+ .industries-grid {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 18px;
+ }
+ .industry-card {
+   position: relative;
+   display: flex; flex-direction: column;
+   background: var(--baiwu-white);
+   border: 1px solid var(--border-line);
+   /* 6px blade in the industry's signature `--accent` colour — each of
+      the 9 industries has its own distinct blade colour, set via
+      `style="--accent:#XXXXXX"` from content.json's `color` field. */
+   border-left: 6px solid var(--accent, var(--baiwu-blue-primary));
+   border-radius: 6px;
+   padding: 24px 24px 22px;
+   color: var(--text-main);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+ }
+ .industry-card:hover {
+   transform: translateY(-3px);
+   /* Hover keeps the original blade colour (no gold override) so each
+      industry remains visually distinct in either state. Add a soft
+      shadow tint matching the accent so the lift is felt. */
+   box-shadow:
+     0 14px 32px rgba(0, 45, 92, 0.1),
+     -4px 0 16px color-mix(in srgb, var(--accent, #0059B3) 25%, transparent);
+ }
+ .industry-name {
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: var(--fs-base);
+   font-weight: 900;
+   color: var(--baiwu-blue-primary);
+   text-transform: uppercase;
+   letter-spacing: 1.2px;
+   margin: 0 0 10px;
+   line-height: 1.2;
+ }
+ .industry-desc {
+   font-size: var(--fs-sm);
+   color: var(--text-sub);
+   line-height: 1.55;
+   margin: 0 0 14px;
+   flex: 1;
+ }
+ .industry-chips {
+   display: flex; flex-wrap: wrap; gap: 6px;
+ }
+ .industry-chip {
+   font-size: 9.5px; font-weight: 800;
+   letter-spacing: 1.2px;
+   text-transform: uppercase;
+   padding: 4px 9px;
+   border-radius: 999px;
+   color: #B8770A;
+   background: rgba(245, 158, 11, 0.08);
+   border: 1px solid rgba(245, 158, 11, 0.45);
+ }
+
+ /* ----- Departments strip ----- */
+ .departments-strip {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 18px;
+ }
+ .department-card {
+   background: var(--baiwu-white);
+   border: 1px solid var(--border-line);
+   border-left: 4px solid var(--baiwu-blue-primary);
+   border-radius: 6px;
+   padding: 24px 24px 22px;
+   transition: transform 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease;
+ }
+ .department-card:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 14px 32px rgba(0, 45, 92, 0.1);
+   border-left-color: #F59E0B;
+ }
+ .department-name {
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: var(--fs-base);
+   font-weight: 900;
+   color: var(--baiwu-blue-primary);
+   text-transform: uppercase;
+   letter-spacing: 1.2px;
+   margin: 0 0 10px;
+ }
+ .department-desc {
+   font-size: var(--fs-sm);
+   color: var(--text-sub);
+   line-height: 1.55;
+   margin: 0;
+ }
+
+ /* (Map section removed — moved into the footer as a 2-column layout
+    [ Map left | Footer info right ]. Map styles now live under the
+    .footer-map-* selectors lower in this stylesheet.) */
+
+ /* Mobile + tablet adjustments */
+ /* (Footer-grid stack rule moved to after the base `.footer-grid {…}`
+    declaration further down — was being overridden by source order. */
+ @media (max-width: 960px) {
+   .industries-grid { grid-template-columns: repeat(2, 1fr); }
+   .departments-strip { grid-template-columns: 1fr; }
+   .footer-info-col {
+     grid-template-columns: repeat(2, 1fr);
+   }
+ }
+ @media (max-width: 600px) {
+   .industries-section,
+   .departments-section { padding: 36px 4%; }
+   .industries-grid { grid-template-columns: 1fr; gap: 14px; }
+   .industry-card,
+   .department-card { padding: 22px 20px 20px; }
+   .footer { padding: 36px 4% 0; }
+   .footer-info-col {
+     grid-template-columns: 1fr;
+   }
+   .footer-map-card { min-height: 360px; padding: 14px 12px; }
+   .footer-map-card .chart-container { min-height: 340px; }
+   .f-bottom-bar { justify-content: flex-start; }
+ }
+
+ /* The standalone chart-container utility is the only chart-related
+    class still used in the live HTML — referenced by the footer's
+    `#global-map` element. The old `.charts-row`, `.chart-card`,
+    `.chart-card::before/after` (blueprint grid overlay), and
+    `.chart-label` rules from the legacy 2-up dashboard layout were
+    deleted; they had no markup left referencing them. */
+ .chart-container {
+   width: 100%;
+   flex: 1;
+   min-height: 280px;
+   position: relative;
+   z-index: 1;
+ }
+
+
+ /* ===========================
+    Footer
+    =========================== */
+ .footer {
+   /* Footer uses the SAME dark-navy background as `.audit-section`
+      (THE TRUST LAYER) — `#1E3A6B`. Two visually heavy dark sections
+      bookend the page (Trust Layer above, Footer at the very bottom),
+      creating a clear vertical rhythm.
+      Top padding tight (24px) so the dark navy hugs the section
+      above without a wide empty gap. */
+   background: #1E3A6B;
+   color: var(--baiwu-white);
+   padding: 24px 4% 0;
+ }
+ /* Footer grid uses the SAME 2/3 + 1/3 proportional split + gap as the
+    Departments / Industries grids above (`repeat(3, 1fr); gap: 18px`).
+    Specifically: with `2fr / 1fr` + `gap: 36px`, the right column's
+    LEFT EDGE lands at exactly the same x-coordinate as the third
+    (IT & Operations) Departments card's left edge above it. Map
+    shrinks proportionally so DOLPHLINK + business card slide right
+    onto that shared vertical guide line. */
+ .footer-grid {
+   display: grid;
+   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+   gap: 36px;
+   align-items: stretch;
+   padding-bottom: 28px;
+ }
+ /* CRITICAL: this @media query MUST come AFTER the base `.footer-grid`
+    rule above. Earlier the media query lived above the base rule and
+    was being overridden by source-order cascade — same specificity,
+    last-declared wins, so the base 2fr/1fr always defeated the
+    1fr-stack rule regardless of viewport. */
+ @media (max-width: 1600px) {
+   .footer-grid {
+     grid-template-columns: 1fr;
+     gap: 28px;
+   }
+   .footer-info-col { min-height: 0; }
+   /* Taller map in stacked mode — when the column gets the full
+      footer width (~1300-1500px), bumping height to 560px brings
+      the card aspect closer to the world map's natural 2:1, so the
+      map fills the card without giant left/right ocean margins. */
+   .footer-map-card { min-height: 560px; }
+   .footer-map-card .chart-container { min-height: 552px; }
+ }
+ .footer-map-col {
+   display: flex; flex-direction: column;
+ }
+ .footer-map-col .sec-title {
+   color: var(--baiwu-white);
+   border-left-color: var(--baiwu-blue-primary);
+   margin-bottom: 10px;
+ }
+ .footer-map-col .sec-intro {
+   color: rgba(255, 255, 255, 0.72);
+   margin: 0 0 18px;
+ }
+ .footer-map-card {
+   flex: 1;
+   min-height: 480px;
+   background: linear-gradient(180deg, #002D5C 0%, #001A38 100%);
+   border: 1px solid rgba(56, 189, 248, 0.28);
+   border-radius: 8px;
+   padding: 4px;
+   overflow: hidden;
+   box-shadow:
+     0 0 0 1px rgba(56, 189, 248, 0.1),
+     0 0 24px rgba(56, 189, 248, 0.14),
+     0 14px 40px rgba(0, 0, 0, 0.32);
+ }
+ .footer-map-card .chart-container {
+   width: 100%;
+   height: 100%;
+   min-height: 472px;
+ }
+
+ /* INFO COLUMN — flex container. Generous gaps so DOLPHLINK title,
+    HQ/Engage block, and the business card each read as distinct
+    independent units. */
+ .footer-info-col {
+   display: flex;
+   flex-direction: column;
+   gap: 40px;
+   min-height: 480px;
+ }
+ .footer-info-top {
+   flex: 0 0 auto;
+   display: flex; flex-direction: column;
+   gap: 36px;
+ }
+ /* HQ + ENGAGE — 2 cols with a vertical gold-tinted divider between
+    them so they read as two distinct contact zones, not one sprawl. */
+ .footer-info-mini-grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 18px 0;
+   position: relative;
+ }
+ .footer-info-mini-grid > .f-col {
+   padding-right: 18px;
+   padding-left: 18px;
+ }
+ .footer-info-mini-grid > .f-col:first-child { padding-left: 0; }
+ .footer-info-mini-grid > .f-col:last-child  { padding-right: 0; }
+ .footer-info-mini-grid > .f-col + .f-col {
+   border-left: 1px solid rgba(245, 158, 11, 0.32);
+ }
+
+ .footer .f-col h2 {
+   color: var(--baiwu-white);
+   /* DOLPHLINK title's left blade MUST be enterprise brand blue —
+      same as every other section heading on the page (.sec-title /
+      .strip-tag). Gold blade was inconsistent with site convention. */
+   border-left: 5px solid var(--baiwu-blue-primary);
+   font-size: var(--fs-xl);
+   font-weight: 900;
+   margin-bottom: 10px;
+   padding-left: 14px;
+   line-height: 1;
+   letter-spacing: -0.3px;
+ }
+ .footer .f-col h6 {
+   color: #F59E0B;
+   font-size: 11px;
+   font-weight: 900;
+   text-transform: uppercase;
+   letter-spacing: 1.8px;
+   margin-bottom: 10px;
+   padding-left: 10px;
+   border-left: 3px solid #F59E0B;
+   line-height: 1;
+ }
+ .footer .f-col p,
+ .footer .f-col a {
+   color: rgba(255, 255, 255, 0.85);
+   font-size: var(--fs-sm);
+   text-decoration: none;
+   display: block;
+   margin-bottom: 6px;
+   font-weight: 500;
+   line-height: 1.5;
+ }
+ .footer .f-col a:hover { color: #F59E0B; }
+ .footer .brand-col p {
+   color: rgba(255, 255, 255, 0.7);
+   font-weight: 500;
+   max-width: 540px;
+   font-size: var(--fs-sm);
+   line-height: 1.6;
+ }
+ .footer .f-col-mission { color: rgba(255, 255, 255, 0.7) !important; font-weight: 500 !important; }
+ .footer .f-col-hours {
+   color: rgba(255, 255, 255, 0.55) !important;
+   font-size: var(--fs-xs) !important;
+   font-weight: 500 !important;
+   margin-top: 8px !important;
+ }
+ .footer .f-col-maplink {
+   color: #F59E0B !important;
+   font-size: var(--fs-xs) !important;
+   font-weight: 700 !important;
+   margin-top: 6px !important;
+ }
+ .footer .f-col-role {
+   color: rgba(255, 255, 255, 0.55);
+   font-size: var(--fs-xs);
+   font-weight: 500;
+ }
+ .footer .f-install-link {
+   color: #F59E0B !important;
+   font-weight: 800 !important;
+ }
+ .footer .f-install-link:hover { color: #FBBF24 !important; }
+
+ /* Quick Links — inline pill-row inside footer right column. */
+ .f-quick-links {
+   list-style: none; margin: 0; padding: 0;
+   display: flex; flex-direction: column; gap: 0;
+ }
+ .f-quick-links li { margin: 0; }
+ .f-quick-links a {
+   font-size: var(--fs-sm) !important;
+   color: rgba(255, 255, 255, 0.85) !important;
+   font-weight: 500 !important;
+   margin-bottom: 6px !important;
+   transition: color 0.2s ease, padding-left 0.2s ease;
+   padding-left: 0;
+ }
+ .f-quick-links a:hover {
+   color: #F59E0B !important;
+   padding-left: 4px;
+ }
+
+ /* ===========================
+    Business Inquiry Card (footer right-bottom) — generic "Talk to
+    Sales" CTA card with prominent QR code linking to Joyce's
+    public landing page (`/c/?u=joycetsam`). Sits IMMEDIATELY under
+    the info-top stack and grows vertically to align its bottom edge
+    with the map card's bottom edge.
+    =========================== */
+ .footer-vcard {
+   flex: 1 1 auto;
+   display: flex;
+   background: var(--baiwu-white);
+   color: var(--text-main);
+   border-radius: 10px;
+   border: 1px solid rgba(245, 158, 11, 0.42);
+   box-shadow:
+     0 0 0 1px rgba(245, 158, 11, 0.15),
+     0 16px 36px rgba(0, 0, 0, 0.32);
+   overflow: hidden;
+   position: relative;
+ }
+ .footer-vcard::before {
+   /* Top gold accent bar */
+   content: '';
+   position: absolute;
+   top: 0; left: 0; right: 0;
+   height: 4px;
+   background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #F59E0B 100%);
+ }
+ .vcard-frame {
+   /* Even tighter top/bottom — the card is a name-card, not a
+      poster. Vertical padding 8px lets the QR + text sit close
+      to the card edges. */
+   flex: 1;
+   display: grid;
+   grid-template-columns: 1fr 180px;
+   gap: 22px;
+   padding: 8px 22px;
+   align-items: center;
+   align-content: center;
+ }
+ .vcard-left {
+   display: flex; flex-direction: column;
+   min-width: 0;
+ }
+ .vcard-brand {
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: 11px; font-weight: 900;
+   letter-spacing: 2.6px;
+   text-transform: uppercase;
+   color: var(--baiwu-blue-primary);
+ }
+ .vcard-rule {
+   width: 40px; height: 2px;
+   background: #F59E0B;
+   margin: 6px 0 12px;
+ }
+ .vcard-eyebrow {
+   font-size: 11px;
+   font-weight: 800;
+   letter-spacing: 1.8px;
+   text-transform: uppercase;
+   color: #F59E0B;
+   margin-bottom: 4px;
+ }
+ .vcard-heading {
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: 26px;
+   font-weight: 900;
+   color: var(--baiwu-blue-deep);
+   letter-spacing: -0.5px;
+   margin: 0 0 8px;
+   line-height: 1.1;
+ }
+ .vcard-line {
+   font-size: 13px;
+   color: var(--text-main);
+   line-height: 1.55;
+   margin: 0 0 6px;
+   font-weight: 500;
+ }
+ .vcard-line--muted {
+   color: var(--text-sub);
+   font-size: 12px;
+ }
+ .vcard-right {
+   display: flex; flex-direction: column;
+   align-items: center; justify-content: center;
+   gap: 10px;
+ }
+ .vcard-qr {
+   width: 160px; height: 160px;
+   display: flex; align-items: center; justify-content: center;
+   background: var(--baiwu-white);
+   border: 1px solid rgba(245, 158, 11, 0.55);
+   border-radius: 8px;
+   padding: 6px;
+ }
+ .vcard-qr img {
+   width: 100% !important;
+   height: 100% !important;
+   image-rendering: pixelated;
+ }
+ .vcard-qr-hint {
+   font-size: 11px;
+   font-weight: 800;
+   letter-spacing: 1.4px;
+   text-transform: uppercase;
+   color: var(--baiwu-blue-primary);
+   text-align: center;
+ }
+ @media (max-width: 600px) {
+   .vcard-frame {
+     grid-template-columns: 1fr;
+     padding: 20px 18px 18px;
+     gap: 16px;
+   }
+   .vcard-right { align-items: flex-start; }
+   .vcard-qr { width: 150px; height: 150px; }
+   .vcard-heading { font-size: 22px; }
+ }
+
+ /* Social row — sits in the bottom-bar between legal links and the
+    copyright. Compact circle icons in brand-blue with gold hover. */
+ .f-social-row {
+   display: inline-flex; gap: 8px;
+   align-items: center;
+ }
+ .f-social-link {
+   width: 30px; height: 30px;
+   display: inline-flex; align-items: center; justify-content: center;
+   border-radius: 50%;
+   background: rgba(0, 89, 179, 0.06);
+   border: 1px solid rgba(0, 89, 179, 0.4);
+   color: var(--baiwu-blue-primary);
+   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+ }
+ .f-social-link:hover {
+   background: rgba(245, 158, 11, 0.14);
+   border-color: #F59E0B;
+   color: #F59E0B;
+   transform: translateY(-1px);
+ }
+ .f-social-link svg {
+   width: 14px; height: 14px;
+ }
+ /* (Old .footer-main / .f-col base rules deleted — the new
+    .footer-grid / .footer-info-col layout fully replaced them.
+    Per-section footer typography lives inside the .footer scope above.) */
+ .f-col-mission { color: var(--text-sub); font-weight: 500; }
+ .brand-col p { color: var(--text-sub); font-weight: 500; max-width: 320px; }
+ /* Footer additions: business hours line + Google Maps link + director's role */
+ .f-col-hours {
+   font-size: var(--fs-xs) !important;
+   color: var(--text-sub) !important;
+   font-weight: 600 !important;
+   margin-top: 8px !important;
+   letter-spacing: 0.4px;
+ }
+ .f-col-maplink {
+   font-size: var(--fs-xs) !important;
+   color: var(--baiwu-blue-primary) !important;
+   font-weight: 700 !important;
+   letter-spacing: 0.6px;
+   margin-top: 6px !important;
+ }
+ .f-col-maplink::after {
+   content: ' →';
+   color: #F59E0B;
+ }
+ .f-col-role {
+   font-size: var(--fs-xs); color: var(--text-sub);
+   font-weight: 500; letter-spacing: 0.3px;
+   display: block; margin-top: -2px; margin-bottom: 8px;
+ }
+ /* Footer Install App link — gold accent so it visually stands apart
+    from the regular footer links and signals "this opens an action,
+    not a page". Always works (calls window.dolphlinkInstall()). */
+ .f-install-link {
+   color: #F59E0B !important;
+   font-weight: 800 !important;
+   letter-spacing: 0.6px;
+   margin-top: 6px !important;
+   transition: color 0.2s ease, gap 0.2s ease;
+ }
+ .f-install-link:hover {
+   color: #FBBF24 !important;
+ }
+ /* Bottom bar — same white as parent footer, separated above by the
+    SITE-STANDARD comet ribbon. Three-section layout:
+    LEFT  — legal links (Privacy / Terms / Cookies / Subprocessors)
+    CENTER — social icons row (LinkedIn / Email / Calendar)
+    RIGHT — copyright */
+ .f-bottom-bar {
+   position: relative;
+   margin-top: 0;
+   margin-left: -4%;
+   margin-right: -4%;
+   padding: 16px 4% 14px;
+   background: var(--baiwu-white);
+   display: grid;
+   grid-template-columns: 1fr auto 1fr;
+   align-items: center;
+   gap: 18px;
+   font-size: 11px;
+   font-weight: 600;
+   letter-spacing: 0.6px;
+   color: var(--text-sub);
+   text-transform: uppercase;
+ }
+ .f-bottom-bar > .f-legal-links { justify-self: start; }
+ .f-bottom-bar > .f-social-row { justify-self: center; }
+ .f-bottom-bar > .f-copyright { justify-self: end; }
+ /* Force single-line for legal links + use a generous hide threshold
+    (1180px) — ANY width below that, the entire legal-links cluster
+    is hidden so it can never wrap to a second row alongside the
+    bottom-bar's other elements (social + copyright). */
+ .f-legal-links {
+   flex-wrap: nowrap;
+   white-space: nowrap;
+ }
+ .f-legal-links a { white-space: nowrap; }
+ @media (max-width: 1180px) {
+   .f-bottom-bar {
+     grid-template-columns: 1fr auto;
+     padding: 16px 4% 14px;
+     gap: 14px;
+   }
+   .f-bottom-bar > .f-legal-links { display: none; }
+   .f-bottom-bar > .f-social-row  { justify-self: start; }
+   .f-bottom-bar > .f-copyright   { justify-self: end; text-align: right; }
+ }
+ @media (max-width: 600px) {
+   .f-bottom-bar { padding: 12px 4% 10px; }
+   .f-copyright { font-size: 9px; letter-spacing: 1px; }
+ }
+ /* Standard site comet ribbon — same animation + colours + box-shadow
+    as the section dividers (`.reliability-section::before` family). */
+ .f-bottom-bar::before {
+   content: '';
+   position: absolute;
+   top: 0; left: 0; right: 0;
+   height: 1px;
+   z-index: 5;
+   pointer-events: none;
+   background-image:
+     linear-gradient(90deg,
+       transparent 0%,
+       transparent 35%,
+       #FFFFFF 50%,
+       transparent 65%,
+       transparent 100%),
+     linear-gradient(var(--baiwu-blue-primary), var(--baiwu-blue-primary));
+   background-size: 200% 100%, 100% 100%;
+   background-position: -100% 0, 0 0;
+   background-repeat: no-repeat, no-repeat;
+   animation: ribbon-flow 3.2s linear infinite;
+   box-shadow: 0 0 6px rgba(0, 89, 179, 0.6), 0 0 14px rgba(0, 89, 179, 0.28);
+   will-change: background-position;
+   transform: translateZ(0);
+   contain: layout paint;
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .f-bottom-bar::before { animation: none; }
+ }
+ .f-legal-links {
+   list-style: none; margin: 0; padding: 0;
+   display: flex; flex-wrap: wrap; gap: 0;
+ }
+ .f-legal-links li { position: relative; }
+ .f-legal-links li + li { margin-left: 18px; }
+ .f-legal-links li + li::before {
+   content: '·';
+   position: absolute;
+   left: -11px; top: 50%; transform: translateY(-50%);
+   color: rgba(245, 158, 11, 0.7);
+   font-size: 14px;
+   line-height: 1;
+ }
+ .f-legal-links a {
+   color: var(--baiwu-blue-primary) !important;
+   font-size: 11px !important;
+   font-weight: 700 !important;
+   letter-spacing: 0.6px;
+   text-transform: uppercase;
+   text-decoration: none;
+   transition: color 0.2s ease;
+ }
+ .f-legal-links a:hover { color: #F59E0B !important; }
+ .f-copyright {
+   font-size: 10px;
+   letter-spacing: 1.4px;
+   color: var(--text-sub);
+ }
+
+ /* ===========================
+    Responsive
+    =========================== */
+ @media (max-width: 1180px) {
+   .menu-item { padding: 0 11px; }
+   /* Stat cards stay vertically stacked at this breakpoint — same as
+      base. Reduce icon/padding slightly for narrower viewports. */
+   .stat-icon-wrap { width: 68px; height: 68px; }
+   .stat-icon { width: 56px; height: 56px; }
+   .stat-card { padding: 18px 8px 24px; }
+ }
+ @media (max-width: 1024px) {
+   :root { --nav-height: 76px; }
+   nav { padding: 0 3%; }
+   .brand-logo { height: 60px; }
+   .brand-name { font-size: 1.4rem; }
+   .menu-item { padding: 0 8px; height: 36px; font-size: var(--fs-xs); letter-spacing: 0.4px; }
+   .nav-cta { padding: 0 14px; height: 40px; }
+   .section-row { padding: 24px 4%; }
+   .hero { flex-direction: column; align-items: flex-start; padding: 40px 4%; min-height: auto; gap: 24px; }
+   .hero-content { max-width: 100%; }
+   .hero-content h1 { font-size: var(--fs-2xl); }
+   .v-frame { width: 100%; flex: none; }
+   .reliability-section { padding: 28px 4%; }
+   .stat-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+   .stat-card {
+     border-bottom: 1px solid var(--border-line);
+     justify-content: center;
+     min-height: 108px;
+   }
+   /* 5 stats in 2 columns = 3 rows; the right column of each row has no
+      right border, and the last card (5th, alone in the 3rd row) has no
+      bottom border. */
+   .stat-card:nth-child(2n) { border-right: none; }
+   .stat-card:last-child { border-bottom: none; }
+   .stat-meta { flex: 0 0 auto; }
+   .stat-icon-wrap { width: 100px; height: 100px; }
+   .stat-icon { width: 88px; height: 88px; }
+   /* In stacked layout, hide the vertical divider (::after only makes sense in row layout) */
+   .charts-row { flex-direction: column; }
+   .charts-row::after { display: none; }
+   .footer-main { grid-template-columns: 1fr 1fr; }
+   .audit-grid { grid-template-columns: 1fr 1fr; }
+   .infra-section { padding: 28px 4%; }
+   .portfolio-strip { grid-template-columns: repeat(3, 1fr); }
+   .btn-portfolio { padding: 22px 10px 36px; min-height: 44px; }
+   .btn-portfolio:nth-child(3) { border-right: none; }
+   .btn-portfolio:nth-child(1), .btn-portfolio:nth-child(2), .btn-portfolio:nth-child(3) { border-bottom: 1px solid var(--border-line); }
+   .portfolio-icon-wrap { width: 100px; height: 100px; }
+   .portfolio-icon { width: 88px; height: 88px; }
+   .chart-card { height: 380px; padding: 20px 3%; }
+   .audit-section { padding: 28px 4%; }
+   .sec-title { font-size: var(--fs-xl); }
+   /* Video frame — mobile */
+   .v-cine-tag { left: 14px; top: 14px; }
+   .v-play-btn { width: 64px; height: 64px; }
+   .v-caption { padding: 12px 14px 10px; }
+   .v-controls { padding: 5px 10px; gap: 6px; top: 14px; right: 14px; }
+   .v-vol-slider { width: 60px; }
+ }
+ @media (max-width: 820px) {
+   .fixed-menu .menu-item:nth-child(n+3) { display: none; }
+ }
+ @media (max-width: 640px) {
+   .brand-logo { height: 48px; }
+   .brand-name { font-size: 1.15rem; }
+   .fixed-menu { display: none; }
+   .nav-cta { height: 36px; padding: 0 12px; font-size: var(--fs-xs); }
+   .footer-main, .audit-grid { grid-template-columns: 1fr; }
+   .f-bottom-bar { justify-content: center; text-align: center; }
+   .portfolio-strip { grid-template-columns: repeat(2, 1fr); }
+   .stat-strip { grid-template-columns: 1fr; }
+   .stat-card {
+     border-right: none !important;
+     padding: 18px 16px;
+     gap: 16px;
+     justify-content: flex-start;     /* Left-align */
+     min-height: 96px;
+   }
+   /* :not(:last-child) raises specificity to override the 1024px rule that
+      stripped border-bottom from cards 3/4 (intended for the 2x2 layout). */
+   .stat-card:not(:last-child) { border-bottom: 1px solid var(--border-line); }
+   .stat-card:last-child { border-bottom: none; }
+   .stat-icon-wrap { width: 84px; height: 84px; }
+   .stat-icon { width: 72px; height: 72px; }
+   .stat-value { font-size: var(--fs-xl); }
+   .stat-label { font-size: var(--fs-xs); }
+   /* Single-column layout — drop the divider, let meta sit flush with icon */
+   .stat-meta {
+     flex: 0 0 auto !important;
+     padding-left: 0 !important;
+     border-left: none !important;
+   }
+   .btn-portfolio { padding: 24px 14px 36px; min-height: 44px; }
+   /* Mobile: tagline becomes an in-flow subtitle below the label (not a top
+      pill), so it doesn't dominate the card or collide with the NEW badge. */
+   .portfolio-tagline {
+     position: static;
+     background: transparent;
+     color: var(--baiwu-blue-primary);
+     border: none;
+     box-shadow: none;
+     padding: 0;
+     margin-top: 2px;
+     font-size: 9px;
+     font-weight: 700;
+     letter-spacing: 0.8px;
+     line-height: 1.2;
+     max-width: 100%;
+     white-space: normal;
+     overflow: visible;
+     text-overflow: clip;
+     opacity: 0.78;
+   }
+   /* NEW badge stays as a small corner accent — no longer collides with anything */
+   .portfolio-badge {
+     font-size: 8px;
+     padding: 2px 4px;
+     letter-spacing: 0.8px;
+     top: 6px; left: 6px;
+   }
+   /* 9 products in 2-col leaves the 9th orphaned; let the last card span both
+      columns to stay visually balanced. */
+   .btn-portfolio:last-child { grid-column: 1 / -1; }
+   .btn-portfolio:nth-child(odd) { border-right: 1px solid var(--border-line); }
+   .btn-portfolio:nth-child(even) { border-right: none !important; }
+   .btn-portfolio:last-child { border-right: none !important; }
+   /* 2-col mobile, 9 cards = 2/2/2/2 + spanning last row.
+      Every card except the last needs a border-bottom to draw all dividers. */
+   .btn-portfolio:not(:last-child) { border-bottom: 1px solid var(--border-line); }
+   .portfolio-icon-wrap { width: 84px; height: 84px; }
+   .portfolio-icon { width: 72px; height: 72px; }
+   .portfolio-label { font-size: var(--fs-xs); letter-spacing: 1.2px; }
+   .hero-content h1 { font-size: var(--fs-2xl); }
+   .hero-cta { flex-direction: column; align-items: stretch; }
+   .btn { padding: 13px 20px; min-height: 44px; }
+   /* Video — mobile: keep only FEATURE PRESENTATION tag for clarity, hide
+      caption title, subtitle, and meta which become unreadable at small size. */
+   .v-cine-tag { font-size: var(--fs-2xs); padding: 3px 8px; left: 12px; top: 12px; letter-spacing: 1.6px; }
+   .v-play-btn { width: 56px; height: 56px; }
+   .v-caption { display: none; }
+   /* Compact small-screen controls — keep mute + fullscreen, hide volume slider */
+   .v-controls { top: 12px; right: 12px; padding: 4px 8px; gap: 6px; }
+   .v-vol-slider { display: none; }
+   .v-control-btn { width: 22px; height: 22px; }
+   /* Thinner section divider on narrow screens */
+   .reliability-section::before,
+   .infra-section::before,
+   .audit-section::before,
+   .charts-row::before,
+   .footer::before { box-shadow: 0 0 4px rgba(56, 189, 248, 0.55); }
+   /* Audit heading + body */
+   .sec-title { font-size: var(--fs-xl); padding-left: 14px; border-left-width: 5px; margin-bottom: 16px; }
+   .audit-box { padding: 16px; }
+   .audit-box h3 { font-size: var(--fs-sm); }
+   .audit-box p { font-size: var(--fs-sm); }
+   /* Compact strip header */
+   .stat-strip-header { padding: 12px 16px; flex-wrap: wrap; }
+   .strip-tag { font-size: var(--fs-xs); letter-spacing: 1.8px; padding: 0 0 0 12px; }
+   .strip-tag::before { width: 4px; height: 14px; }
+   .strip-status { font-size: var(--fs-xs); }
+   /* Eyebrow */
+   .eyebrow { font-size: var(--fs-2xs); padding: 5px 12px 5px 9px; letter-spacing: 1.3px; }
+ }
+ @media (max-width: 480px) {
+   .section-row, .reliability-section, .infra-section, .audit-section { padding: 24px 4%; }
+   .hero { padding: 32px 4%; }
+   .hero-content h1 { font-size: var(--fs-xl); }
+   .hero-content p { font-size: var(--fs-sm); padding-left: 14px; }
+   .stat-value { font-size: var(--fs-xl); }
+   .stat-card { min-height: 84px; }
+   .stat-icon-wrap { width: 72px; height: 72px; }
+   .stat-icon { width: 60px; height: 60px; }
+   .portfolio-icon-wrap { width: 72px; height: 72px; }
+   .portfolio-icon { width: 60px; height: 60px; }
+   /* Slightly shorter chart cards on extra-narrow screens */
+   .chart-card { height: 340px; padding: 18px 2%; }
+   .chart-card h3 { font-size: var(--fs-sm); }
+ }
+ /* ===========================
+    Audit icons
+    =========================== */
+ .audit-icon {
+   color: var(--baiwu-blue-primary);
+   margin-bottom: 12px;
+   display: block;
+   filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.35));
+ }
+
+ /* ===========================
+    Hero text CTA link (replaces the ghost button)
+    =========================== */
+ .btn-link {
+   display: inline-flex; align-items: center; gap: 6px;
+   padding: 10px 4px;
+   font-size: var(--fs-xs);
+   font-weight: 800;
+   letter-spacing: 1.1px;
+   text-transform: uppercase;
+   color: var(--baiwu-white);
+   text-decoration: none;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+   transition: 0.2s ease;
+ }
+ .btn-link span { transition: transform 0.2s ease; }
+ .btn-link:hover {
+   border-bottom-color: var(--baiwu-white);
+   color: var(--baiwu-white);
+ }
+ .btn-link:hover span { transform: translateX(4px); }
+
+ /* ===========================
+    Footer legal bar
+    =========================== */
+ .f-bottom-bar {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+ }
+
+
+ /* ===========================
+    Reveal-on-scroll
+    =========================== */
+ .reveal {
+   opacity: 0;
+   transform: translateY(28px);
+   transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+   /* No persistent will-change. The transition triggers a one-shot layer
+      promotion automatically; pinning will-change forever would waste GPU
+      memory on every revealed section for the rest of the page lifetime. */
+ }
+ .reveal.revealed {
+   opacity: 1;
+   transform: translateY(0);
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .reveal { opacity: 1; transform: none; }
+ }
+
+ /* ===========================
+    Focus rings — keyboard-only via :focus-visible
+    =========================== */
+ *:focus { outline: none; }
+ *:focus-visible {
+   outline: 2px solid var(--baiwu-blue-primary);
+   outline-offset: 3px;
+   border-radius: 2px;
+ }
+ .stat-card:focus-visible,
+ .btn-portfolio:focus-visible {
+   outline-offset: -2px;
+ }
+
+ /* ===========================
+    Trust strip & footer responsive
+    =========================== */
+ @media (max-width: 1024px) {
+   .footer-main { grid-template-columns: 1fr 1fr; }
+ }
+ @media (max-width: 640px) {
+   .footer-main { grid-template-columns: 1fr; }
+   .f-bottom-bar { justify-content: center; }
+ }
+
+ @media (prefers-reduced-motion: reduce) {
+   * { transition: none !important; animation: none !important; }
+ }

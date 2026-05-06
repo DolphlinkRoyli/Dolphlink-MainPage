@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Disallow: /content/_*
+Disallow: /media/_orig/
+
+# Block AI scrapers that don't respect robots (optional, comment out if you want)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://dolphlinkroyli.github.io/Dolphlink-MainPage/seo/sitemap.xml
