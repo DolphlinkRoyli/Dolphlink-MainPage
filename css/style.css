@@ -1687,11 +1687,30 @@
  }
  @media (max-width: 1024px) {
    .industries-tier--primary { grid-template-columns: repeat(2, 1fr); }
+   /* 5 items at 3 cols = 3+2 (last row 2 cards). Acceptable on tablet. */
    .industries-tier--secondary { grid-template-columns: repeat(3, 1fr); }
  }
- @media (max-width: 640px) {
+ @media (max-width: 720px) {
    .industries-tier--primary { grid-template-columns: 1fr; }
-   .industries-tier--secondary { grid-template-columns: repeat(2, 1fr); }
+   /* 5 items at 2 cols would leave a lonely 5th card on its own row.
+      Switch to 1 column → all 5 cards stack cleanly, full-width. */
+   .industries-tier--secondary { grid-template-columns: 1fr; gap: 8px; }
+   .industries-tier-label { margin-top: 22px; }
+   /* Mini cards on mobile: a bit more padding so they read like full
+      list rows, not squeezed thumbnails. */
+   .industry-card--mini {
+     padding: 16px 18px;
+     border-left-width: 3px;
+   }
+   .industry-card--mini .industry-name {
+     font-size: var(--fs-xs);
+     letter-spacing: 1.2px;
+     margin-bottom: 4px;
+   }
+   .industry-card--mini .industry-desc {
+     font-size: 13px;
+     line-height: 1.55;
+   }
  }
  .industry-card {
    position: relative;
