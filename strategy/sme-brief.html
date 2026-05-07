@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中小企业市场策略简报 · DOLPHLINK × LARK</title>
+<meta name="description" content="百悟科技 SME 市场进入策略：痛点诊断、与企业版的关系、Twilio 留下的空间、东南亚 vs 全球分层、三种部署模式、ERP × Lark 集成流程图。给到 B 决策者的一份直白简报。">
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap">
+
+<style>
+:root {
+  --ink: #0F172A;
+  --ink-soft: #334155;
+  --ink-mid: #475569;
+  --ink-faint: #64748B;
+  --ink-muted: #94A3B8;
+  --line: #E2E8F0;
+  --line-soft: #EEF2F7;
+  --paper: #FFFFFF;
+  --paper-soft: #F8FAFC;
+  --paper-tint: #F1F5F9;
+
+  --blue: #0059B3;
+  --blue-deep: #002D5C;
+  --blue-soft: rgba(0, 89, 179, 0.08);
+  --blue-mid:  rgba(0, 89, 179, 0.18);
+
+  --gold: #BF9430;
+  --gold-warm: #D4AB45;
+  --gold-soft: rgba(191, 148, 48, 0.14);
+
+  --mint: #10B981;
+  --mint-soft: rgba(16, 185, 129, 0.10);
+
+  --warn: #DC2626;
+  --warn-soft: rgba(220, 38, 38, 0.08);
+
+  --content-w: 880px;
+  --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--blue); text-decoration: none; border-bottom: 1px dotted currentColor; }
+a:hover { color: var(--blue-deep); border-bottom-style: solid; }
+
+/* ------ Page layout ----------------------------------------------------- */
+.brief {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 88px) clamp(20px, 5vw, 56px) 96px;
+}
+.brief-meta {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: baseline;
+}
+.brief-meta .tag {
+  display: inline-block;
+  background: var(--blue-soft);
+  border-radius: 4px;
+  padding: 4px 10px;
+  letter-spacing: 1.6px;
+}
+.brief-meta .stamp { color: var(--ink-faint); letter-spacing: 1px; }
+
+h1.brief-title {
+  font-family: var(--sans);
+  font-size: clamp(30px, 4.4vw, 44px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+h1.brief-title .accent { color: var(--blue); }
+
+.brief-lead {
+  font-size: clamp(16px, 1.5vw, 18px);
+  line-height: 1.75;
+  color: var(--ink-soft);
+  max-width: 720px;
+  margin: 0 0 36px;
+}
+
+/* ------ Section ---------------------------------------------------------- */
+.sec {
+  padding: 56px 0 8px;
+  border-top: 1px solid var(--line);
+  margin-top: 24px;
+}
+.sec-num {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 3.5px;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.sec-title {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+  margin-bottom: 18px;
+}
+.sec-thesis {
+  font-size: clamp(14.5px, 1.2vw, 16.5px);
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+  max-width: 720px;
+}
+p { margin-bottom: 16px; color: var(--ink-soft); }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); font-weight: 700; }
+
+/* ------ Pain grid -------------------------------------------------------- */
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 28px 0 24px;
+}
+.pain {
+  padding: 22px 22px 20px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--warn);
+  border-radius: 6px;
+}
+.pain-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.pain-num {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.pain-name {
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+.pain p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink-mid);
+  margin: 0;
+}
+.pain p + p { margin-top: 8px; }
+
+/* ------ Pain → Solution two-column ------------------------------------- */
+.pair-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 14px;
+}
+.pair-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 10px 14px;
+  border-bottom: 1.5px solid var(--ink);
+}
+.pair-table td {
+  padding: 16px 14px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.pair-table td:first-child {
+  width: 38%;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper-soft);
+}
+.pair-table td:last-child {
+  background: var(--paper);
+}
+.pair-table td strong { color: var(--blue); }
+
+/* ------ Competitive matrix ---------------------------------------------- */
+.matrix-wrap {
+  margin: 28px 0;
+  padding: 28px 22px 22px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.matrix-wrap svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.matrix-legend {
+  display: flex; flex-wrap: wrap; gap: 18px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--ink-mid);
+}
+.matrix-legend .swatch {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* ------ Region comparison table ----------------------------------------- */
+.region {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 13.5px;
+}
+.region th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 12px 14px;
+  border-bottom: 1.5px solid var(--ink);
+  background: var(--paper);
+}
+.region th:first-child { width: 22%; }
+.region td {
+  padding: 12px 14px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.region td:first-child {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 12.5px;
+}
+.region tr:nth-child(even) td { background: var(--paper-soft); }
+
+/* ------ Deployment cards ------------------------------------------------ */
+.deploy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 28px 0;
+}
+.deploy {
+  padding: 22px 22px 24px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  position: relative;
+}
+.deploy-tier {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.deploy-name {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+.deploy-aud {
+  font-size: 13px;
+  color: var(--ink-mid);
+  font-style: italic;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.deploy dl {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 6px 10px;
+  font-size: 13px;
+}
+.deploy dt {
+  font-weight: 600;
+  color: var(--ink-faint);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+.deploy dd {
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* ------ Mermaid diagram wrapper ----------------------------------------- */
+.flow {
+  margin: 22px 0 30px;
+  padding: 20px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.flow-cap {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  letter-spacing: 0.5px;
+}
+.mermaid {
+  text-align: center;
+  font-family: var(--sans) !important;
+}
+.flow-note {
+  font-size: 12.5px;
+  color: var(--ink-mid);
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  line-height: 1.6;
+}
+.flow-note strong { color: var(--ink); }
+
+/* ------ Closing block --------------------------------------------------- */
+.close {
+  margin-top: 56px;
+  padding: 32px 28px;
+  background: linear-gradient(135deg, var(--blue-deep), #001833);
+  color: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.close h2 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 12px;
+  color: #FFFFFF;
+}
+.close p {
+  font-size: 14.5px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 12px;
+}
+.close ol {
+  font-size: 14px;
+  color: rgba(255,255,255,0.92);
+  padding-left: 22px;
+  line-height: 1.7;
+}
+.close ol li { margin-bottom: 6px; }
+.close .signoff {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.4px;
+}
+
+/* ------ Print + screen niceties ----------------------------------------- */
+@media print {
+  body { font-size: 11pt; }
+  .sec, .close { page-break-inside: avoid; }
+  a { color: inherit; border-bottom: none; }
+}
+</style>
+</head>
+<body>
+
+<article class="brief">
+
+  <!-- ==================================================================
+       HEADER
+       ================================================================== -->
+  <header>
+    <div class="brief-meta">
+      <span class="tag">内部策略简报 · INTERNAL</span>
+      <span class="stamp">Baiwu Tech · DOLPHLINK × LARK · 2026 Q2</span>
+    </div>
+    <h1 class="brief-title">
+      为<span class="accent">不在主流里挣扎</span>的中小企业，<br>
+      建一条主流通道。
+    </h1>
+    <p class="brief-lead">
+      这份简报回答四个问题：第一，亚太长尾中小企业的痛点到底是什么。第二，
+      百悟科技服务大客户的那套底盘，能不能下沉给他们 —— 不打折地下沉。第三，
+      Twilio 这个最大的同行留下了多少空间，我们要怎么占。第四，落到产品上，
+      App、云服务、平台这三种部署怎么搭，ERP 和 Lark 之间的工作流怎么走通。
+      整篇是给决策者看的，不是 marketing — 直白讲清楚利弊和取舍，方便对外
+      说明、对内对齐。
+    </p>
+  </header>
+
+
+  <!-- ==================================================================
+       SECTION 1 — Pain diagnosis
+       ================================================================== -->
+  <section class="sec" id="pain">
+    <div class="sec-num">01 · 痛点诊断</div>
+    <h2 class="sec-title">中小企业不是缩小版的大企业。他们的痛点是大企业供应商根本不去碰的那一类。</h2>
+    <p class="sec-thesis">
+      过去三年我们走访了 SG / KL / HK / BKK / HCM / 印尼雅加达若干家 5–500 人的公司
+      —— 餐饮连锁、跨境电商、诊所集团、补习中心、物流车队、设计工作室。
+      把诉求归纳起来，集中在六个口子。每个口子都不致命，但叠在一起就足以让一家
+      30 人的公司每年白白浪费掉 2–4 个全职人员的精力。
+    </p>
+
+    <div class="pain-grid">
+      <article class="pain">
+        <div class="pain-head"><span class="pain-num">1</span><span class="pain-name">通信成本不透明 + 月费门槛</span></div>
+        <p>大厂 CPaaS（Twilio / Vonage / MessageBird）的最低消费是 USD 800–1,500 / 月，
+          年签起步。一家 12 人的诊所一个月也就发 800 条预约提醒，按用量算 SGD $32，
+          被月费门槛卡得没法用。</p>
+      </article>
+
+      <article class="pain">
+        <div class="pain-head"><span class="pain-num">2</span><span class="pain-name">渠道分散 · 工具孤岛</span></div>
+        <p>客户在 SMS、WhatsApp、Email、电话、Lazada 私信、Shopee 私信之间跳来跳去，
+          团队用 Excel + 群聊兜底。新人入职第一周就是学六套工具的密码。</p>
+      </article>
+
+      <article class="pain">
+        <div class="pain-head"><span class="pain-num">3</span><span class="pain-name">跨语言客服</span></div>
+        <p>越南客户用越南语，泰国客户用泰语，印尼客户用印尼语，老板和团队主要讲普通话/英文。
+          请三套客服人手太贵，机翻又会得罪人。模板出错率 15%+ 的情况很常见。</p>
+      </article>
+
+      <article class="pain">
+        <div class="pain-head"><span class="pain-num">4</span><span class="pain-name">合规盲区</span></div>
+        <p>新加坡 PDPA、马来 PDPA、泰国 PDPA、越南 PDPL、印尼 PDP Law、香港 PDPO、
+          中国《个保法》—— 每个司法区一套规则，每年都在变。SME 没有法务岗，
+          只能祈祷"出事了再说"。</p>
+      </article>
+
+      <article class="pain">
+        <div class="pain-head"><span class="pain-num">5</span><span class="pain-name">上线慢 · 没有 IT 团队</span></div>
+        <p>大厂方案的实施周期是 6–12 周，需要专门 IT 对接、写代码、做集成测试。
+          SME 的"IT 部门"通常就是一个会装 Wi-Fi 的同事。三个月的等待期 +
+          采购流程，老板早就用回 Excel 了。</p>
+      </article>
+
+      <article class="pain">
+        <div class="pain-head"><span class="pain-num">6</span><span class="pain-name">协作工具断层</span></div>
+        <p>东南亚 / 大中华区 SME 用 Lark / 飞书的密度远高于 Slack。
+          但是 CPaaS 的官方 App 几乎都只对接 Slack / Teams。
+          想用 Twilio + Lark 通常要靠 Zapier 胶水或自己写 webhook。</p>
+      </article>
+    </div>
+  </section>
+
+
+  <!-- ==================================================================
+       SECTION 2 — Our direction
+       ================================================================== -->
+  <section class="sec" id="solution">
+    <div class="sec-num">02 · 我们的解</div>
+    <h2 class="sec-title">同一套主权底盘，换一个入口、换一种计费、换一种说话方式。</h2>
+    <p class="sec-thesis">
+      百悟科技服务政府和大客户的核心资产是不可分割的：1,000+ Tier-1 carrier route、
+      ISO 27001 / MAS TRM / IM8 全套合规、99.999% SLA、新加坡主权基础设施。
+      这些资产不能因为客户变小就稀释 —— 我们也不打算稀释。给 SME 的版本
+      共用同一套底盘，但<strong>改造五件事</strong>：入口、计费、合规体感、上手速度、品牌语气。
+      下面是痛点和解的对照。
+    </p>
+
+    <table class="pair-table">
+      <thead>
+        <tr>
+          <th>痛点</th>
+          <th>我们的方向</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>月费门槛 USD 800+ 把小客户挡在门外</td>
+          <td>取消最低消费。从 <strong>SGD $0.04 / SMS</strong> 起，按用量算。SGD $20 充值能发 500 条，下个月不发也不扣钱。
+              企业版的批量阶梯价自动套用，不需要谈判。</td>
+        </tr>
+        <tr>
+          <td>渠道分散 / 工具孤岛</td>
+          <td><strong>Lark 作为统一收件箱。</strong>SMS / WhatsApp / Voice / Email 全部回流到一个 Lark 群聊里，
+              团队在已经在用的工具里就能回复，客户在他喜欢的渠道里收到。</td>
+        </tr>
+        <tr>
+          <td>跨语言客服 · 机翻不可用</td>
+          <td>原生 Unicode SMS（繁/简/越/泰/印尼/Tagalog 全部可用）。
+              <strong>预置 20+ 母语模板</strong>覆盖订单、预约、催收、营销四大场景。支持团队 SG / KL / HK / BKK / HCM 各有母语对接人。</td>
+        </tr>
+        <tr>
+          <td>合规盲区 · 没人懂 PDPA / 个保法</td>
+          <td>合规<strong>内置在路由层</strong>。每条消息出库前先过一遍当地法规检查（Sender ID 是否合规、
+              是否需要 opt-out、日间/夜间窗口）。客户什么都不用做。审计报告按季度自动生成。</td>
+        </tr>
+        <tr>
+          <td>上线 6–12 周 · 没有 IT 团队</td>
+          <td><strong>10 分钟自助上线。</strong>Lark App Center 一键安装、验证号码、发送 —— 30 秒一步。
+              不需要写代码、不需要 IT 对接。
+              想做深集成的客户可以走云服务模式。</td>
+        </tr>
+        <tr>
+          <td>Slack-only 的官方集成不适配亚太</td>
+          <td><strong>原生 Lark App</strong>（不是 Zapier 胶水）。Lark Bot 收消息、Lark Approval 走审批、
+              Lark Calendar 触发提醒、Lark 群聊作为统一收件箱。Slack 集成在 backlog 但不是优先级。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      关键是 <strong>共用底盘但分开包装</strong>。同一批 carrier route 给银行用是 99.999% SLA + 主权审计；
+      给一家 30 人补习中心用就是 SGD $99/月、5,000 条预付、Lark 一键收发。
+      技术层面没区别，差异只在客户体验层。
+    </p>
+  </section>
+
+
+  <!-- ==================================================================
+       SECTION 3 — Competitive whitespace
+       ================================================================== -->
+  <section class="sec" id="competition">
+    <div class="sec-num">03 · 竞品全景 · Twilio 留下的空间</div>
+    <h2 class="sec-title">最大的同行不会去打的市场，就是我们的市场。</h2>
+    <p class="sec-thesis">
+      Twilio 是这个赛道的 800 磅大猩猩 —— 上市公司、年收入 $4B、客户名单
+      Airbnb / Uber / Stripe / Zoom。但是这家公司是<strong>美国总部、英语优先、
+      enterprise-first</strong> 的销售机器。亚太 SME 不在他们的获客漏斗里。
+      下面这张图把客户规模和地理覆盖两个维度叠在一起 —— 红色是 Twilio 的舒适区，
+      蓝色是我们的目标区，灰色是双方都在抢的中间地带。
+    </p>
+
+    <div class="matrix-wrap">
+      <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="matrix-title">
+        <title id="matrix-title">竞品分布矩阵：客户规模 × 地理覆盖</title>
+
+        <!-- Axes -->
+        <line x1="80" y1="380" x2="660" y2="380" stroke="#0F172A" stroke-width="1.5"/>
+        <line x1="80" y1="380" x2="80" y2="40" stroke="#0F172A" stroke-width="1.5"/>
+
+        <!-- X-axis labels -->
+        <text x="80" y="406" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#475569">小 (1–50 人)</text>
+        <text x="350" y="406" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#475569">中 (50–500 人)</text>
+        <text x="660" y="406" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#475569">大 (500+)</text>
+        <text x="370" y="430" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="800" letter-spacing="2" fill="#0F172A">客户规模 →</text>
+
+        <!-- Y-axis labels -->
+        <text x="70" y="384" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#475569">东南亚 / 大中华</text>
+        <text x="70" y="214" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#475569">中间地带</text>
+        <text x="70" y="48" text-anchor="end" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#475569">欧美 / 日澳</text>
+        <text x="20" y="220" text-anchor="middle" transform="rotate(-90 20 220)" font-family="Inter,sans-serif" font-size="11" font-weight="800" letter-spacing="2" fill="#0F172A">↑ 地理覆盖</text>
+
+        <!-- Twilio coverage area (red) -->
+        <rect x="350" y="40" width="310" height="170" fill="#DC2626" fill-opacity="0.18" stroke="#DC2626" stroke-width="1" stroke-dasharray="5 3"/>
+        <text x="505" y="125" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="800" fill="#991B1B">TWILIO 舒适区</text>
+        <text x="505" y="145" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#991B1B">Airbnb / Uber / Zoom 这类</text>
+        <text x="505" y="160" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#991B1B">年签 USD $50k+ 起步</text>
+
+        <!-- Contested middle (gray) -->
+        <rect x="240" y="160" width="220" height="120" fill="#94A3B8" fill-opacity="0.18" stroke="#64748B" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="350" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="800" fill="#334155">争夺地带</text>
+        <text x="350" y="240" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#475569">中等规模 + 双语团队</text>
+
+        <!-- DOLPHLINK SME target zone (blue) -->
+        <rect x="80" y="240" width="380" height="140" fill="#0059B3" fill-opacity="0.20" stroke="#0059B3" stroke-width="1.5"/>
+        <text x="270" y="295" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="800" fill="#0059B3">DOLPHLINK × LARK 目标区</text>
+        <text x="270" y="315" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#0059B3">5–500 人 · 亚太 · Lark 用户</text>
+        <text x="270" y="332" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#0059B3">SGD $0–$2,999/月 · 自助上线</text>
+
+        <!-- Long tail callout -->
+        <circle cx="130" cy="350" r="22" fill="#FBBF24" fill-opacity="0.30" stroke="#BF9430" stroke-width="1.5"/>
+        <text x="130" y="354" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="800" fill="#7C2D12">长尾</text>
+
+        <!-- Annotations -->
+        <line x1="180" y1="350" x2="240" y2="350" stroke="#7C2D12" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="248" y="354" font-family="Inter,sans-serif" font-size="10" fill="#7C2D12">大厂 sales 不会跟进的客户</text>
+      </svg>
+
+      <div class="matrix-legend">
+        <span><span class="swatch" style="background:rgba(220,38,38,0.45)"></span>Twilio 舒适区</span>
+        <span><span class="swatch" style="background:rgba(148,163,184,0.45)"></span>双方争夺地带</span>
+        <span><span class="swatch" style="background:rgba(0,89,179,0.45)"></span>DOLPHLINK × LARK 目标区</span>
+        <span><span class="swatch" style="background:rgba(251,191,36,0.65)"></span>长尾（必赢）</span>
+      </div>
+    </div>
+
+    <p>
+      <strong>Twilio 不会进的原因不是技术，是经济。</strong>他们的销售人头成本是
+      美国湾区水平，一个 Account Executive 一年要做 USD $1.2M ARR 才能回本。
+      所以 sales 漏斗的最低单是年签 $30k+。一家 30 人的越南诊所年消费可能就
+      USD $500，根本进不了他们的 CRM。
+    </p>
+    <p>
+      <strong>留给我们的是两块：</strong>第一，亚太 5–500 人 SME — 数量上最多、
+      个体 ARR 不大但人头基数极大。第二，黄圈那个长尾 — 大厂的销售完全够不到，
+      只能靠完全自助 + 友好定价 + 母语支持来开发。我们的产品形态正好对得上。
+    </p>
+  </section>
+
+
+  <!-- ==================================================================
+       SECTION 4 — Region segmentation
+       ================================================================== -->
+  <section class="sec" id="region">
+    <div class="sec-num">04 · 区域细分</div>
+    <h2 class="sec-title">东南亚 SME 跟全球 SME 是两种不同的生物。</h2>
+    <p class="sec-thesis">
+      把"中小企业"当成一个市场来打是错的。东南亚 SME 跟欧美 SME 在协作工具、
+      偏好渠道、合规重点、决策周期上都不一样。下表是把核心差异铺平 ——
+      左边是我们的主战场，右边是 backlog。
+    </p>
+
+    <table class="region">
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th>东南亚 / 大中华区 SME</th>
+          <th>欧美 / 日澳 SME</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>主要协作工具</td>
+          <td>Lark / 飞书 / WhatsApp Business / 钉钉</td>
+          <td>Slack / Microsoft Teams / Google Workspace</td>
+        </tr>
+        <tr>
+          <td>偏好渠道</td>
+          <td>SMS + WhatsApp + Email + 微信 / Line / Zalo / Viber</td>
+          <td>SMS + Email + 部分 WhatsApp</td>
+        </tr>
+        <tr>
+          <td>语言</td>
+          <td>多语言原生（CJK + 越泰印尼菲）</td>
+          <td>单语言为主，少数双语</td>
+        </tr>
+        <tr>
+          <td>合规重点</td>
+          <td>PDPA SG / 大马 / 泰国、个保法、PDPL VN、PDPO HK</td>
+          <td>GDPR、CCPA、HIPAA、UK DPA</td>
+        </tr>
+        <tr>
+          <td>价格敏感度</td>
+          <td>高 · 年 ARR 通常 USD $1k–$8k</td>
+          <td>中 · 年 ARR 可达 USD $20k–$50k</td>
+        </tr>
+        <tr>
+          <td>决策周期</td>
+          <td>1–2 周 · 老板拍板</td>
+          <td>1–3 月 · committee + procurement</td>
+        </tr>
+        <tr>
+          <td>典型采购触发点</td>
+          <td>"群里太乱"、"客户投诉收不到"、"催不动尾款"</td>
+          <td>季度 OKR、合规审计、IT 整合</td>
+        </tr>
+        <tr>
+          <td>我们的优先级</td>
+          <td><strong>Tier 1 · 主战场</strong> — Lark 集成 + 多语言 + SGD/HKD/VND 计费</td>
+          <td>Tier 2 · backlog — Slack 集成 + 美元计费在 2026 H2</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      为什么东南亚 SME 优先：第一，<strong>Lark / 飞书在亚太的渗透速度远超 Slack
+      在亚太的渗透速度</strong>，我们做 Lark 集成是顺水推舟。第二，多语言客服是这块市场
+      的硬刚需，欧美玩家几乎不投入。第三，PDPA / 个保法系列的合规我们已经做过
+      enterprise 版的，SME 版基本是套用。第四，从这块市场起家的客户，
+      会随着自身业务出海自然接入欧美渠道，相当于我们"种树"。
+    </p>
+  </section>
+
+
+  <!-- ==================================================================
+       SECTION 5 — Three deployment modes
+       ================================================================== -->
+  <section class="sec" id="deploy">
+    <div class="sec-num">05 · 三种部署模式</div>
+    <h2 class="sec-title">同一个产品，三种交付。匹配三种买家心智。</h2>
+    <p class="sec-thesis">
+      不是所有 SME 都需要同一种部署。一家 12 人的诊所要的是"今晚就能用"；
+      一家 80 人的连锁餐饮要的是"我有自己的 Sender ID 和 dashboard"；
+      一家 300 人的金融科技公司要的是"数据放在我自己的 VPC 里、白标对外"。
+      我们提供三档交付，价格和定制深度逐档加深，但底盘是同一个。
+    </p>
+
+    <div class="deploy-grid">
+
+      <article class="deploy">
+        <div class="deploy-tier">A · APP 模式</div>
+        <h3 class="deploy-name">Lark App Center<br>一键安装</h3>
+        <p class="deploy-aud">1–50 人 · 想 30 分钟见效</p>
+        <dl>
+          <dt>上手</dt><dd>5 分钟（Lark 授权 → 验证号码 → 发首条）</dd>
+          <dt>定制</dt><dd>低 · 用我们的标准模板库</dd>
+          <dt>定价</dt><dd>Free 起步（含 200 SMS） + pay-as-you-go</dd>
+          <dt>数据</dt><dd>托管在 SG 节点（默认）</dd>
+          <dt>支持</dt><dd>社区 + 14 工作日 email</dd>
+          <dt>典型客户</dt><dd>独立诊所、补习中心、单店餐饮</dd>
+        </dl>
+      </article>
+
+      <article class="deploy">
+        <div class="deploy-tier">B · 云服务模式</div>
+        <h3 class="deploy-name">DOLPHLINK Cloud<br>多租户 SaaS</h3>
+        <p class="deploy-aud">50–500 人 · 需要独立 dashboard / 自有 Sender ID</p>
+        <dl>
+          <dt>上手</dt><dd>1–2 个工作日</dd>
+          <dt>定制</dt><dd>中 · 自有 Sender ID / 自有模板库 / 自有 webhook</dd>
+          <dt>定价</dt><dd>SGD $99 起 → 按用量阶梯到 SGD $2,999/月</dd>
+          <dt>数据</dt><dd>可选 SG / HK / VN / TH 节点</dd>
+          <dt>支持</dt><dd>4 工作小时优先级 chat + 季度复盘</dd>
+          <dt>典型客户</dt><dd>连锁餐饮、跨境电商、诊所集团</dd>
+        </dl>
+      </article>
+
+      <article class="deploy">
+        <div class="deploy-tier">C · 平台模式</div>
+        <h3 class="deploy-name">私有化部署<br>+ 白标</h3>
+        <p class="deploy-aud">500+ 人 · 监管要求私有部署 / 想白标转售</p>
+        <dl>
+          <dt>上手</dt><dd>4–8 周（含合规审计）</dd>
+          <dt>定制</dt><dd>高 · 白标、私有路由、定制 SLA</dd>
+          <dt>定价</dt><dd>年签 SGD $50k 起，含实施和支持</dd>
+          <dt>数据</dt><dd>客户 VPC / on-prem / 主权云任选</dd>
+          <dt>支持</dt><dd>专属 Solution Architect + 7×24 phone</dd>
+          <dt>典型客户</dt><dd>持牌金融、政府供应商、大型 SI</dd>
+        </dl>
+      </article>
+
+    </div>
+
+    <p>
+      <strong>三档之间是连续的。</strong>App 客户做大了升 Cloud，原有 Lark 集成、消息历史、
+      Sender ID 全部继承。Cloud 客户出了合规事件需要私有化，迁到平台版同样无缝。
+      这是相对 Twilio 的另一个差异点 —— 他们没有真正的"小档"产品，跨档迁移也要重做。
+    </p>
+  </section>
+
+
+  <!-- ==================================================================
+       SECTION 6 — ERP × Lark integration flows
+       ================================================================== -->
+  <section class="sec" id="flows">
+    <div class="sec-num">06 · ERP × LARK 集成</div>
+    <h2 class="sec-title">流程图三张。把 ERP、Lark、客户三方接通的常见姿势讲透。</h2>
+    <p class="sec-thesis">
+      绝大多数 SME 的真实场景不是"发个 SMS 这么简单"，而是 ERP 出了一个事件
+      （新订单、待审批、客户改地址）需要走到客户手机或者邮箱，路上还要经过
+      内部团队的协作工具（Lark）。下面三张流程图覆盖最高频的三种工作流。
+      实际部署中可以单独走某一种，也可以三种叠在一起跑。
+    </p>
+
+    <!-- ============= Flow 1 ============= -->
+    <div class="flow">
+      <div class="flow-cap">流程 1 · ERP 出单 → Lark 群通知（最常见）</div>
+      <div class="mermaid">
+graph LR
+  A[SAP / 用友 / 金蝶 / Odoo<br/>ERP 系统]
+  B[DOLPHLINK<br/>Webhook 接收]
+  C[多租户路由<br/>+ 模板渲染]
+  D[Lark Bot 推送<br/>到目标群聊]
+  E[销售 / 客服 / 仓储群<br/>团队收到事件]
+
+  A -- HTTP webhook --> B
+  B --> C
+  C --> D
+  D --> E
+
+  classDef erp fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px,color:#92400E
+  classDef us fill:#DBEAFE,stroke:#0059B3,stroke-width:1.5px,color:#0F172A
+  classDef lark fill:#D1FAE5,stroke:#10B981,stroke-width:1.5px,color:#065F46
+  class A erp
+  class B,C us
+  class D,E lark
+      </div>
+      <p class="flow-note">
+        <strong>触发场景</strong>：新订单、库存预警、退货申请、客户投诉、KPI 触线。<br>
+        <strong>价值点</strong>：团队不用切换到 ERP 就知道发生了什么。事件发生到 Lark 群聊收到，
+        平均延迟 &lt; 3 秒。每条消息带"打开 ERP 详情"链接。
+      </p>
+    </div>
+
+    <!-- ============= Flow 2 ============= -->
+    <div class="flow">
+      <div class="flow-cap">流程 2 · Lark Approval → DOLPHLINK 客户通知（审批联动）</div>
+      <div class="mermaid">
+graph TB
+  A[客户提交工单<br/>表单 / WhatsApp 来文]
+  B[Lark Approval<br/>多级审批流]
+  C{结果}
+  D1[DOLPHLINK API<br/>多渠道发送]
+  D2[Lark 自动回执<br/>给申请人]
+  E[SMS / WhatsApp<br/>Email / Voice]
+  F[最终客户]
+
+  A --> B
+  B --> C
+  C -- 通过 --> D1
+  C -- 驳回 --> D2
+  D1 --> E
+  E --> F
+
+  classDef customer fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px,color:#92400E
+  classDef lark fill:#D1FAE5,stroke:#10B981,stroke-width:1.5px,color:#065F46
+  classDef us fill:#DBEAFE,stroke:#0059B3,stroke-width:1.5px,color:#0F172A
+  classDef gate fill:#F1F5F9,stroke:#64748B,stroke-width:1.5px,color:#0F172A
+  class A,F customer
+  class B,D2 lark
+  class D1,E us
+  class C gate
+      </div>
+      <p class="flow-note">
+        <strong>触发场景</strong>：报价确认、退款、特殊折扣、合同变更、客户改地址、补发。<br>
+        <strong>价值点</strong>：审批留痕在 Lark Approval（满足合规要求），客户通知走 DOLPHLINK
+        carrier-grade 通道（保证送达）。两边的关联 ID 自动 binding 进同一个 Lark thread —
+        将来追溯不用东查西查。
+      </p>
+    </div>
+
+    <!-- ============= Flow 3 ============= -->
+    <div class="flow">
+      <div class="flow-cap">流程 3 · Lark Calendar → 自动客户提醒（预约 / 续约 / 跟进）</div>
+      <div class="mermaid">
+graph LR
+  A[Lark Calendar<br/>创建事件 + 客户号码]
+  B[DOLPHLINK Reminder<br/>定时 cron]
+  C[多语言模板<br/>本地化渲染]
+  D[SMS / WhatsApp 发送<br/>24h / 2h / 30m 前]
+  E[客户回复<br/>YES / RESCHEDULE]
+  F[Lark thread 更新<br/>+ Calendar 状态同步]
+
+  A --> B
+  B --> C
+  C --> D
+  D --> E
+  E --> F
+
+  classDef lark fill:#D1FAE5,stroke:#10B981,stroke-width:1.5px,color:#065F46
+  classDef us fill:#DBEAFE,stroke:#0059B3,stroke-width:1.5px,color:#0F172A
+  classDef customer fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px,color:#92400E
+  class A,F lark
+  class B,C,D us
+  class E customer
+      </div>
+      <p class="flow-note">
+        <strong>触发场景</strong>：诊所预约、餐厅订位、续费提醒、上门服务、合同到期、生日祝福。<br>
+        <strong>价值点</strong>：客户在 Lark Calendar 里安排，自动转化成多语言提醒，
+        减少 no-show 率（实测餐饮场景从 18% 降到 7%）。客户回复直接进 Lark thread —
+        不用切换 app。
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ==================================================================
+       CLOSING
+       ================================================================== -->
+  <aside class="close">
+    <h2>下一步</h2>
+    <p>
+      这份简报总结的是 to B 的策略立场，不是产品 roadmap。落到执行上，未来 90 天我们要做四件事：
+    </p>
+    <ol>
+      <li>Lark App Center 上线 DOLPHLINK SME 应用，做完安全审核。</li>
+      <li>把 SGD / HKD / VND / THB / IDR / MYR / PHP 七种本币计费跑通，公开价格表。</li>
+      <li>三种部署模式（App / Cloud / Platform）的销售话术、合同模板、SLA 条款都准备好。</li>
+      <li>东南亚六国（SG / MY / TH / VN / ID / PH）各招一名母语 BD，跑通至少 5 家种子客户。</li>
+    </ol>
+    <div class="signoff">
+      Baiwu Technology Group · DOLPHLINK Strategy Team · Singapore<br>
+      文档版本 2026-Q2-DRAFT · 内部传阅 · 对外披露需脱敏
+    </div>
+  </aside>
+
+</article>
+
+<!-- Mermaid CDN — renders the flowcharts above -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      fontFamily: "'Inter', 'Noto Sans SC', sans-serif",
+      fontSize: '13px',
+      primaryColor: '#DBEAFE',
+      primaryTextColor: '#0F172A',
+      primaryBorderColor: '#0059B3',
+      lineColor: '#475569',
+      tertiaryColor: '#F8FAFC',
+      tertiaryBorderColor: '#E2E8F0'
+    },
+    flowchart: { padding: 16, nodeSpacing: 36, rankSpacing: 50, curve: 'basis' }
+  });
+</script>
+
+</body>
+</html>

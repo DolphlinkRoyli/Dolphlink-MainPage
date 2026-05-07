@@ -1,0 +1,61 @@
+{
+  "__lang": "ms",
+  "__comment": "DOLPHLINK Bahasa Melayu translations. Direct B2B tone, neutral Malaysia/Singapore register. Edit to refine.",
+
+  "nav.lark": "Integrasi Lark",
+  "nav.workflows": "Aliran kerja ERP",
+  "nav.pricing": "Harga",
+  "nav.useCases": "Kes penggunaan",
+  "nav.enterprise": "Enterprise",
+  "nav.cta.connect": "Sambungkan Lark",
+
+  "sme.hero.eyebrow": "Untuk PKS yang diabaikan oleh pemain utama",
+  "sme.hero.h1.line1": "Tulang belakang gred operator yang sama digunakan bank besar —",
+  "sme.hero.h1.line2": "disambungkan terus ke Lark.",
+  "sme.hero.tagline": "SMS, WhatsApp, suara, e-mel — dan ERP anda — semua mengalir melalui ruang kerja Lark anda. Pemain CPaaS besar (Twilio / Vonage / MessageBird) tidak akan menjawab panggilan jika kontrak tahunan kurang USD 50,000. Kami akan. Bayar setiap mesej dari SGD 0.04, integrasi Lark asli, pelbagai bahasa secara lalai. Hidup malam ini, tanpa pasukan IT.",
+  "sme.hero.cta.primary": "Sambungkan Lark · Percuma",
+  "sme.hero.cta.secondary": "Lihat harga",
+  "sme.hero.meta.live": "Hidup dalam 10 minit",
+  "sme.hero.meta.contract": "Tiada kontrak, batal bila-bila masa",
+  "sme.hero.meta.lang": "Bahasa Asia secara asli",
+
+  "sme.benefits.eyebrow": "Kenapa PKS pilih kami berbanding Twilio + Slack",
+  "sme.benefits.title": "Empat perkara yang pemain utama tidak akan beri.",
+
+  "sme.pricing.eyebrow": "Tiga mod penggunaan",
+  "sme.pricing.title": "App, Cloud, atau Platform. Tulang belakang yang sama.",
+  "sme.pricing.plan.app": "App",
+  "sme.pricing.plan.cloud": "Cloud",
+  "sme.pricing.plan.platform": "Platform",
+  "sme.pricing.plan.cloud.flag": "Pilihan kebanyakan PKS",
+
+  "sme.useCases.eyebrow": "Kes penggunaan",
+  "sme.useCases.title": "Dibina untuk kerja kritikal yang tidak glamor.",
+
+  "sme.integrations.eyebrow": "Aliran kerja ERP × Lark",
+  "sme.integrations.title": "Di mana ERP, pasukan, dan pelanggan anda bertemu.",
+
+  "sme.how.eyebrow": "Cara ia berfungsi",
+  "sme.how.title": "Tiga langkah. Hidup sebelum makan tengah hari.",
+
+  "sme.cta.eyebrow": "Untuk pasaran ekor panjang",
+  "sme.cta.title": "Pemain utama dibina untuk 1% teratas. Kami bina ini untuk 99% yang lain.",
+
+  "sme.footer.tag": "Komunikasi gred operator untuk PKS yang diabaikan pemain utama. Oleh Baiwu Technology Group, Singapura.",
+  "sme.footer.privacy": "Privasi",
+  "sme.footer.terms": "Terma",
+  "sme.footer.enterprise": "Laman enterprise",
+
+  "home.hero.cta.industry": "Wawasan industri",
+  "home.hero.cta.sme": "Versi PKS",
+  "home.hero.cta.auto": "Lihat auto-orkestrasi",
+  "home.hero.sme.tag.headline": "Direka untuk pasukan kecil.",
+  "home.hero.sme.tag.sub": "Tulang belakang enterprise yang sama, disesuaikan untuk bajet & kelajuan PKS.",
+
+  "home.section.reliability": "Matriks Kebolehpercayaan",
+  "home.section.portfolio": "Portfolio",
+  "home.section.industries": "Industri Dilayan",
+  "home.section.departments": "Jabatan Diperkasa",
+  "home.section.network": "Rangkaian Operator",
+  "home.section.compliance": "Risikan Pematuhan"
+}

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" data-page="sme">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>DOLPHLINK × Lark for SME · SMS, WhatsApp, Voice for the SMEs the mainstream forgot</title>
+ <meta name="description" content="Carrier-grade communications wired straight into Lark. SMS / WhatsApp / Voice / Email for 5–500 person Asian SMEs. Pay per message, no enterprise contract, native Lark integration. Live in 10 minutes from SGD $99/month.">
+ <meta name="author" content="Baiwu Technology Group">
+ <meta name="robots" content="index, follow, max-image-preview:large">
+ <meta name="theme-color" content="#0059B3">
+ <meta name="application-name" content="DOLPHLINK">
+ <meta name="format-detection" content="telephone=no">
+ <!-- Referrer-Policy: send only origin (not path/query) cross-origin. -->
+ <meta name="referrer" content="strict-origin-when-cross-origin">
+ <link rel="canonical" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+
+ <!-- Regional intent — page targets ASEAN-wide English market with SG as
+      the default. x-default is the fallback for any other locale. -->
+ <link rel="alternate" hreflang="en-sg" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <link rel="alternate" hreflang="en-hk" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <link rel="alternate" hreflang="en-my" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <link rel="alternate" hreflang="en-ph" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <link rel="alternate" hreflang="x-default" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+
+ <link rel="icon" type="image/webp" href="../media/icon/3D/logo.webp">
+ <link rel="apple-touch-icon" href="../media/icon/3D/logo.webp">
+ <link rel="manifest" href="../seo/site.webmanifest">
+
+ <!-- Preload critical CSS for faster first paint (LCP improvement) -->
+ <link rel="preload" href="../css/tokens.css?v=1" as="style">
+ <link rel="preload" href="../css/sme.css?v=3" as="style">
+
+ <!-- Open Graph — locale forced to en_SG (Singapore-anchored ASEAN page) -->
+ <meta property="og:type" content="website">
+ <meta property="og:locale" content="en_SG">
+ <meta property="og:locale:alternate" content="en_HK">
+ <meta property="og:locale:alternate" content="en_MY">
+ <meta property="og:locale:alternate" content="en_PH">
+ <meta property="og:title" content="DOLPHLINK × Lark for SME">
+ <meta property="og:description" content="Carrier-grade SMS / WhatsApp / Voice / Email wired into Lark, with ERP webhooks built in. Three deployment modes: App, Cloud, Platform. From SGD $0 + pay-as-you-go.">
+ <meta property="og:url" content="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <meta property="og:image" content="https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp">
+ <meta property="og:image:width" content="1200">
+ <meta property="og:image:height" content="630">
+ <meta property="og:image:alt" content="DOLPHLINK × Lark for SME — carrier-grade SMS, WhatsApp, Voice, Email wired into Lark">
+ <meta property="og:site_name" content="DOLPHLINK">
+
+ <!-- Twitter -->
+ <meta name="twitter:card" content="summary_large_image">
+ <meta name="twitter:title" content="DOLPHLINK × Lark for SME">
+ <meta name="twitter:description" content="Carrier-grade SMS / WhatsApp / Voice / Email wired into Lark. From SGD $0 + pay-as-you-go.">
+ <meta name="twitter:image" content="https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp">
+ <meta name="twitter:image:alt" content="DOLPHLINK × Lark for SME — carrier-grade SMS, WhatsApp, Voice, Email wired into Lark">
+
+ <!-- (Self-hosted by policy — Google Fonts removed. Body falls back
+      to the system font stack defined in css/sme.css → --sme-font.) -->
+
+ <link rel="stylesheet" href="../css/tokens.css?v=1">
+ <link rel="stylesheet" href="../css/sme.css?v=3">
+
+ <!-- ======================================================================
+      Structured data — Schema.org JSON-LD. Inlined here (rather than going
+      through seo.json's global {{ jsonld }} token) because the SME page
+      needs page-specific schema that shouldn't pollute the homepage's graph.
+      ====================================================================== -->
+
+ <!-- Organization (linked to homepage's @id so search engines understand
+      this is the same entity, not a duplicate) -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "Organization",
+   "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization",
+   "name": "DOLPHLINK",
+   "alternateName": "DOLPHLINK by Baiwu Technology Group",
+   "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/",
+   "logo": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/icon/3D/logo.webp",
+   "address": {
+     "@type": "PostalAddress",
+     "streetAddress": "9 Raffles Place #29-04, Republic Plaza",
+     "addressLocality": "Singapore",
+     "postalCode": "048619",
+     "addressCountry": "SG"
+   },
+   "contactPoint": {
+     "@type": "ContactPoint",
+     "contactType": "sales",
+     "email": "Salesmarketing@dolphlink.com",
+     "availableLanguage": ["English", "Mandarin"],
+     "areaServed": ["SG", "HK", "MY", "VN", "TH", "ID", "PH"]
+   }
+ }
+ </script>
+
+ <!-- SoftwareApplication with three Offers (App / Cloud / Platform) — the
+      key page-specific schema. Powers Google's pricing rich snippets. -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "SoftwareApplication",
+   "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#software",
+   "name": "DOLPHLINK × Lark for SME",
+   "description": "Carrier-grade communications wired straight into Lark workspaces. SMS, WhatsApp, Voice, Email and ERP webhooks for 5–500 person Asian SMEs. Native Lark integration, multi-language, pay-per-message.",
+   "applicationCategory": "BusinessApplication",
+   "applicationSubCategory": "Communications Platform as a Service",
+   "operatingSystem": "Web, Lark App Center",
+   "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/",
+   "image": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp",
+   "publisher": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+   "inLanguage": ["en", "zh-Hant", "zh-Hans", "vi", "th", "id", "ms", "tl"],
+   "offers": [
+     {
+       "@type": "Offer",
+       "name": "App — free tier",
+       "description": "Lark App Center install, 1–50 person teams, 5-min setup. 200 free SMS to start, then pay-as-you-go from SGD $0.04 per SMS.",
+       "price": "0",
+       "priceCurrency": "SGD",
+       "priceSpecification": {
+         "@type": "UnitPriceSpecification",
+         "price": "0.04",
+         "priceCurrency": "SGD",
+         "unitText": "per SMS"
+       },
+       "availability": "https://schema.org/InStock",
+       "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#pricing"
+     },
+     {
+       "@type": "Offer",
+       "name": "Cloud — most SMEs pick this",
+       "description": "Multi-tenant SaaS for 50–500 person teams. SGD $99/month includes 5,000 messages, own dashboard, own Sender ID, own webhooks, data residency choice (SG / HK / VN / TH).",
+       "price": "99",
+       "priceCurrency": "SGD",
+       "priceSpecification": {
+         "@type": "UnitPriceSpecification",
+         "price": "99",
+         "priceCurrency": "SGD",
+         "billingDuration": "P1M",
+         "unitText": "per month, 5,000 messages included"
+       },
+       "availability": "https://schema.org/InStock",
+       "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#pricing"
+     },
+     {
+       "@type": "Offer",
+       "name": "Platform — private deployment",
+       "description": "Private deployment in customer VPC / on-prem / sovereign cloud. White-label option, custom SLA, dedicated Solution Architect, 4–8 week implementation including compliance audit. Annual contract from SGD $50,000.",
+       "price": "50000",
+       "priceCurrency": "SGD",
+       "priceSpecification": {
+         "@type": "UnitPriceSpecification",
+         "price": "50000",
+         "priceCurrency": "SGD",
+         "billingDuration": "P1Y",
+         "unitText": "per year, includes implementation"
+       },
+       "availability": "https://schema.org/InStock",
+       "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#pricing"
+     }
+   ],
+   "featureList": [
+     "Native Lark Bot — no Zapier glue required",
+     "SMS, WhatsApp, Voice, Email through one workflow",
+     "Pay-per-message pricing — no enterprise minimum",
+     "Asian-language native (CJK + SEA scripts)",
+     "PDPA / GDPR / 个保法 compliance enforced at routing layer",
+     "ERP webhook integrations (SAP / 用友 / 金蝶 / Odoo / QuickBooks / Xero)",
+     "Live in 10 minutes from sign-up"
+   ],
+   "aggregateRating": {
+     "@type": "AggregateRating",
+     "ratingValue": "4.8",
+     "reviewCount": "47",
+     "bestRating": "5",
+     "worstRating": "1"
+   }
+ }
+ </script>
+
+ <!-- FAQPage — derived from "use cases" + "how it works" sections. Powers
+      Google's FAQ rich snippet (the expandable Q&A in search results). -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#faq",
+   "mainEntity": [
+     {
+       "@type": "Question",
+       "name": "How long does setup take for an SME?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Most SME onboardings finish in under 10 minutes. Three steps: install the DOLPHLINK app from Lark App Center (~60 seconds), verify your business mobile number with a one-time SMS code (~90 seconds), then send your first message from a pre-localised template (~5 minutes). The slowest step is the SMS verification code — usually 30 seconds."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "What does it cost? Is there a minimum commitment?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Three modes. App: free, then pay-as-you-go from SGD $0.04 per SMS. Cloud: SGD $99/month with 5,000 messages included. Platform: from SGD $50,000/year for private deployment. No US$1,000 enterprise minimum, no annual commit on App or Cloud, top up SGD $20 today and pause for a month if you want."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "Which languages are supported?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "SMS in 繁體中文 / 简体中文 / Tiếng Việt / ไทย / Bahasa Indonesia / Bahasa Melayu / Tagalog deliver as native scripts, not transliterated. Templates are pre-localised for common SME flows. Support team operates in Singapore, Kuala Lumpur, Hong Kong, Bangkok, and Ho Chi Minh City."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "Does it integrate with my existing ERP?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Native webhooks for SAP, 用友, 金蝶, Odoo, QuickBooks, Xero — plus any system that can fire a webhook. Three common workflows: ERP order → Lark group notification, Lark Approval → customer SMS/WhatsApp, Lark Calendar → automatic customer reminder. End-to-end latency under 3 seconds."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "Is the platform compliant for regulated SMEs?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Yes. PDPA Singapore / Malaysia / Thailand, 个保法, PDPL Vietnam, PDPO Hong Kong, GDPR — every regulation gets checked at the routing layer before the message leaves. Tamper-evident message logs in the same format banks file. ISO 27001 + SOC 2 inherited from our enterprise stack. Quarterly audit reports auto-generated."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "What if I outgrow Cloud and need private deployment?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Move up to Platform mode — same backbone, deployed in your VPC / on-prem / sovereign cloud. Your message history, Sender IDs, and Lark integration carry over intact. White-label option available. Implementation typically 4–8 weeks including compliance audit."
+       }
+     }
+   ]
+ }
+ </script>
+
+ <!-- BreadcrumbList — Home → SME -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "DOLPHLINK",
+       "item": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/"
+     },
+     {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "SME × Lark",
+       "item": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/"
+     }
+   ]
+ }
+ </script>
+
+ <!-- Article schema for the F&B no-show stat — micro-data point that can
+      surface as a featured snippet for queries like "SMS reminder no-show
+      rate" or "F&B booking confirmation impact". -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "Article",
+   "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#case-fnb",
+   "headline": "F&B booking confirmations cut no-shows from 18% to 7%",
+   "description": "Field data from a 12-store Hong Kong F&B chain over Q4 2025. Lark Calendar event triggers a 24-hour SMS reminder; one-tap reply confirms, cancels, or reschedules. Floor manager sees responses in Lark before service starts.",
+   "datePublished": "2026-01-15",
+   "author": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+   "publisher": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+   "mainEntityOfPage": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#use-cases"
+ }
+ </script>
+
+ <!-- Single-entry dispatcher — reads <html data-page="sme"> and lazy-loads engine/sme/index.js -->
+ <script type="module" src="../js/app.js?v=2"></script>
+</head>
+<body class="sme-body">
+ <header class="sme-nav" role="banner">
+   <a href="../" class="sme-nav-brand" aria-label="DOLPHLINK home">
+     <img src="../media/icon/3D/logo.webp" alt="" class="sme-nav-logo" width="36" height="36" decoding="async" />
+     <span class="sme-nav-name">DOLPHLINK</span>
+     <span class="sme-nav-badge">× LARK</span>
+   </a>
+   <nav class="sme-nav-links" aria-label="Primary">
+     <a href="#lark" class="sme-nav-link" data-i18n="nav.lark">Lark integration</a>
+     <a href="#integrations" class="sme-nav-link" data-i18n="nav.workflows">ERP workflows</a>
+     <a href="#pricing" class="sme-nav-link" data-i18n="nav.pricing">Pricing</a>
+     <a href="#use-cases" class="sme-nav-link" data-i18n="nav.useCases">Use cases</a>
+   </nav>
+   <div class="sme-nav-cta">
+     <!-- Language picker — populated by core/i18n.js attachLanguagePicker() -->
+     <div class="sme-nav-lang" data-lang-picker></div>
+     <a href="../" class="sme-nav-link sme-nav-link--ghost" data-i18n="nav.enterprise">Enterprise</a>
+     <a href="mailto:Salesmarketing@dolphlink.com?subject=SME%20%2B%20Lark%20-%20Sign%20me%20up" class="sme-btn sme-btn--small" data-i18n="nav.cta.connect">Connect Lark</a>
+   </div>
+ </header>
+
+<main class="sme-main">
+ <section class="sme-hero" id="hero">
+   <div class="sme-hero-inner">
+     <span class="sme-eyebrow">
+       <span class="sme-eyebrow-dot"></span>
+       <span data-i18n="sme.hero.eyebrow">For the SMEs the mainstream forgot</span>
+     </span>
+
+     <h1 class="sme-hero-h1">
+       <span data-i18n="sme.hero.h1.line1">The same carrier-grade stack the big banks use —</span>
+       <span class="sme-hero-h1-accent" data-i18n="sme.hero.h1.line2">wired straight into Lark.</span>
+     </h1>
+
+     <p class="sme-hero-tagline" data-i18n="sme.hero.tagline">
+       SMS, WhatsApp, Voice, Email — and your ERP — all flowing through your Lark
+       workspace. The big CPaaS players (Twilio / Vonage / MessageBird) won't return
+       your call below USD $50k annual contract. We will. Pay per message from
+       SGD $0.04, native Lark integration, multi-language by default. Live tonight,
+       no IT team needed.
+     </p>
+
+     <div class="sme-hero-cta">
+       <a href="mailto:Salesmarketing@dolphlink.com?subject=SME%20%2B%20Lark%20-%20Connect%20my%20workspace" class="sme-btn sme-btn--primary">
+         <span data-i18n="sme.hero.cta.primary">Connect Lark · Free</span>
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+           <polyline points="9 5 16 12 9 19"/>
+         </svg>
+       </a>
+       <a href="#pricing" class="sme-btn sme-btn--ghost" data-i18n="sme.hero.cta.secondary">See pricing</a>
+     </div>
+
+     <div class="sme-hero-meta">
+       <span class="sme-hero-meta-item">
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+         <span data-i18n="sme.hero.meta.live">Live in 10 minutes</span>
+       </span>
+       <span class="sme-hero-meta-item">
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+         <span data-i18n="sme.hero.meta.contract">No contract, cancel anytime</span>
+       </span>
+       <span class="sme-hero-meta-item">
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+         <span data-i18n="sme.hero.meta.lang">Asian languages, native</span>
+       </span>
+     </div>
+   </div>
+
+   <aside class="sme-hero-visual" aria-hidden="true">
+     <div class="sme-lark-card">
+       <div class="sme-lark-card-head">
+         <span class="sme-lark-dot sme-lark-dot--green"></span>
+         <span class="sme-lark-dot sme-lark-dot--yellow"></span>
+         <span class="sme-lark-dot sme-lark-dot--red"></span>
+         <span class="sme-lark-card-title">Lark · Customer Inbox</span>
+       </div>
+       <div class="sme-lark-msg sme-lark-msg--in">
+         <span class="sme-lark-channel">SMS · +65 ••••</span>
+         <p>Hi! I'd like to confirm tomorrow's 3pm appointment.</p>
+       </div>
+       <div class="sme-lark-msg sme-lark-msg--out">
+         <span class="sme-lark-channel">Reply · WhatsApp</span>
+         <p>Confirmed for 3pm! See you tomorrow at Robinson Rd.</p>
+       </div>
+       <div class="sme-lark-msg sme-lark-msg--in">
+         <span class="sme-lark-channel">Email · &nbsp;orders@</span>
+         <p>Tracking number for order #4821?</p>
+       </div>
+       <div class="sme-lark-card-foot">
+         <span class="sme-lark-foot-pill">SMS</span>
+         <span class="sme-lark-foot-pill">WhatsApp</span>
+         <span class="sme-lark-foot-pill">Voice</span>
+         <span class="sme-lark-foot-pill">Email</span>
+         <span class="sme-lark-foot-arrow">→</span>
+         <span class="sme-lark-foot-pill sme-lark-foot-pill--lark">Lark</span>
+       </div>
+     </div>
+   </aside>
+ </section>
+
+ <section class="sme-section sme-benefits" id="lark">
+   <div class="sme-section-head">
+     <span class="sme-section-eyebrow" data-i18n="sme.benefits.eyebrow">Why SMEs choose us over Twilio + Slack</span>
+     <h2 class="sme-section-title" data-i18n="sme.benefits.title">Four things the mainstream won't give you.</h2>
+     <p class="sme-section-intro">
+       The big CPaaS vendors built their pricing for VC-funded scale-ups in San Francisco. We built ours
+       for a 12-person clinic in District 5, a 40-person logistics firm in Penang, a family bakery chain in
+       Tsim Sha Tsui. Different game, different rules.
+     </p>
+   </div>
+
+   <div class="sme-benefit-grid">
+
+     <article class="sme-benefit">
+       <div class="sme-benefit-icon sme-benefit-icon--lark">
+         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+       </div>
+       <h3 class="sme-benefit-title">Lives inside Lark.</h3>
+       <p class="sme-benefit-desc">No new dashboard for your team to learn. SMS / WhatsApp / Voice / Email all flow into a single Lark group chat where your existing team already lives. Reply from Lark, the customer gets it on their channel of choice.</p>
+       <ul class="sme-benefit-list">
+         <li>Native Lark Bot (no Zapier glue)</li>
+         <li>Approval flows via Lark Approval</li>
+         <li>Reminders on Lark Calendar events</li>
+       </ul>
+     </article>
+
+     <article class="sme-benefit">
+       <div class="sme-benefit-icon sme-benefit-icon--green">
+         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+       </div>
+       <h3 class="sme-benefit-title">Pay per message. No floor.</h3>
+       <p class="sme-benefit-desc">No US$ 1,000 / month enterprise minimum. No annual commit. From SGD $0.04 per SMS, WhatsApp from $0.03, voice minutes by the second. Top up SGD $20 today, send 500 messages, pause for a month — fine.</p>
+       <ul class="sme-benefit-list">
+         <li>Pay-as-you-go, top up any time</li>
+         <li>Volume tiers kick in automatically</li>
+         <li>Public price list — no &quot;contact sales&quot;</li>
+       </ul>
+     </article>
+
+     <article class="sme-benefit">
+       <div class="sme-benefit-icon sme-benefit-icon--gold">
+         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+       </div>
+       <h3 class="sme-benefit-title">Asian-language native, end to end.</h3>
+       <p class="sme-benefit-desc">Built in Singapore, run across ASEAN. SMS in 繁體 / 简体 / Tiếng Việt / ไทย / Bahasa / Tagalog deliver as native scripts, not transliterated nonsense. Templates pre-localised. Support replies in your language, not Google-translated.</p>
+       <ul class="sme-benefit-list">
+         <li>Unicode SMS in all CJK + SEA scripts</li>
+         <li>Templates pre-translated for common flows</li>
+         <li>Support team in SG, KL, HK, BKK, HCM</li>
+       </ul>
+     </article>
+
+     <article class="sme-benefit">
+       <div class="sme-benefit-icon sme-benefit-icon--shield">
+         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z"/><path d="M9 12 L11 14 L15 10"/></svg>
+       </div>
+       <h3 class="sme-benefit-title">Compliance, automatic.</h3>
+       <p class="sme-benefit-desc">PDPA Singapore / Malaysia / Thailand · 个保法 · PDPL Vietnam · PDPO Hong Kong · GDPR — every regulation gets checked at the routing layer before the message leaves. No legal team required. Quarterly audit reports auto-generated; you forward them to your auditor and move on.</p>
+       <ul class="sme-benefit-list">
+         <li>Sender ID / opt-out / DND windows enforced per region</li>
+         <li>Tamper-evident message logs (same format the banks file)</li>
+         <li>ISO 27001 + SOC 2 inherited from enterprise stack</li>
+       </ul>
+     </article>
+
+   </div>
+ </section>
+
+ <section class="sme-section sme-pricing" id="pricing">
+   <div class="sme-section-head">
+     <span class="sme-section-eyebrow" data-i18n="sme.pricing.eyebrow">Three deployment modes</span>
+     <h2 class="sme-section-title" data-i18n="sme.pricing.title">App, Cloud, or Platform. Same backbone.</h2>
+     <p class="sme-section-intro">
+       Same carrier-grade backbone — different ways of delivering it to you.
+       App for fast self-serve, Cloud for owned dashboards and webhooks, Platform
+       for private deployment and white-label. Move up between modes when you grow;
+       your message history, Sender IDs, and Lark integration carry over intact.
+     </p>
+   </div>
+
+   <div class="sme-pricing-grid">
+
+     <article class="sme-plan">
+       <header class="sme-plan-head">
+         <span class="sme-plan-name">App</span>
+         <span class="sme-plan-tagline">Lark App Center · 1 – 50 person teams · 5-min setup</span>
+       </header>
+       <div class="sme-plan-price">
+         <span class="sme-plan-price-num">Free</span>
+         <span class="sme-plan-price-unit">+ pay-as-you-go from SGD $0.04 / SMS</span>
+       </div>
+       <ul class="sme-plan-features">
+         <li>200 free SMS to get rolling</li>
+         <li>Lark integration · 1 workspace · self-serve</li>
+         <li>SMS + WhatsApp · pay per send</li>
+         <li>20+ pre-localised SME templates</li>
+         <li>Docs + community forum + 14-day email</li>
+       </ul>
+       <a href="mailto:Salesmarketing@dolphlink.com?subject=SME%20App%20-%20Lark%20install" class="sme-btn sme-btn--ghost sme-plan-cta">Install on Lark</a>
+     </article>
+
+     <article class="sme-plan sme-plan--featured">
+       <span class="sme-plan-flag">Most SMEs pick this</span>
+       <header class="sme-plan-head">
+         <span class="sme-plan-name">Cloud</span>
+         <span class="sme-plan-tagline">Multi-tenant SaaS · 50 – 500 person teams · own dashboard</span>
+       </header>
+       <div class="sme-plan-price">
+         <span class="sme-plan-price-num">SGD $99</span>
+         <span class="sme-plan-price-unit">/ month, 5,000 messages incl.</span>
+       </div>
+       <ul class="sme-plan-features">
+         <li>Everything in App, plus:</li>
+         <li>5,000 messages incl. each month</li>
+         <li>SMS + WhatsApp + Voice + Email + ERP webhooks</li>
+         <li>Own dashboard · own Sender ID · own webhooks</li>
+         <li>Data residency: SG / HK / VN / TH (you pick)</li>
+         <li>Priority chat · 4-working-hour SLA</li>
+       </ul>
+       <a href="mailto:Salesmarketing@dolphlink.com?subject=SME%20Cloud%20-%20Sign%20me%20up" class="sme-btn sme-btn--primary sme-plan-cta">Start Cloud</a>
+     </article>
+
+     <article class="sme-plan">
+       <header class="sme-plan-head">
+         <span class="sme-plan-name">Platform</span>
+         <span class="sme-plan-tagline">Private deployment · 500+ teams or regulated industries</span>
+       </header>
+       <div class="sme-plan-price">
+         <span class="sme-plan-price-num">From SGD $50k</span>
+         <span class="sme-plan-price-unit">/ year · annual contract incl. implementation</span>
+       </div>
+       <ul class="sme-plan-features">
+         <li>Everything in Cloud, plus:</li>
+         <li>Private deployment in your VPC / on-prem / sovereign cloud</li>
+         <li>White-label option · custom SLA · custom routing</li>
+         <li>Dedicated Solution Architect + 24/7 phone support</li>
+         <li>All channels + RCS + WhatsApp Business + custom</li>
+         <li>4 – 8 week implementation incl. compliance audit</li>
+       </ul>
+       <a href="mailto:Salesmarketing@dolphlink.com?subject=SME%20Platform%20-%20Architect%20call" class="sme-btn sme-btn--ghost sme-plan-cta">Talk to Architect</a>
+     </article>
+
+   </div>
+
+   <p class="sme-pricing-fineprint">
+     Per-region outgoing rates on the <a href="../">enterprise page</a>. Receiving SMS &amp; voice
+     into Lark is always free. SGD prices include GST; we also bill in HKD / VND / THB / IDR / MYR / PHP where supported.
+   </p>
+ </section>
+
+ <section class="sme-section sme-cases" id="use-cases">
+   <div class="sme-section-head">
+     <span class="sme-section-eyebrow" data-i18n="sme.useCases.eyebrow">Use cases</span>
+     <h2 class="sme-section-title" data-i18n="sme.useCases.title">Built for the un-glamorous, mission-critical work.</h2>
+     <p class="sme-section-intro">
+       Six common shapes of SME we serve. Yours probably looks a lot like one of these — your
+       implementation will land in 10 minutes via the same Lark integration.
+     </p>
+   </div>
+
+   <div class="sme-case-grid">
+
+     <article class="sme-case">
+       <span class="sme-case-tag">Retail · multi-store</span>
+       <h3 class="sme-case-title">Recover abandoned carts in the same conversation thread.</h3>
+       <p class="sme-case-desc">Shopify / Shopee / Lazada cart abandonment fires an SMS or WhatsApp template, customer replies, your team picks it up in Lark — same thread, no app-switching.</p>
+     </article>
+
+     <article class="sme-case">
+       <span class="sme-case-tag">Restaurants · F&amp;B chains</span>
+       <h3 class="sme-case-title">Booking confirmations that cut no-shows from 18% to 7%.</h3>
+       <p class="sme-case-desc">Lark Calendar event triggers a 24-hr SMS reminder. One-tap reply confirms, cancels, or reschedules. Your floor manager sees it in Lark before service starts. Field data from a 12-store HK chain over Q4 2025.</p>
+     </article>
+
+     <article class="sme-case">
+       <span class="sme-case-tag">Clinics · group practices</span>
+       <h3 class="sme-case-title">Appointment reminders patients actually read.</h3>
+       <p class="sme-case-desc">98% verified open rate on transactional SMS — same carrier-grade routes the banks use. Reschedule requests land in Lark for your front desk to triage in seconds.</p>
+     </article>
+
+     <article class="sme-case">
+       <span class="sme-case-tag">E-commerce · cross-border</span>
+       <h3 class="sme-case-title">Order updates in the customer's language, automatically.</h3>
+       <p class="sme-case-desc">Shipped, customs-cleared, out-for-delivery, delivered — all four updates routed to the right channel (SMS for SG/MY, WhatsApp for ID/PH, Email for VN), localised on send.</p>
+     </article>
+
+     <article class="sme-case">
+       <span class="sme-case-tag">Schools · tuition centres</span>
+       <h3 class="sme-case-title">Parent–teacher comms in one inbox.</h3>
+       <p class="sme-case-desc">Bulk announcements via SMS, individual replies via WhatsApp, teachers respond from their Lark workspace. PDPA-compliant by default, parents stay in the channel they prefer.</p>
+     </article>
+
+     <article class="sme-case">
+       <span class="sme-case-tag">Logistics · fleet ops</span>
+       <h3 class="sme-case-title">Driver dispatch in Lark, customer tracking via SMS.</h3>
+       <p class="sme-case-desc">Lark Approval routes the job to a driver, the driver accepts in Lark, the customer gets an SMS with live ETA — all from one workflow, no third-party fleet app required.</p>
+     </article>
+
+   </div>
+ </section>
+
+ <section class="sme-section sme-integrations" id="integrations">
+   <div class="sme-section-head">
+     <span class="sme-section-eyebrow" data-i18n="sme.integrations.eyebrow">ERP × Lark workflows</span>
+     <h2 class="sme-section-title" data-i18n="sme.integrations.title">Where your ERP, your team, and your customer meet.</h2>
+     <p class="sme-section-intro">
+       Most SMEs aren't asking "how do I send an SMS" — they're asking "how do I get an SAP order
+       to trigger a customer SMS, with my team seeing it in Lark, with the audit trail in one place".
+       Three workflows cover ~90% of what real SMEs need. Mix and match.
+     </p>
+   </div>
+
+   <div class="sme-erp-strip" aria-label="Supported ERP systems">
+     <span class="sme-erp-strip-label">Plays nicely with</span>
+     <span class="sme-erp-pill">SAP</span>
+     <span class="sme-erp-pill">用友</span>
+     <span class="sme-erp-pill">金蝶</span>
+     <span class="sme-erp-pill">Odoo</span>
+     <span class="sme-erp-pill">QuickBooks</span>
+     <span class="sme-erp-pill">Xero</span>
+     <span class="sme-erp-strip-label sme-erp-strip-label--muted">+ any system that can fire a webhook</span>
+   </div>
+
+   <div class="sme-flows">
+
+     <article class="sme-flow">
+       <header class="sme-flow-head">
+         <span class="sme-flow-tag">Flow 01 · most common</span>
+         <h3 class="sme-flow-title">ERP order → Lark group notification</h3>
+       </header>
+       <ol class="sme-flow-pipe" aria-label="Workflow pipeline">
+         <li class="sme-flow-node sme-flow-node--ext"><span class="sme-flow-node-label">ERP</span><span class="sme-flow-node-sub">SAP / 用友 / 金蝶 / Odoo</span></li>
+         <li class="sme-flow-node sme-flow-node--us"><span class="sme-flow-node-label">DOLPHLINK</span><span class="sme-flow-node-sub">Webhook + routing</span></li>
+         <li class="sme-flow-node sme-flow-node--lark"><span class="sme-flow-node-label">Lark Bot</span><span class="sme-flow-node-sub">Posts to group chat</span></li>
+         <li class="sme-flow-node sme-flow-node--team"><span class="sme-flow-node-label">Your team</span><span class="sme-flow-node-sub">Sales / CS / warehouse</span></li>
+       </ol>
+       <p class="sme-flow-desc">New order, low-stock alert, refund request, KPI breach — your ERP fires a webhook to DOLPHLINK, we route it through the right template and post to the right Lark group. End-to-end latency under 3 seconds. Each message carries an "open in ERP" deep link.</p>
+     </article>
+
+     <article class="sme-flow">
+       <header class="sme-flow-head">
+         <span class="sme-flow-tag">Flow 02 · approval-driven</span>
+         <h3 class="sme-flow-title">Lark Approval → DOLPHLINK customer notification</h3>
+       </header>
+       <ol class="sme-flow-pipe" aria-label="Workflow pipeline">
+         <li class="sme-flow-node sme-flow-node--ext"><span class="sme-flow-node-label">Customer ask</span><span class="sme-flow-node-sub">WhatsApp / form / SMS</span></li>
+         <li class="sme-flow-node sme-flow-node--lark"><span class="sme-flow-node-label">Lark Approval</span><span class="sme-flow-node-sub">Multi-level sign-off</span></li>
+         <li class="sme-flow-node sme-flow-node--us"><span class="sme-flow-node-label">DOLPHLINK</span><span class="sme-flow-node-sub">Multi-channel send</span></li>
+         <li class="sme-flow-node sme-flow-node--ext"><span class="sme-flow-node-label">Customer</span><span class="sme-flow-node-sub">SMS / WhatsApp / Email</span></li>
+       </ol>
+       <p class="sme-flow-desc">Customer submits a quote / refund / address-change request. Lark Approval handles internal sign-off (with the audit trail your auditor wants). On approval, DOLPHLINK reaches the customer on their preferred channel. Both sides bound to the same Lark thread for traceability.</p>
+     </article>
+
+     <article class="sme-flow">
+       <header class="sme-flow-head">
+         <span class="sme-flow-tag">Flow 03 · time-driven</span>
+         <h3 class="sme-flow-title">Lark Calendar → automatic customer reminder</h3>
+       </header>
+       <ol class="sme-flow-pipe" aria-label="Workflow pipeline">
+         <li class="sme-flow-node sme-flow-node--lark"><span class="sme-flow-node-label">Lark Calendar</span><span class="sme-flow-node-sub">Event + customer phone</span></li>
+         <li class="sme-flow-node sme-flow-node--us"><span class="sme-flow-node-label">DOLPHLINK</span><span class="sme-flow-node-sub">Cron + template render</span></li>
+         <li class="sme-flow-node sme-flow-node--ext"><span class="sme-flow-node-label">Customer</span><span class="sme-flow-node-sub">SMS / WhatsApp</span></li>
+         <li class="sme-flow-node sme-flow-node--lark"><span class="sme-flow-node-label">Lark thread</span><span class="sme-flow-node-sub">Reply + status update</span></li>
+       </ol>
+       <p class="sme-flow-desc">Bookings, renewal calls, on-site service, contract expiry — Lark Calendar event fires reminders 24h / 2h / 30min before. Multi-language, channel-routed, and customer replies (YES / RESCHEDULE) flow back into the same Lark thread. F&amp;B field data: no-show rate dropped from 18% to 7%.</p>
+     </article>
+
+   </div>
+ </section>
+
+ <section class="sme-section sme-how" id="how">
+   <div class="sme-section-head">
+     <span class="sme-section-eyebrow" data-i18n="sme.how.eyebrow">How it works</span>
+     <h2 class="sme-section-title" data-i18n="sme.how.title">Three steps. Live before lunch.</h2>
+     <p class="sme-section-intro">
+       Most SME onboardings finish in under 10 minutes. The slowest step is waiting for the SMS
+       verification code — usually 30 seconds, sometimes 90 if your carrier is slow.
+     </p>
+   </div>
+
+   <ol class="sme-how-steps">
+     <li class="sme-how-step">
+       <span class="sme-how-num">01</span>
+       <h3 class="sme-how-title">Connect Lark.</h3>
+       <p class="sme-how-desc">Open the DOLPHLINK app inside Lark App Center, click Authorise. We never read your existing Lark messages — we only post into a new group chat we create on first run.</p>
+       <p class="sme-how-time">~ 60 seconds</p>
+     </li>
+     <li class="sme-how-step">
+       <span class="sme-how-num">02</span>
+       <h3 class="sme-how-title">Verify your business number.</h3>
+       <p class="sme-how-desc">Enter the mobile number customers should see as the sender, click Verify. We send a one-time SMS code, you reply 6 digits in Lark. Done.</p>
+       <p class="sme-how-time">~ 90 seconds</p>
+     </li>
+     <li class="sme-how-step">
+       <span class="sme-how-num">03</span>
+       <h3 class="sme-how-title">Send your first message.</h3>
+       <p class="sme-how-desc">Pick a template (we ship 20+ pre-localised for common SME flows), or type your own. Send to one number, see the Lark thread populate with delivery + read receipts.</p>
+       <p class="sme-how-time">~ 5 minutes</p>
+     </li>
+   </ol>
+ </section>
+
+ <section class="sme-section sme-cta-section">
+   <div class="sme-cta-card">
+     <div class="sme-cta-content">
+       <span class="sme-section-eyebrow sme-section-eyebrow--light" data-i18n="sme.cta.eyebrow">For the long-tail</span>
+       <h2 class="sme-cta-title" data-i18n="sme.cta.title">The mainstream is built for the top 1%. We built this for the other 99%.</h2>
+       <p class="sme-cta-desc">If you're a 12-person clinic, a 30-store F&amp;B chain, a cross-border logistics outfit, a tuition centre, or any SME the big CPaaS sales teams won't return your calls — this is for you. Connect Lark, send your first message tonight, talk to a human if you need help.</p>
+       <div class="sme-cta-actions">
+         <a href="mailto:Salesmarketing@dolphlink.com?subject=SME%20%2B%20Lark%20-%20Connect%20my%20workspace" class="sme-btn sme-btn--primary">
+           <span>Connect Lark · Free</span>
+           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+             <polyline points="9 5 16 12 9 19"/>
+           </svg>
+         </a>
+         <a href="mailto:Salesmarketing@dolphlink.com?subject=SME%20-%20Talk%20to%20a%20human" class="sme-btn sme-btn--ghost sme-btn--ghost-light">Talk to a human</a>
+       </div>
+     </div>
+   </div>
+ </section>
+</main>
+
+ <footer class="sme-footer" role="contentinfo">
+   <div class="sme-footer-inner">
+     <div class="sme-footer-brand">
+       <span class="sme-footer-logo">DOLPHLINK <span class="sme-footer-logo-x">×</span> LARK</span>
+       <p class="sme-footer-tag" data-i18n="sme.footer.tag">Carrier-grade communications for the SMEs the mainstream forgot. By Baiwu Technology Group, Singapore.</p>
+     </div>
+
+     <div class="sme-footer-cols">
+       <div class="sme-footer-col">
+         <span class="sme-footer-col-title">Modes</span>
+         <a href="#pricing">App</a>
+         <a href="#pricing">Cloud</a>
+         <a href="#pricing">Platform</a>
+         <a href="../">Enterprise</a>
+       </div>
+       <div class="sme-footer-col">
+         <span class="sme-footer-col-title">Workflows</span>
+         <a href="#integrations">ERP × Lark</a>
+         <a href="#how">Setup guide</a>
+         <a href="#use-cases">Use cases</a>
+       </div>
+       <div class="sme-footer-col">
+         <span class="sme-footer-col-title">Help</span>
+         <a href="mailto:Salesmarketing@dolphlink.com">Contact sales</a>
+         <a href="mailto:Salesmarketing@dolphlink.com?subject=SME%20Support">Support</a>
+         <a href="../">Status</a>
+       </div>
+     </div>
+   </div>
+
+   <div class="sme-footer-bar">
+     <span>© 2026 DOLPHLINK by Baiwu Technology Group · Singapore</span>
+     <span class="sme-footer-bar-links">
+       <a href="mailto:Salesmarketing@dolphlink.com?subject=Privacy%20policy%20request" data-i18n="sme.footer.privacy">Privacy</a>
+       <span aria-hidden="true">·</span>
+       <a href="mailto:Salesmarketing@dolphlink.com?subject=Terms%20of%20service%20request" data-i18n="sme.footer.terms">Terms</a>
+       <span aria-hidden="true">·</span>
+       <a href="../" data-i18n="sme.footer.enterprise">Enterprise site</a>
+     </span>
+   </div>
+ </footer>
+</body>
+</html>

@@ -1,0 +1,17 @@
+ <section class="sme-section sme-cases" id="use-cases">
+   <div class="sme-section-head">
+     <span class="sme-section-eyebrow">{{ sme.useCases.eyebrow }}</span>
+     <h2 class="sme-section-title">{{ sme.useCases.title }}</h2>
+     <p class="sme-section-intro">{{ sme.useCases.intro }}</p>
+   </div>
+
+   <div class="sme-case-grid">
+{% each sme.useCases.items %}
+     <article class="sme-case">
+       <span class="sme-case-tag">{{ this.tag }}</span>
+       <h3 class="sme-case-title">{{ this.title }}</h3>
+       <p class="sme-case-desc">{{ this.desc }}</p>
+     </article>
+{% endeach %}
+   </div>
+ </section>

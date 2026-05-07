@@ -12,30 +12,106 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v197';
+const CACHE_VERSION = 'dolphlink-v223';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
 
-// Files cached at install time — the minimum needed to render the homepage
-// AND the enterprise digital-card landing page (/c/?u=<localpart>).
-// The standalone /cards/ mini-app has been retired; the card view now lives
-// inside the main-page Request-Briefing modal (js/register.js) and the
-// public-facing /c/ landing page (js: js/c.js).
+// Files cached at install time.
+//
+// Engine layout (single-entry hook dispatcher + per-page subtrees):
+//
+//   js/app.js                ← entry, dispatched on every page
+//   js/engine/dispatch.js    ← reads <html data-page>, lazy-loads page module
+//   js/engine/core/...       ← helpers shared by 2+ pages (drive, vcard,
+//                              clipboard, strings, loader-shell)
+//   js/engine/home/...       ← homepage tree (the bulk of the JS)
+//   js/engine/card/index.js  ← /card/ digital-card page (legacy /c/ redirects)
+//   js/engine/sme/index.js   ← /sme/ landing page (no-op for now)
+//
+// Per-page subtrees own their utils, renderers, modules, and icon
+// libraries. They import shared helpers from ../core/ when needed.
+// Outside js/engine/ + lib/ NO JS exists in this repo.
 const OFFLINE_URL = SCOPE + 'offline.html';
 const PRECACHE = [
   SCOPE,
   SCOPE + 'index.html',
   SCOPE + 'offline.html',
+  SCOPE + 'css/tokens.css',           // design tokens — must load before style.css
   SCOPE + 'css/style.css',
+  SCOPE + 'css/sme.css',              // SME × Lark landing page styles
   SCOPE + 'css/register.css',
-  SCOPE + 'js/main.js',
-  SCOPE + 'js/register.js',
-  SCOPE + 'js/register-scanner.js',     // lazy-loaded by register.js when QR scanner opens; precache so offline scan still works
+
+  // ---- Single application entry + the only file every page uses ----
+  SCOPE + 'js/app.js',
+  SCOPE + 'js/engine/dispatch.js',
+
+  // ---- Core helpers (shared by 2+ pages) ----
+  SCOPE + 'js/engine/core/loader-shell.js',
+  SCOPE + 'js/engine/core/drive.js',
+  SCOPE + 'js/engine/core/strings.js',
+  SCOPE + 'js/engine/core/vcard.js',
+  SCOPE + 'js/engine/core/clipboard.js',
+  SCOPE + 'js/engine/core/url.js',          // safeHttpUrl — XSS shield for href= sites
+  SCOPE + 'js/engine/core/i18n.js',         // runtime locale swap (zh/ja/es/ms/hi)
+  SCOPE + 'content/i18n/zh.json',
+  SCOPE + 'content/i18n/ja.json',
+  SCOPE + 'content/i18n/es.json',
+  SCOPE + 'content/i18n/ms.json',
+  SCOPE + 'content/i18n/hi.json',
+  // Full-page locale content (homepage). The loader falls back to
+  // content.json when a locale file is missing, so listing them here is
+  // pure perf (skip-the-network on locale switch).
+  SCOPE + 'content/content.zh.json',
+  SCOPE + 'content/content.ja.json',
+  SCOPE + 'content/content.es.json',
+  SCOPE + 'content/content.ms.json',
+  SCOPE + 'content/content.hi.json',
+
+  // ---- Homepage tree (loaded only when <html data-page="home">) ----
+  SCOPE + 'js/engine/home/index.js',
+  SCOPE + 'js/engine/home/utils.js',
+  SCOPE + 'js/engine/home/tokens.js',
+  SCOPE + 'js/engine/home/loader.js',
+  SCOPE + 'js/engine/home/hydrate.js',
+  SCOPE + 'js/engine/home/lib-loader.js',
+  SCOPE + 'js/engine/home/fallbacks.js',
+  SCOPE + 'js/engine/home/icons/svg-builders.js',
+  SCOPE + 'js/engine/home/render/hero.js',
+  SCOPE + 'js/engine/home/render/stats.js',
+  SCOPE + 'js/engine/home/render/portfolio.js',
+  SCOPE + 'js/engine/home/render/audit.js',
+  SCOPE + 'js/engine/home/render/menu.js',
+  SCOPE + 'js/engine/home/render/trust.js',
+  SCOPE + 'js/engine/home/render/industries.js',
+  SCOPE + 'js/engine/home/render/departments.js',
+  SCOPE + 'js/engine/home/render/legal.js',
+  SCOPE + 'js/engine/home/render/social.js',
+  SCOPE + 'js/engine/home/render/icon-html.js',  // shared SVG-or-webp helper
+  SCOPE + 'js/engine/home/modules/loader-shell.js',
+  SCOPE + 'js/engine/home/modules/scroll.js',
+  SCOPE + 'js/engine/home/modules/card-detail.js',
+  SCOPE + 'js/engine/home/modules/footer-card.js',
+  SCOPE + 'js/engine/home/modules/map.js',
+  SCOPE + 'js/engine/home/register.js',          // Request-Briefing modal
+  SCOPE + 'js/engine/home/register-scanner.js',  // QR scanner (lazy)
+
+  // ---- Card-page tree (loaded only when <html data-page="card">) ----
+  SCOPE + 'js/engine/card/index.js',
+
+  // ---- SME-page tree (loaded only when <html data-page="sme">) ----
+  SCOPE + 'js/engine/sme/index.js',
+
+  // Card-page tree — primary URL is /card/?u=<localpart>. The legacy
+  // /c/?u=<localpart> still works because c/index.html is a redirect
+  // stub that JS-replaces to ../card/ + the original query string.
+  SCOPE + 'card/',
+  SCOPE + 'card/index.html',
   SCOPE + 'c/',
   SCOPE + 'c/index.html',
-  SCOPE + 'c/c.css',
-  SCOPE + 'js/c.js',
+  SCOPE + 'sme/',                     // SME × Lark landing page (built artifact)
+  SCOPE + 'sme/index.html',
+  SCOPE + 'css/card.css',
   SCOPE + 'media/img/video-poster.webp',
   SCOPE + 'media/video/current.mp4',
   SCOPE + 'media/icon/3D/logo.webp',
@@ -43,7 +119,8 @@ const PRECACHE = [
   // Local copies of external libs (populated by lib/download.ps1).
   // Pre-cache on install so offline mode + repeat visits skip the CDN.
   // If these files don't exist yet, addAll() rejects but we log + continue
-  // (see install handler) — the JS loaders fall back to jsdelivr.
+  // (see install handler) — engine/home/fallbacks.js degrades the feature
+  // to a still-useful static substitute.
   SCOPE + 'lib/echarts.min.js',
   SCOPE + 'lib/world.json',
   SCOPE + 'lib/qrcode.min.js'
@@ -53,12 +130,8 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_VERSION)
       .then(cache => cache.addAll(PRECACHE).catch(err => {
-        // Don't fail install if a single asset is missing (e.g. before deploy)
         console.warn('[sw] precache partial:', err);
       }))
-      // NOTE: do NOT skipWaiting() automatically — that would force the new
-      // SW on top of an active session, sometimes mixing old + new caches
-      // mid-render. Instead we wait for the page to opt in via postMessage.
   );
 });
 
@@ -89,13 +162,9 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return;
 
   // Skip range / partial requests (mostly <video src> byte-range fetches).
-  // The Cache API rejects 206 Partial Content with a TypeError, so we
-  // simply let the browser handle these natively. Anything served as a
-  // partial response is by definition not part of the offline shell.
   if (req.headers.has('range')) return;
 
   // content.json — always try network first so editors' updates show fast.
-  // Falls back to cache only if offline.
   if (url.pathname.endsWith('/content.json') || url.pathname.includes('/content/')) {
     event.respondWith(
       fetch(req)
@@ -115,25 +184,18 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(req).then(cached => {
       if (cached) {
-        // Refresh the cached copy in background so it stays fresh
         fetch(req).then(resp => {
           if (resp.status === 200) caches.open(CACHE_VERSION).then(c => c.put(req, resp));
         }).catch(() => {});
         return cached;
       }
       return fetch(req).then(resp => {
-        // Only cache full 200 responses. Skip 206 (range) / 0 (opaque) /
-        // anything else — they crash Cache.put() or pollute the offline
-        // shell with broken byte ranges.
         if (resp.status === 200 && resp.type === 'basic') {
           const copy = resp.clone();
           caches.open(CACHE_VERSION).then(c => c.put(req, copy));
         }
         return resp;
       }).catch(() => {
-        // Network is dead AND nothing cached. For HTML navigations show
-        // the branded offline page; for other resources just let the
-        // browser show its native error.
         if (req.mode === 'navigate' || req.destination === 'document') {
           return caches.match(OFFLINE_URL);
         }

@@ -1,0 +1,16 @@
+ <header class="sme-nav" role="banner">
+   <a href="../" class="sme-nav-brand" aria-label="{{ sme.header.ariaLabel }}">
+     <img src="../media/icon/3D/logo.webp" alt="" class="sme-nav-logo" width="36" height="36" decoding="async" />
+     <span class="sme-nav-name">{{ sme.header.brandName }}</span>
+     <span class="sme-nav-badge">{{ sme.header.brandBadge }}</span>
+   </a>
+   <nav class="sme-nav-links" aria-label="Primary">
+{% each sme.header.navLinks %}
+     <a href="{{ this.href }}" class="sme-nav-link">{{ this.label }}</a>
+{% endeach %}
+   </nav>
+   <div class="sme-nav-cta">
+     <a href="../" class="sme-nav-link sme-nav-link--ghost">{{ sme.header.enterpriseLink }}</a>
+     <a href="mailto:{{ sme.header.ctaMailto }}" class="sme-btn sme-btn--small">{{ sme.header.ctaLabel }}</a>
+   </div>
+ </header>

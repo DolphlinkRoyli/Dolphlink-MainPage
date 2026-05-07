@@ -1,0 +1,127 @@
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>{{ meta.title }}</title>
+ <meta name="description" content="{{ meta.description }}">
+ <meta name="keywords" content="{{ meta.keywords }}">
+ <meta name="author" content="{{ meta.author }}">
+ <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+ <meta name="googlebot" content="index, follow">
+ <meta name="theme-color" content="{{ meta.themeColor }}">
+ <meta name="application-name" content="{{ meta.appName }}">
+ <meta name="apple-mobile-web-app-title" content="{{ meta.appName }}">
+ <meta name="mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+ <meta name="format-detection" content="telephone=no">
+ <!-- Referrer-Policy: send only origin (not path/query) cross-origin.
+      Stops third-party destinations from learning the full URL when
+      users click outbound links (e.g. mailto/LinkedIn/Drive). -->
+ <meta name="referrer" content="strict-origin-when-cross-origin">
+ <link rel="canonical" href="{{ meta.canonical }}">
+
+ <!-- Favicons + PWA icons -->
+ <link rel="icon" type="image/webp" href="{{ icons.favicon }}">
+ <link rel="apple-touch-icon" href="{{ icons.appleTouchIcon }}">
+ <link rel="manifest" href="{{ icons.manifest }}">
+
+ <!-- Open Graph -->
+ <meta property="og:type" content="{{ opengraph.type }}">
+ <meta property="og:locale" content="{{ opengraph.locale }}">
+ <meta property="og:title" content="{{ opengraph.title }}">
+ <meta property="og:description" content="{{ opengraph.description }}">
+ <meta property="og:url" content="{{ opengraph.url }}">
+ <meta property="og:image" content="{{ opengraph.image }}">
+ <meta property="og:image:type" content="{{ opengraph.imageType }}">
+ <meta property="og:image:width" content="{{ opengraph.imageWidth }}">
+ <meta property="og:image:height" content="{{ opengraph.imageHeight }}">
+ <meta property="og:image:alt" content="{{ opengraph.imageAlt }}">
+ <meta property="og:site_name" content="{{ opengraph.siteName }}">
+
+ <!-- Twitter -->
+ <meta name="twitter:card" content="{{ twitter.card }}">
+ <meta name="twitter:title" content="{{ twitter.title }}">
+ <meta name="twitter:description" content="{{ twitter.description }}">
+ <meta name="twitter:image" content="{{ twitter.image }}">
+ <meta name="twitter:image:alt" content="{{ twitter.imageAlt }}">
+
+ <!-- JSON-LD Structured Data — sourced from content/seo.json, baked in
+      at build time so crawlers see the data without running JS. -->
+{{ jsonld }}
+
+ <!-- Preload critical resources (no third-party origins by policy) -->
+ <!-- LCP critical: hero background image. fetchpriority=high tells the browser
+      to download it on the same priority lane as the HTML/CSS, so it lands
+      with the first paint instead of flashing in 200-500ms later. -->
+ <link rel="preload" as="image" type="image/webp"
+       href="media/img/video-poster.webp" fetchpriority="high">
+
+ <!-- Preload critical scripts so they download in parallel with HTML parse.
+      The dispatcher's `import('./home/index.js')` is a DYNAMIC import — the
+      browser only learns about it at runtime. Manual modulepreload kicks
+      that fetch off during HTML parse, parallel to the static chain.
+      Once home/index.js arrives, ITS static imports (utils, hydrate, render/*)
+      are auto-discovered and fetched in parallel — no need to list them. -->
+ <link rel="modulepreload" href="js/app.js?v=2">
+ <link rel="modulepreload" href="js/engine/dispatch.js">
+ <link rel="modulepreload" href="js/engine/home/index.js">
+ <link rel="modulepreload" href="js/engine/home/register.js?v=19">
+ <!-- Preload content.json so the fetch in loader.js hits a warm cache.
+      crossorigin="anonymous" required to match the cors+same-origin
+      mode that fetch() defaults to — without it the browser fetches twice. -->
+ <link rel="preload" as="fetch" href="content/content.json?v=20260507ag" crossorigin="anonymous">
+
+ <!-- (Google Fonts removed by policy — no third-party origins. Body
+      typography falls back to the system font stack in css/style.css
+      → -apple-system / BlinkMacSystemFont / "Segoe UI" / Roboto.) -->
+ <link rel="stylesheet" href="css/tokens.css?v=1">
+ <link rel="stylesheet" href="css/style.css?v=156">
+ <link rel="preload" as="style" href="css/register.css?v=1" onload="this.onload=null;this.rel='stylesheet'">
+ <noscript><link rel="stylesheet" href="css/register.css?v=1"></noscript>
+ <!-- ECharts lazy-loaded from local lib/ (injected only when charts viewport intersects) — saves 209 KiB initial JS -->
+ <script type="module" src="js/app.js?v=2"></script>
+
+ <!-- Speculation Rules — Chromium prerenders the linked URL in a hidden
+      tab the moment we hint, so when the user actually clicks the QR
+      code the destination is already in memory and navigates instantly.
+      Conservative: only hint at the public vCard landing. -->
+ <script type="speculationrules">
+   {
+     "prerender": [
+       { "source": "list",
+         "urls": ["c/?u=joycetsam"],
+         "eagerness": "moderate" }
+     ]
+   }
+ </script>
+ <!-- Tiny error-monitor stub — kept in <head> so it can catch errors
+      that fire before the main PWA/install script (which lives at
+      end-of-body) executes. -->
+ <script>
+   window.__dlpkErrors = [];
+   (function () {
+     var DLPK_ERR_MAX = 50;
+     var dlpkErrSeen = Object.create(null);
+     function pushErr(entry) {
+       var key = entry.type + '|' + entry.msg + '|' + (entry.src || '') + '|' + (entry.line || '');
+       if (dlpkErrSeen[key]) { dlpkErrSeen[key].count++; dlpkErrSeen[key].lastAt = entry.at; return; }
+       entry.count = 1; entry.lastAt = entry.at;
+       dlpkErrSeen[key] = entry;
+       window.__dlpkErrors.push(entry);
+       if (window.__dlpkErrors.length > DLPK_ERR_MAX) {
+         var d = window.__dlpkErrors.shift();
+         delete dlpkErrSeen[d.type + '|' + d.msg + '|' + (d.src || '') + '|' + (d.line || '')];
+       }
+     }
+     window.addEventListener('error', function (e) {
+       pushErr({ type: 'error', msg: e.message, src: e.filename, line: e.lineno, col: e.colno,
+         stack: e.error && e.error.stack || '', at: new Date().toISOString() });
+       console.warn('[dlpk:error]', e.message, e.filename + ':' + e.lineno);
+     });
+     window.addEventListener('unhandledrejection', function (e) {
+       pushErr({ type: 'unhandledrejection',
+         msg: (e.reason && e.reason.message) || String(e.reason),
+         stack: (e.reason && e.reason.stack) || '', at: new Date().toISOString() });
+       console.warn('[dlpk:reject]', e.reason);
+     });
+   })();
+ </script>

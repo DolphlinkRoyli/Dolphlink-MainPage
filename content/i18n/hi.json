@@ -1,0 +1,61 @@
+{
+  "__lang": "hi",
+  "__comment": "DOLPHLINK Hindi (Devanagari) translations. Direct B2B tone, neutral business register. Edit to refine.",
+
+  "nav.lark": "Lark एकीकरण",
+  "nav.workflows": "ERP वर्कफ्लो",
+  "nav.pricing": "मूल्य निर्धारण",
+  "nav.useCases": "उपयोग के मामले",
+  "nav.enterprise": "एंटरप्राइज़",
+  "nav.cta.connect": "Lark कनेक्ट करें",
+
+  "sme.hero.eyebrow": "उन SMEs के लिए जिन्हें मुख्यधारा भूल गई",
+  "sme.hero.h1.line1": "बड़े बैंकों द्वारा उपयोग की जाने वाली कैरियर-ग्रेड स्टैक —",
+  "sme.hero.h1.line2": "सीधे Lark से जुड़ी।",
+  "sme.hero.tagline": "SMS, WhatsApp, वॉयस, ईमेल — और आपका ERP — सब आपके Lark वर्कस्पेस से गुजरते हैं। बड़े CPaaS खिलाड़ी (Twilio / Vonage / MessageBird) USD 50,000 वार्षिक अनुबंध से कम पर आपका कॉल नहीं उठाएंगे। हम उठाएंगे। प्रति संदेश SGD 0.04 से भुगतान, Lark के साथ नेटिव एकीकरण, डिफ़ॉल्ट रूप से बहुभाषी। आज रात लाइव, IT टीम की ज़रूरत नहीं।",
+  "sme.hero.cta.primary": "Lark कनेक्ट करें · मुफ़्त",
+  "sme.hero.cta.secondary": "मूल्य देखें",
+  "sme.hero.meta.live": "10 मिनट में लाइव",
+  "sme.hero.meta.contract": "कोई अनुबंध नहीं, कभी भी रद्द करें",
+  "sme.hero.meta.lang": "एशियाई भाषाएँ, मूल समर्थन",
+
+  "sme.benefits.eyebrow": "SMEs Twilio + Slack की जगह हमें क्यों चुनते हैं",
+  "sme.benefits.title": "चार चीज़ें जो मुख्यधारा आपको नहीं देगी।",
+
+  "sme.pricing.eyebrow": "तीन डिप्लॉयमेंट मोड",
+  "sme.pricing.title": "App, Cloud, या Platform। एक ही रीढ़।",
+  "sme.pricing.plan.app": "App",
+  "sme.pricing.plan.cloud": "Cloud",
+  "sme.pricing.plan.platform": "Platform",
+  "sme.pricing.plan.cloud.flag": "अधिकांश SMEs यही चुनते हैं",
+
+  "sme.useCases.eyebrow": "उपयोग के मामले",
+  "sme.useCases.title": "बिना ग्लैमर के, मिशन-क्रिटिकल कार्य के लिए बनाया गया।",
+
+  "sme.integrations.eyebrow": "ERP × Lark वर्कफ्लो",
+  "sme.integrations.title": "जहाँ आपका ERP, टीम, और ग्राहक मिलते हैं।",
+
+  "sme.how.eyebrow": "यह कैसे काम करता है",
+  "sme.how.title": "तीन चरण। दोपहर के भोजन से पहले लाइव।",
+
+  "sme.cta.eyebrow": "लॉन्ग-टेल के लिए",
+  "sme.cta.title": "मुख्यधारा शीर्ष 1% के लिए बनी है। हमने यह शेष 99% के लिए बनाया।",
+
+  "sme.footer.tag": "उन SMEs के लिए कैरियर-ग्रेड संचार जिन्हें मुख्यधारा भूल गई। Baiwu Technology Group, सिंगापुर द्वारा।",
+  "sme.footer.privacy": "गोपनीयता",
+  "sme.footer.terms": "शर्तें",
+  "sme.footer.enterprise": "एंटरप्राइज़ साइट",
+
+  "home.hero.cta.industry": "उद्योग अंतर्दृष्टि",
+  "home.hero.cta.sme": "SME संस्करण",
+  "home.hero.cta.auto": "ऑटो-ऑर्केस्ट्रेशन देखें",
+  "home.hero.sme.tag.headline": "छोटी टीमों के लिए डिज़ाइन किया गया।",
+  "home.hero.sme.tag.sub": "वही एंटरप्राइज़ स्टैक, SME बजट और गति के अनुरूप।",
+
+  "home.section.reliability": "विश्वसनीयता मैट्रिक्स",
+  "home.section.portfolio": "पोर्टफोलियो",
+  "home.section.industries": "सेवित उद्योग",
+  "home.section.departments": "सशक्त विभाग",
+  "home.section.network": "कैरियर नेटवर्क",
+  "home.section.compliance": "अनुपालन इंटेलिजेंस"
+}

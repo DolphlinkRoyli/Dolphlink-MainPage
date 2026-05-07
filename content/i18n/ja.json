@@ -1,0 +1,61 @@
+{
+  "__lang": "ja",
+  "__comment": "DOLPHLINK Japanese translations. Direct B2B tone; defaults to formal-but-not-stiff register (です/ます調). Edit to refine.",
+
+  "nav.lark": "Lark 連携",
+  "nav.workflows": "ERP ワークフロー",
+  "nav.pricing": "料金",
+  "nav.useCases": "活用事例",
+  "nav.enterprise": "エンタープライズ",
+  "nav.cta.connect": "Lark を接続",
+
+  "sme.hero.eyebrow": "見落とされてきた中小企業のために",
+  "sme.hero.h1.line1": "大手銀行が使うキャリアグレード基盤を ——",
+  "sme.hero.h1.line2": "Lark に直結。",
+  "sme.hero.tagline": "SMS、WhatsApp、音声、メール ―― そしてあなたの ERP ―― すべてが Lark ワークスペースを流れる。Twilio / Vonage / MessageBird は年間 5 万米ドル未満の契約には返事をしない。私たちは違います。1 通あたり SGD 0.04 から、Lark ネイティブ統合、多言語デフォルト。今夜稼働、IT チーム不要。",
+  "sme.hero.cta.primary": "Lark を無料で接続",
+  "sme.hero.cta.secondary": "料金を見る",
+  "sme.hero.meta.live": "10 分で稼働",
+  "sme.hero.meta.contract": "契約なし、いつでも解約",
+  "sme.hero.meta.lang": "アジア言語ネイティブ対応",
+
+  "sme.benefits.eyebrow": "Twilio + Slack より中小企業が DOLPHLINK を選ぶ理由",
+  "sme.benefits.title": "メインストリームが提供しない 4 つのこと。",
+
+  "sme.pricing.eyebrow": "3 つの導入モード",
+  "sme.pricing.title": "App、Cloud、Platform。同じ基盤。",
+  "sme.pricing.plan.app": "App",
+  "sme.pricing.plan.cloud": "Cloud",
+  "sme.pricing.plan.platform": "Platform",
+  "sme.pricing.plan.cloud.flag": "中小企業の多くが選択",
+
+  "sme.useCases.eyebrow": "活用事例",
+  "sme.useCases.title": "華やかではないが、ミッションクリティカルな業務のために。",
+
+  "sme.integrations.eyebrow": "ERP × Lark ワークフロー",
+  "sme.integrations.title": "ERP、チーム、顧客が出会う場所。",
+
+  "sme.how.eyebrow": "仕組み",
+  "sme.how.title": "3 ステップ。ランチ前に稼働。",
+
+  "sme.cta.eyebrow": "ロングテール向け",
+  "sme.cta.title": "メインストリームは上位 1% 向け。私たちは残り 99% のために構築しました。",
+
+  "sme.footer.tag": "見落とされてきた中小企業のためのキャリアグレード通信。シンガポール、Baiwu Technology Group。",
+  "sme.footer.privacy": "プライバシー",
+  "sme.footer.terms": "利用規約",
+  "sme.footer.enterprise": "エンタープライズサイト",
+
+  "home.hero.cta.industry": "業界インサイト",
+  "home.hero.cta.sme": "中小企業版",
+  "home.hero.cta.auto": "自動オーケストレーションを見る",
+  "home.hero.sme.tag.headline": "小規模チーム向け設計。",
+  "home.hero.sme.tag.sub": "同じエンタープライズ基盤、中小企業の予算とスピードに最適化。",
+
+  "home.section.reliability": "信頼性マトリクス",
+  "home.section.portfolio": "プロダクト ポートフォリオ",
+  "home.section.industries": "対応業界",
+  "home.section.departments": "支援部門",
+  "home.section.network": "キャリアネットワーク",
+  "home.section.compliance": "コンプライアンス インテリジェンス"
+}

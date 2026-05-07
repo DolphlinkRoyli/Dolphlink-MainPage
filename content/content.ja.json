@@ -1,0 +1,219 @@
+{
+  "_comment": "DOLPHLINK 日本語コンテンツ。content.json と同じ構造。技術用語 (API/SMS/RCS/ISO 27001/MAS TRM 等) と固有名詞 (新加坡/Dolphlink Touch 等) は原文ママ。文体: B2B 向けです・ます調。",
+  "nav": {
+    "brandName": "DOLPHLINK",
+    "ctaLabel": "ブリーフィング予約",
+    "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
+    "menuItems": [
+      { "label": "ホーム",         "scrollTo": "h-sec", "href": "", "target": "" },
+      { "label": "信頼性",         "scrollTo": "r-sec", "href": "", "target": "" },
+      { "label": "信頼性レイヤー", "scrollTo": "a-sec", "href": "", "target": "" }
+    ]
+  },
+  "hero": {
+    "h1": "優れた顧客体験のすべてを支える",
+    "eyebrow": "シンガポール・サイバーセキュリティ法に基づく運営 · IM8 準拠",
+    "h1Line1": "シンガポール政府公認の",
+    "h1Line2": "通信インフラ。",
+    "tagline": "ミッションクリティカルな政府機関・規制業界のためのキャリアグレード通信および AI オーケストレーション基盤。シンガポール政府認可、MAS TRM 準拠で、200 カ国超のすべてのメッセージ・通話・AI エージェント操作に、政府レベルの監査証跡、エンドツーエンド暗号化、改ざん検知ログを標準装備しています。",
+    "ctaPrimary": "ブリーフィング予約",
+    "ctaPrimaryMailto": "Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&cc=Joycetsam@dolphlink.com",
+    "ctaSecondary": "自動オーケストレーションを見る",
+    "ctaSecondaryScrollTo": "n-sec",
+    "stats": [
+      { "value": "99.999%", "label": "稼働率" },
+      { "value": "1,000+",  "label": "Tier-1 ルート" },
+      { "value": "200+",    "label": "対応国・地域" }
+    ],
+    "triggerLine": "サービスの分断を検知し、自動で復旧オーケストレーションを発動します。"
+  },
+  "trustWall": {
+    "headerTag": "キャリアネットワークとコンプライアンス",
+    "statusLabel": "ライブ · Tier-1 ルート",
+    "operatorsLabel": "グローバルネットワーク",
+    "regulatorsLabel": "整合する規制",
+    "operators": [
+      { "name": "アジア太平洋" },
+      { "name": "EMEA" },
+      { "name": "アメリカ" },
+      { "name": "1,000+ グローバルルート" }
+    ],
+    "regulators": [
+      { "name": "ISO 27001" }, { "name": "MAS TRM" }, { "name": "IM8" },
+      { "name": "PDPA" }, { "name": "GDPR" }, { "name": "SOC 2" }
+    ]
+  },
+  "reliability": {
+    "headerTag": "信頼性マトリクス",
+    "stats": [
+      { "key": "sla",  "icon": "icon_6",  "value": "99.999%", "label": "稼働率",
+        "desc": "地理的に冗長化された PoP 構成により、99.999%（ファイブナイン）の高可用性を実現。ミッションクリティカルな通信のために設計されており、SLA は第三者機関による独立検証および四半期ごとの監査保証を実施しています。" },
+      { "key": "loc",  "icon": "icon_5",  "value": "200+",    "label": "対応国・地域",
+        "desc": "世界 1,000 を超える Tier-1 モバイルキャリアルートを経由して 200 カ国以上をカバー。規制業界・新興市場を問わず、キャリアグレードの品質とラストワンマイル到達性を提供します。" },
+      { "key": "lat",  "icon": "icon_10", "value": "<10 秒",   "label": "送達速度",
+        "desc": "Tier-1 キャリア経由で SMS が 10 秒以内に到達。世界基準で検証、四半期ごとに監査、リアルタイムのルート分析によって継続的に最適化されています。" },
+      { "key": "ain",  "icon": "icon_7",  "value": "AI×H",    "label": "オーケストレーション",
+        "desc": "人間が介在する AI ガバナンスを備えた、フルスタックの AI エージェント・オーケストレーション。定型業務は AI ボットが、判断を要する複雑なケースは AI エージェントが処理し、社内ポリシーやリスク閾値に達した瞬間、シームレスに人間の担当者へ引き継ぎます。組み込みの移行ツールにより、レガシーなワークフローを御社のスケジュールに合わせて次世代運用へ移行可能。すべての引き継ぎに改ざん検知付きの監査証跡が残ります。" },
+      { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "開封率",
+        "desc": "Tier-1 キャリア経由のトランザクション SMS において、検証済みの開封率 98% を達成。緊急の OTP、不正利用アラート、重要通知は数秒以内にお客様へ届き、実際に読まれています。トランザクションをマーケティング配信より優先するルーティング設計と、四半期ごとの第三者測定監査により裏付けられた数値です。" }
+    ]
+  },
+  "portfolios": {
+    "headerTag": "ポートフォリオ",
+    "intro": "3 つの柱、9 つの製品、1 つの主権プラットフォーム。今日の技術スタックに合うエントリポイントを選び、運用が成長したら隣接する柱に拡張してください。",
+    "pillars": [
+      { "key": "connectivity",  "name": "コネクティビティ", "tagline": "Tier-1 キャリアリーチ",
+        "desc": "キャリアグレードのバックボーン。Tier-1 キャリアルート経由で 200+ カ国に SMS、音声、電話番号を提供します。" },
+      { "key": "orchestration", "name": "オーケストレーション", "tagline": "マルチチャネル + 開発者",
+        "desc": "統合メッセージングハブ、プログラマブル API、AI-人間対話フロー向けノーコードチャットボットビルダー。" },
+      { "key": "governance",    "name": "AI ガバナンス",   "tagline": "主権コマンド + 移行",
+        "desc": "完全な監査証跡を備えたエージェントオーケストレーション、運用分析、カスタム AI-デジタル移行サービス。" }
+    ],
+    "items": [
+      { "key": "sms", "pillar": "connectivity", "icon": "icon_4", "label": "SMS Platform",
+        "tagline": "Global SMS API", "recommend": "FLAGSHIP", "recommendTier": "gold",
+        "desc": "1 つのプラットフォームで、3 つの利用部門に対応。開発者は Node・Python・Go・Java・PHP の各 SDK が用意された REST API でシステム連携。マーケティング担当者は Pages（SMS 内に埋め込めるモバイル LP）や Campaigns（セグメント別一括配信）で施策を実行。カスタマーサポート部門は統合インボックスで双方向の顧客対応を行います。\n\n1,000 を超える Tier-1 キャリアルートを経由し、200 カ国以上へ 10 秒以内で SMS を到達。トランザクション SMS の検証済み開封率は 98%。Short Code、Long Number、オプトインキーワードを使った双方向メッセージングで、大規模なインタラクティブ施策を実現します。\n\nエンドツーエンドの TLS 1.3 暗号化に加え、OTP や緊急アラートには優先ルーティングを適用。24 時間 365 日体制の NOC 監視と自動キャリア切替によって、常に最速の経路を確保します。" },
+      { "key": "voice", "pillar": "connectivity", "icon": "icon_13", "label": "Voice & SIP",
+        "tagline": "法人向け音声基盤", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "TTS、自動音声通知、コール転送、DTMF 入力に対応した地理冗長型 SIP トランキングが、あらゆる音声ワークロードを支えるキャリアグレードの基盤となります。\n\n通話ごとの詳細な分析データにより、不正利用の監視・対策を強化。可用性と説明責任を重視するコンタクトセンター、中小企業、IP PBX 販売代理店向けに設計されています。\n\nブラウザ型エージェント端末向けの WebRTC ブリッジに加え、G.711・G.729・Opus コーデックに完全対応。改ざん不可の通話録音、リアルタイムのジッター・パケットロス計測、ワンクリックでの DID 番号移行に対応します。" },
+      { "key": "numbers", "pillar": "connectivity", "icon": "icon_14", "label": "Phone Numbers",
+        "tagline": "グローバル DID 番号", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "100 カ国を超える地域番号・全国番号・モバイル番号・フリーダイヤル番号を即時取得可能。同じ管理画面のセッション内で、異なる国・地域の番号を一括して払い出すことができます。\n\n英数字の Sender ID、Short Code、Hosted Number（キャリアを変更せずに既存固定電話で SMS・音声を利用可能）に対応し、現行業務にそのまま組み込めます。組み込みのコンプライアンス機能が、地域ごとの規制要件を自動で判定します。\n\n対応地域では 48 時間以内に番号ポータビリティを完了。バニティ番号の予約や即時開通にも対応。一元管理ダッシュボードで、全地域の利用状況・請求・コンプライアンス状況を一画面で把握できます。" },
+      { "key": "touch", "pillar": "orchestration", "icon": "icon_11", "label": "Dolphlink Touch",
+        "tagline": "マルチチャネル統合ハブ", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "ビジネス向け統合メッセージング基盤。SMS、WhatsApp、RCS、メール、新興チャネルを 1 つのプラットフォームに集約。どこから始まった会話でも、すべて 1 か所に集まります。\n\nマーケティング担当者にも扱いやすいテンプレート、ドラッグ＆ドロップで作れるキャンペーンビルダー、配信失敗時に自動でチャネルを切り替えるフォールバック機能を搭載。スピード感を重視する営業・マーケティング・カスタマーサクセス部門のために設計されています。\n\nテンプレート審査ワークフローを備えた WhatsApp Business Platform ネイティブ連携、行動データに基づく動的セグメント配信、チャネル横断の A/B テストにも対応。コンバージョン分析で施策の ROI をエンドツーエンドで可視化します。" },
+      { "key": "api", "pillar": "orchestration", "icon": "icon_8", "label": "Dolphlink One-API",
+        "tagline": "開発者向け API 基盤", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "SMS、音声、WhatsApp、メール、新興チャネルをすべて 1 つの API で扱える、プログラマブルな統合 API。チャネルを問わず、1 回の API コールでメッセージ送信や発信が可能です。\n\nプライマリ経路の配信が失敗した際に自動でチャネルを切り替えるフォールバック機能を備えた、すぐに導入できる SDK を提供。すべてのメッセージを確実に届ける必要があるミッションクリティカルなワークフローに最適です。\n\nNode・Python・Go・Java・PHP をカバーする 5 言語の SDK、実テスト番号付きの対話型サンドボックス、自動リトライ機能付きの署名済み Webhook 配信を提供。詳細なログとリクエスト再実行機能で、数日かかっていたデバッグを数分に短縮します。" },
+      { "key": "smart", "pillar": "orchestration", "icon": "icon_12", "label": "Dolphlink Smart",
+        "tagline": "AI チャットボットビルダー", "recommend": "NEW", "recommendTier": "gold",
+        "desc": "人間が介在する AI ワークフローのための、ノーコード対話ビルダー。ドラッグ操作で構築し、デプロイパイプラインに触れることなく即座に公開できます。\n\n定型業務は AI ボットが、判断が必要な複雑な案件は人間のオペレーターが対応し、シームレスな引き継ぎで会話を途切れさせません。御社固有のデータをもとにした文脈理解、規制業界での運用を想定した ISO 27001・GDPR・RBAC を標準搭載。\n\nPDF・Web・データベースから知識ベースを取り込み、業界用語に合わせてファインチューニングが可能。40 言語以上の多言語対話に対応し、感情解析機能がデリケートな案件を数秒以内に人間のオペレーターへエスカレーションします。" },
+      { "key": "nexus", "pillar": "governance", "icon": "icon_1", "label": "Dolphlink Nexus",
+        "tagline": "AI エージェント・オーケストレーション", "recommend": "NEW", "recommendTier": "gold",
+        "desc": "AI エージェント運用の中枢を担う統合管理センター。各種ボット、RPA フロー、カスタム AI モデル、人間の担当者を、監査可能な単一のコントロールプレーンに統合します。\n\n移行支援、完全なデータレジデンシー（国内保管）、RBAC、操作ログを標準搭載し、政府機関や規制業界向けに設計。すべての操作はトレース可能で、データセットは規制当局が指定する所在地から動きません。\n\nビジュアル形式のワークフローデザイナーで、任意の LLM・RPA ツール・人間の担当者を、条件分岐や承認ゲートとともに自由に接続。改ざん検知付きの監査証跡があらゆる意思決定とデータアクセスを記録するため、規制当局の監査にもそのまま対応できます。" },
+      { "key": "console", "pillar": "governance", "icon": "icon_2", "label": "Operations Hub",
+        "tagline": "運用分析プラットフォーム", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "Messaging Gateway が API キーや認証情報を一元管理。1 つのダッシュボードで、すべての認証情報・チャネル・チームを管理できます。\n\nMessage Log が、各メッセージのステータス・内容・リアルタイムコストを完全に可視化。集計分析とトレンド表示により、データが蓄積されるたびに通信戦略を継続的に最適化できます。\n\n配信率の低下やコストの異常急増は、閾値ベースのアラートで自動通知。コスト予測機能がチャネル・地域ごとの月次支出を予測し、CSV や Webhook での出力で BI・経理・コンプライアンス基盤と連携できます。" },
+      { "key": "custom", "pillar": "governance", "icon": "icon_9", "label": "AI-Digital Solutions",
+        "tagline": "デジタル移行サービス", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "既存インフラ案件向けに、AI を活用したデジタル移行サービスをご提供。御社のシステム環境（オンプレミス・ハイブリッド・主権クラウド）に合わせて柔軟に対応します。\n\nレガシーシステムと、DOLPHLINK の通信・AI オーケストレーション・コンプライアンス基盤との橋渡しを行うカスタム連携を設計。御社のスケジュール、データ所在地、ガバナンス要件に沿って実装します。\n\n4 週間の要件定義・アーキテクチャワークショップを起点とした段階的なロールアウトを実施。並行稼働によるパイロットを経て、段階的に本番切替を行います。専任のソリューションアーキテクト、24 時間 365 日の優先サポート、カスタム SLA 条項により、ミッションクリティカルなワークフローを継続的に保護します。" }
+    ]
+  },
+  "audit": {
+    "title": "信頼性レイヤー",
+    "items": [
+      { "title": "コンプライアンス認証",
+        "desc": "ISO 27001 および GDPR 認証取得済み。シンガポール PDPA、MAS TRM、ASEAN／EMEA／米州地域の各種規制フレームワークに対応。第三者機関による独立監査を毎年実施し、監査保証レポートは NDA 締結のうえご提供します。" },
+      { "title": "データ主権",
+        "desc": "シンガポールを拠点とする政府レベルのインフラを基盤に、ASEAN・EMEA・米州にまたがる地域別データレジデンシーを実現。すべての顧客データは、規制当局が指定する管轄区域内に保管されます。証跡管理を伴う四半期ごとの第三者監査保証付き。" },
+      { "title": "信頼性の検証",
+        "desc": "地理冗長型 PoP 全体で 99.999% の稼働率を第三者検証済み。通信中は TLS 1.3、保存データは AES-256 で暗号化し、第三者機関による侵入テストを四半期ごとに実施しています。" },
+      { "title": "アクセスガバナンス",
+        "desc": "プラットフォーム全体にロールベースアクセス制御（RBAC）を適用。チーム・テナント・ワークフロー単位の細粒度な権限管理、詳細な操作ログ、SSO 連携を標準搭載しています。" }
+    ]
+  },
+  "industries": {
+    "headerTag": "対応業界",
+    "intro": "規制業界およびミッションクリティカルな通信のために設計。DOLPHLINK の主権アーキテクチャと AI エージェント・オーケストレーションが定量的な優位性をもたらす 4 つの主要業界、ならびに同じ基盤上で提供する 5 つの追加業界に対応します。",
+    "primaryLabel": "主要業界",
+    "secondaryLabel": "対応業界",
+    "items": [
+      { "key": "banking", "tier": "primary", "name": "銀行・FinTech", "color": "#0059B3",
+        "desc": "安全な 2FA／OTP、リアルタイムの不正利用アラート、明細通知、自動音声発信による返済リマインダーまでを一括対応。",
+        "chips": ["MAS TRM", "PDPA", "PCI-DSS"] },
+      { "key": "government", "tier": "primary", "name": "政府・公共機関", "color": "#1F2937",
+        "desc": "政府レベルのインフラ上で、市民向けアラート、行政サービスの通知、緊急放送を配信。IM8 準拠かつ監査対応済みで、ASEAN・EMEA・米州の複数規制管轄でデプロイ可能です。",
+        "chips": ["IM8", "主権クラウド", "多管轄対応"] },
+      { "key": "healthcare", "tier": "primary", "name": "医療・ヘルスケア", "color": "#10B981",
+        "desc": "予約リマインダーの自動配信と AI チャットボットによるトリアージで無断キャンセルを削減。主権レベルのデータレジデンシーが患者プライバシーを保護します。",
+        "chips": ["PDPA", "HIPAA 対応", "ISO 27001"] },
+      { "key": "insurance", "tier": "primary", "name": "保険", "color": "#7C3AED",
+        "desc": "契約更新リマインダー、請求ステータス通知、KYC 認証フローまでを一気通貫で。規制対象のすべての顧客接点に改ざん検知付き監査証跡を付与します。",
+        "chips": ["PDPA", "GDPR", "ISO 27001"] },
+      { "key": "retail", "tier": "secondary", "name": "小売・EC", "color": "#0059B3",
+        "desc": "自社データに基づくパーソナライズ施策、リアルタイムの配送通知、カゴ落ちリカバリー、SMS に埋め込む Pages ランディングページを提供します。",
+        "chips": ["GDPR", "PDPA"] },
+      { "key": "education", "tier": "secondary", "name": "教育", "color": "#0059B3",
+        "desc": "入学手続きの確認連絡、授業リマインダー、保護者と学校のやりとりを一つの受信箱に集約。地域言語ペアの多言語にも対応します。",
+        "chips": ["PDPA", "多言語"] },
+      { "key": "logistics", "tier": "secondary", "name": "物流", "color": "#0059B3",
+        "desc": "WhatsApp、メール、チャットを横断する統合インボックスと、配送状況の自動通知を一体化。ドライバー配車は音声 IVR と SMS の確認応答で運用できます。",
+        "chips": ["オムニチャネル", "GDPR"] },
+      { "key": "entertainment", "tier": "secondary", "name": "エンタメ・ゲーム", "color": "#0059B3",
+        "desc": "海外向けゲームパブリッシャーやソーシャルアプリ向けに、国際 SMS・音声認証を提供。国別最適化ルーティングが新興市場のラストワンマイルにも対応します。",
+        "chips": ["200 カ国超", "GDPR"] },
+      { "key": "hospitality", "tier": "secondary", "name": "ホスピタリティ", "color": "#0059B3",
+        "desc": "ゲストの好みのチャネルで対応するノーコード型セルフサービスボット。到着前・滞在中・滞在後のフローをすべて自動化できます。",
+        "chips": ["ノーコードボット", "多言語"] }
+    ]
+  },
+  "departments": {
+    "headerTag": "サポート対象部門",
+    "intro": "DOLPHLINK は、お客様の組織内における 4 つの異なる部門を、同一の共通基盤で支援します — 現場のオペレーションから、カスタム AI デジタル構築まで一貫して対応します。",
+    "items": [
+      { "key": "support", "name": "カスタマーサポート",
+        "desc": "あらゆるデジタル接点でのマルチチャネル対応に、AI と人間担当者のスムーズな引き継ぎを組み合わせます。すべての問い合わせには完全な監査証跡、感情スコアリング、SLA 遵守が紐付き、Tier-1 から Tier-3 のエスカレーションフローも地域ごとに設定可能です。" },
+      { "key": "growth", "name": "マーケティング・営業",
+        "desc": "会話を売上に変える部門のための機能群。SMS、WhatsApp、メール施策を 1 つの管理画面で A/B テストし、行動セグメントを活用してエンドツーエンドで ROI を計測できます。パイプラインのアトリビューションやライフサイクル自動化も標準搭載です。" },
+      { "key": "ops", "name": "IT・運用部門",
+        "desc": "エンタープライズグレードのインフラ上で、会話型コマースをスマートに運用。プログラマブルな API エンドポイント 1 本で従来のレガシーゲートウェイ連携を置き換え、優先ルーティング、自動キャリア切替、24 時間 365 日の NOC 監視まで提供します。" },
+      { "key": "innovation", "name": "DX 推進部門",
+        "desc": "ゼロからの新規構築から、レガシーシステムからの移行まで、カスタム AI デジタル案件に対応。ソリューションアーキテクトが、お客様のシステム構成、スケジュール、ガバナンス要件に沿って統合を実装します。" }
+    ]
+  },
+  "charts": {
+    "mapLabel": "グローバル接続ネットワーク",
+    "locations": [
+      { "name": "シンガポール (グローバル本社)", "value": [103.8513, 1.283], "isHQ": true },
+      { "name": "北京",          "value": [116.4074, 39.9042], "isHQ": false },
+      { "name": "上海",          "value": [121.4737, 31.2304], "isHQ": false },
+      { "name": "東京",          "value": [139.6917, 35.6895], "isHQ": false },
+      { "name": "ムンバイ",       "value": [72.8777,  19.076],  "isHQ": false },
+      { "name": "シドニー",       "value": [151.2093, -33.8688],"isHQ": false },
+      { "name": "オークランド",   "value": [174.7633, -36.8485],"isHQ": false },
+      { "name": "フランクフルト", "value": [8.6821,   50.1109], "isHQ": false },
+      { "name": "ロンドン",       "value": [-0.1278,  51.5074], "isHQ": false },
+      { "name": "シリコンバレー", "value": [-122.0575,37.3875], "isHQ": false },
+      { "name": "サンパウロ",     "value": [-46.6333, -23.5505],"isHQ": false }
+    ]
+  },
+  "footer": {
+    "brandTitle": "DOLPHLINK",
+    "brandTagline": "シンガポールに本社を置く通信基盤および移行パートナー。Baiwu Technology Group が提供。ミッションクリティカルな信頼性で、200 カ国超の政府機関とグローバル企業をつなぎます。",
+    "missionLabel": "私たちの行動指針",
+    "missionText": "標準化、セキュリティ、継続性。信頼性に妥協が許されない機関のために、通信とオーケストレーションを設計しています。すべてのリリースは監査され、すべてのデータはガバナンス下に置かれ、すべての対話に説明責任が伴います。",
+    "locationLabel": "本社",
+    "locationLine1": "9 Raffles Place #29-04",
+    "locationLine2": "Republic Plaza, Singapore 048619",
+    "locationHours": "平日 09:00 – 18:00 SGT",
+    "locationMapHref": "https://maps.google.com/?q=9+Raffles+Place+%2329-04+Republic+Plaza+Singapore+048619",
+    "locationMapLabel": "Google Maps で見る ↗",
+    "connectivityLabel": "お問い合わせ",
+    "salesEmail": "Salesmarketing@dolphlink.com",
+    "salesMailto": "Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com",
+    "directorEmail": "Joycetsam@dolphlink.com",
+    "directorMailto": "Joycetsam@dolphlink.com",
+    "directorLabel": "ビジネスディレクター",
+    "officialSiteLabel": "Baiwu Group",
+    "officialSiteHref": "https://www.baiwutong.com",
+    "installLabel": "アプリをインストール",
+    "mapHeading": "グローバル接続ネットワーク",
+    "mapIntro": "アジア太平洋、欧州、米州、オセアニアにわたる戦略拠点が、DOLPHLINK のグローバル提供能力を支えています。",
+    "vcardEyebrow": "営業窓口",
+    "vcardHeading": "ブリーフィング予約",
+    "vcardLine1": "営業 · パートナー · 調達",
+    "vcardLine2": "QR コードを読み取って連絡先を保存し、30 分のチームブリーフィングをご予約ください。",
+    "vcardScanLabel": "スキャンして保存",
+    "socialLabel": "お問い合わせ",
+    "social": [
+      { "name": "LinkedIn",  "href": "https://www.linkedin.com/", "icon": "linkedin" },
+      { "name": "営業へメール", "href": "mailto:Salesmarketing@dolphlink.com", "icon": "mail" },
+      { "name": "打ち合わせを予約",  "href": "mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call", "icon": "calendar" }
+    ],
+    "legalLinks": [
+      { "label": "プライバシーポリシー", "href": "#" },
+      { "label": "利用規約", "href": "#" }
+    ],
+    "copyright": "© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED."
+  }
+}

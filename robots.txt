@@ -1,19 +1,66 @@
+# DOLPHLINK robots.txt
+# ============================================================================
+# Default: allow all conventional + AI-search crawlers. The trade-off here is
+# AI-search visibility (ChatGPT search, Perplexity, Claude search) vs. having
+# our copy used as LLM training data. We've drawn the line at SEARCH/INDEX
+# (allow) vs. TRAINING-ONLY (block).
+
 User-agent: *
 Allow: /
 Disallow: /content/_*
 Disallow: /media/_orig/
 
-# Block AI scrapers that don't respect robots (optional, comment out if you want)
+# ----- AI search engines: ALLOWED ------------------------------------------
+# These bots index pages so that ChatGPT / Perplexity / Claude can SHOW
+# DOLPHLINK as a source when users ask about Singapore CPaaS, SME × Lark,
+# sovereign communications, etc. Blocking these means losing visibility to
+# B2B buyers who increasingly start their research inside an AI assistant.
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# ----- AI training scrapers: BLOCKED ---------------------------------------
+# These bots ingest content to train new model versions, with no benefit to
+# DOLPHLINK in return. Blocking them protects our copy + brand voice from
+# being absorbed into competitor models without attribution.
+
 User-agent: GPTBot
 Disallow: /
 
-User-agent: anthropic-ai
-Disallow: /
-
-User-agent: ClaudeBot
+User-agent: Google-Extended
 Disallow: /
 
 User-agent: CCBot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: ImagesiftBot
 Disallow: /
 
 Sitemap: https://dolphlinkroyli.github.io/Dolphlink-MainPage/seo/sitemap.xml

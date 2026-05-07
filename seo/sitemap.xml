@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Homepage — sovereign CPaaS / AI orchestration positioning -->
   <url>
     <loc>https://dolphlinkroyli.github.io/Dolphlink-MainPage/</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -16,4 +19,20 @@
       <image:title>DOLPHLINK Logo</image:title>
     </image:image>
   </url>
+
+  <!-- SME × Lark landing page — targets ASEAN small/medium enterprises -->
+  <url>
+    <loc>https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-sg" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/"/>
+    <image:image>
+      <image:loc>https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp</image:loc>
+      <image:title>DOLPHLINK × Lark for SME — carrier-grade SMS, WhatsApp, Voice wired into Lark</image:title>
+      <image:caption>SME-focused CPaaS for 5–500 person Asian businesses. Pay per message, native Lark integration, from SGD $99/month.</image:caption>
+    </image:image>
+  </url>
+
 </urlset>

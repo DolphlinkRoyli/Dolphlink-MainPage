@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="home">
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,11 @@
  <meta name="apple-mobile-web-app-capable" content="yes">
  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
  <meta name="format-detection" content="telephone=no">
+ <!-- Referrer-Policy: only send the origin (not the path/query) when
+      the user clicks an outbound link. Stops third-party destinations
+      from learning that someone hit our digital-card vanity URLs
+      (?u=joycetsam) or any private-looking query params. -->
+ <meta name="referrer" content="strict-origin-when-cross-origin">
  <link rel="canonical" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/">
 
  <!-- Favicons + PWA icons -->
@@ -165,9 +170,7 @@
  }
  </script>
 
- <!-- Preconnect / preload critical resources -->
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <!-- Preload critical resources (no third-party origins by policy) -->
  <!-- (cdn.jsdelivr.net preconnect dropped — all libs now load from local /lib/) -->
  <!-- LCP critical: hero background image. fetchpriority=high tells the browser
       to download it on the same priority lane as the HTML/CSS, so it lands
@@ -175,8 +178,19 @@
  <link rel="preload" as="image" type="image/webp"
        href="media/img/video-poster.webp" fetchpriority="high">
 
- <!-- Preload critical scripts so they download in parallel with HTML parse -->
- <link rel="preload" as="script" href="js/main.js?v=73">
+ <!-- Preload critical scripts so they download in parallel with HTML parse.
+      The dispatcher's `import('./home/index.js')` is a DYNAMIC import — the
+      browser only learns about it at runtime. Manual modulepreload lets us
+      kick that fetch off during HTML parse, parallel to the static chain.
+      Once home/index.js arrives, ITS static imports (utils, hydrate, render/*)
+      are auto-discovered and fetched in parallel — no need to list them here. -->
+ <link rel="modulepreload" href="js/app.js?v=2">
+ <link rel="modulepreload" href="js/engine/dispatch.js">
+ <link rel="modulepreload" href="js/engine/home/index.js">
+ <!-- register.js is loaded as a separate <script type="module"> at end-of-body
+      for the Request-Briefing modal. Preloading here means the modal opens
+      instantly on first .nav-cta click, no download wait. -->
+ <link rel="modulepreload" href="js/engine/home/register.js?v=19">
  <!-- Preload content.json so it lands the moment main.js calls fetch().
       Saves the round-trip of waiting for main.js to parse + execute first.
       Same query string main.js uses (CONTENT_VERSION = 20260507n) so the
@@ -189,30 +203,41 @@
       the preloaded response is reused by the fetch in main.js. -->
  <link rel="preload" as="fetch" href="content/content.json?v=20260507ag" crossorigin="anonymous">
 
- <!-- Inter (variable font, 100..900 axis): single file, blocks first paint.
-      Loaded as `preload` + onload-swap so it doesn't block render at all. -->
- <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
- <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" rel="stylesheet"></noscript>
+ <!-- (Google Fonts removed by policy — no third-party origins. Body
+      typography falls back to the system font stack defined in
+      css/style.css → font-family. The native font is platform-perfect
+      and saves a render-blocking round-trip.) -->
  <!-- (JetBrains Mono load deleted — that font was only used by the
       retired page-loader. The new inline #dlpk-loader uses Inter,
       same as the rest of the site, so no second font request needed.) -->
- <link rel="stylesheet" href="css/style.css?v=153">
+ <link rel="stylesheet" href="css/tokens.css?v=1">
+ <link rel="stylesheet" href="css/style.css?v=156">
  <link rel="preload" as="style" href="css/register.css?v=1" onload="this.onload=null;this.rel='stylesheet'">
  <noscript><link rel="stylesheet" href="css/register.css?v=1"></noscript>
  <!-- ECharts lazy-loaded from local lib/ (injected only when charts viewport intersects) — saves 209 KiB initial JS -->
- <script src="js/main.js?v=73" defer></script>
+ <script type="module" src="js/app.js?v=2"></script>
 
- <!-- Speculation Rules — Chromium prerenders the linked URL in a hidden
-      tab the moment we hint, so when the user actually clicks the QR
-      code or footer "Save Joyce's Contact" QR link the destination is already in
-      memory and navigates instantly.  Prerender is conservative: we
-      only hint at the public vCard landing, which is the single most
-      likely follow-up navigation from the homepage. -->
+ <!-- Speculation Rules — Chromium prerenders linked URLs in a hidden
+      tab the moment a user shows intent (hover for `moderate`), so
+      destination renders instantly when they actually click.
+      Two layers:
+        1. List-prerender for known high-intent destinations: SME
+           landing (hero CTA) and the public vCard (QR code + footer).
+        2. Document-prerender on hover for any other internal link
+           — covers organic in-page navigation (audit anchor, etc.)
+           without us having to enumerate. -->
  <script type="speculationrules">
    {
      "prerender": [
        { "source": "list",
-         "urls": ["c/?u=joycetsam"],
+         "urls": ["sme/", "card/?u=joycetsam"],
+         "eagerness": "moderate" },
+       { "source": "document",
+         "where": { "and": [
+           { "href_matches": "/Dolphlink-MainPage/*" },
+           { "not": { "href_matches": "*mailto:*" } },
+           { "not": { "href_matches": "*tel:*" } }
+         ]},
          "eagerness": "moderate" }
      ]
    }
@@ -519,10 +544,12 @@
  <span data-key="nav.ctaLabel">Request Briefing</span>
  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
  </a>
+ <!-- Language picker — populated by core/i18n.js attachLanguagePicker() -->
+ <div class="nav-lang" data-lang-picker></div>
  </div>
  </nav>
 
- <div class="wrapper">
+ <main class="wrapper">
  <section id="h-sec" class="section-row hero">
  <div class="hero-content">
  <span class="eyebrow">
@@ -532,7 +559,10 @@
  </svg>
  <span data-key="hero.eyebrow">Operated under Singapore's Cybersecurity Act · IM8-Aligned</span>
  </span>
- <h1><span data-key="hero.h1Line1">Singapore's Sovereign</span><br><span class="h1-accent" data-key="hero.h1Line2">Communications Spine.</span></h1>
+ <!-- Hero H1 — single-line brand headline. Roy spec May 2026:
+      "Behind Every Great Customer Experience". Translated per locale via
+      content.<lang>.json's hero.h1 key (English fallback if missing). -->
+ <h1 data-key="hero.h1">Behind Every Great Customer Experience</h1>
  <p data-key="hero.tagline">The carrier-grade communications and AI-orchestration backbone for governments and regulated enterprises that cannot fail. Singapore-licensed and MAS TRM-aligned, with every message, call, and AI agent action carrying sovereign-grade audit trails, end-to-end encryption, and tamper-evident logs across 200+ countries.</p>
  <!-- KPI stat row — 3 hard numbers, scannable in 1 second. Replaces
       the longer subTagline paragraph. JS populates from hero.stats. -->
@@ -559,7 +589,7 @@
          <rect x="11" y="9" width="3" height="10" fill="currentColor" stroke="none" opacity="0.85"/>
          <rect x="16" y="5" width="3" height="14" fill="currentColor" stroke="none" opacity="0.85"/>
        </svg>
-       <span>Industry Insights</span>
+       <span data-i18n="home.hero.cta.industry">Industry Insights</span>
        <svg class="btn-industries-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
          <polyline points="9 5 16 12 9 19"/>
@@ -578,7 +608,7 @@
          <line x1="6.5" y1="7.5" x2="10.4" y2="10.4"/>
          <line x1="13.6" y1="13.6" x2="17.5" y2="16.5"/>
        </svg>
-       <span data-key="hero.ctaSecondary">See Auto-Orchestration</span>
+       <span data-key="hero.ctaSecondary" data-i18n="home.hero.cta.auto">See Auto-Orchestration</span>
        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
          <polyline points="9 5 16 12 9 19"/>
@@ -594,7 +624,7 @@
         right (occupies same horizontal slot as See Auto above so its
         left edge aligns with See Auto's left edge). -->
    <div class="hero-cta-row hero-cta-row--sme">
-     <a href="/sme/" class="btn btn-sme" aria-label="Small and medium enterprise portal">
+     <a href="sme/" class="btn btn-sme" aria-label="Small and medium enterprise portal">
        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
          <path d="M3 9 L5 4 H19 L21 9"/>
@@ -602,15 +632,15 @@
          <path d="M9 20 V14 H15 V20"/>
          <circle cx="12" cy="11.5" r="0.6" fill="currentColor"/>
        </svg>
-       <span>SME · Best-Fit Plans</span>
+       <span data-i18n="home.hero.cta.sme">SME · Best-Fit Plans</span>
        <svg class="btn-sme-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
          <polyline points="9 5 16 12 9 19"/>
        </svg>
      </a>
      <p class="hero-sme-tag">
-       <span class="hero-sme-tag-headline">Built for smaller teams.</span>
-       <span class="hero-sme-tag-sub">Same enterprise stack, right-sized for SME budgets &amp; speed.</span>
+       <span class="hero-sme-tag-headline" data-i18n="home.hero.sme.tag.headline">Built for smaller teams.</span>
+       <span class="hero-sme-tag-sub" data-i18n="home.hero.sme.tag.sub">Same enterprise stack, right-sized for SME budgets &amp; speed.</span>
      </p>
    </div>
 
@@ -777,7 +807,7 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
      <h2 class="sec-title sec-title--light" id="industries-heading"
          data-key="industries.headerTag"></h2>
      <p class="sec-intro" data-key="industries.intro">Built for regulated, mission-critical communications. Four primary verticals where DOLPHLINK's sovereign architecture and agent orchestration deliver measurable advantage. Five additional sectors served on the same backbone.</p>
-     <div class="industries-grid" data-render="industries.items"><div class="industries-tier industries-tier--primary"><article class="industry-card" data-industry="banking" style="--accent:#0059B3"><h3 class="industry-name">Banking &amp; FinTech</h3><p class="industry-desc">Secure 2FA/OTP, real-time fraud alerts, statement delivery, and automated repayment reminders via bulk voice campaigns.</p><div class="industry-chips"><span class="industry-chip">MAS TRM</span><span class="industry-chip">PDPA</span><span class="industry-chip">PCI-DSS</span></div></article><article class="industry-card" data-industry="government" style="--accent:#1F2937"><h3 class="industry-name">Government &amp; Public Sector</h3><p class="industry-desc">Citizen alerts, public-service notifications, and emergency broadcasts on sovereign infrastructure. IM8-aligned, audit-ready, and deployable across multiple regulator-licensed jurisdictions in ASEAN, EMEA, and the Americas.</p><div class="industry-chips"><span class="industry-chip">IM8</span><span class="industry-chip">Sovereign Cloud</span><span class="industry-chip">Multi-Jurisdiction</span></div></article><article class="industry-card" data-industry="healthcare" style="--accent:#10B981"><h3 class="industry-name">Healthcare</h3><p class="industry-desc">Automated appointment reminders and AI chatbot triage cut no-shows. Patient privacy preserved with sovereign data residency.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">HIPAA-Ready</span><span class="industry-chip">ISO 27001</span></div></article><article class="industry-card" data-industry="insurance" style="--accent:#7C3AED"><h3 class="industry-name">Insurance</h3><p class="industry-desc">Policy renewal reminders, claim-status notifications, and KYC verification flows. Tamper-evident audit trails for every regulated touchpoint.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">GDPR</span><span class="industry-chip">ISO 27001</span></div></article></div><div class="industries-tier-label">Also Serving</div><div class="industries-tier industries-tier--secondary"><article class="industry-card industry-card--mini" data-industry="retail" style="--accent:#0059B3"><h4 class="industry-name">Retail &amp; E-Commerce</h4><p class="industry-desc">Personalised engagement from first-party data, real-time order updates, abandoned-cart recovery, and Pages-embedded landings inside SMS.</p></article><article class="industry-card industry-card--mini" data-industry="education" style="--accent:#0059B3"><h4 class="industry-name">Education</h4><p class="industry-desc">Enrolment confirmations, course reminders, and parent-school chat in one inbox. Multilingual support across regional language pairs.</p></article><article class="industry-card industry-card--mini" data-industry="logistics" style="--accent:#0059B3"><h4 class="industry-name">Logistics</h4><p class="industry-desc">Unified inbox across WhatsApp, Email, and Chat with automated tracking notifications. Driver dispatch via voice IVR and SMS confirmations.</p></article><article class="industry-card industry-card--mini" data-industry="entertainment" style="--accent:#0059B3"><h4 class="industry-name">Entertainment &amp; Gaming</h4><p class="industry-desc">International SMS and Voice verification for overseas game publishers and social apps. Country-aware routing handles emerging-market last mile.</p></article><article class="industry-card industry-card--mini" data-industry="hospitality" style="--accent:#0059B3"><h4 class="industry-name">Hospitality</h4><p class="industry-desc">Guest engagement on every preferred channel with no-code self-service bots. Pre-arrival, in-stay, and post-stay flows automated end to end.</p></article></div></div>
+     <div class="industries-grid" data-render="industries.items"><div class="industries-tier industries-tier--primary"><article class="industry-card" data-industry="banking" style="--accent:#0059B3"><h3 class="industry-name">Banking &amp; FinTech</h3><p class="industry-desc">Secure 2FA/OTP, real-time fraud alerts, statement delivery, and automated repayment reminders via bulk voice campaigns.</p><div class="industry-chips"><span class="industry-chip">MAS TRM</span><span class="industry-chip">PDPA</span><span class="industry-chip">PCI-DSS</span></div></article><article class="industry-card" data-industry="government" style="--accent:#1F2937"><h3 class="industry-name">Government &amp; Public Sector</h3><p class="industry-desc">Citizen alerts, public-service notifications, and emergency broadcasts on sovereign infrastructure. IM8-aligned, audit-ready, and deployable across multiple regulator-licensed jurisdictions in ASEAN, EMEA, and the Americas.</p><div class="industry-chips"><span class="industry-chip">IM8</span><span class="industry-chip">Sovereign Cloud</span><span class="industry-chip">Multi-Jurisdiction</span></div></article><article class="industry-card" data-industry="healthcare" style="--accent:#10B981"><h3 class="industry-name">Healthcare</h3><p class="industry-desc">Automated appointment reminders and AI chatbot triage cut no-shows. Patient privacy preserved with sovereign data residency.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">HIPAA-Ready</span><span class="industry-chip">ISO 27001</span></div></article><article class="industry-card" data-industry="insurance" style="--accent:#7C3AED"><h3 class="industry-name">Insurance</h3><p class="industry-desc">Policy renewal reminders, claim-status notifications, and KYC verification flows. Tamper-evident audit trails for every regulated touchpoint.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">GDPR</span><span class="industry-chip">ISO 27001</span></div></article></div><div class="industries-tier-label">Also Serving</div><div class="industries-tier industries-tier--secondary"><article class="industry-card industry-card--mini" data-industry="retail" style="--accent:#0059B3"><h3 class="industry-name">Retail &amp; E-Commerce</h4><p class="industry-desc">Personalised engagement from first-party data, real-time order updates, abandoned-cart recovery, and Pages-embedded landings inside SMS.</p></article><article class="industry-card industry-card--mini" data-industry="education" style="--accent:#0059B3"><h3 class="industry-name">Education</h4><p class="industry-desc">Enrolment confirmations, course reminders, and parent-school chat in one inbox. Multilingual support across regional language pairs.</p></article><article class="industry-card industry-card--mini" data-industry="logistics" style="--accent:#0059B3"><h3 class="industry-name">Logistics</h4><p class="industry-desc">Unified inbox across WhatsApp, Email, and Chat with automated tracking notifications. Driver dispatch via voice IVR and SMS confirmations.</p></article><article class="industry-card industry-card--mini" data-industry="entertainment" style="--accent:#0059B3"><h3 class="industry-name">Entertainment &amp; Gaming</h4><p class="industry-desc">International SMS and Voice verification for overseas game publishers and social apps. Country-aware routing handles emerging-market last mile.</p></article><article class="industry-card industry-card--mini" data-industry="hospitality" style="--accent:#0059B3"><h3 class="industry-name">Hospitality</h4><p class="industry-desc">Guest engagement on every preferred channel with no-code self-service bots. Pre-arrival, in-stay, and post-stay flows automated end to end.</p></article></div></div>
    </div>
  </section>
 
@@ -787,7 +817,7 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
      <h2 class="sec-title sec-title--light" id="departments-heading"
          data-key="departments.headerTag"></h2>
      <p class="sec-intro" data-key="departments.intro">Inside every customer organisation, DOLPHLINK serves four distinct teams with shared infrastructure, from front-line operations to bespoke AI-digital builds.</p>
-     <div class="departments-strip" data-render="departments.items"><div class="department-card" data-department="support"><h4 class="department-name">Customer Service</h4><p class="department-desc">Multi-channel support across every digital touchpoint with AI-Human handoff. Every ticket carries a full audit trail, sentiment scoring, and SLA enforcement. Tier-1 to Tier-3 escalation flows configurable per region.</p></div><div class="department-card" data-department="growth"><h4 class="department-name">Marketing &amp; Sales</h4><p class="department-desc">Convert conversations into revenue across channels. A/B test SMS, WhatsApp, and Email campaigns, segment by behaviour, and measure end-to-end ROI in one console. Pipeline attribution and lifecycle automation built in.</p></div><div class="department-card" data-department="ops"><h4 class="department-name">IT &amp; Operations</h4><p class="department-desc">Streamlined Conversational Commerce on enterprise-grade infrastructure. A single programmable API endpoint replaces dozens of legacy gateway integrations, with priority routing, automatic carrier failover, and 24/7 NOC monitoring.</p></div><div class="department-card" data-department="innovation"><h4 class="department-name">Digital Transformation</h4><p class="department-desc">Bespoke AI-digital projects from greenfield architecture to legacy migration. Solution architects deliver integrations on your stack, timeline, and governance requirements.</p></div></div>
+     <div class="departments-strip" data-render="departments.items"><div class="department-card" data-department="support"><h3 class="department-name">Customer Service</h4><p class="department-desc">Multi-channel support across every digital touchpoint with AI-Human handoff. Every ticket carries a full audit trail, sentiment scoring, and SLA enforcement. Tier-1 to Tier-3 escalation flows configurable per region.</p></div><div class="department-card" data-department="growth"><h3 class="department-name">Marketing &amp; Sales</h4><p class="department-desc">Convert conversations into revenue across channels. A/B test SMS, WhatsApp, and Email campaigns, segment by behaviour, and measure end-to-end ROI in one console. Pipeline attribution and lifecycle automation built in.</p></div><div class="department-card" data-department="ops"><h3 class="department-name">IT &amp; Operations</h4><p class="department-desc">Streamlined Conversational Commerce on enterprise-grade infrastructure. A single programmable API endpoint replaces dozens of legacy gateway integrations, with priority routing, automatic carrier failover, and 24/7 NOC monitoring.</p></div><div class="department-card" data-department="innovation"><h3 class="department-name">Digital Transformation</h4><p class="department-desc">Bespoke AI-digital projects from greenfield architecture to legacy migration. Solution architects deliver integrations on your stack, timeline, and governance requirements.</p></div></div>
    </div>
  </section>
 
@@ -816,7 +846,7 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
          </div>
          <div class="footer-info-mini-grid">
            <div class="f-col">
-             <h6 data-key="footer.locationLabel"></h6>
+             <h3 class="f-col-title" data-key="footer.locationLabel"></h3>
              <p><span data-key="footer.locationLine1">9 Raffles Place #29-04</span><br><span data-key="footer.locationLine2">Republic Plaza, Singapore 048619</span></p>
              <p class="f-col-hours" data-key="footer.locationHours">Weekdays 09:00 – 18:00 SGT</p>
              <a href="https://maps.google.com/?q=9+Raffles+Place+%2329-04+Republic+Plaza+Singapore+048619" target="_blank" rel="noopener noreferrer"
@@ -824,7 +854,7 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
                 class="f-col-maplink">View on Google Maps ↗</a>
            </div>
            <div class="f-col">
-             <h6 data-key="footer.connectivityLabel"></h6>
+             <h3 class="f-col-title" data-key="footer.connectivityLabel"></h3>
              <a href="mailto:Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com" data-href-key="footer.salesMailto" data-href-prefix="mailto:" data-key="footer.salesEmail">Salesmarketing@dolphlink.com</a>
              <a href="mailto:Joycetsam@dolphlink.com" data-href-key="footer.directorMailto" data-href-prefix="mailto:" data-key="footer.directorEmail">Joycetsam@dolphlink.com</a>
              <span class="f-col-role" data-key="footer.directorLabel">Business Director</span>
@@ -850,10 +880,10 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
      <span class="f-copyright" data-key="footer.copyright">© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED.</span>
    </div>
  </footer>
- </div>
+ </main>
 
  <!-- Mobile-only "Connect" floating button — fully isolated; desktop noop -->
- <script src="js/register.js?v=16" defer></script>
+ <script type="module" src="js/engine/home/register.js?v=19"></script>
 
  <!-- PWA service worker + install handler.  Moved from <head> to end-of-body
       so the ~200-line synchronous parse no longer blocks first paint.  All

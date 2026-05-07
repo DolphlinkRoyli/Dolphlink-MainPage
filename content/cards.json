@@ -1,9 +1,9 @@
 {
-  "_comment": "DOLPHLINK team digital business cards. Email is the lookup key. The local part of the email (before @) determines BOTH the URL path (/c/?u=<local>) AND the photo filename in the Drive folder (<local>.jpg|png|webp). 'products' references portfolios.items[].key from content.json. Set active=false to hide a former member without losing git history.",
+  "_comment": "DOLPHLINK team digital business cards. Email is the lookup key. The local part of the email (before @) determines BOTH the URL path (/card/?u=<local>) AND the photo filename in the Drive folder (<local>.jpg|png|webp). 'products' references portfolios.items[].key from content.json. Set active=false to hide a former member without losing git history. Old /c/?u=<local> URLs still work via the redirect stub at /c/index.html.",
   "config": {
     "_comment": "Global config. ga4Id: paste your GA4 Measurement ID here (G-XXXXXXX) to enable analytics. landingBase: where the QR-decoded URL lives. cardBase: GitHub Pages root used to build absolute share URLs.",
     "ga4Id": "",
-    "landingBase": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/c/",
+    "landingBase": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/card/",
     "cardBase": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/"
   },
   "company": {

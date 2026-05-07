@@ -1,0 +1,59 @@
+ <!-- Footer + Map (merged). Two-column layout:
+      LEFT  — Global connectivity map (formerly its own section)
+      RIGHT — Brand / HQ / Engage / Mission columns
+      BOTTOM — Legal links + copyright -->
+ <footer class="footer">
+   <div class="footer-grid">
+     <!-- Left column: Map -->
+     <div class="footer-map-col" aria-labelledby="footer-map-heading">
+       <h2 class="sec-title" id="footer-map-heading" data-key="footer.mapHeading"></h2>
+       <p class="sec-intro" data-key="footer.mapIntro">Strategic operational hubs anchoring DOLPHLINK across ASEAN, Greater China, EMEA, and the Americas.</p>
+       <div class="footer-map-card">
+         <div id="global-map" class="chart-container"></div>
+         <span class="map-pan-hint" aria-hidden="true">Drag to explore</span>
+       </div>
+     </div>
+     <!-- Right column: top = compact info / bottom = business card -->
+     <div class="footer-info-col">
+       <!-- Top stack: Brand + HQ + Engage + Quick Links (tight) -->
+       <div class="footer-info-top">
+         <div class="f-col brand-col">
+           <h2 data-key="footer.brandTitle"></h2>
+           <p data-key="footer.brandTagline">Singapore-headquartered communications spine and migration partner by Baiwu Technology Group. Connecting governments and global enterprises across 200+ countries with mission-critical reliability.</p>
+         </div>
+         <div class="footer-info-mini-grid">
+           <div class="f-col">
+             <h3 class="f-col-title" data-key="footer.locationLabel"></h3>
+             <p><span data-key="footer.locationLine1">9 Raffles Place #29-04</span><br><span data-key="footer.locationLine2">Republic Plaza, Singapore 048619</span></p>
+             <p class="f-col-hours" data-key="footer.locationHours">Weekdays 09:00 – 18:00 SGT</p>
+             <a href="https://maps.google.com/?q=9+Raffles+Place+%2329-04+Republic+Plaza+Singapore+048619" target="_blank" rel="noopener noreferrer"
+                data-href-key="footer.locationMapHref" data-key="footer.locationMapLabel"
+                class="f-col-maplink">View on Google Maps ↗</a>
+           </div>
+           <div class="f-col">
+             <h3 class="f-col-title" data-key="footer.connectivityLabel"></h3>
+             <a href="mailto:Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com" data-href-key="footer.salesMailto" data-href-prefix="mailto:" data-key="footer.salesEmail">Salesmarketing@dolphlink.com</a>
+             <a href="mailto:Joycetsam@dolphlink.com" data-href-key="footer.directorMailto" data-href-prefix="mailto:" data-key="footer.directorEmail">Joycetsam@dolphlink.com</a>
+             <span class="f-col-role" data-key="footer.directorLabel">Business Director</span>
+             <a href="#" class="f-install-link"
+                onclick="event.preventDefault(); if (typeof window.dolphlinkInstall === 'function') window.dolphlinkInstall();">
+               Install App ↗
+             </a>
+           </div>
+         </div>
+       </div>
+
+       <!-- Bottom: company business card with QR (Joyce) -->
+       <aside class="footer-vcard" id="footer-vcard" aria-label="Business card preview">
+         <!-- Filled in by main.js renderFooterCard() once cards.json loads -->
+       </aside>
+     </div>
+   </div>
+   <!-- Legal links + Social + Copyright bar -->
+   <div class="f-bottom-bar">
+     <ul class="f-legal-links" data-render="footer.legalLinks"><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms and Conditions</a></li></ul>
+     <div class="f-social-row" data-render="footer.social"
+          aria-label="Connect with DOLPHLINK"><a class="f-social-link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a class="f-social-link" href="mailto:Salesmarketing@dolphlink.com" target="_blank" rel="noopener noreferrer" aria-label="Email Sales" title="Email Sales"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><a class="f-social-link" href="mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call" target="_blank" rel="noopener noreferrer" aria-label="Schedule a Call" title="Schedule a Call"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></a></div>
+     <span class="f-copyright" data-key="footer.copyright">© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED.</span>
+   </div>
+ </footer>

@@ -1,0 +1,219 @@
+{
+  "_comment": "DOLPHLINK contenido en español. Misma estructura que content.json. Términos técnicos (API/SMS/RCS/ISO 27001/MAS TRM, etc.) y nombres propios (Singapore/Dolphlink Touch, etc.) se mantienen en su forma original. Registro: B2B formal pero accesible.",
+  "nav": {
+    "brandName": "DOLPHLINK",
+    "ctaLabel": "Solicitar Briefing",
+    "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
+    "menuItems": [
+      { "label": "Inicio",            "scrollTo": "h-sec", "href": "", "target": "" },
+      { "label": "Fiabilidad",        "scrollTo": "r-sec", "href": "", "target": "" },
+      { "label": "Capa de Confianza", "scrollTo": "a-sec", "href": "", "target": "" }
+    ]
+  },
+  "hero": {
+    "h1": "Detrás de cada gran experiencia de cliente",
+    "eyebrow": "Operada bajo la Ley de Ciberseguridad de Singapur · Conforme a IM8",
+    "h1Line1": "La columna vertebral de comunicaciones",
+    "h1Line2": "soberana de Singapur.",
+    "tagline": "Plataforma de comunicaciones y orquestación de IA de grado carrier, diseñada para gobiernos e industrias reguladas donde fallar no es una opción. Con licencia en Singapur y alineada con el marco MAS TRM, ofrece cobertura en más de 200 países. Cada SMS, cada llamada y cada acción de un agente de IA queda registrada con trazabilidad de auditoría de nivel gubernamental, cifrado de extremo a extremo y logs a prueba de manipulación.",
+    "ctaPrimary": "Solicitar reunión informativa",
+    "ctaPrimaryMailto": "Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&cc=Joycetsam@dolphlink.com",
+    "ctaSecondary": "Ver auto-orquestación",
+    "ctaSecondaryScrollTo": "n-sec",
+    "stats": [
+      { "value": "99,999%", "label": "Disponibilidad" },
+      { "value": "1.000+",  "label": "Rutas Tier-1" },
+      { "value": "200+",    "label": "Países y regiones" }
+    ],
+    "triggerLine": "Detecta interrupciones de servicio y activa la recuperación automáticamente."
+  },
+  "trustWall": {
+    "headerTag": "Red de operadores y cumplimiento",
+    "statusLabel": "En vivo · Rutas Tier-1",
+    "operatorsLabel": "Red global",
+    "regulatorsLabel": "Cumplimiento normativo",
+    "operators": [
+      { "name": "Asia-Pacífico" },
+      { "name": "Europa, Oriente Medio y África" },
+      { "name": "Américas" },
+      { "name": "Más de 1.000 rutas globales" }
+    ],
+    "regulators": [
+      { "name": "ISO 27001" }, { "name": "MAS TRM" }, { "name": "IM8" },
+      { "name": "PDPA" }, { "name": "GDPR" }, { "name": "SOC 2" }
+    ]
+  },
+  "reliability": {
+    "headerTag": "Matriz de fiabilidad",
+    "stats": [
+      { "key": "sla",  "icon": "icon_6",  "value": "99,999%", "label": "Disponibilidad",
+        "desc": "Disponibilidad de cinco nueves sobre PoP geo-redundantes. Diseñada para comunicaciones de misión crítica, con SLA verificado de forma independiente por terceros y certificaciones trimestrales." },
+      { "key": "loc",  "icon": "icon_5",  "value": "200+",    "label": "Países y regiones",
+        "desc": "Cobertura mundial a través de más de 1.000 rutas Tier-1 con operadores móviles, garantizando calidad de mensajería de grado carrier y conectividad de última milla, tanto en mercados regulados como emergentes." },
+      { "key": "lat",  "icon": "icon_10", "value": "<10 s",   "label": "Entrega",
+        "desc": "Los SMS llegan en menos de 10 segundos por rutas Tier-1 de operadores. Las cifras se verifican contra benchmarks globales, se auditan trimestralmente y se optimizan de forma continua mediante análisis de rutas en tiempo real." },
+      { "key": "ain",  "icon": "icon_7",  "value": "AI×H",    "label": "Orquestación",
+        "desc": "Orquestación de agentes de extremo a extremo con gobernanza de IA con intervención humana. Los bots gestionan tareas rutinarias y los agentes los casos que requieren criterio; cuando se activa una política o un umbral de riesgo, se hace un traspaso transparente a un operador humano. Las herramientas de migración integradas permiten llevar los flujos legados al operativo de nueva generación al ritmo de cada cliente, con trazabilidad de auditoría a prueba de manipulación en cada traspaso." },
+      { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "Tasa de apertura",
+        "desc": "Tasa de apertura verificada del 98% en SMS transaccionales enviados por operadores Tier-1 a nivel global. Los OTP urgentes, las alertas de fraude y las notificaciones prioritarias llegan a sus clientes en segundos y se leen de verdad. El enrutamiento prioriza el tráfico transaccional sobre los envíos de marketing, con auditorías de medición trimestrales por parte de terceros." }
+    ]
+  },
+  "portfolios": {
+    "headerTag": "Portafolio",
+    "intro": "Tres pilares, nueve productos, una plataforma soberana. Elija el punto de entrada que se adapte a su pila tecnológica actual y expándase a pilares adyacentes a medida que sus operaciones crezcan.",
+    "pillars": [
+      { "key": "connectivity",  "name": "Conectividad", "tagline": "Alcance Operador Tier-1",
+        "desc": "Columna vertebral de grado operador. SMS, voz y números telefónicos en más de 200 países vía rutas Tier-1." },
+      { "key": "orchestration", "name": "Orquestación", "tagline": "Multicanal + Desarrolladores",
+        "desc": "Hub unificado de mensajería, API programable y constructor de chatbots sin código para flujos conversacionales IA-humano." },
+      { "key": "governance",    "name": "Gobernanza de IA",   "tagline": "Comando Soberano + Migración",
+        "desc": "Orquestación de agentes con trazabilidad completa, analítica operacional y servicios personalizados de migración IA-Digital." }
+    ],
+    "items": [
+      { "key": "sms", "pillar": "connectivity", "icon": "icon_4", "label": "SMS Platform",
+        "tagline": "API SMS Global", "recommend": "FLAGSHIP", "recommendTier": "gold",
+        "desc": "Una plataforma, tres audiencias. Los desarrolladores integran vía una API REST limpia con SDKs para Node, Python, Go, Java y PHP. Los marketers alcanzan vía Pages (páginas de aterrizaje móviles incrustadas en SMS) y Campaigns (envíos masivos segmentados). Los equipos de servicio al cliente manejan conversaciones bidireccionales en una bandeja de entrada unificada.\n\nEntrega SMS en menos de 10 segundos a más de 200 países vía 1.000+ rutas Tier-1 de operadores móviles. 98% de tasa de apertura verificada en tráfico transaccional. Mensajería bidireccional vía Short Codes, Long Numbers y palabras clave de opt-in impulsa campañas interactivas a escala.\n\nCifrado TLS 1.3 de extremo a extremo, enrutamiento prioritario para OTP y alertas urgentes. Monitoreo NOC 24/7 con failover automático de operador asegura siempre la ruta más rápida." },
+      { "key": "voice", "pillar": "connectivity", "icon": "icon_13", "label": "Voice & SIP",
+        "tagline": "Voz Empresarial", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "El SIP trunking geo-redundante con TTS, notificaciones de voz, redirección de llamadas y entrada DTMF forma la columna vertebral de grado operador para cualquier carga de trabajo de voz.\n\nInsights detallados por llamada potencian el monitoreo y defensa contra fraude. Diseñado para centros de contacto, PYMES y revendedores de IP PBX que exigen disponibilidad y rendición de cuentas.\n\nSoporte completo para códecs G.711, G.729, Opus, además de un puente WebRTC para consolas de agentes basadas en navegador. Grabaciones de llamadas inmutables, métricas de jitter y pérdida de paquetes en tiempo real, portabilidad de DID con un clic." },
+      { "key": "numbers", "pillar": "connectivity", "icon": "icon_14", "label": "Phone Numbers",
+        "tagline": "Números DID Globales", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "Acceso instantáneo a números locales, nacionales, móviles y gratuitos en más de 100 países. Aprovisione números de diferentes regiones dentro de la misma sesión de consola.\n\nSender IDs alfanuméricos, Short Codes y Hosted Numbers (SMS y voz en sus líneas fijas existentes sin cambiar de operador) se conectan a sus operaciones actuales. Inteligencia de cumplimiento integrada evalúa los requisitos regulatorios de cada región automáticamente.\n\nPortabilidad numérica en 48 horas en regiones soportadas, reservas vanity y aprovisionamiento instantáneo. Tablero de inventario centralizado rastrea uso, facturación y estado de cumplimiento de todas las regiones en una sola vista." },
+      { "key": "touch", "pillar": "orchestration", "icon": "icon_11", "label": "Dolphlink Touch",
+        "tagline": "Hub Multicanal", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "Hub unificado de mensajería empresarial. SMS, WhatsApp, RCS, Email y canales emergentes en una plataforma. Cada conversación llega a un solo lugar, sin importar dónde comenzó.\n\nPlantillas amigables para marketers, constructor de campañas drag-and-drop y fallback automático inteligente que cambia de canal cuando la entrega falla. Construido para equipos de ingresos, marketing y engagement con clientes que priorizan la velocidad.\n\nIntegración nativa con WhatsApp Business Platform con flujos de aprobación de plantillas, segmentación dinámica de audiencias desde señales de comportamiento, pruebas A/B entre canales. La analítica de conversión mide el ROI de extremo a extremo." },
+      { "key": "api", "pillar": "orchestration", "icon": "icon_8", "label": "Dolphlink One-API",
+        "tagline": "Plataforma para Desarrolladores", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "Una API programable a través de SMS, voz, WhatsApp, Email y canales emergentes. Una llamada envía mensajes o inicia llamadas, sin importar el canal.\n\nSDKs drop-in con fallback automático inteligente que cambia de canal cuando la entrega primaria falla. Construido para flujos de trabajo de misión crítica donde cada mensaje debe llegar.\n\nSDKs en cinco lenguajes cubriendo Node, Python, Go, Java y PHP, sandbox interactivo con números de prueba en vivo, entrega de webhooks firmados con reintento automático. Logs comprehensivos y replay de solicitudes convierten días de depuración en minutos." },
+      { "key": "smart", "pillar": "orchestration", "icon": "icon_12", "label": "Dolphlink Smart",
+        "tagline": "Constructor de Chatbots IA", "recommend": "NEW", "recommendTier": "gold",
+        "desc": "Constructor de conversaciones sin código para flujos de trabajo de IA con humano en el ciclo. Arrastre para configurar, despliegue sin tocar pipelines.\n\nLos bots manejan la rutina, los agentes humanos manejan los matices, traspasos fluidos mantienen cada conversación. Comprensión consciente del contexto desde sus propios datos, ISO 27001, GDPR y RBAC integrados para entornos regulados.\n\nIngesta de bases de conocimiento desde fuentes PDF, web y bases de datos, ajuste fino para terminología de dominio, conversaciones multilingües en más de 40 idiomas. Detección de sentimiento escala asuntos sensibles a agentes humanos en segundos." },
+      { "key": "nexus", "pillar": "governance", "icon": "icon_1", "label": "Dolphlink Nexus",
+        "tagline": "Orquestación de Agentes IA", "recommend": "NEW", "recommendTier": "gold",
+        "desc": "El centro de comando soberano para orquestación de agentes. Unifica cada bot, flujo RPA, modelo personalizado y revisor humano en un único plano de control auditable.\n\nDiseñado para gobiernos y empresas reguladas con soporte de migración integrado, residencia de datos completa, RBAC y registros de actividad. Cada acción es trazable, cada conjunto de datos permanece donde el regulador exige.\n\nDiseñador de flujos de trabajo visual con lógica condicional y puertas de aprobación conecta cualquier LLM, herramienta RPA o revisor humano. Trazabilidad de auditoría a prueba de manipulación captura cada decisión y contacto de datos para revisión regulatoria, lista para usar." },
+      { "key": "console", "pillar": "governance", "icon": "icon_2", "label": "Operations Hub",
+        "tagline": "Analítica Operacional", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "Messaging Gateway centraliza códigos API y gestión de claves. Un único tablero administra cada credencial, cada canal, cada equipo.\n\nMessage Log proporciona transparencia completa en cada mensaje: estado, contenido, costo en tiempo real. Insights agregados y tendencias en tiempo real optimizan cada estrategia de comunicación a medida que fluyen los datos.\n\nAlertas basadas en umbrales notifican caídas en tasas de entrega o picos inesperados de costo. Pronóstico de costos predice gasto mensual por canal y región, exportaciones CSV y webhook alimentan pipelines de BI, finanzas y cumplimiento." },
+      { "key": "custom", "pillar": "governance", "icon": "icon_9", "label": "AI-Digital Solutions",
+        "tagline": "Servicios de Migración", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "Servicios de migración IA-Digital para proyectos de infraestructura existentes. Nos reunimos con su pila donde está hoy: on-premise, híbrido o nube soberana.\n\nDiseñamos integraciones personalizadas entre sus sistemas heredados y las capas de comunicación, orquestación de IA y cumplimiento de DOLPHLINK, entregadas según su cronograma, residencia de datos y requisitos de gobernanza.\n\nLanzamientos por fases comienzan con un workshop de descubrimiento y arquitectura de cuatro semanas, seguido de pilotos paralelos y migraciones por etapas. Arquitecto de soluciones dedicado, soporte prioritario 24/7 y cláusulas SLA personalizadas protegen sus flujos de trabajo de misión crítica." }
+    ]
+  },
+  "audit": {
+    "title": "Capa de confianza",
+    "items": [
+      { "title": "Certificaciones de cumplimiento",
+        "desc": "Certificada ISO 27001 y GDPR. Compatible con PDPA de Singapur, MAS TRM y los marcos regulatorios regionales de ASEAN, Europa-Oriente Medio-África y América. Auditorías independientes anuales por terceros; los informes de certificación están disponibles bajo NDA." },
+      { "title": "Soberanía de datos",
+        "desc": "Infraestructura de nivel gubernamental con base en Singapur, con residencia de datos regional en ASEAN, Europa-Oriente Medio-África y América. Cada registro de cliente permanece en la jurisdicción exacta que exige su regulador, con certificaciones trimestrales de terceros y cadena de custodia completa." },
+      { "title": "Fiabilidad verificada",
+        "desc": "99,999% de disponibilidad verificada en una red de PoP geo-redundantes. TLS 1.3 en tránsito, AES-256 en reposo, y pruebas de penetración trimestrales por terceros." },
+      { "title": "Gobernanza de accesos",
+        "desc": "Control de acceso basado en roles (RBAC) en toda la plataforma. Permisos granulares por equipo, tenant y flujo de trabajo, con registros detallados de actividad e integración SSO de serie." }
+    ]
+  },
+  "industries": {
+    "headerTag": "Industrias a las que damos servicio",
+    "intro": "Diseñado para comunicaciones reguladas y de misión crítica. Cuatro verticales principales donde la arquitectura soberana de DOLPHLINK y la orquestación de agentes de IA aportan una ventaja medible, y cinco sectores adicionales atendidos sobre la misma plataforma.",
+    "primaryLabel": "Verticales principales",
+    "secondaryLabel": "También atendemos",
+    "items": [
+      { "key": "banking", "tier": "primary", "name": "Banca y FinTech", "color": "#0059B3",
+        "desc": "2FA/OTP seguro, alertas de fraude en tiempo real, entrega de estados de cuenta, recordatorios automatizados de pago vía campañas de voz masivas.",
+        "chips": ["MAS TRM", "PDPA", "PCI-DSS"] },
+      { "key": "government", "tier": "primary", "name": "Gobierno y Sector Público", "color": "#1F2937",
+        "desc": "Alertas ciudadanas, notificaciones de servicio público y transmisiones de emergencia sobre infraestructura soberana. Alineado con IM8, listo para auditoría, desplegable en múltiples jurisdicciones reguladas en ASEAN/EMEA/Américas.",
+        "chips": ["IM8", "Nube Soberana", "Multi-Jurisdicción"] },
+      { "key": "healthcare", "tier": "primary", "name": "Salud", "color": "#10B981",
+        "desc": "Reduzca ausencias con recordatorios automatizados de citas y triaje vía chatbot IA. Privacidad del paciente protegida con residencia soberana de datos.",
+        "chips": ["PDPA", "HIPAA-Ready", "ISO 27001"] },
+      { "key": "insurance", "tier": "primary", "name": "Seguros", "color": "#7C3AED",
+        "desc": "Recordatorios de renovación de póliza, notificaciones de estado de reclamos y flujos de verificación KYC. Trazabilidad de auditoría a prueba de manipulación en cada punto de contacto regulado.",
+        "chips": ["PDPA", "GDPR", "ISO 27001"] },
+      { "key": "retail", "tier": "secondary", "name": "Retail y E-Commerce", "color": "#0059B3",
+        "desc": "Engagement personalizado desde datos de primera parte, actualizaciones de pedidos en tiempo real, recuperación de carritos abandonados, páginas de aterrizaje incrustadas en SMS vía Pages.",
+        "chips": ["GDPR", "PDPA"] },
+      { "key": "education", "tier": "secondary", "name": "Educación", "color": "#0059B3",
+        "desc": "Confirmaciones de inscripción, recordatorios de cursos y chats padres-escuela en una bandeja de entrada. Soporte multilingüe en pares de idiomas regionales.",
+        "chips": ["PDPA", "Multilingüe"] },
+      { "key": "logistics", "tier": "secondary", "name": "Logística", "color": "#0059B3",
+        "desc": "Bandeja de entrada unificada a través de WhatsApp, Email y Chat más notificaciones automatizadas de seguimiento. Despacho de conductores con IVR de voz y confirmaciones SMS.",
+        "chips": ["Omnicanal", "GDPR"] },
+      { "key": "entertainment", "tier": "secondary", "name": "Entretenimiento y Gaming", "color": "#0059B3",
+        "desc": "Verificación SMS y de voz internacional para editores de juegos en el extranjero y aplicaciones sociales. Enrutamiento por país maneja la última milla en mercados emergentes.",
+        "chips": ["200+ Países", "GDPR"] },
+      { "key": "hospitality", "tier": "secondary", "name": "Hospitalidad", "color": "#0059B3",
+        "desc": "Engagement con huéspedes en su canal preferido con bots de autoservicio sin código. Flujos de pre-llegada, durante la estadía y post-estadía automatizados de extremo a extremo.",
+        "chips": ["Bots Sin Código", "Multilingüe"] }
+    ]
+  },
+  "departments": {
+    "headerTag": "Departamentos a los que damos soporte",
+    "intro": "Dentro de cada organización cliente, DOLPHLINK presta servicio a cuatro equipos distintos sobre la misma infraestructura compartida — desde operaciones de primera línea hasta proyectos a medida de IA y digitalización.",
+    "items": [
+      { "key": "support", "name": "Servicio al Cliente",
+        "desc": "Soporte multicanal a través de cada punto de contacto digital con traspaso IA-humano. Trazabilidad de auditoría completa, puntuación de sentimiento y aplicación SLA en cada ticket. Flujos de escalamiento Tier-1 a Tier-3 configurables por región." },
+      { "key": "growth", "name": "Marketing y Ventas",
+        "desc": "Convierta conversaciones en ingresos. Pruebe A/B campañas SMS, WhatsApp y Email, segmente por comportamiento y mida el ROI de extremo a extremo en una consola. Atribución de pipeline y automatización de ciclo de vida integradas." },
+      { "key": "ops", "name": "TI y Operaciones",
+        "desc": "Comercio conversacional optimizado en infraestructura de grado empresarial. Un único endpoint de API programable reemplaza docenas de integraciones de gateways heredados, enrutamiento prioritario, failover automático de operador y monitoreo NOC 24/7." },
+      { "key": "innovation", "name": "Transformación Digital",
+        "desc": "Proyectos personalizados IA-Digital desde arquitectura greenfield hasta migración legacy. Arquitectos de soluciones entregan integraciones según su pila tecnológica, cronograma y requisitos de gobernanza." }
+    ]
+  },
+  "charts": {
+    "mapLabel": "Red de Conectividad Global",
+    "locations": [
+      { "name": "Singapur (Sede Global)", "value": [103.8513, 1.283], "isHQ": true },
+      { "name": "Beijing",        "value": [116.4074, 39.9042], "isHQ": false },
+      { "name": "Shanghái",       "value": [121.4737, 31.2304], "isHQ": false },
+      { "name": "Tokio",          "value": [139.6917, 35.6895], "isHQ": false },
+      { "name": "Bombay",         "value": [72.8777,  19.076],  "isHQ": false },
+      { "name": "Sídney",         "value": [151.2093, -33.8688],"isHQ": false },
+      { "name": "Auckland",       "value": [174.7633, -36.8485],"isHQ": false },
+      { "name": "Fráncfort",      "value": [8.6821,   50.1109], "isHQ": false },
+      { "name": "Londres",        "value": [-0.1278,  51.5074], "isHQ": false },
+      { "name": "Silicon Valley", "value": [-122.0575,37.3875], "isHQ": false },
+      { "name": "São Paulo",      "value": [-46.6333, -23.5505],"isHQ": false }
+    ]
+  },
+  "footer": {
+    "brandTitle": "DOLPHLINK",
+    "brandTagline": "Plataforma de comunicaciones y socio de migración con sede en Singapur, perteneciente a Baiwu Technology Group. Conectamos gobiernos y empresas globales en más de 200 países con fiabilidad de misión crítica.",
+    "missionLabel": "Nuestro principio",
+    "missionText": "Estandarizar, proteger, sostener. Diseñamos comunicaciones y orquestación para instituciones donde la fiabilidad no es negociable. Cada lanzamiento queda auditado, cada byte gobernado y cada conversación es trazable.",
+    "locationLabel": "Sede Central",
+    "locationLine1": "9 Raffles Place #29-04",
+    "locationLine2": "Republic Plaza, Singapur 048619",
+    "locationHours": "Lun–Vie 09:00 – 18:00 SGT",
+    "locationMapHref": "https://maps.google.com/?q=9+Raffles+Place+%2329-04+Republic+Plaza+Singapore+048619",
+    "locationMapLabel": "Ver en Google Maps ↗",
+    "connectivityLabel": "Contáctenos",
+    "salesEmail": "Salesmarketing@dolphlink.com",
+    "salesMailto": "Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com",
+    "directorEmail": "Joycetsam@dolphlink.com",
+    "directorMailto": "Joycetsam@dolphlink.com",
+    "directorLabel": "Directora de Negocios",
+    "officialSiteLabel": "Baiwu Group",
+    "officialSiteHref": "https://www.baiwutong.com",
+    "installLabel": "Instalar Aplicación",
+    "mapHeading": "Red de Conectividad Global",
+    "mapIntro": "Hubs operativos estratégicos en Asia-Pacífico, Europa, Américas y Oceanía respaldan las capacidades globales de DOLPHLINK.",
+    "vcardEyebrow": "Hable con Ventas",
+    "vcardHeading": "Solicitar Briefing",
+    "vcardLine1": "Ventas · Alianzas · Adquisiciones",
+    "vcardLine2": "Escanee el código QR para guardar el contacto y agendar un briefing de 30 minutos con el equipo.",
+    "vcardScanLabel": "Escanear para guardar",
+    "socialLabel": "Conectar",
+    "social": [
+      { "name": "LinkedIn",  "href": "https://www.linkedin.com/", "icon": "linkedin" },
+      { "name": "Email Ventas", "href": "mailto:Salesmarketing@dolphlink.com", "icon": "mail" },
+      { "name": "Agendar Llamada",  "href": "mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call", "icon": "calendar" }
+    ],
+    "legalLinks": [
+      { "label": "Política de Privacidad", "href": "#" },
+      { "label": "Términos de Servicio", "href": "#" }
+    ],
+    "copyright": "© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED."
+  }
+}

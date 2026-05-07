@@ -1,0 +1,61 @@
+{
+  "__lang": "zh-Hans",
+  "__comment": "DOLPHLINK Simplified Chinese translations. Keys map to data-i18n attributes in index.html and sme/index.html. Missing keys fall back to English. Edit this file to refine wording — translations are intentionally direct and B2B-tone, prioritising clarity over polish.",
+
+  "nav.lark": "飞书集成",
+  "nav.workflows": "ERP 工作流",
+  "nav.pricing": "定价",
+  "nav.useCases": "应用场景",
+  "nav.enterprise": "企业版",
+  "nav.cta.connect": "连接飞书",
+
+  "sme.hero.eyebrow": "为被主流忽略的中小企业而生",
+  "sme.hero.h1.line1": "大银行使用的运营商级通信栈 ——",
+  "sme.hero.h1.line2": "直接接入飞书。",
+  "sme.hero.tagline": "短信、WhatsApp、语音、邮件 —— 还有你的 ERP —— 全部经飞书工作区流转。Twilio / Vonage / MessageBird 等大厂在年合同 5 万美元以下不接你的电话,我们接。每条消息按量计费,从新币 0.04 起,飞书原生集成,默认多语言。今晚上线,无需 IT 团队。",
+  "sme.hero.cta.primary": "免费连接飞书",
+  "sme.hero.cta.secondary": "查看定价",
+  "sme.hero.meta.live": "10 分钟上线",
+  "sme.hero.meta.contract": "无合约,随时取消",
+  "sme.hero.meta.lang": "亚洲语言原生支持",
+
+  "sme.benefits.eyebrow": "为什么中小企业选择我们,而不是 Twilio + Slack",
+  "sme.benefits.title": "主流厂商不会给你的四件事。",
+
+  "sme.pricing.eyebrow": "三种部署模式",
+  "sme.pricing.title": "App、Cloud 或 Platform。同一底座。",
+  "sme.pricing.plan.app": "应用版",
+  "sme.pricing.plan.cloud": "云版",
+  "sme.pricing.plan.platform": "平台版",
+  "sme.pricing.plan.cloud.flag": "多数中小企业的选择",
+
+  "sme.useCases.eyebrow": "应用场景",
+  "sme.useCases.title": "为不光鲜但关键的业务而生。",
+
+  "sme.integrations.eyebrow": "ERP × 飞书工作流",
+  "sme.integrations.title": "你的 ERP、团队、客户在这里相遇。",
+
+  "sme.how.eyebrow": "工作原理",
+  "sme.how.title": "三步搞定。午饭前上线。",
+
+  "sme.cta.eyebrow": "服务长尾客户",
+  "sme.cta.title": "主流厂商为头部 1% 服务。我们为剩下的 99% 而建。",
+
+  "sme.footer.tag": "为被主流忽略的中小企业提供运营商级通信。新加坡百悟科技集团出品。",
+  "sme.footer.privacy": "隐私",
+  "sme.footer.terms": "条款",
+  "sme.footer.enterprise": "企业站",
+
+  "home.hero.cta.industry": "行业洞察",
+  "home.hero.cta.sme": "中小企业版",
+  "home.hero.cta.auto": "查看自动化编排",
+  "home.hero.sme.tag.headline": "为小团队量身打造。",
+  "home.hero.sme.tag.sub": "同样的企业级技术栈,匹配中小企业预算与速度。",
+
+  "home.section.reliability": "可靠性矩阵",
+  "home.section.portfolio": "产品组合",
+  "home.section.industries": "服务行业",
+  "home.section.departments": "赋能部门",
+  "home.section.network": "运营商网络",
+  "home.section.compliance": "合规情报"
+}

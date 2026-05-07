@@ -1,0 +1,367 @@
+{
+  "_": "Build-time SEO + brand metadata. Baked into index.html by build/build.py at build time so search engines and social-card scrapers see the data WITHOUT running JavaScript. Edit this file to re-skin the brand's search/social presence — content.json is for visible page copy, this is for invisible-to-readers metadata.",
+  "meta": {
+    "title": "Singapore Sovereign CPaaS & AI Orchestration Platform | DOLPHLINK",
+    "description": "Singapore's sovereign communications spine. CPaaS, AI orchestration, and human-in-the-loop AI governance for governments, FinTech, healthcare, and regulated enterprises. 1,000+ Tier-1 operators across 200+ countries at 99.999% uptime. ISO 27001 certified, MAS TRM and IM8-aligned. Operated under Singapore's Cybersecurity Act.",
+    "keywords": "CPaaS, Communications Platform as a Service, AI governance, AI gov, sovereign AI, AI-Human Lifecycle, agent orchestration, AI orchestration, digital solution, AI digital solution, enterprise communications platform, government communications platform, SMS API, voice API, SIP trunking, RCS messaging, conversational AI, no-code chatbot, government AI solutions, regulated industries CPaaS, ISO 27001 CPaaS, MAS TRM compliant, IM8-aligned, PDPA Singapore, GDPR compliant CPaaS, tier-1 carrier connectivity, mission-critical messaging, RFP-ready communications, RFP CPaaS, government tender CPaaS, B2B integration platform, REST API enterprise, SDK integration, webhook integration, Singapore CPaaS, ASEAN CPaaS, sovereign cloud Singapore, digital migration partner, AI migration services, FinTech communications, healthcare communications, retail communications, logistics communications, customer engagement platform, omnichannel messaging, two-factor authentication API, OTP delivery, transactional SMS, programmable voice, contact center API, SIP trunk Singapore, telco platform, carrier-grade communications, sovereign infrastructure",
+    "author": "Baiwu Technology Group",
+    "themeColor": "#0059B3",
+    "appName": "DOLPHLINK",
+    "canonical": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/"
+  },
+  "icons": {
+    "favicon": "media/icon/3D/logo.webp",
+    "appleTouchIcon": "media/icon/3D/logo.webp",
+    "manifest": "seo/site.webmanifest"
+  },
+  "opengraph": {
+    "type": "website",
+    "locale": "en_US",
+    "title": "DOLPHLINK · Singapore's Sovereign Communications Spine",
+    "description": "Carrier-grade CPaaS + AI orchestration for governments and regulated enterprises. 1,000+ Tier-1 operators · 200+ countries · 99.999% uptime · MAS TRM + IM8-aligned · Operated under Singapore's Cybersecurity Act.",
+    "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/",
+    "image": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp",
+    "imageType": "image/webp",
+    "imageWidth": 1200,
+    "imageHeight": 630,
+    "imageAlt": "DOLPHLINK — sovereign CPaaS and AI governance platform for global enterprise",
+    "siteName": "DOLPHLINK"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "DOLPHLINK · Singapore's Sovereign Communications Spine",
+    "description": "Carrier-grade CPaaS + AI orchestration. 1,000+ Tier-1 operators · 200+ countries · 99.999% uptime · Operated under Singapore's Cybersecurity Act.",
+    "image": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp",
+    "imageAlt": "DOLPHLINK — sovereign CPaaS and AI governance platform"
+  },
+  "cardPage": {
+    "_": "Per-page SEO overrides for the standalone /card/?u=<localpart> digital business card landing page. Used by templates/card-page.html. Old /c/?u=<localpart> URLs redirect via /c/index.html.",
+    "title": "DOLPHLINK · Digital Card",
+    "description": "DOLPHLINK digital business card."
+  },
+  "smePage": {
+    "_": "Per-page SEO overrides for the standalone /sme/ landing page. Used by templates/sme/*.html.",
+    "title": "DOLPHLINK × Lark for SME · SMS, WhatsApp, Voice for the SMEs the mainstream forgot",
+    "description": "Carrier-grade communications wired straight into Lark. SMS / WhatsApp / Voice / Email for 5–500 person Asian SMEs. Pay per message, no enterprise contract, native Lark integration. Live in 10 minutes from SGD $99/month.",
+    "canonical": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/"
+  },
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization",
+          "name": "DOLPHLINK",
+          "alternateName": "DOLPHLINK by Baiwu Technology Group",
+          "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/",
+          "logo": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/icon/3D/logo.webp",
+          "description": "Singapore-based sovereign CPaaS and AI governance platform serving governments, FinTech, healthcare, and regulated enterprises across 200+ countries.",
+          "foundingLocation": "Singapore",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "9 Raffles Place #29-04, Republic Plaza",
+            "addressLocality": "Singapore",
+            "postalCode": "048619",
+            "addressCountry": "SG"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "contactType": "sales",
+              "email": "Salesmarketing@dolphlink.com",
+              "availableLanguage": ["English", "Mandarin"],
+              "areaServed": ["Asia", "Europe", "Americas"]
+            }
+          ],
+          "sameAs": ["https://www.baiwutong.com"]
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-cpaas",
+          "name": "Sovereign CPaaS Platform",
+          "alternateName": "Communications Platform as a Service",
+          "serviceType": "Communications Platform as a Service",
+          "category": "Enterprise Communications",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "Carrier-grade SMS, voice, phone-numbers, and AI-Human orchestration delivered through one programmable API. 99.999% uptime, MAS TRM and IM8-aligned, 1,000+ tier-1 operators, 200+ countries."
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-sms",
+          "name": "Global SMS API",
+          "description": "Direct connections to 1,000+ tier-1 mobile operators with sub-10-second delivery and 98% verified open rate. Three audiences served: developers (REST API + SDKs), marketers (Pages + Campaigns), customer service (unified inbox).",
+          "category": "SMS API",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-voice",
+          "name": "Enterprise Voice & SIP",
+          "description": "Geo-redundant SIP trunking with TTS, DTMF input, call forwarding, and per-call fraud-monitoring telemetry. Built for contact centres, SMBs, and IP PBX resellers.",
+          "category": "Voice API",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-numbers",
+          "name": "Global Phone Numbers",
+          "description": "Local, national, mobile, toll-free numbers in 100+ countries plus Sender IDs, Short Codes, and Hosted Numbers (SMS/Voice on existing landlines). Built-in compliance intelligence per region.",
+          "category": "Phone Numbers",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-touch",
+          "name": "Dolphlink Touch — Multi-Channel Hub",
+          "description": "Unified messaging API across SMS, WhatsApp, RCS, Email, with intelligent automatic fallback when delivery fails on the primary channel.",
+          "category": "Omnichannel Messaging",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-smart",
+          "name": "Dolphlink Smart — AI Chatbot Builder",
+          "description": "No-code drag-and-drop AI bot and voicebot builder with role-based access control and ISO 27001 / GDPR compliance. Context-aware AI integrated with your existing data sources.",
+          "category": "Conversational AI",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-api",
+          "name": "Dolphlink One-API",
+          "description": "Single programmable API across SMS, voice, WhatsApp, Email, and emerging channels with automatic channel fallback. SDKs in Node, Python, Go, Java, PHP.",
+          "category": "Developer Platform",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-nexus",
+          "name": "Dolphlink Nexus — AI Agent Orchestration",
+          "description": "Sovereign AI command centre unifying bots, RPA, custom models, and human reviewers behind a single auditable control plane. Tamper-evident logs and full data residency.",
+          "category": "AI Orchestration",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-console",
+          "name": "Operations Hub",
+          "description": "Messaging Gateway + Message Log + Messaging Analytics. Real-time monitoring of every message, status, content, and cost across all channels.",
+          "category": "Operations Analytics",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        },
+        {
+          "@type": "Product",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-custom",
+          "name": "AI-Digital Solutions — Custom Integration",
+          "description": "Bespoke AI-Digital migration services that integrate legacy systems with DOLPHLINK's communications, AI orchestration, and compliance layers on the customer's data residency requirements.",
+          "category": "Professional Services",
+          "brand": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization",
+          "name": "DOLPHLINK",
+          "alternateName": ["Baiwu Technology Group", "Baiwu Tech"],
+          "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/icon/3D/logo.webp",
+            "width": 240,
+            "height": 240
+          },
+          "description": "Singapore-based sovereign CPaaS and AI orchestration platform. 1,000+ Tier-1 operator routes across 200+ countries at 99.999% uptime. SMS, voice, and human-in-the-loop AI governance for governments, FinTech, and regulated enterprises. Operated under Singapore's Cybersecurity Act, MAS TRM and IM8-aligned.",
+          "foundingDate": "2010",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Republic Plaza",
+            "addressLocality": "Singapore",
+            "postalCode": "048619",
+            "addressCountry": "SG"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "sales",
+            "email": "Sales@dolphlink.com",
+            "areaServed": "Worldwide",
+            "availableLanguage": ["English", "Chinese"]
+          },
+          "knowsAbout": [
+            "CPaaS (Communications Platform as a Service)",
+            "AI Governance",
+            "Sovereign AI",
+            "AI Orchestration",
+            "AI-Human Lifecycle",
+            "Agent Orchestration",
+            "Digital Solution",
+            "AI Digital Solution",
+            "Government AI Solutions",
+            "Conversational AI",
+            "Enterprise Communications Platform",
+            "Government Communications Platform",
+            "SMS API",
+            "Voice API",
+            "SIP Trunking",
+            "RCS Messaging",
+            "Two-Factor Authentication API",
+            "OTP Delivery",
+            "Programmable Voice",
+            "Customer Engagement Platform",
+            "Omnichannel Messaging",
+            "Digital Migration",
+            "AI Migration Services",
+            "Regulated Industries Compliance",
+            "ISO 27001 Certified CPaaS",
+            "MAS TRM Compliant",
+            "IM8 Aligned",
+            "PDPA Singapore Compliant",
+            "GDPR Compliant CPaaS",
+            "Tier-1 Carrier Connectivity",
+            "Mission-Critical Messaging",
+            "B2B Integration Platform",
+            "REST API Enterprise",
+            "SDK Integration",
+            "Sovereign Infrastructure",
+            "Sovereign Cloud Singapore",
+            "ASEAN CPaaS",
+            "FinTech Communications",
+            "Healthcare Communications",
+            "Contact Center API"
+          ],
+          "sameAs": ["https://www.baiwutong.com"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#website",
+          "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/",
+          "name": "DOLPHLINK",
+          "publisher": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-sms",
+          "name": "DOLPHLINK SMS Platform",
+          "alternateName": "Global SMS API",
+          "serviceType": "SMS API",
+          "category": "Communications Platform as a Service",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "Direct connections to 1,000+ tier-1 mobile operators for global SMS in under 10 seconds. Developer-first API with comprehensive documentation, Pages mobile landing pages, Campaigns for personalized bulk messaging, two-way messaging via Short Codes and Long Numbers, TLS 1.3 encryption with priority OTP routing, and 24/7 NOC with automatic carrier failover."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-voice",
+          "name": "DOLPHLINK Voice & SIP",
+          "alternateName": "Enterprise Voice",
+          "serviceType": "SIP Trunking and Programmable Voice",
+          "category": "Communications Platform as a Service",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "Geo-redundant SIP trunking with text-to-speech, audio notifications, call forwarding, DTMF input, fraud monitoring, WebRTC bridge for browser agents, full G.711/G.729/Opus codec support, tamper-proof call recording, real-time jitter and packet-loss metrics, and one-click DID porting."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-numbers",
+          "name": "DOLPHLINK Phone Numbers",
+          "alternateName": "Global DID Numbers",
+          "serviceType": "DID Number Provisioning",
+          "category": "Communications Platform as a Service",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "Local, national, mobile, and toll-free numbers across 100+ countries. Alphanumeric Sender IDs, Short Codes, Hosted Numbers, built-in Compliance Intelligence, number porting in under 48 hours, vanity reservation, and centralized inventory dashboard."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-touch",
+          "name": "Dolphlink Touch",
+          "alternateName": "Multi-Channel Hub",
+          "serviceType": "Omnichannel Customer Engagement Platform",
+          "category": "Customer Engagement",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "Unified business messaging hub across SMS, WhatsApp, RCS, Email, and emerging channels. Marketing-friendly templates, drag-and-drop campaign builder, intelligent automatic fallback, native WhatsApp Business Platform integration with template approval, dynamic segment targeting, and end-to-end conversion analytics."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-api",
+          "name": "Dolphlink API",
+          "alternateName": "Developer Platform",
+          "serviceType": "Programmable Communications API",
+          "category": "Developer Tools",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "One programmable API across SMS, voice, WhatsApp, Email, and emerging channels. Drop-in SDK with intelligent automatic fallback. Five language SDKs (Node, Python, Go, Java, PHP), interactive sandbox with live test numbers, signed webhook delivery with automatic retry, and comprehensive request replay logs."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-smart",
+          "name": "Dolphlink Smart",
+          "alternateName": "AI Chatbot Builder",
+          "serviceType": "No-Code Conversational AI",
+          "category": "AI / Conversational AI",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "No-code conversation builder for AI-Human workflows. Bots and human agents in seamless handoff, context-aware understanding, ISO 27001 / GDPR / RBAC built in, knowledge base ingestion from PDF/web/database, fine-tuning for domain terminology, multilingual conversation across 40+ languages, and sentiment-driven escalation."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-nexus",
+          "name": "Dolphlink Nexus",
+          "alternateName": "AI Agent Orchestration",
+          "serviceType": "Sovereign AI Orchestration Platform",
+          "category": "AI Governance / Agent Orchestration",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "Sovereign command center for AI-Human orchestration. Unifies bots, RPA flows, custom models, and human reviewers into one auditable control plane. Built-in migration support, full data residency, RBAC, activity logs, visual workflow designer with conditional logic and approval gates, tamper-evident audit trails for regulator review."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-console",
+          "name": "DOLPHLINK Operations Hub",
+          "alternateName": "Ops Analytics",
+          "serviceType": "Communications Operations and Analytics",
+          "category": "Analytics and Operations",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "Centralized API key management, full message log with status, content, and real-time costs. Aggregated insights, real-time trends, threshold-based alerts, monthly cost forecasting by channel and region, plus CSV and Webhook exports to BI, finance, and compliance pipelines."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-custom",
+          "name": "DOLPHLINK AI-Digital Solutions",
+          "alternateName": "Custom Integration",
+          "serviceType": "Custom AI-Digital Migration Services",
+          "category": "Professional Services",
+          "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+          "areaServed": "Worldwide",
+          "description": "Tailored AI-Digital migration for existing infrastructure projects. Bespoke integrations between legacy systems and DOLPHLINK communications, AI orchestration, and compliance layers. Phased rollout with four-week discovery workshop, parallel-run pilots, gradual cutover, dedicated solution architect, 24/7 priority support, and custom SLA terms."
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#portfolio",
+          "name": "DOLPHLINK Portfolio",
+          "description": "Full DOLPHLINK CPaaS, AI governance, and digital solution portfolio.",
+          "numberOfItems": 9,
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-sms" } },
+            { "@type": "ListItem", "position": 2, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-voice" } },
+            { "@type": "ListItem", "position": 3, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-numbers" } },
+            { "@type": "ListItem", "position": 4, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-touch" } },
+            { "@type": "ListItem", "position": 5, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-api" } },
+            { "@type": "ListItem", "position": 6, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-smart" } },
+            { "@type": "ListItem", "position": 7, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-nexus" } },
+            { "@type": "ListItem", "position": 8, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-console" } },
+            { "@type": "ListItem", "position": 9, "item": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#service-custom" } }
+          ]
+        }
+      ]
+    }
+  ]
+}

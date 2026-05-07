@@ -1,0 +1,61 @@
+{
+  "__lang": "es",
+  "__comment": "DOLPHLINK Spanish (neutral / Latin American business register) translations. Direct B2B tone. Edit to refine wording for specific markets (es-ES vs es-MX).",
+
+  "nav.lark": "Integración con Lark",
+  "nav.workflows": "Flujos ERP",
+  "nav.pricing": "Precios",
+  "nav.useCases": "Casos de uso",
+  "nav.enterprise": "Empresarial",
+  "nav.cta.connect": "Conectar Lark",
+
+  "sme.hero.eyebrow": "Para las pymes que el mercado convencional ignora",
+  "sme.hero.h1.line1": "La misma infraestructura que usan los grandes bancos —",
+  "sme.hero.h1.line2": "conectada directamente a Lark.",
+  "sme.hero.tagline": "SMS, WhatsApp, voz, correo electrónico ―― y tu ERP ―― todo fluyendo por tu espacio Lark. Los grandes proveedores CPaaS (Twilio / Vonage / MessageBird) no responden si tu contrato anual es inferior a USD 50.000. Nosotros sí. Pago por mensaje desde SGD 0,04, integración Lark nativa, multilingüe por defecto. En vivo esta noche, sin equipo de TI.",
+  "sme.hero.cta.primary": "Conectar Lark · Gratis",
+  "sme.hero.cta.secondary": "Ver precios",
+  "sme.hero.meta.live": "En vivo en 10 minutos",
+  "sme.hero.meta.contract": "Sin contrato, cancela cuando quieras",
+  "sme.hero.meta.lang": "Idiomas asiáticos, nativos",
+
+  "sme.benefits.eyebrow": "Por qué las pymes nos eligen frente a Twilio + Slack",
+  "sme.benefits.title": "Cuatro cosas que el mercado convencional no te dará.",
+
+  "sme.pricing.eyebrow": "Tres modos de despliegue",
+  "sme.pricing.title": "App, Cloud o Platform. Misma base.",
+  "sme.pricing.plan.app": "App",
+  "sme.pricing.plan.cloud": "Cloud",
+  "sme.pricing.plan.platform": "Platform",
+  "sme.pricing.plan.cloud.flag": "La mayoría de pymes elige éste",
+
+  "sme.useCases.eyebrow": "Casos de uso",
+  "sme.useCases.title": "Diseñado para el trabajo crítico, sin glamour.",
+
+  "sme.integrations.eyebrow": "Flujos ERP × Lark",
+  "sme.integrations.title": "Donde tu ERP, tu equipo y tu cliente se encuentran.",
+
+  "sme.how.eyebrow": "Cómo funciona",
+  "sme.how.title": "Tres pasos. En vivo antes del almuerzo.",
+
+  "sme.cta.eyebrow": "Para la cola larga",
+  "sme.cta.title": "El mercado convencional sirve al 1% superior. Nosotros construimos para el otro 99%.",
+
+  "sme.footer.tag": "Comunicaciones de grado operador para las pymes que el mercado ignora. Por Baiwu Technology Group, Singapur.",
+  "sme.footer.privacy": "Privacidad",
+  "sme.footer.terms": "Términos",
+  "sme.footer.enterprise": "Sitio empresarial",
+
+  "home.hero.cta.industry": "Insights por industria",
+  "home.hero.cta.sme": "Versión PYME",
+  "home.hero.cta.auto": "Ver auto-orquestación",
+  "home.hero.sme.tag.headline": "Diseñado para equipos pequeños.",
+  "home.hero.sme.tag.sub": "La misma infraestructura empresarial, dimensionada para presupuesto y velocidad PYME.",
+
+  "home.section.reliability": "Matriz de confiabilidad",
+  "home.section.portfolio": "Portafolio",
+  "home.section.industries": "Industrias atendidas",
+  "home.section.departments": "Departamentos potenciados",
+  "home.section.network": "Red de operadores",
+  "home.section.compliance": "Inteligencia de cumplimiento"
+}

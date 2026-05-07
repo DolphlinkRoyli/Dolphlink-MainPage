@@ -1,28 +1,66 @@
-:root {
- --baiwu-blue-primary: #0059B3;
- --baiwu-blue-deep: #002D5C;
- --baiwu-bg-light: #F1F5F9;
- --baiwu-white: #FFFFFF;
- --border-line: #E2E8F0;
- --text-main: #0F172A;
- --text-sub: #64748B;
- --text-copyright: #1E293B;
- --ui-font-size: 0.75rem;
- --nav-height: 72px;
- /* ==========================
-    Type scale (standard 8 steps)
-    ========================== */
- --fs-2xs:  0.625rem;  /* 10px - micro tags */
- --fs-xs:   0.75rem;   /* 12px - UI labels */
- --fs-sm:   0.875rem;  /* 14px - small body */
- --fs-base: 1rem;      /* 16px - body */
- --fs-lg:   1.25rem;   /* 20px - brand */
- --fs-xl:   1.5rem;    /* 24px - mobile heading */
- --fs-2xl:  2rem;      /* 32px - stat / section title */
- --fs-3xl:  3rem;      /* 48px - hero */
- }
+/* Design tokens (--baiwu-blue-primary, --fs-2xl, etc.) are now declared
+   in css/tokens.css — loaded BEFORE this file in index.html.
+   To re-skin the site for a new brand, edit css/tokens.css. */
 
  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ============================================================================
+ * Language picker (homepage variant) — populated by core/i18n.js. Sits in
+ * .nav-right next to the Request-Briefing CTA. Same component CSS as the
+ * SME page; only the surrounding selector differs. Both pages share the
+ * .dlpk-lang-* class names so the picker looks consistent everywhere.
+ * ========================================================================== */
+.nav-lang { display: inline-flex; align-items: center; margin-left: 0; }
+.dlpk-lang-picker {
+  position: relative; font-size: 12px; line-height: 1;
+}
+/* Homepage nav is white-on-light, so picker chip uses brand-blue text on
+   a faint blue tint with brand-blue border — visible against white. */
+.dlpk-lang-picker > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 12px; border-radius: 999px;
+  color: var(--baiwu-blue-primary, #0059B3);
+  border: 1.5px solid var(--baiwu-blue-primary, #0059B3);
+  background: rgba(0,89,179,.04);
+  font-weight: 700; letter-spacing: .3px;
+  transition: background .12s, border-color .12s, transform .12s;
+  -webkit-user-select: none; user-select: none;
+}
+.dlpk-lang-picker > summary::-webkit-details-marker { display: none; }
+.dlpk-lang-picker > summary:hover {
+  background: rgba(0,89,179,.10);
+  transform: translateY(-1px);
+}
+.dlpk-lang-picker .dlpk-lang-current { font-weight: 700; letter-spacing: .2px; }
+.dlpk-lang-menu {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  list-style: none; margin: 0; padding: 6px;
+  min-width: 200px;
+  background: #FFFFFF;
+  color: #0F172A;
+  border: 1px solid rgba(15,23,42,.12);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15,23,42,.32);
+  z-index: 200;
+}
+.dlpk-lang-menu li { margin: 0; padding: 0; }
+.dlpk-lang-menu button {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  width: 100%; padding: 9px 12px; text-align: left;
+  background: transparent; border: none; border-radius: 7px;
+  color: #0F172A; cursor: pointer; font: inherit;
+}
+.dlpk-lang-menu button:hover { background: rgba(0,89,179,.08); }
+.dlpk-lang-menu button[aria-current="true"] { background: rgba(0,89,179,.12); color: #0059B3; }
+.dlpk-lang-native { font-weight: 700; font-size: 13px; }
+.dlpk-lang-en { font-size: 11px; color: rgba(15,23,42,.55); letter-spacing: .3px; }
+.dlpk-lang-menu button[aria-current="true"] .dlpk-lang-en { color: rgba(0,89,179,.7); }
+@media (max-width: 720px) {
+  .nav-lang { margin-left: 0; }
+  .dlpk-lang-menu { left: auto; right: 0; }
+}
 
  /* (smooth scroll removed — anchor jumps and JS scrollTo are now instant.
     Sovereign register prefers immediacy over animation polish.) */
@@ -897,12 +935,13 @@
    flex-wrap: wrap;
  }
  .trust-cards--network .trust-card {
-   /* basis 100px so cards never shrink below the longest label
-      ("Asia-Pacific" + padding ≈ 100px). Combined with flex-grow, they
-      still distribute equally when there's room. Without this min-width
-      they get squished < text width on narrow side-by-side layouts. */
-   flex: 1 1 100px;
-   min-width: 100px;
+   /* `max-content` floor — the card never shrinks below its rendered
+      text width, so "ASIA-PACIFIC" (the longest label) is always fully
+      visible. flex-grow:1 still lets all cards distribute extra space
+      equally when there's room. flex-wrap moves a card to a new row
+      rather than clipping when the row is too narrow. */
+   flex: 1 1 auto;
+   min-width: max-content;
  }
 
  /* ============================================================
@@ -1166,8 +1205,11 @@
      gap: 8px;
    }
    .trust-cards--network .trust-card {
+     /* Mobile 2×2 grid — keep `max-content` floor so ASIA-PACIFIC is
+        never clipped. Card may push to its own row at very narrow
+        widths, which is preferable to a cropped label. */
      flex: 1 1 calc(50% - 4px);
-     min-width: 0;
+     min-width: max-content;
    }
    .trust-stat {
      flex: 1 1 calc(50% - 4px);
@@ -2527,25 +2569,31 @@
    --footer-fs-body: clamp(10.5px, 0.55vw + 0.4rem, 12.5px);
    --footer-fs-meta: clamp(9.5px,  0.45vw + 0.35rem, 11px);
  }
- .footer .f-col h6 {
-   color: #F59E0B;
+ /* `.f-col-title` is the small caps column heading. Was `<h6>` historically;
+    bumped to `<h3>` to fix a heading-order skip flagged by Lighthouse
+    (parent .footer brand title is `<h2>`, so children must be `<h3>`).
+    Gold colour brightened to `#FCD34D` so the small-caps reading at the
+    fluid `--footer-fs-meta` size (9.5–11px) clears WCAG AAA contrast
+    against the `#1E3A6B` navy footer (≥7:1). */
+ .footer .f-col-title {
+   color: #FCD34D;
    font-size: var(--footer-fs-meta);
    font-weight: 900;
    text-transform: uppercase;
    letter-spacing: 1.8px;
-   margin-bottom: 10px;
+   margin: 0 0 10px;
    padding-left: 10px;
-   border-left: 3px solid #F59E0B;
+   border-left: 3px solid #FCD34D;
    line-height: 1;
  }
  .footer .f-col p,
  .footer .f-col a {
-   color: rgba(255, 255, 255, 0.85);
+   color: rgba(255, 255, 255, 0.92);  /* up from .85 — clears AAA at small sizes */
    font-size: var(--footer-fs-body);
    letter-spacing: -0.1px;        /* compress for long emails */
    text-decoration: none;
    display: block;
-   margin-bottom: 6px;
+   margin-bottom: 4px;
    font-weight: 500;
    line-height: 1.5;
    /* Long unbreakable strings (emails, addresses) wrap if needed. */
@@ -2553,7 +2601,14 @@
    word-break: break-word;
    min-width: 0;
  }
- .footer .f-col a:hover { color: #F59E0B; }
+ /* Touch-target floor — every footer link gets ≥24px tap height + a
+    consistent 8px gap from the next item. Lighthouse flagged the old
+    block-level mailto links as too small / too tightly spaced. */
+ .footer .f-col a {
+   padding: 6px 0;
+   margin-bottom: 4px;
+ }
+ .footer .f-col a:hover { color: #FCD34D; }
  .footer .brand-col p {
    color: rgba(255, 255, 255, 0.7);
    font-weight: 500;
@@ -2578,15 +2633,18 @@
     footer. Same colour family + size as the body text, regular weight
     (no bold) so the gold colour alone signals "this is a CTA" without
     visually shouting. */
+ /* "View on Google Maps" + "Install App" — gold action links.
+    Brightened to #FCD34D to clear WCAG AAA contrast (≥7:1) against
+    the #1E3A6B navy footer, fixes Lighthouse low-contrast flag. */
  .footer .f-col-maplink,
  .footer .f-install-link {
-   color: #F59E0B !important;
+   color: #FCD34D !important;
    font-size: var(--footer-fs-body) !important;
    font-weight: 500 !important;
    letter-spacing: 0.4px !important;
  }
  .footer .f-col-maplink { margin-top: 6px !important; }
- .footer .f-install-link:hover { color: #FBBF24 !important; }
+ .footer .f-install-link:hover { color: #FFFFFF !important; }
 
  /* (Old `.f-quick-links` block removed — Quick Links section was retired
     when the footer was redesigned around the Business Inquiry card.) */

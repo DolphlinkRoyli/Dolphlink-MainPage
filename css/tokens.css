@@ -1,0 +1,50 @@
+/* ============================================================================
+ * DOLPHLINK design tokens — single source of truth for brand styling.
+ * ============================================================================
+ * To re-skin this template for a new project, EDIT THIS FILE ONLY.
+ * Every color, font scale, and layout dimension elsewhere references
+ * the tokens declared here, so swapping a brand is a 1-file edit.
+ *
+ * Loaded BEFORE style.css so cascades resolve in the right order.
+ * Do not declare layout / component rules here — only `:root` custom
+ * properties.
+ * ============================================================================
+ */
+
+:root {
+  /* --------------------------------------------------------------------------
+   * BRAND PALETTE — primary identity colors
+   * ------------------------------------------------------------------------ */
+  --baiwu-blue-primary: #0059B3;       /* Primary action / CTA */
+  --baiwu-blue-deep:    #002D5C;       /* Deep accent + hover state */
+  --baiwu-bg-light:     #F1F5F9;       /* Light page background */
+  --baiwu-white:        #FFFFFF;       /* Card surfaces */
+
+  /* --------------------------------------------------------------------------
+   * NEUTRAL SCALE — borders, text, dividers
+   * ------------------------------------------------------------------------ */
+  --border-line:        #E2E8F0;       /* Hairlines + card borders */
+  --text-main:          #0F172A;       /* Primary text */
+  --text-sub:           #64748B;       /* Secondary / supporting text */
+  --text-copyright:     #1E293B;       /* Footer fineprint */
+
+  /* --------------------------------------------------------------------------
+   * LAYOUT — global geometry
+   * ------------------------------------------------------------------------ */
+  --ui-font-size:       0.75rem;       /* 12px — small UI labels (nav, chips) */
+  --nav-height:         72px;          /* Sticky nav bar — used by JS scroll math */
+
+  /* --------------------------------------------------------------------------
+   * TYPE SCALE — 8-step modular scale, base 16px (1rem)
+   * Use these tokens instead of raw px / rem values so brand swaps
+   * resize uniformly. Values match Material / Tailwind defaults.
+   * ------------------------------------------------------------------------ */
+  --fs-2xs:  0.625rem;  /* 10px — micro tags, eyebrows */
+  --fs-xs:   0.75rem;   /* 12px — UI labels, nav chips */
+  --fs-sm:   0.875rem;  /* 14px — small body, captions */
+  --fs-base: 1rem;      /* 16px — body copy */
+  --fs-lg:   1.25rem;   /* 20px — brand mark, large UI */
+  --fs-xl:   1.5rem;    /* 24px — mobile heading, sec-title (mobile) */
+  --fs-2xl:  2rem;      /* 32px — stat numbers, sec-title (desktop) */
+  --fs-3xl:  3rem;      /* 48px — hero h1 */
+}

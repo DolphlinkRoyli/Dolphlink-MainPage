@@ -1,0 +1,22 @@
+ <!-- ================================================================
+      JS-disabled fallback — slim banner only.
+      Since the entire page is now PRE-RENDERED as static HTML
+      (hero text, trust wall, portfolio, industries, footer all
+      hard-coded directly into the markup, with JS just hydrating
+      from content.json on top), the no-JS experience is fully
+      readable. We show a small thin banner at the top of the page
+      so the user knows enhanced features (auto-play video loop,
+      ECharts world map, install prompt) are unavailable, but
+      everything text-based works.
+      Crucial for: SEO crawlers, Lighthouse, AI agents (GPTBot,
+      ClaudeBot, etc.), enterprise procurement scrapers.
+      ================================================================ -->
+ <noscript>
+  <style>
+   .dlpk-noscript{padding:8px 16px;background:#FEF3C7;color:#78350F;font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:600;text-align:center;border-bottom:1px solid #F59E0B}
+   .dlpk-noscript a{color:#0059B3;text-decoration:underline;font-weight:700}
+  </style>
+  <div class="dlpk-noscript">
+   Enable JavaScript for full interactive experience (animated globe, world map). All text content below is fully readable as-is. <a href="mailto:Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com">Email Sales</a>
+  </div>
+ </noscript>
