@@ -176,7 +176,7 @@
        href="media/img/video-poster.webp" fetchpriority="high">
 
  <!-- Preload critical scripts so they download in parallel with HTML parse -->
- <link rel="preload" as="script" href="js/main.js?v=49">
+ <link rel="preload" as="script" href="js/main.js?v=51">
  <!-- Preload content.json so it lands the moment main.js calls fetch().
       Saves the round-trip of waiting for main.js to parse + execute first.
       Same query string main.js uses (CONTENT_VERSION = 20260507n) so the
@@ -187,7 +187,7 @@
       browser fetches content.json TWICE. With anonymous, preload uses
       cors+same-origin which matches the default fetch() behaviour and
       the preloaded response is reused by the fetch in main.js. -->
- <link rel="preload" as="fetch" href="content/content.json?v=20260507x" crossorigin="anonymous">
+ <link rel="preload" as="fetch" href="content/content.json?v=20260507z" crossorigin="anonymous">
 
  <!-- Inter (variable font, 100..900 axis): single file, blocks first paint.
       Loaded as `preload` + onload-swap so it doesn't block render at all. -->
@@ -207,11 +207,11 @@
      }, 1500);
    });
  </script>
- <link rel="stylesheet" href="css/style.css?v=93">
+ <link rel="stylesheet" href="css/style.css?v=94">
  <link rel="preload" as="style" href="css/register.css?v=1" onload="this.onload=null;this.rel='stylesheet'">
  <noscript><link rel="stylesheet" href="css/register.css?v=1"></noscript>
  <!-- ECharts lazy-loaded from local lib/ (injected only when charts viewport intersects) — saves 209 KiB initial JS -->
- <script src="js/main.js?v=49" defer></script>
+ <script src="js/main.js?v=51" defer></script>
 
  <!-- Speculation Rules — Chromium prerenders the linked URL in a hidden
       tab the moment we hint, so when the user actually clicks the QR
@@ -560,7 +560,7 @@
    <span data-key="hero.ctaPrimary">Request Briefing</span>
  </a>
  <a href="#n-sec" data-scroll-to="n-sec" class="btn btn-ghost">
-   <span data-key="hero.ctaSecondary">Explore the Portfolio</span>
+   <span data-key="hero.ctaSecondary">See Auto-Orchestration</span>
    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
      <line x1="5" y1="12" x2="19" y2="12"/>
@@ -568,6 +568,15 @@
    </svg>
  </a>
  </div>
+ <!-- Trigger micro-copy under the CTAs — surfaces the differentiator
+      (other CPaaS are passive send/receive; we detect + auto-trigger).
+      Pulse dot suggests "live system", reinforces real-time perception.
+      data-key on the inner <span> only, so JS hydration replaces the
+      text without wiping the dot element next to it. -->
+ <p class="hero-trigger">
+   <span class="hero-trigger-dot" aria-hidden="true"></span>
+   <span data-key="hero.triggerLine">Detects fragmentation events. Triggers orchestration automatically.</span>
+ </p>
  </div>
  <!-- Cinematic full-bleed video — covers the entire hero section as
       ambient backdrop. Dark navy gradient overlay (in CSS) sits between

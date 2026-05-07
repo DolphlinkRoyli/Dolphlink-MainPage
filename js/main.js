@@ -668,7 +668,7 @@ function renderTrustWall(container, items, connect) {
 
 // Content version — bump this when CSV/JSON changes so browsers bypass stale cache.
 // Ties together: cache-buster query param + visible version in <html data-content-version>.
-const CONTENT_VERSION = '20260507x';
+const CONTENT_VERSION = '20260507z';
 
 // Hide the inline pre-read loader (defined in index.html). Called once
 // content.json is rendered, AND defensively after a 5s timeout in case

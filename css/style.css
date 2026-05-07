@@ -504,6 +504,48 @@
  }
 
  .hero-cta { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+ /* Trigger micro-copy under the CTAs — communicates the platform's
+    auto-detect / auto-trigger differentiator in 8 words. The pulsing
+    green dot signals "live system", reinforcing the real-time
+    perception buyers expect from sovereign infrastructure. */
+ .hero-trigger {
+   margin-top: 16px;
+   display: inline-flex;
+   align-items: center;
+   gap: 10px;
+   padding: 8px 14px;
+   background: rgba(255, 255, 255, 0.06);
+   border: 1px solid rgba(245, 158, 11, 0.35);
+   border-radius: 4px;
+   font-size: var(--fs-xs);
+   font-weight: 600;
+   letter-spacing: 0.3px;
+   color: rgba(255, 255, 255, 0.92);
+   max-width: 100%;
+   backdrop-filter: blur(6px);
+   -webkit-backdrop-filter: blur(6px);
+ }
+ .hero-trigger-dot {
+   flex-shrink: 0;
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   background: #22C55E;
+   box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+   animation: hero-trigger-pulse 1.6s ease-in-out infinite;
+ }
+ @keyframes hero-trigger-pulse {
+   0%, 100% { opacity: 1; transform: scale(1); }
+   50%      { opacity: 0.55; transform: scale(0.85); }
+ }
+ @media (max-width: 640px) {
+   .hero-trigger {
+     font-size: 11px;
+     padding: 7px 12px;
+     gap: 8px;
+   }
+ }
  .btn {
    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
    padding: 12px 22px;
