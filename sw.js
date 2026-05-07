@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v130';
+const CACHE_VERSION = 'dolphlink-v197';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -21,7 +21,7 @@ const SCOPE = self.registration && self.registration.scope
 // AND the enterprise digital-card landing page (/c/?u=<localpart>).
 // The standalone /cards/ mini-app has been retired; the card view now lives
 // inside the main-page Request-Briefing modal (js/register.js) and the
-// public-facing /c/ landing page (js: c/c.js).
+// public-facing /c/ landing page (js: js/c.js).
 const OFFLINE_URL = SCOPE + 'offline.html';
 const PRECACHE = [
   SCOPE,
@@ -31,6 +31,7 @@ const PRECACHE = [
   SCOPE + 'css/register.css',
   SCOPE + 'js/main.js',
   SCOPE + 'js/register.js',
+  SCOPE + 'js/register-scanner.js',     // lazy-loaded by register.js when QR scanner opens; precache so offline scan still works
   SCOPE + 'c/',
   SCOPE + 'c/index.html',
   SCOPE + 'c/c.css',

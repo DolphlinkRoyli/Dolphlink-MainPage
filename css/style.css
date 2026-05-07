@@ -35,143 +35,25 @@
     containing block (so `position: fixed` for the nav still works). */
  html, body { overflow-x: clip; max-width: 100%; }
 
- /* ===========================
-    Boot loader — full-screen overlay
-    =========================== */
- #page-loader {
-   position: fixed; inset: 0;
-   z-index: 9999;
-   background: radial-gradient(ellipse at center, #002D5C 0%, #00091A 100%);
-   display: grid; place-items: center;
-   transition: opacity 0.7s ease, visibility 0.7s ease;
-   overflow: hidden;
+ /* CRITICAL flex/grid shrink guard. By default, flex items have
+    `min-width: auto` (= content size), and grid items the same. So a
+    33-char email in a `1fr` cell *cannot* shrink below 250px even with
+    `overflow-wrap: anywhere` — the cell expands instead and pushes the
+    page wider. This rule lets every flex/grid descendant actually honour
+    its assigned track / flex-basis, so wrap rules take effect.
+    Scoped to the long-content sections (footer, hero, sections) so we
+    don't touch icon rows or label chips that legitimately need their
+    intrinsic min-width. */
+ .footer, .footer *,
+ .hero, .hero *,
+ .section-row, .section-row * {
+   min-width: 0;
  }
- #page-loader.done {
-   opacity: 0;
-   visibility: hidden;
-   pointer-events: none;
- }
- /* Scanning grid */
- #page-loader::before {
-   content: '';
-   position: absolute; inset: 0;
-   background-image:
-     linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
-     linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
-   background-size: 48px 48px;
-   animation: loader-grid-pan 14s linear infinite;
-   opacity: 0.55;
- }
- @keyframes loader-grid-pan {
-   to { background-position: 48px 48px; }
- }
- /* Vertical scan beam */
- #page-loader::after {
-   content: '';
-   position: absolute; inset: 0;
-   background: linear-gradient(180deg, transparent 0%, rgba(56, 189, 248, 0.12) 50%, transparent 100%);
-   background-size: 100% 200%;
-   background-position: 0 -100%;
-   animation: loader-scan-beam 3.2s ease-in-out infinite;
-   pointer-events: none;
- }
- @keyframes loader-scan-beam {
-   to { background-position: 0 200%; }
- }
- .loader-content {
-   position: relative; z-index: 2;
-   display: flex; flex-direction: column;
-   align-items: center; gap: 22px;
-   max-width: 380px; padding: 0 24px;
- }
- .loader-logo {
-   width: 96px; height: auto; display: block;
-   filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.5)) contrast(1.05);
-   animation: loader-pulse 2.5s ease-in-out infinite;
- }
- @keyframes loader-pulse {
-   0%, 100% { transform: scale(1); filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.5)) contrast(1.05); }
-   50%      { transform: scale(1.04); filter: drop-shadow(0 0 36px rgba(56, 189, 248, 0.75)) contrast(1.05); }
- }
- .loader-brand {
-   font-family: 'Inter', sans-serif;
-   font-size: 1.6rem; font-weight: 900;
-   color: #FFFFFF; letter-spacing: -0.5px;
-   line-height: 1;
- }
- .loader-status {
-   font-family: 'JetBrains Mono', monospace;
-   font-size: 0.72rem; font-weight: 500;
-   color: rgba(255, 255, 255, 0.6);
-   letter-spacing: 0.6px;
-   min-height: 16px;
-   text-align: center;
-   transition: color 0.3s ease;
- }
- .loader-bar {
-   width: 280px; height: 2px;
-   background: rgba(255, 255, 255, 0.1);
-   border-radius: 1px;
-   overflow: hidden;
-   position: relative;
- }
- .loader-bar-fill {
-   height: 100%; width: 0%;
-   background: linear-gradient(90deg, var(--baiwu-blue-primary), #38BDF8);
-   border-radius: 1px;
-   transition: width 0.5s ease;
-   box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
-   position: relative;
- }
- .loader-bar-fill::after {
-   content: '';
-   position: absolute; inset: 0;
-   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
-   background-size: 50% 100%;
-   background-position: -50% 0;
-   background-repeat: no-repeat;
-   animation: loader-shimmer 1.5s linear infinite;
- }
- @keyframes loader-shimmer {
-   to { background-position: 150% 0; }
- }
- .loader-meta {
-   display: flex; width: 280px;
-   justify-content: space-between;
-   font-family: 'JetBrains Mono', monospace;
-   font-size: 0.62rem; font-weight: 700;
-   letter-spacing: 1.6px;
-   color: var(--baiwu-blue-primary);
-   text-transform: uppercase;
- }
- .loader-pct { color: rgba(255, 255, 255, 0.85); }
- @media (prefers-reduced-motion: reduce) {
-   #page-loader::before, #page-loader::after, .loader-bar-fill::after, .loader-logo {
-     animation: none;
-   }
- }
- /* Loader — mobile responsive overrides */
- @media (max-width: 640px) {
-   #page-loader::before { background-size: 32px 32px; opacity: 0.35; }
-   .loader-content { gap: 16px; padding: 0 24px; max-width: 100%; }
-   .loader-logo { width: 68px; }
-   .loader-brand { font-size: 1.25rem; letter-spacing: -0.3px; }
-   .loader-status {
-     font-size: 0.66rem; line-height: 1.4;
-     max-width: 280px;
-   }
-   .loader-bar { width: min(240px, 76vw); }
-   .loader-meta {
-     width: min(240px, 76vw);
-     font-size: 0.58rem; letter-spacing: 1.2px;
-   }
- }
- @media (max-width: 380px) {
-   .loader-logo { width: 56px; }
-   .loader-brand { font-size: 1.1rem; }
-   .loader-bar { width: min(200px, 72vw); }
-   .loader-meta { width: min(200px, 72vw); font-size: 0.55rem; }
- }
+
+ /* (Old #page-loader / .loader-* boot-screen rules deleted — superseded
+    by the inline #dlpk-loader markup + minified inline CSS in
+    index.html. ~150 lines / ~5KB removed.) */
+
  body {
  background-color: var(--baiwu-white);
  color: var(--text-main);
@@ -179,11 +61,6 @@
  -webkit-font-smoothing: antialiased;
  line-height: 1.2;
  }
-
- /* #bg-canvas — decorative particle network retired. JS removes the
-    element entirely (see js/main.js IIFE), but the rule below makes the
-    same call from CSS in case stale JS gets cached. */
- #bg-canvas { display: none !important; }
 
  /* ===========================
     Header / Nav
@@ -256,8 +133,12 @@
  .footer {
    position: relative;
  }
- /* Single 1px line: subtle cyan base + animated white comet + cyan halo */
- /* Shared geometry */
+ /* Section divider — single hairline that fades from transparent at the
+    edges to a faint gold mid-glow. No comet, no box-shadow halo, no
+    blue-on-blue stripe — just one quiet gold pinstripe between
+    sections. Same rule for ALL sections (light + dark) since the gold
+    accent reads on both bgs. Earlier "white-comet + blue-glow"
+    combination created an ugly double-line at section boundaries. */
  .reliability-section::before,
  .infra-section::before,
  .audit-section::before,
@@ -271,63 +152,17 @@
    height: 1px;
    z-index: 5;
    pointer-events: none;
-   background-size: 200% 100%, 100% 100%;
-   background-position: -100% 0, 0 0;
-   background-repeat: no-repeat, no-repeat;
-   /* (ribbon-flow comet animation removed — sovereign-infrastructure
-      brand language calls for stillness, not motion. The static gradient
-      remains as a clean section divider.) */
+   background: linear-gradient(90deg,
+     transparent 0%,
+     rgba(245, 158, 11, 0.0) 12%,
+     rgba(245, 158, 11, 0.55) 50%,
+     rgba(245, 158, 11, 0.0) 88%,
+     transparent 100%);
    contain: layout paint;
  }
- /* Light sections (reliability / infra / trust / departments) —
-    solid brand blue rule. NOTE: use `background-image` longhand +
-    explicit `background-color` so the upstream `background-size` /
-    `background-position` (which power the `ribbon-flow` comet
-    animation) are NOT reset by a shorthand. */
- .reliability-section::before,
- .infra-section::before,
- .trust-section::before,
- .departments-section::before {
-   background-image:
-     linear-gradient(90deg,
-       transparent 0%,
-       transparent 35%,
-       #FFFFFF 50%,
-       transparent 65%,
-       transparent 100%),
-     linear-gradient(var(--baiwu-blue-primary), var(--baiwu-blue-primary));
-   box-shadow: 0 0 6px rgba(0, 89, 179, 0.6), 0 0 14px rgba(0, 89, 179, 0.28);
- }
- /* (Trust → Reliability divider override removed — both sections are
-    now light, the standard light-section comet ribbon already
-    handles the transition cleanly.) */
- /* Dark sections (audit / charts / industries / footer) — softer
-    cyan rule. Use `background-image` longhand so size/position from
-    shared rule survive (animation needs 200% sized first layer). */
- .audit-section::before,
- .industries-section::before,
- .footer::before {
-   background-image:
-     linear-gradient(90deg,
-       transparent 0%,
-       transparent 35%,
-       #FFFFFF 50%,
-       transparent 65%,
-       transparent 100%),
-     linear-gradient(rgba(56, 189, 248, 0.45), rgba(56, 189, 248, 0.45));
-   box-shadow: 0 0 6px rgba(56, 189, 248, 0.55), 0 0 14px rgba(56, 189, 248, 0.25);
- }
- /* (@keyframes ribbon-flow removed — see comment on the divider rule above.) */
 
- @media (prefers-reduced-motion: reduce) {
-   .reliability-section::before,
-   .infra-section::before,
-   .audit-section::before,
-   .trust-section::before,
-   .industries-section::before,
-   .departments-section::before,
-   .footer::before { animation: none; }
- }
+ /* (No reduced-motion override needed — divider is now a static gradient,
+    no animation to suppress.) */
 
  /* ===========================
     Hero - row layout
@@ -372,14 +207,24 @@
      rgba(0, 45, 92, 0.18) 100%);
  }
  @media (max-width: 768px) {
-   /* Mobile: text covers full width, so dark overlay needs to be even
-      throughout for legibility on top of the Earth. */
+   /* Mobile gradient mask — STRONGER. The globe + glowing connection
+      lines from the bg video cut right through the long tagline copy
+      on a narrow screen and make body text painful to read. Now we
+      drop a near-opaque navy curtain over the upper 60% (where text
+      lives), then fade to ~40% at the bottom so the Earth still
+      shows through under the CTA row. The result: text floats on a
+      calm dark surface, decoration breathes underneath. */
    .hero::before {
      background: linear-gradient(180deg,
-       rgba(0, 45, 92, 0.85) 0%,
-       rgba(0, 45, 92, 0.75) 60%,
-       rgba(0, 45, 92, 0.85) 100%);
+       rgba(0, 45, 92, 0.94) 0%,
+       rgba(0, 45, 92, 0.92) 35%,
+       rgba(0, 45, 92, 0.85) 60%,
+       rgba(0, 45, 92, 0.55) 88%,
+       rgba(0, 45, 92, 0.30) 100%);
    }
+   /* Tone the Earth itself down on phones so the busy network lines
+      don't fight the text even after the gradient mask. */
+   .hero-bg-video { opacity: 0.55; }
  }
  /* Video covers the entire hero. To shift the Earth (which sits at the
     video's centre) visually to the RIGHT side of the hero, we render the
@@ -415,7 +260,10 @@
  .hero-content {
    position: relative;
    z-index: 2;
-   max-width: 720px;
+   /* Tighter max-width for a more restrained, designed hero. 620px is
+      ~75 chars at body size — comfortable reading width for the tagline,
+      and a natural anchor for the stats / CTA / trigger rows below. */
+   max-width: 620px;
  }
 
  /* (.hero-cinematic removed — KPI stat row now carries the credibility,
@@ -423,16 +271,43 @@
     second half of the hero text panel.) */
 
  .eyebrow {
-   display: inline-flex; align-items: center; gap: 7px;
-   padding: 6px 14px 6px 11px; margin-bottom: 16px;
-   font-size: var(--fs-xs); font-weight: 800; letter-spacing: 1.6px;
-   text-transform: uppercase; color: var(--baiwu-white);
-   background: rgba(255, 255, 255, 0.1);
-   border: 1px solid rgba(255, 255, 255, 0.28);
+   display: inline-flex;
+   align-items: center;
+   gap: 7px;
+   padding: 6px 14px 6px 11px;
+   margin-bottom: 16px;
+   font-size: var(--fs-xs);
+   font-weight: 800;
+   letter-spacing: 1.6px;
+   text-transform: uppercase;
+   color: var(--baiwu-white);
+   /* Subtle vertical gradient (top-light, bottom-darker) so the pill
+      reads as a "lit-from-above" tablet floating over the dark hero,
+      not a flat washed-out chip. */
+   background: linear-gradient(180deg,
+     rgba(255, 255, 255, 0.18) 0%,
+     rgba(255, 255, 255, 0.08) 100%);
+   border: 1px solid rgba(255, 255, 255, 0.32);
    border-radius: 999px;
-   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+   /* Two-layer shadow:
+      - inner top highlight (1px white) gives the bevel/sheen
+      - outer drop shadow lifts the pill off the bg
+      Combined they create depth without breaking the cinematic dark
+      hero aesthetic. */
+   box-shadow:
+     inset 0 1px 0 rgba(255, 255, 255, 0.22),
+     0 4px 14px rgba(0, 0, 0, 0.30),
+     0 0 18px rgba(56, 189, 248, 0.10);
+   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+   backdrop-filter: blur(10px);
+   -webkit-backdrop-filter: blur(10px);
+   white-space: nowrap;          /* keep on one line */
  }
- .eyebrow-icon { color: var(--baiwu-white); flex-shrink: 0; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.45)); }
+ .eyebrow-icon {
+   color: var(--baiwu-white);
+   flex-shrink: 0;
+   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.55));
+ }
 
  .hero-content h1 {
    font-size: var(--fs-3xl); font-weight: 900; letter-spacing: -0.05em;
@@ -454,7 +329,9 @@
  .hero-content p {
    font-size: var(--fs-base); color: rgba(255, 255, 255, 0.94);
    border-left: 3px solid var(--baiwu-blue-primary);
-   padding-left: 16px; line-height: 1.55; max-width: 520px;
+   padding-left: 16px; line-height: 1.55;
+   /* max-width 520px removed — tagline now flows to .hero-content's
+      720px max so its right edge aligns with the stats row below it. */
    font-weight: 500; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
  }
  /* (.hero-sub removed — KPI stat row replaced the secondary tagline.) */
@@ -464,7 +341,10 @@
  .hero-stats {
    display: flex;
    flex-wrap: wrap;
-   gap: 32px;
+   /* Stats now fill the .hero-content width and distribute via
+      space-between so right edge anchors to the tagline's right edge. */
+   justify-content: space-between;
+   gap: 24px;
    margin: 26px 0 22px;
    padding: 18px 24px;
    background: rgba(255, 255, 255, 0.05);
@@ -476,6 +356,7 @@
  .hero-stat {
    display: flex; flex-direction: column; gap: 4px;
    min-width: 0;
+   flex: 0 0 auto;
  }
  .hero-stat-value {
    font-family: 'Inter', system-uI, sans-serif;
@@ -493,72 +374,366 @@
    text-transform: uppercase;
    color: rgba(255, 255, 255, 0.78);
  }
+ /* MOBILE STAT MATRIX — redesigned per Roy's UX critique. The old
+    horizontal "3 stats squeezed in a row, font shrunk to 9px" layout
+    looked like a footnote. Now: vertical billboard. Each row gets its
+    own line, the number reads big (clamp 24-28px gold), the label
+    reads quiet beneath, separated by hairline gold dividers. Generous
+    24px row gap so the trio breathes — no more cramped feeling. */
  @media (max-width: 640px) {
    .hero-stats {
-     gap: 16px;
-     padding: 14px 16px;
-     margin: 22px 0 18px;
+     flex-direction: column;
+     align-items: flex-start;
+     justify-content: flex-start;
+     gap: 0;
+     padding: 18px 18px 20px;
+     margin: 26px 0 22px;
+     background: rgba(255, 255, 255, 0.07);
+     border-left-width: 4px;
    }
-   .hero-stat-value { font-size: var(--fs-lg); }
-   .hero-stat-label { font-size: 9px; letter-spacing: 1.2px; }
+   .hero-stat {
+     flex: 1 1 auto;
+     width: 100%;
+     flex-direction: row;
+     align-items: baseline;
+     gap: 12px;
+     padding: 14px 0;
+     border-bottom: 1px solid rgba(245, 158, 11, 0.22);
+   }
+   .hero-stat:first-child { padding-top: 4px; }
+   .hero-stat:last-child  { padding-bottom: 4px; border-bottom: none; }
+   .hero-stat-value {
+     font-size: clamp(22px, 6vw, 28px);
+     font-weight: 900;
+     letter-spacing: -0.02em;
+     line-height: 1;
+     /* Tabular numerals for clean column edges if multiple stats stack. */
+     font-feature-settings: 'tnum' 1, 'lnum' 1;
+   }
+   .hero-stat-label {
+     font-size: 10px;
+     letter-spacing: 1.4px;
+     /* Push label to the right side of the row so number reads at left
+        edge — billboard pattern, not centered footnote. */
+     margin-left: auto;
+     opacity: 0.7;
+   }
  }
 
- .hero-cta { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
+ .hero-cta {
+   margin-top: 18px;
+   display: flex;
+   gap: 12px;
+   flex-wrap: wrap;
+ }
+ /* Buttons keep natural intrinsic width (clean, designed, not stretched).
+    The CTA row, the stats row, and the trigger row all live inside the
+    620px .hero-content cap, so left edges align naturally; right edges
+    fall close enough that the visual rhythm reads as one column. */
+
+ /* STACKED hero CTA — two audience tracks separated by a gold hairline.
+    Both rows align to the same left edge (.hero-content's left edge)
+    so SME button and See Auto button sit on the same vertical line. */
+ .hero-cta--stacked {
+   flex-direction: column;
+   align-items: stretch;
+   gap: 0;
+   margin-top: 22px;
+ }
+ .hero-cta-row {
+   display: flex;
+   align-items: center;
+   gap: 14px;
+   flex-wrap: wrap;
+   padding: 4px 0;
+ }
+ /* Both audience rows share IDENTICAL alignment language:
+      - justify-content: flex-start (anchored at left edge)
+      - gap: 12px between siblings
+      - same padding rhythm
+    LEFT BUTTONS (Industry Insights + SME) are FIXED-WIDTH (230px)
+    via the --hero-side-btn-w token, so their RIGHT edges line up
+    perfectly across the two rows. RIGHT BUTTON (See Auto) uses
+    flex: 1 to stretch to the row's right edge — anchoring its
+    right edge to the 200+ COUNTRIES stat's right edge above. */
+ .hero-cta-row--enterprise,
+ .hero-cta-row--sme {
+   justify-content: flex-start;
+   gap: 12px;
+   padding: 4px 0;
+ }
+ /* Side button width is fluid via clamp() — scales with viewport instead
+    of locking at a single px value. Min 220px so "SME · Best-Fit Plans"
+    + storefront icon + arrow stays one line at the smallest desktop;
+    max 300px so on 1600px+ screens the buttons don't grow into giant
+    blocks; intermediate vw factor (22vw) gives a smooth linear scale
+    between min and max. */
+ :root {
+   --hero-side-btn-w: clamp(220px, 22vw, 300px);
+ }
+ .hero-cta-row .btn-industries,
+ .hero-cta-row .btn-sme {
+   flex: 0 0 var(--hero-side-btn-w);
+   width: var(--hero-side-btn-w);
+   justify-content: center;
+   white-space: nowrap;
+   /* Button text is fluid too — scales 11px → 13px so it visually
+      matches the button growing wider on bigger screens. */
+   font-size: clamp(11px, 0.85vw + 0.45rem, 13px);
+   letter-spacing: clamp(0.8px, 0.1vw, 1.2px);
+ }
+ /* See Auto-Orchestration (.btn-industries) on row 1 + SME tag on row 2
+    both stretch to fill remaining row width, anchoring their right
+    edges to the stats-row's right edge (200+ COUNTRIES). */
+ .hero-cta-row--enterprise > .btn-industries:not(:first-child),
+ .hero-cta-row--sme .hero-sme-tag {
+   flex: 1 1 0;
+   min-width: 0;
+   width: auto;
+ }
+
+ /* SME row's right slot — small marketing intro that mirrors See Auto's
+    horizontal position above. Two-line copy: bold headline + light
+    sub-line ending with a "Click left ←" cue that points back to the
+    gold button. All sizes fluid via clamp() to match the button scale. */
+ .hero-sme-tag {
+   margin: 0;
+   padding: clamp(3px, 0.4vw, 6px) 0 clamp(3px, 0.4vw, 6px) clamp(12px, 1.2vw, 18px);
+   border-left: 2px solid rgba(245, 158, 11, 0.45);
+   font-family: 'Inter', system-ui, sans-serif;
+   line-height: 1.55;
+ }
+ .hero-sme-tag-headline {
+   display: block;
+   font-size: clamp(11px, 0.9vw + 0.4rem, 13.5px);
+   font-weight: 800;
+   letter-spacing: clamp(0.8px, 0.1vw, 1.4px);
+   text-transform: uppercase;
+   color: #FCD34D;
+   text-shadow: 0 0 6px rgba(245, 158, 11, 0.32);
+   margin-bottom: 6px;
+   line-height: 1.25;
+ }
+ .hero-sme-tag-sub {
+   display: block;
+   font-size: clamp(10.5px, 0.8vw + 0.35rem, 12.5px);
+   font-weight: 500;
+   color: rgba(255, 255, 255, 0.82);
+   /* Generous line-height for the body sub-line — Roy specifically asked
+      for more breathing room so the wrapped 2-3 lines on phones don't
+      feel cramped. 1.7 is the sweet spot for body copy at 11px on a
+      dark hero — readable without feeling stretched. */
+   line-height: 1.72;
+   letter-spacing: 0.1px;
+ }
+ /* (.hero-sme-tag-cta + horizontal/vertical variants deleted — explicit
+    text cues "Click left ←" / "Click up ↑" replaced by a subtle pulse
+    animation on the .btn-sme button itself, which signals "interactive"
+    intuitively without spelling it out. Modern UX, less patchwork.) */
+ /* Gold hairline that visually splits the two audience tracks.
+    Symmetric 14px gap above/below so the divider sits dead-center
+    between the two rows — eliminates the uneven "12px-then-4px"
+    rhythm Roy noticed earlier. */
+ .hero-cta-divider {
+   display: block;
+   height: 1px;
+   width: 100%;
+   margin: 14px 0;
+   background: linear-gradient(90deg,
+     rgba(245, 158, 11, 0.0)  0%,
+     rgba(245, 158, 11, 0.55) 50%,
+     rgba(245, 158, 11, 0.0)  100%);
+ }
+ /* Wrap point: when the row is too narrow for [button | tag] to
+    coexist comfortably, stack them. 600px gives breathing room before
+    the tag text gets squished into a sliver. The directional cue
+    swaps from "Click left ←" to "Click up ↑" since the button now
+    sits ABOVE the tag instead of to its left. */
+ @media (max-width: 600px) {
+   .hero-cta-row--enterprise,
+   .hero-cta-row--sme {
+     flex-direction: column;
+     align-items: stretch;
+     gap: 12px;
+   }
+   /* Drop the fixed clamp width — each button now takes the full row
+      width so it reads as a proper stacked CTA on narrow viewports.
+      Use selector specificity matching the desktop See-Auto override
+      (`.hero-cta-row--enterprise > .btn-industries:not(:first-child)`)
+      so this mobile rule wins via source-order. */
+   .hero-cta-row--enterprise > .btn-industries,
+   .hero-cta-row--sme        > .btn-sme {
+     flex: 1 1 auto;
+     width: 100%;
+   }
+   .hero-sme-tag {
+     /* Border on left becomes border on top so the gold accent still
+        marks the SME track but in the new vertical context. */
+     border-left: none;
+     border-top: 2px solid rgba(245, 158, 11, 0.45);
+     padding: 12px 0 0;
+   }
+   /* Mobile body copy gets slightly looser line-height since the text
+      wraps to 2-3 lines on phones — needs more space between rows. */
+   .hero-sme-tag-sub {
+     line-height: 1.78;
+     letter-spacing: 0.15px;
+   }
+   .hero-sme-tag-headline {
+     margin-bottom: 8px;
+   }
+   /* Swap directional cue: button is now ABOVE the tag, not to the LEFT. */
+   .hero-sme-tag-cta--horizontal { display: none; }
+   .hero-sme-tag-cta--vertical   { display: inline; }
+ }
 
  /* Trigger micro-copy under the CTAs — communicates the platform's
-    auto-detect / auto-trigger differentiator in 8 words. The pulsing
-    green dot signals "live system", reinforcing the real-time
-    perception buyers expect from sovereign infrastructure. */
- .hero-trigger {
-   margin-top: 16px;
-   display: inline-flex;
-   align-items: center;
-   gap: 10px;
-   padding: 8px 14px;
-   background: rgba(255, 255, 255, 0.06);
-   border: 1px solid rgba(245, 158, 11, 0.35);
-   border-radius: 4px;
-   font-size: var(--fs-xs);
-   font-weight: 600;
-   letter-spacing: 0.3px;
-   color: rgba(255, 255, 255, 0.92);
-   max-width: 100%;
-   backdrop-filter: blur(6px);
-   -webkit-backdrop-filter: blur(6px);
- }
- .hero-trigger-dot {
-   flex-shrink: 0;
-   width: 8px;
-   height: 8px;
-   border-radius: 50%;
-   background: #22C55E;
-   box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
-   animation: hero-trigger-pulse 1.6s ease-in-out infinite;
- }
- @keyframes hero-trigger-pulse {
-   0%, 100% { opacity: 1; transform: scale(1); }
-   50%      { opacity: 0.55; transform: scale(0.85); }
- }
- @media (max-width: 640px) {
-   .hero-trigger {
-     font-size: 11px;
-     padding: 7px 12px;
-     gap: 8px;
-   }
- }
+    auto-detect / auto-trigger differentiator. */
+ /* (`.hero-trigger`, `.hero-trigger-dot`, `@keyframes hero-trigger-pulse`
+    + the 640px @media override deleted — that hero-trigger row was
+    retired; the live-system signal now lives inside the See-Auto
+    button's green Defragment Now status pill instead.) */
+
  .btn {
-   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-   padding: 12px 22px;
+   display: inline-flex; align-items: center; justify-content: center;
+   /* Fluid sizing so buttons scale with viewport instead of locking at
+      one set of pixels. gap, padding, font-size all clamp between
+      mobile-friendly min and desktop-comfy max — keeps proportions
+      coherent across the full responsive range. */
+   gap: clamp(6px, 0.5vw, 9px);
+   padding: clamp(10px, 0.85vw + 0.3rem, 14px) clamp(16px, 1.6vw, 26px);
    font-size: var(--fs-xs); font-weight: 800; letter-spacing: 1.1px; text-transform: uppercase;
    text-decoration: none; border-radius: 4px; transition: 0.2s ease;
    border: 1px solid transparent; cursor: pointer;
  }
  .btn svg { transition: transform .2s ease; flex-shrink: 0; }
  .btn:hover svg { transform: translateX(2px); }
- .btn-primary { background: var(--baiwu-blue-primary); color: var(--baiwu-white); box-shadow: 0 5px 16px rgba(0, 89, 179, 0.45); }
- .btn-primary:hover { background: var(--baiwu-white); color: var(--baiwu-blue-primary); box-shadow: 0 6px 22px rgba(255, 255, 255, 0.25); }
+ /* (.btn-primary deleted — Request Briefing CTA was removed from the
+    hero in an earlier round; .btn-industries replaced it as the
+    enterprise-blue solid button. No remaining HTML uses .btn-primary.) */
  .btn-ghost { background: rgba(255, 255, 255, 0.06); color: var(--baiwu-white); border-color: rgba(191, 148, 48, 0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
  .btn-ghost:hover { background: var(--baiwu-white); color: var(--baiwu-blue-deep); border-color: var(--baiwu-white); }
+ /* Borderless variant — used in hero where a hard outline visually
+    fights the solid Industry Insights button next to it. Keep the
+    transparent surface + blur, drop the gold ring. */
+ .btn-ghost--borderless {
+   border-color: transparent !important;
+   background: rgba(255, 255, 255, 0.04);
+ }
+ .btn-ghost--borderless:hover {
+   border-color: transparent !important;
+   background: var(--baiwu-white);
+ }
+
+ /* (.hero-sme-track / .hero-sme-prompt rules deleted — the brand-blue
+    "best-fit" prompt pill was retired in favour of baking the message
+    into the SME button's own label ("SME · Best-Fit Plans"). One
+    button, no extra elements competing for alignment.) */
+
+ /* Industry Insights — solid enterprise-blue CTA paired with See-Auto
+    in the hero's enterprise row. Same body copy register as See-Auto
+    (8px gap icon-text-arrow), but inverted color (blue on white-ish
+    fill) so the two buttons read as a paired set, not duplicates. The
+    bar-chart icon signals "verticals / industries we know". */
+ .btn-industries {
+   background: var(--baiwu-blue-primary);
+   color: #FFFFFF;
+   border: 1px solid var(--baiwu-blue-primary);
+   box-shadow:
+     0 4px 14px rgba(0, 89, 179, 0.35),
+     inset 0 1px 0 rgba(255, 255, 255, 0.18);
+ }
+ .btn-industries svg { color: #FFFFFF; flex-shrink: 0; }
+ .btn-industries .btn-industries-arrow {
+   margin-left: 2px;
+   opacity: 0.85;
+   transition: transform 0.2s ease, opacity 0.2s ease;
+ }
+ .btn-industries:hover {
+   background: var(--baiwu-white);
+   color: var(--baiwu-blue-deep);
+   border-color: var(--baiwu-white);
+   box-shadow:
+     0 6px 22px rgba(0, 89, 179, 0.45),
+     0 0 24px rgba(56, 189, 248, 0.28),
+     inset 0 1px 0 rgba(255, 255, 255, 0.45);
+ }
+ .btn-industries:hover svg { color: var(--baiwu-blue-deep); }
+ .btn-industries:hover .btn-industries-arrow {
+   transform: translateX(4px);
+   opacity: 1;
+ }
+
+ /* SME entry button — restored to ENTERPRISE BLUE per Roy. Visual treatment
+    mirrors .btn-industries (solid brand-blue + white text + storefront
+    icon) so the SME path reads as "another enterprise-style action"
+    not a separate gold side-track. Bottom-row position + storefront
+    icon still differentiate audience without color-coding the segment. */
+ .btn-sme {
+   background: var(--baiwu-blue-primary);
+   color: #FFFFFF;
+   border: 1px solid var(--baiwu-blue-primary);
+   position: relative;
+   box-shadow:
+     0 4px 14px rgba(0, 89, 179, 0.35),
+     inset 0 1px 0 rgba(255, 255, 255, 0.18);
+   /* Subtle "interactable" pulse — gentle 3s cycle on the outer glow.
+      Replaces the explicit "Click ←/↑" text cue with a micro-animation
+      that signals "tap me" intuitively. Pauses on hover so the user
+      doesn't get a fighting hover state. */
+   animation: btn-sme-pulse 3.2s ease-in-out infinite;
+ }
+ @keyframes btn-sme-pulse {
+   0%, 100% {
+     box-shadow:
+       0 4px 14px rgba(0, 89, 179, 0.35),
+       inset 0 1px 0 rgba(255, 255, 255, 0.18);
+   }
+   50% {
+     box-shadow:
+       0 6px 22px rgba(0, 89, 179, 0.55),
+       0 0 22px rgba(56, 189, 248, 0.35),
+       inset 0 1px 0 rgba(255, 255, 255, 0.28);
+   }
+ }
+ .btn-sme svg { color: #FFFFFF; flex-shrink: 0; }
+ .btn-sme .btn-sme-arrow {
+   margin-left: 2px;
+   opacity: 0.85;
+   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+   /* Idle "drift" on the trailing arrow — gently slides 0 ↔ 3px along
+      with the pulse, suggesting forward motion without being hyper. */
+   animation: btn-sme-arrow-drift 3.2s ease-in-out infinite;
+ }
+ @keyframes btn-sme-arrow-drift {
+   0%, 100% { transform: translateX(0);   opacity: 0.85; }
+   50%      { transform: translateX(3px); opacity: 1; }
+ }
+ .btn-sme:hover {
+   animation: none;                         /* freeze pulse on hover */
+   background: var(--baiwu-white);
+   color: var(--baiwu-blue-deep);
+   border-color: var(--baiwu-white);
+   box-shadow:
+     0 6px 22px rgba(0, 89, 179, 0.45),
+     0 0 24px rgba(56, 189, 248, 0.28),
+     inset 0 1px 0 rgba(255, 255, 255, 0.45);
+ }
+ .btn-sme:hover svg { color: var(--baiwu-blue-deep); }
+ .btn-sme:hover .btn-sme-arrow {
+   animation: none;
+   transform: translateX(5px);
+   opacity: 1;
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .btn-sme,
+   .btn-sme .btn-sme-arrow { animation: none; }
+ }
+
+ /* (`.btn-with-status` + `.btn-status*` + green Defragment-Now status
+    row deleted — Roy retired the live status row from the See Auto
+    button. The system-active signal still lives elsewhere on the
+    page; the CTA itself is now a single clean action. ~70 lines removed.) */
 
  /* ===========================
     (Old video card / .v-frame / .v-caption / .v-controls / .v-play-btn /
@@ -578,207 +753,372 @@
     suppressed by OS reduced-motion settings (we keep it tasteful: slow,
     no flicker, no axis flip).
     =========================== */
+ /* ============================================================
+    UPSTREAM TWIN OF .audit-section (THE TRUST LAYER)
+    Both sections render as full-width deep-navy bands with white
+    sec-title + gold animated stars + gold-bordered breathing-glow
+    cards. The two sections bookend the page (Carrier on top of the
+    light marketing zone, Trust Layer just below the dark map).
+    Visual identity is intentionally identical — they are the
+    "twin sovereign" panels, mirrored.
+    ============================================================ */
  .trust-section {
-   /* Light section — same bg as reliability / infra / footer so the
-      trust strip flows visually into the rest of the light part of the
-      page (only audit-section + charts remain dark). */
-   background: var(--baiwu-bg-light);
+   background: #1E3A6B;
+   color: var(--baiwu-white);
    padding: 40px 4%;
    contain: paint;
  }
- /* Header IDENTICAL to .stat-strip-header (The Numbers card) — same
-    padding, same border-bottom hairline, same blue-tinted top fade.
-    Default `.strip-tag` brand-blue color + blue blade apply, no
-    overrides needed. The trust-card-specific gold rule fills the
-    horizontal space to the right of the title. */
- .trust-strip-header {
-   display: flex; align-items: center;
-   padding: 22px 28px;
-   border-bottom: 1px solid var(--border-line);
-   background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
- }
- .trust-strip-header .strip-rule {
-   flex: 1; height: 1px;
- }
+ /* The wrap is no longer a white card — it's just a transparent
+    container that holds the title + the two row-cards inside the
+    deep-navy section. Old white background, gold border, and outer
+    glow are all dropped to match audit-section's open layout. */
  .trust-strip-wrap {
    position: relative;
-   /* Match the visual weight of The Trust Layer cards (.audit-box):
-      2px solid gold border + multi-layer gold glow on all sides. The
-      top edge no longer "stays clean" — sovereign register reads
-      better when the whole panel is treated as a single high-prestige
-      card, like the Trust Layer below. */
-   background: var(--baiwu-white);
-   border: 2px solid #F59E0B;
-   border-radius: 8px;
-   box-shadow:
-     /* Inner gold halo — matches .audit-box treatment */
-     0 0 0 1px rgba(245, 158, 11, 0.28),
-     0 0 22px rgba(245, 158, 11, 0.45),
-     /* Outer drop shadow for depth */
-     0 14px 40px rgba(0, 45, 92, 0.08),
-     0 2px 6px rgba(0, 45, 92, 0.04);
-   overflow: hidden;
-   contain: layout paint;
+   background: transparent;
+   border: none;
+   border-radius: 0;
+   box-shadow: none;
+   overflow: visible;
+   display: flex;
+   flex-direction: column;
+   gap: 14px;             /* same as .audit-grid > .audit-box gap */
  }
  /* (Legacy gold inner rails removed — they were leftover from the
     earlier dark-navy card design and were the actual source of the
     "yellow lines" appearing 4px from the top + bottom edges of the
     trust card.) */
 
- /* The two row bands have the SAME deep-navy background as `.audit-box`
-    (the trust-layer cards lower on the page). White card header sits
-    above them; gold scroll content shines on dark. */
+ /* SINGLE unified card — deep-navy bg, gold 2px border, multi-layer
+    breathing-glow halo. Identical visual treatment to .audit-box but
+    only ONE card holding both panes, separated by a gold vertical
+    hairline. align-items: stretch so the divider spans full height
+    and both panes' headers sit on the same baseline at top. */
  .trust-row {
-   display: flex; align-items: center; gap: 22px;
-   padding: 16px 24px;
-   position: relative;
-   min-height: 58px;
-   background: var(--baiwu-blue-deep);   /* #002D5C — matches audit-box  */
- }
- /* Internal row divider — matches the trust-strip-header's bottom
-    border + every other internal hairline on the site (`var(--border-line)`).
-    On the dark-navy row bg this still reads as a clean separation
-    without introducing yet another color. */
- .trust-row + .trust-row { border-top: 1px solid var(--border-line); }
- /* Sub-label typography. On dark navy = white text, gold blade left. */
- .trust-row-label {
-   flex: 0 0 auto;
-   font-family: 'Inter', system-ui, sans-serif;
-   font-size: var(--fs-xs);
-   font-weight: 900;
-   letter-spacing: 1.8px;
-   text-transform: uppercase;
-   color: var(--baiwu-white);
-   padding-left: 14px;
-   border-left: 3px solid #F59E0B;
-   line-height: 1;
-   white-space: nowrap;
- }
- /* ----- STATIC trust grid (replaces marquee) ----------------------------- */
- .trust-track {
-   flex: 1;
-   position: relative;
-   /* No mask, no overflow:hidden — content is a clean grid that fits the
-      row width, no scroller needed. */
-   contain: paint;
- }
- /* Carrier row — 4 equal cells in a single horizontal grid.
-    Three wordmark cells + one stat cell ("1,000+ Global Routes"). */
- .trust-row--ops .trust-track {
-   display: grid;
-   grid-template-columns: repeat(4, 1fr);
-   gap: 0;
-   border-left: 1px solid rgba(255, 255, 255, 0.08);
- }
- .trust-row--ops .trust-mark {
-   /* Each carrier cell — fills its grid track, vertically centred,
-      separated from neighbours by hairline divider on the right. */
    display: flex;
-   align-items: center;
-   justify-content: center;
-   padding: 22px 12px;
-   font-family: 'Inter', system-ui, sans-serif;
-   font-weight: 800;
-   font-size: 17px;
-   letter-spacing: 0.6px;
-   color: rgba(255, 255, 255, 0.94);
-   text-align: center;
-   line-height: 1.25;
-   border-right: 1px solid rgba(255, 255, 255, 0.08);
-   transition: background 0.25s ease;
+   align-items: stretch;
+   gap: clamp(16px, 2vw, 32px);
+   padding: clamp(14px, 1.4vw, 20px) clamp(20px, 2vw, 30px);
+   position: relative;
+   min-height: 64px;
+   background: var(--baiwu-blue-deep);
+   border: 2px solid #F59E0B;
+   border-radius: 8px;
+   box-shadow:
+     0 0 0 1px rgba(245, 158, 11, 0.28),
+     0 0 18px rgba(245, 158, 11, 0.45),
+     inset 0 0 22px rgba(245, 158, 11, 0.10);
+   animation: audit-glow 3.6s ease-in-out infinite;
+   transition: transform 0.3s ease, background 0.3s ease;
+   will-change: box-shadow, border-color, transform;
  }
- .trust-row--ops .trust-mark:hover {
-   background: rgba(255, 255, 255, 0.04);
- }
- /* The stat cell — 4th carrier slot showing the global-route count.
-    Gold accent so it visually anchors the row's right edge as the
-    "and many more" indicator instead of pretending to be a 4th carrier. */
- .trust-mark--stat {
-   color: #F59E0B !important;
-   font-size: 15px !important;
-   letter-spacing: 1px !important;
-   text-transform: uppercase;
-   font-weight: 900 !important;
-   background: linear-gradient(135deg,
-     rgba(245, 158, 11, 0.05) 0%,
-     rgba(245, 158, 11, 0.12) 100%);
- }
- .trust-mark--stat:hover {
-   background: linear-gradient(135deg,
-     rgba(245, 158, 11, 0.10) 0%,
-     rgba(245, 158, 11, 0.18) 100%) !important;
+ .trust-row:hover {
+   animation-play-state: paused;
+   transform: translateY(-3px);
+   background: linear-gradient(180deg, var(--baiwu-blue-deep) 0%, #003673 100%);
+   border-color: #FBBF24;
+   box-shadow:
+     0 0 0 2px rgba(251, 191, 36, 0.7),
+     0 0 32px rgba(251, 191, 36, 0.85),
+     0 0 70px rgba(245, 158, 11, 0.45),
+     0 12px 32px rgba(0, 0, 0, 0.4),
+     inset 0 0 36px rgba(251, 191, 36, 0.22);
  }
 
- /* Regulator row — pills laid out as a 6-column grid that fills the
-    full track width. No more empty space between left pills and right
-    trophy cluster — every pill stretches equally. */
- .trust-row--reg .trust-track {
-   display: grid;
-   grid-template-columns: repeat(6, 1fr);
-   gap: 8px;
-   align-items: center;
-   padding: 2px 0;
+ /* Each pane = one labeled half of the unified card. Stack vertically:
+    mini-header (icon + uppercase label) on top, then a horizontal
+    grid of cards below. */
+ .trust-pane {
+   display: flex;
+   flex-direction: column;
+   gap: clamp(8px, 0.85vw, 12px);
+   min-width: 0;
  }
- .trust-row--reg .trust-mark {
+ /* Pane widths in 4:6 ratio = matches the cell COUNT in each pane.
+    With matching 4-cell and 6-cell grids inside, all 10 cells across
+    the unified card end up the EXACT SAME WIDTH — visual harmony,
+    no oversized network cells next to crammed compliance cells. */
+ .trust-pane--network    { flex: 4 1 0; min-width: 0; }
+ .trust-pane--compliance { flex: 6 1 0; min-width: 0; }
+
+ /* Headers in BOTH panes sit on the same top baseline because both
+    panes use flex-direction: column and align-items: stretch on the
+    parent. Same min-height keeps them locked to identical y. */
+ .trust-pane-header {
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+   min-height: 18px;
+   color: #F59E0B;
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: clamp(10px, 0.85vw, 12px);
+   font-weight: 900;
+   letter-spacing: 2px;
+   text-transform: uppercase;
+   line-height: 1;
+ }
+ .trust-pane-icon {
+   flex-shrink: 0;
+   width: clamp(14px, 1.1vw, 16px);
+   height: clamp(14px, 1.1vw, 16px);
+   color: #F59E0B;
+   opacity: 0.9;
+ }
+
+ /* Compliance pane uses a 6-cell grid. Network is FLEX so the 3
+    region cards take 1fr each and the gold .trust-stat at the end
+    sizes to its own content (no card border/bg) — no overflow. */
+ .trust-cards {
+   align-items: stretch;
+ }
+ /* DEFAULT: 3 cols × 2 rows for compliance pills.
+    At every typical desktop / tablet / phone size, 3 cols feels
+    balanced and never crowds icons next to neighbouring pills.
+    Override flips to 6 cols only on very wide screens (≥1600px)
+    where the compliance pane has enough room to comfortably show
+    all 6 in a single line. */
+ .trust-cards--compliance {
+   display: grid;
+   grid-template-columns: repeat(3, minmax(0, 1fr));
+   column-gap: clamp(6px, 0.7vw, 10px);
+   row-gap: clamp(6px, 0.6vw, 8px);
+ }
+ @media (min-width: 1600px) {
+   .trust-cards--compliance {
+     grid-template-columns: repeat(6, minmax(0, 1fr));
+   }
+ }
+ .trust-cards--network {
+   display: flex;
+   align-items: stretch;
+   /* Bigger row-gap than column-gap so when the gold stat wraps to its
+      own line it doesn't sit crammed against the cards above. */
+   column-gap: clamp(6px, 0.7vw, 10px);
+   row-gap: clamp(12px, 1.3vw, 20px);
+   flex-wrap: wrap;
+ }
+ .trust-cards--network .trust-card {
+   /* basis 100px so cards never shrink below the longest label
+      ("Asia-Pacific" + padding ≈ 100px). Combined with flex-grow, they
+      still distribute equally when there's room. Without this min-width
+      they get squished < text width on narrow side-by-side layouts. */
+   flex: 1 1 100px;
+   min-width: 100px;
+ }
+
+ /* ============================================================
+    TWO DISTINCT CARD STYLES — Network vs Compliance use different
+    visual treatments so the two halves of the unified panel read
+    as TWO DIFFERENT KINDS OF CREDENTIALS, not one homogeneous list.
+    -----------------------------------------------------------
+    Network  = "data widgets": filled rectangle cards, brand-blue
+               left blade, solid background gradient. Reads like a
+               dashboard cell — concrete operational fact.
+    Compliance = "credential badges": gold-bordered rounded pills
+               with hairline gold ring, transparent bg, like
+               certifications stamped on a passport.
+    ============================================================ */
+ .trust-card {
    display: inline-flex;
    align-items: center;
    justify-content: center;
-   gap: 7px;
+   gap: clamp(7px, 0.85vw, 12px);   /* icon-to-text gap, scales smoothly */
    font-family: 'Inter', system-ui, sans-serif;
-   font-size: 11px;
    font-weight: 900;
-   letter-spacing: 1.6px;
+   font-size: clamp(11px, 1.05vw, 14px);
+   letter-spacing: clamp(0.4px, 0.08vw, 0.8px);
    text-transform: uppercase;
-   padding: 9px 8px;
-   border: 1px solid rgba(255, 255, 255, 0.7);
-   border-radius: 999px;
-   background: rgba(255, 255, 255, 0.04);
-   color: rgba(255, 255, 255, 0.95);
+   line-height: 1.15;
+   color: rgba(255, 255, 255, 0.96);
+   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+   min-width: 0;
+ }
+ .trust-card-text {
+   flex: 0 1 auto;
+   min-width: 0;
    white-space: nowrap;
-   transition: background 0.2s ease, border-color 0.2s ease;
+   /* No `overflow: hidden` / `text-overflow: ellipsis` — we'd rather
+      the auto-fit grid wrap a card to the next row than show "IS..."
+      truncation. The minmax floor on the grid track guarantees enough
+      space for the longest label. */
  }
- .trust-row--reg .trust-mark:hover {
-   background: rgba(255, 255, 255, 0.10);
-   border-color: rgba(255, 255, 255, 0.95);
- }
- .trust-mark-icon {
+ .trust-card-icon {
    flex-shrink: 0;
-   color: #F59E0B;       /* Gold icon, matches the trophy cluster */
-   opacity: 0.92;
- }
- .trust-mark-label {
-   flex: 0 0 auto;
+   width: clamp(13px, 1.1vw, 16px);
+   height: clamp(13px, 1.1vw, 16px);
  }
 
- /* Audit fine print — sits below the regulator row, full width, centred.
-    Reads as a footnote: "we actually have audits running on these". */
+ /* ── NETWORK CARDS — "dashboard cell" treatment ───────────── */
+ .trust-cards--network .trust-card {
+   /* Uniform gold border on ALL FOUR sides — visually rhymes with the
+      unified .trust-row card border that wraps everything, and treats
+      each region cell as a small gold-framed plate. No more
+      asymmetric "3px gold blade left + 1px cyan top/right/bottom". */
+   padding: clamp(12px, 1.3vw, 18px) clamp(10px, 1.1vw, 16px);
+   background: linear-gradient(180deg,
+     rgba(0, 89, 179, 0.22) 0%,
+     rgba(0, 45, 92, 0.55) 100%);
+   border: 1.5px solid rgba(245, 158, 11, 0.55);
+   border-radius: 4px;
+   justify-content: flex-start;
+   text-align: left;
+   box-shadow:
+     0 4px 12px rgba(0, 0, 0, 0.25),
+     inset 0 1px 0 rgba(245, 158, 11, 0.18);
+ }
+ .trust-cards--network .trust-card:hover {
+   background: linear-gradient(180deg,
+     rgba(0, 89, 179, 0.35) 0%,
+     rgba(0, 45, 92, 0.7) 100%);
+   border-color: #FBBF24;
+   transform: translateY(-1px);
+   box-shadow:
+     0 6px 18px rgba(0, 0, 0, 0.35),
+     0 0 16px rgba(245, 158, 11, 0.30),
+     inset 0 1px 0 rgba(245, 158, 11, 0.30);
+ }
+
+ /* GOLD STAT — replaces what was a gold "1,000+ Routes" card. Now
+    inline icon + uppercase gold text, NO border, NO background, NO
+    pill — just bright gold typography sitting at the end of the row.
+    No more cell-width overflow because the element sizes to its
+    content. Acts like a hand-stamped seal saying "and 1,000+ more"
+    on the row of region wordmarks. */
+ .trust-stat {
+   flex: 0 0 auto;
+   display: inline-flex;
+   align-items: center;
+   gap: clamp(6px, 0.7vw, 10px);
+   padding: 0 clamp(4px, 0.5vw, 8px);
+   font-family: 'Inter', system-ui, sans-serif;
+   color: #FCD34D;
+   text-shadow:
+     0 0 6px rgba(251, 191, 36, 0.50),
+     0 0 14px rgba(245, 158, 11, 0.28);
+   white-space: nowrap;
+   /* margin auto centres the element when it wraps to its own line
+      (no siblings to share the row → all leftover space is split
+      between left+right margins → centred). When it shares the row
+      with the 3 region cards the cards' flex-grow consumes free
+      space first, so the auto margins collapse and the stat stays
+      where it would normally sit. Best of both behaviours. */
+   margin-left: auto;
+   margin-right: auto;
+   /* Subtle slow gold shimmer so it still reads as the "premium" token */
+   animation: trust-gold-pulse 3.4s ease-in-out infinite;
+ }
+ /* Two-line stack: NUMBER on top (big), LABEL below (small uppercase).
+    Stacking instead of one long horizontal line cuts the element's
+    width roughly in half — leaves more room for the 3 region cards. */
+ .trust-stat-text {
+   flex: 0 0 auto;
+   display: inline-flex;
+   flex-direction: column;
+   align-items: flex-start;
+   line-height: 1;
+   gap: 2px;
+ }
+ .trust-stat-number {
+   font-size: clamp(13px, 1.2vw, 16px);
+   font-weight: 900;
+   letter-spacing: 0.4px;
+ }
+ .trust-stat-label {
+   font-size: clamp(8.5px, 0.75vw, 10px);
+   font-weight: 800;
+   letter-spacing: clamp(0.8px, 0.12vw, 1.4px);
+   text-transform: uppercase;
+   opacity: 0.85;
+ }
+ .trust-stat-icon {
+   flex-shrink: 0;
+   color: #FCD34D;
+   /* Icon now matches the height of the 2-line stack so it visually
+      anchors the number+label as one unit. */
+   width: clamp(20px, 1.7vw, 26px);
+   height: clamp(20px, 1.7vw, 26px);
+   filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.55));
+ }
+ /* Gold pulse cycles only the text-shadow + drop-shadow so there's
+    a soft glow breathing — no layout shift, no border ripple. */
+ @keyframes trust-gold-pulse {
+   0%, 100% {
+     text-shadow:
+       0 0 6px rgba(251, 191, 36, 0.50),
+       0 0 14px rgba(245, 158, 11, 0.28);
+   }
+   50% {
+     text-shadow:
+       0 0 11px rgba(251, 191, 36, 0.85),
+       0 0 22px rgba(245, 158, 11, 0.45);
+   }
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .trust-stat { animation: none; }
+ }
+
+ /* ── COMPLIANCE CARDS — "credential badge" treatment ──────── */
+ .trust-cards--compliance .trust-card {
+   /* Gold-outlined rounded pill — transparent on dark navy bg, with
+      a hairline 1.5px gold ring and small gold icon. Reads as a
+      certification stamp. Tighter horizontal padding so the icon
+      and text fit even at narrow grid cell widths (~140px). */
+   padding: clamp(10px, 1.1vw, 14px) clamp(8px, 1.1vw, 16px);
+   background: rgba(255, 255, 255, 0.03);
+   border: 1.5px solid rgba(245, 158, 11, 0.5);
+   border-radius: 999px;
+   box-shadow:
+     0 0 0 1px rgba(245, 158, 11, 0.08),
+     0 2px 8px rgba(0, 0, 0, 0.20);
+ }
+ .trust-cards--compliance .trust-card:hover {
+   background: rgba(245, 158, 11, 0.10);
+   border-color: rgba(251, 191, 36, 0.85);
+   transform: translateY(-1px);
+   box-shadow:
+     0 0 0 1px rgba(245, 158, 11, 0.25),
+     0 0 16px rgba(245, 158, 11, 0.35),
+     0 4px 12px rgba(0, 0, 0, 0.30);
+ }
+ .trust-cards--compliance .trust-card-icon {
+   color: #F59E0B;
+   opacity: 0.92;
+ }
+
+ /* Vertical gold divider between regions and pills */
+ .trust-divider {
+   flex: 0 0 1px;
+   align-self: stretch;
+   background: linear-gradient(180deg,
+     transparent 0%,
+     rgba(245, 158, 11, 0.55) 20%,
+     rgba(245, 158, 11, 0.55) 80%,
+     transparent 100%);
+   margin: 0 clamp(2px, 0.4vw, 6px);
+ }
+
+ /* (Old `.trust-pills`, `.trust-mark`, `.trust-region*` rules removed —
+    superseded by `.trust-cards` + `.trust-card` which render both
+    panes uniformly as a horizontal grid of dark cards.) */
+
+ /* Audit fine print — bottom-right of the unified card, like a watermark
+    or signature line under a regulator certificate. Right-aligned reads
+    as "filed by", separating it from the body content above. */
  .trust-fineprint {
-   padding: 10px 24px 14px;
-   background: var(--baiwu-blue-deep);
-   color: rgba(255, 255, 255, 0.55);
+   padding: 8px 4px 0;
+   background: transparent;
+   color: rgba(255, 255, 255, 0.5);
    font-family: 'Inter', system-ui, sans-serif;
    font-size: 10.5px;
    font-weight: 600;
    letter-spacing: 1.6px;
    text-transform: uppercase;
-   text-align: center;
-   border-top: 1px solid rgba(255, 255, 255, 0.06);
+   text-align: right;
+   border-top: none;
  }
 
- /* Trophy cluster — gold, static (no glow pulse). On mobile when row
-    stacks, centre the trophies horizontally rather than left-anchor. */
- .trust-rating {
-   display: inline-flex; align-items: center; gap: 5px;
-   line-height: 1; flex-shrink: 0;
-   margin-left: 14px;
- }
- .trust-trophy {
-   width: 22px; height: 22px;
-   color: #F59E0B;
-   /* Static drop-shadow — no animation. The gold trophy + glow alone
-      reads as "premium tier"; pulsing reads as "marketing". */
-   filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.4));
- }
+ /* Trophy cluster removed — the 3 gold trophies were redundant once
+    the regulator pills carried their own gold icons. The .audit-stars
+    on the section heading now carry the "premium tier" signal. */
 
  /* Marquee scroll is the ONE animation kept on this strip — the
     horizontal drift IS the storytelling for "live carrier traffic
@@ -786,55 +1126,72 @@
     trophy glow) was decoration competing with the marquee for
     attention, so it's been retired. */
 
+ /* Tablet (~1100px and below): stack the two panes vertically with a
+    horizontal gold divider. Side-by-side layout starts to crush cells
+    below this width even with the 4:6 flex ratio + min-width on
+    individual cards — better to give each pane the full row. */
+ @media (max-width: 1100px) {
+   .trust-row {
+     flex-direction: column;
+     align-items: stretch;
+     gap: 16px;
+   }
+   .trust-pane--network,
+   .trust-pane--compliance {
+     flex: 1 1 auto;
+   }
+   .trust-divider {
+     flex: 0 0 1px;
+     height: 1px;
+     width: 100%;
+     align-self: auto;
+     background: linear-gradient(90deg,
+       transparent 0%,
+       rgba(245, 158, 11, 0.55) 20%,
+       rgba(245, 158, 11, 0.55) 80%,
+       transparent 100%);
+     margin: 0;
+   }
+   /* (compliance grid 3-col override moved up to the 1280px breakpoint
+      so it also applies in the 1100-1280 side-by-side zone) */
+ }
+
  @media (max-width: 720px) {
    .trust-section { padding: 28px 4% 0; }
-   .trust-strip-header { padding: 14px 16px; }
-   /* Stack label above track on mobile so each gets full width. */
-   .trust-row { flex-direction: column; align-items: stretch; gap: 12px; padding: 14px 16px; min-height: 0; }
-   .trust-row-label {
-     padding-left: 10px;
-     font-size: 11px; letter-spacing: 1.4px;
+   .trust-row { padding: 16px; gap: 14px; }
+   /* Mobile: 4 items in 2×2 grid — row 1: APAC | EMEA, row 2: AMERICAS | 1,000+
+      (so the gold stat shares its row with AMERICAS instead of sitting
+      alone on a 3rd row, halving the network pane's vertical space). */
+   .trust-cards--network {
+     gap: 8px;
    }
-   /* Carrier 4-cell grid → 2×2 on mobile (still equal cells, no marquee). */
-   .trust-row--ops .trust-track {
-     grid-template-columns: repeat(2, 1fr);
-     border-left: none;
+   .trust-cards--network .trust-card {
+     flex: 1 1 calc(50% - 4px);
+     min-width: 0;
    }
-   .trust-row--ops .trust-mark {
-     padding: 18px 10px;
-     font-size: 14px;
-     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+   .trust-stat {
+     flex: 1 1 calc(50% - 4px);
+     justify-content: center;
+     padding: 6px 4px;
    }
-   .trust-row--ops .trust-mark:nth-child(2n) { border-right: none; }
-   .trust-row--ops .trust-mark:nth-last-child(-n+2) { border-bottom: none; }
-   .trust-mark--stat {
-     font-size: 12px !important;
-     letter-spacing: 0.6px !important;
-   }
-   /* Pills 6→3 columns on mobile (2 rows of 3). Smaller font + tighter gap. */
-   .trust-row--reg .trust-track {
-     grid-template-columns: repeat(3, 1fr);
+   .trust-cards--compliance { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+   .trust-card {
+     font-size: 11px;
+     letter-spacing: 0.6px;
      gap: 6px;
    }
-   .trust-row--reg .trust-mark {
-     font-size: 9.5px;
-     padding: 7px 6px;
-     letter-spacing: 1.2px;
-     gap: 5px;
+   .trust-cards--network .trust-card {
+     padding: 12px 10px;
    }
-   .trust-mark-icon { width: 11px; height: 11px; }
-   /* Centre trophy cluster on mobile when the regulator row stacks. */
-   .trust-row--reg { align-items: center; }
-   .trust-rating {
-     margin-left: 0;
-     margin-top: 8px;
-     justify-content: center;
-     width: 100%;
+   .trust-cards--compliance .trust-card {
+     padding: 9px 10px;
    }
+   .trust-card-icon { width: 12px; height: 12px; }
    .trust-fineprint {
-     padding: 10px 16px 12px;
+     padding: 10px 4px 0;
      font-size: 9px;
      letter-spacing: 1px;
+     text-align: right;
    }
  }
 
@@ -844,6 +1201,9 @@
  .reliability-section {
    background: var(--baiwu-bg-light);
    padding: 40px 4%;
+   /* Skip paint until viewport intersect — saves initial-load CPU. */
+   content-visibility: auto;
+   contain-intrinsic-size: 1px 540px;
  }
 
  .stat-strip-wrap {
@@ -877,13 +1237,18 @@
     breathe rather than the heading dominating the section. */
  .strip-tag {
    display: inline-flex; align-items: center;
-   font-size: var(--fs-xl); font-weight: 900; letter-spacing: -0.4px;
+   /* Same fluid clamp() as .sec-title so "Reliability Matrix" /
+      "The Portfolio" / "Departments We Empower" auto-shrink on mobile
+      and stay legible at every viewport without media-query stairs. */
+   font-size: clamp(1.125rem, 1.4vw + 0.7rem, 1.75rem);
+   font-weight: 900;
+   letter-spacing: -0.4px;
    text-transform: uppercase;
    color: var(--baiwu-blue-primary);
    padding: 0 0 0 16px;
    border: none;
    position: relative;
-   line-height: 1;
+   line-height: 1.1;
  }
  /* Blade — matches `.sec-title`'s 6px solid blue blade exactly.
     Implemented as a positioned ::before so .strip-tag can keep the
@@ -898,22 +1263,9 @@
    box-shadow: 0 0 10px rgba(0, 89, 179, 0.42);
  }
  .strip-rule { flex: 1; }
- .strip-status {
-   display: inline-flex; align-items: center; gap: 8px;
-   font-size: var(--fs-xs); font-weight: 900; letter-spacing: 1.8px;
-   text-transform: uppercase; color: #22C55E;
-   text-shadow: 0 0 8px rgba(34, 197, 94, 0.25);
- }
- .strip-status .dot {
-   width: 8px; height: 8px; border-radius: 50%;
-   background: #22C55E;
-   box-shadow: 0 0 10px #22C55E, 0 0 0 3px rgba(34, 197, 94, 0.16);
-   animation: pulse-dot 2s ease-in-out infinite;
- }
- @keyframes pulse-dot {
-   0%, 100% { opacity: 1; }
-   50% { opacity: 0.5; }
- }
+ /* (Old `.strip-status` live-pulse pill rules deleted — never rendered
+    by the JS, no HTML referenced them, the green-dot now lives in
+    `.hero-trigger-dot` instead.) */
  /* PWA install howto popup entrance */
  @keyframes dlpkInstallPop {
    from { opacity: 0; transform: translateY(8px); }
@@ -1113,8 +1465,13 @@
  }
 
  .stat-value {
-   font-family: 'JetBrains Mono', monospace;
-   font-size: var(--fs-lg); font-weight: 700;
+   /* Inter (variable, already loaded) replaces JetBrains Mono — second
+      font wasn't worth the extra request for one numeric line. Tight
+      letter-spacing keeps the digit-heavy "99.999%" / "1,000+" feeling
+      compact and tabular-ish even in a proportional face. */
+   font-family: 'Inter', system-ui, sans-serif;
+   font-feature-settings: 'tnum' 1, 'lnum' 1;
+   font-size: var(--fs-lg); font-weight: 800;
    color: var(--baiwu-blue-primary);
    letter-spacing: -0.5px;
    line-height: 1;
@@ -1331,38 +1688,70 @@
    transform: scaleX(0);
    transform-origin: var(--origin-x, 50%) center;
    pointer-events: none;
-   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-               opacity 0.3s ease,
-               max-height 0.5s ease,
-               visibility 0s linear 0.5s;
+   transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+               opacity 0.4s ease,
+               max-height 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+               visibility 0s linear 0.6s;
  }
  .card-detail.open {
    visibility: visible;
    opacity: 1;
    transform: scaleX(1);
-   max-height: 1200px;
-   pointer-events: auto;
-   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-               opacity 0.3s ease,
-               max-height 0.5s ease,
-               visibility 0s linear 0s;
- }
- .card-detail.open {
-   visibility: visible;
-   opacity: 1;
-   transform: scaleX(1);
+   max-height: 1600px;
    pointer-events: auto;
    /* On open, visibility flips immediately so the transform animation is seen */
-   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-               opacity 0.3s ease,
+   transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+               opacity 0.4s ease,
+               max-height 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
                visibility 0s linear 0s;
  }
- /* Content fades in slightly after the panel finishes expanding */
+
+ /* ============================================================
+    SMOOTH SINGLE-UNIT REVEAL — the whole content body animates
+    as ONE cohesive entity, not as separately-staggered chunks.
+    This eliminates the "discrete jumps" feel: per-element stagger,
+    no matter how short the gap, breaks the brain's continuity
+    perception. One transform + one opacity = one motion.
+    Curve: cubic-bezier(0.16, 1, 0.3, 1) — Apple's signature
+    "expo-out" easing. Very fast initial acceleration that decays
+    smoothly to rest. The first 60% of motion happens in the first
+    20% of time, so the eye reads it as "settled" almost instantly
+    while the last bit gracefully glides into place.
+    ============================================================ */
  .card-detail .card-detail-body {
    opacity: 0;
-   transition: opacity 0.25s ease 0.32s;
+   transform: translateY(20px);
+   transition:
+     opacity   0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s,
+     transform 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+   will-change: opacity, transform;
  }
- .card-detail.open .card-detail-body { opacity: 1; }
+ .card-detail.open .card-detail-body {
+   opacity: 1;
+   transform: translateY(0);
+ }
+
+ /* Reset any residual transforms that previous staggered styles
+    may have applied via specificity in older builds. */
+ .card-detail .card-detail-icon-wrap,
+ .card-detail .card-detail-eyebrow,
+ .card-detail .card-detail-title,
+ .card-detail .card-detail-text > p {
+   opacity: 1;
+   transform: none;
+   filter: none;
+   transition: none;
+ }
+
+ /* Respect users who've asked for reduced motion. */
+ @media (prefers-reduced-motion: reduce) {
+   .card-detail,
+   .card-detail .card-detail-body {
+     transition-duration: 0.2s !important;
+     transition-delay: 0s !important;
+     transform: none !important;
+   }
+ }
 
  .card-detail-close {
    position: absolute;
@@ -1514,14 +1903,24 @@
    contain-intrinsic-size: 1px 800px;
  }
  .sec-title {
-   font-size: var(--fs-xl); font-weight: 900;
-   text-transform: uppercase; letter-spacing: -0.4px;
+   /* Fluid scaling 18px → 28px so long titles like "Carrier Network &
+      Compliance" don't overflow narrow viewports. flex-wrap allows the
+      audit-stars cluster to drop below the title text on phones rather
+      than forcing the title to wrap mid-word + push stars off-screen. */
+   font-size: clamp(1.125rem, 1.4vw + 0.7rem, 1.75rem);
+   font-weight: 900;
+   text-transform: uppercase;
+   letter-spacing: -0.4px;
    margin-bottom: 18px;
    border-left: 6px solid var(--baiwu-blue-primary);
    padding-left: 16px;
    color: var(--baiwu-white);
-   line-height: 1;
-   display: flex; align-items: center; gap: 16px;
+   line-height: 1.1;
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: clamp(8px, 1.5vw, 16px);
+   row-gap: 6px;
  }
  .audit-stars {
    display: inline-flex;
@@ -1531,7 +1930,8 @@
  }
  .audit-stars > span {
    display: inline-block;
-   font-size: 1.5rem;
+   /* Stars scale with the sec-title font so they always look proportional. */
+   font-size: clamp(0.95rem, 1.1vw + 0.55rem, 1.4rem);
    line-height: 1;
    color: #FBBF24;
    text-shadow:
@@ -1638,7 +2038,12 @@
    background: var(--baiwu-bg-light);
    padding: 40px 4%;             /* match `.section-row` / `.audit-section`
                                     standard so titles align horizontally */
+   /* Both below the LCP fold — skip layout/paint until viewport
+      intersect for faster initial load. */
+   content-visibility: auto;
  }
+ .industries-section  { contain-intrinsic-size: 1px 880px; }
+ .departments-section { contain-intrinsic-size: 1px 460px; }
  /* Wraps no longer apply max-width — content spans the same section-content
     box as `.audit-section`'s heading + grid so left edges of every section's
     sec-title line up at the same 4% from viewport edge. */
@@ -1671,9 +2076,9 @@
  /* Dark-section variant (e.g. inside .map-section over the navy bg) —
     same font-size, line-height, blade — only the body colour flips
     so the paragraph stays legible against the dark background. */
- .sec-intro.sec-intro--dark {
-   color: rgba(255, 255, 255, 0.78);
- }
+ /* (`.sec-intro--dark` rule deleted — never applied: no HTML class
+    references it, the variant was retired when the dark map section
+    moved into the footer.) */
 
  /* ----- Industries grid ----- */
  /* When tiered (primary + secondary), `.industries-grid` becomes the
@@ -1914,6 +2319,10 @@
    background: #1E3A6B;
    color: var(--baiwu-white);
    padding: 24px 4% 0;
+   /* Footer is below the LCP fold + contains the lazy-loaded ECharts
+      world map + business-card QR — biggest paint-skip win on the page. */
+   content-visibility: auto;
+   contain-intrinsic-size: 1px 720px;
  }
  /* Footer grid uses the SAME 2/3 + 1/3 proportional split + gap as the
     Departments / Industries grids above (`repeat(3, 1fr); gap: 18px`).
@@ -1947,6 +2356,28 @@
    .footer-map-card { min-height: 560px; }
    .footer-map-card .chart-container { min-height: 552px; }
  }
+ /* Mobile FINAL override — MUST come after the 1600px rule above so
+    source-order cascade leaves this one in effect on small viewports.
+    560px tall × ~360 wide = extreme portrait → world map (2:1) gets
+    scaled to fit min(w,h) which overflows horizontally. Cap height
+    at 240px on phones so the card is landscape, fits cleanly, and
+    the city labels (Singapore / Tokyo / Frankfurt etc) all stay
+    visible without right-edge clipping. */
+ @media (max-width: 600px) {
+   /* Landscape ~1.7:1 card so the 2:1 world map fits tightly with
+      minimal navy padding above + below. Aspect-ratio + min-height
+      lets the card scale with viewport width while staying short. */
+   .footer-map-card {
+     min-height: 0;
+     aspect-ratio: 16 / 10;
+     padding: 4px;
+   }
+   .footer-map-card .chart-container {
+     min-height: 0;
+     height: 100%;
+   }
+   .footer-map-col .sec-intro { margin-bottom: 10px; }
+ }
  .footer-map-col {
    display: flex; flex-direction: column;
  }
@@ -1967,6 +2398,7 @@
    border-radius: 8px;
    padding: 4px;
    overflow: hidden;
+   position: relative;                  /* anchor for .map-pan-hint */
    box-shadow:
      0 0 0 1px rgba(56, 189, 248, 0.1),
      0 0 24px rgba(56, 189, 248, 0.14),
@@ -1977,6 +2409,40 @@
    height: 100%;
    min-height: 472px;
  }
+ /* "Drag to explore" pill — hidden on desktop where the map fits the
+    card; shown on mobile where roam is enabled and users can pan. */
+ .map-pan-hint {
+   display: none;
+   position: absolute;
+   left: 50%;
+   bottom: 10px;
+   transform: translateX(-50%);
+   z-index: 3;
+   pointer-events: none;
+   padding: 5px 11px;
+   background: rgba(15, 23, 42, 0.78);
+   border: 1px solid rgba(245, 158, 11, 0.42);
+   border-radius: 999px;
+   color: #FBBF24;
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 1px;
+   text-transform: uppercase;
+   font-family: Inter, system-ui, sans-serif;
+   white-space: nowrap;
+   animation: mapHintPulse 2.4s ease-in-out 2;
+   animation-fill-mode: both;
+ }
+ @keyframes mapHintPulse {
+   0%, 100% { opacity: 0.55; }
+   50%      { opacity: 1; }
+ }
+ /* Hint visibility is now controlled by JS (.map-roam-on class added
+    when ECharts roam is active at the current viewport width). This
+    is more accurate than a fixed CSS breakpoint because the actual
+    roam threshold is dynamic — depends on the smooth scaling curve
+    in buildMapOption(). */
+ .footer-map-card.map-roam-on .map-pan-hint { display: inline-block; }
 
  /* INFO COLUMN — flex container. Generous gaps so DOLPHLINK title,
     HQ/Engage block, and the business card each read as distinct
@@ -1986,28 +2452,52 @@
    flex-direction: column;
    gap: 40px;
    min-height: 480px;
+   min-width: 0;
+   max-width: 100%;
  }
  .footer-info-top {
    flex: 0 0 auto;
    display: flex; flex-direction: column;
    gap: 36px;
+   min-width: 0;
+   max-width: 100%;
  }
  /* HQ + ENGAGE — 2 cols with a vertical gold-tinted divider between
     them so they read as two distinct contact zones, not one sprawl. */
  .footer-info-mini-grid {
    display: grid;
-   grid-template-columns: 1fr 1fr;
+   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
    gap: 18px 0;
    position: relative;
  }
  .footer-info-mini-grid > .f-col {
    padding-right: 18px;
    padding-left: 18px;
+   min-width: 0;
  }
  .footer-info-mini-grid > .f-col:first-child { padding-left: 0; }
  .footer-info-mini-grid > .f-col:last-child  { padding-right: 0; }
  .footer-info-mini-grid > .f-col + .f-col {
    border-left: 1px solid rgba(245, 158, 11, 0.32);
+ }
+ /* Below 480px the two side-by-side info columns each collapse to
+    ~150-160px wide — narrower than a single line of the address or
+    email even after wrap. Stack vertically and drop the divider so
+    HQ + ENGAGE each get full column width. */
+ @media (max-width: 480px) {
+   .footer-info-mini-grid {
+     grid-template-columns: 1fr;
+     gap: 22px;
+   }
+   .footer-info-mini-grid > .f-col {
+     padding-left: 0 !important;
+     padding-right: 0 !important;
+   }
+   .footer-info-mini-grid > .f-col + .f-col {
+     border-left: none;
+     border-top: 1px solid rgba(245, 158, 11, 0.22);
+     padding-top: 22px;
+   }
  }
 
  .footer .f-col h2 {
@@ -2023,9 +2513,23 @@
    line-height: 1;
    letter-spacing: -0.3px;
  }
+ /* ============================================================
+    FOOTER TYPE SCALE — normalised across ALL info columns so email
+    addresses (e.g. Salesmarketing@dolphlink.com, 27 chars) fit in a
+    single line at typical column widths and don't break mid-word
+    ("co" / "m" wrap that Roy reported).
+    Two-tier hierarchy via tokens:
+      --footer-fs-body  ≈ 11.5px (clamp 10.5-12.5px)  — primary text
+      --footer-fs-meta  ≈ 10px   (clamp  9.5-11px)    — hours/role/etc
+    --footer-letter-spacing kept tight (-0.1px) for compact email rendering.
+    ============================================================ */
+ .footer {
+   --footer-fs-body: clamp(10.5px, 0.55vw + 0.4rem, 12.5px);
+   --footer-fs-meta: clamp(9.5px,  0.45vw + 0.35rem, 11px);
+ }
  .footer .f-col h6 {
    color: #F59E0B;
-   font-size: 11px;
+   font-size: var(--footer-fs-meta);
    font-weight: 900;
    text-transform: uppercase;
    letter-spacing: 1.8px;
@@ -2037,47 +2541,51 @@
  .footer .f-col p,
  .footer .f-col a {
    color: rgba(255, 255, 255, 0.85);
-   font-size: var(--fs-sm);
+   font-size: var(--footer-fs-body);
+   letter-spacing: -0.1px;        /* compress for long emails */
    text-decoration: none;
    display: block;
    margin-bottom: 6px;
    font-weight: 500;
    line-height: 1.5;
+   /* Long unbreakable strings (emails, addresses) wrap if needed. */
+   overflow-wrap: anywhere;
+   word-break: break-word;
+   min-width: 0;
  }
  .footer .f-col a:hover { color: #F59E0B; }
  .footer .brand-col p {
    color: rgba(255, 255, 255, 0.7);
    font-weight: 500;
    max-width: 540px;
-   font-size: var(--fs-sm);
+   font-size: var(--footer-fs-body);
    line-height: 1.6;
-   /* Prevent horizontal overflow on narrow viewports */
-   overflow-wrap: break-word;
-   word-wrap: break-word;
+   overflow-wrap: anywhere;
+   word-break: break-word;
    hyphens: auto;
+   min-width: 0;
  }
- .footer .f-col-mission { color: rgba(255, 255, 255, 0.7) !important; font-weight: 500 !important; }
- .footer .f-col-hours {
-   color: rgba(255, 255, 255, 0.55) !important;
-   font-size: var(--fs-xs) !important;
-   font-weight: 500 !important;
-   margin-top: 8px !important;
- }
- .footer .f-col-maplink {
-   color: #F59E0B !important;
-   font-size: var(--fs-xs) !important;
-   font-weight: 700 !important;
-   margin-top: 6px !important;
- }
+ /* Secondary meta lines — hours, role, map link, install — all share
+    the smaller meta tier so the typography reads as one unified system. */
+ .footer .f-col-hours,
  .footer .f-col-role {
-   color: rgba(255, 255, 255, 0.55);
-   font-size: var(--fs-xs);
-   font-weight: 500;
+   color: rgba(255, 255, 255, 0.55) !important;
+   font-size: var(--footer-fs-meta) !important;
+   font-weight: 500 !important;
  }
+ .footer .f-col-hours { margin-top: 8px !important; }
+ /* "View on Google Maps" and "Install App" — gold action links in the
+    footer. Same colour family + size as the body text, regular weight
+    (no bold) so the gold colour alone signals "this is a CTA" without
+    visually shouting. */
+ .footer .f-col-maplink,
  .footer .f-install-link {
    color: #F59E0B !important;
-   font-weight: 800 !important;
+   font-size: var(--footer-fs-body) !important;
+   font-weight: 500 !important;
+   letter-spacing: 0.4px !important;
  }
+ .footer .f-col-maplink { margin-top: 6px !important; }
  .footer .f-install-link:hover { color: #FBBF24 !important; }
 
  /* (Old `.f-quick-links` block removed — Quick Links section was retired
@@ -2211,13 +2719,26 @@
    align-items: center;
  }
  .f-social-link {
-   width: 30px; height: 30px;
-   display: inline-flex; align-items: center; justify-content: center;
+   /* Lock dimensions HARD — without these defences the global
+      `.footer * { min-width: 0 }` shrink-guard combined with flex
+      parents can squish the icons into oblong shapes. */
+   width: 32px;
+   height: 32px;
+   min-width: 32px;
+   min-height: 32px;
+   flex-shrink: 0;
+   flex-grow: 0;
+   aspect-ratio: 1;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
    border-radius: 50%;
    background: rgba(0, 89, 179, 0.06);
    border: 1px solid rgba(0, 89, 179, 0.4);
    color: var(--baiwu-blue-primary);
    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+   box-sizing: border-box;
+   padding: 0;
  }
  .f-social-link:hover {
    background: rgba(245, 158, 11, 0.14);
@@ -2226,12 +2747,14 @@
    transform: translateY(-1px);
  }
  .f-social-link svg {
-   width: 14px; height: 14px;
+   width: 14px;
+   height: 14px;
+   flex-shrink: 0;
+   display: block;
  }
  /* (Old .footer-main / .f-col base rules deleted — the new
     .footer-grid / .footer-info-col layout fully replaced them.
     Per-section footer typography lives inside the .footer scope above.) */
- .f-col-mission { color: var(--text-sub); font-weight: 500; }
  .brand-col p { color: var(--text-sub); font-weight: 500; max-width: 320px; }
  /* Footer additions: business hours line + Google Maps link + director's role */
  .f-col-hours {
@@ -2241,17 +2764,10 @@
    margin-top: 8px !important;
    letter-spacing: 0.4px;
  }
- .f-col-maplink {
-   font-size: var(--fs-xs) !important;
-   color: var(--baiwu-blue-primary) !important;
-   font-weight: 700 !important;
-   letter-spacing: 0.6px;
-   margin-top: 6px !important;
- }
- .f-col-maplink::after {
-   content: ' →';
-   color: #F59E0B;
- }
+ /* (Old un-scoped .f-col-maplink rule deleted — font/colour now handled
+    by the unified `.footer .f-col-maplink, .footer .f-install-link`
+    rule higher up. The ::after gold arrow lives in the HTML now if
+    needed, no separate pseudo-element.) */
  .f-col-role {
    font-size: var(--fs-xs); color: var(--text-sub);
    font-weight: 500; letter-spacing: 0.3px;
@@ -2424,7 +2940,8 @@
    .portfolio-icon-wrap { width: 100px; height: 100px; }
    .portfolio-icon { width: 88px; height: 88px; }
    .audit-section { padding: 28px 4%; }
-   .sec-title { font-size: var(--fs-xl); }
+   /* .sec-title font-size now handled by clamp() at the base rule —
+      no override needed at this breakpoint. */
  }
  @media (max-width: 820px) {
    .fixed-menu .menu-item:nth-child(n+3) { display: none; }
@@ -2525,18 +3042,29 @@
    .infra-section::before,
    .audit-section::before,
    .footer::before { box-shadow: 0 0 4px rgba(56, 189, 248, 0.55); }
-   /* Audit heading + body */
-   .sec-title { font-size: var(--fs-xl); padding-left: 14px; border-left-width: 5px; margin-bottom: 16px; }
+   /* Audit heading + body — font-size handled by clamp() at base rule */
+   .sec-title { padding-left: 14px; border-left-width: 5px; margin-bottom: 16px; }
    .audit-box { padding: 16px; }
    .audit-box h3 { font-size: var(--fs-sm); }
    .audit-box p { font-size: var(--fs-sm); }
    /* Compact strip header */
    .stat-strip-header { padding: 12px 16px; flex-wrap: wrap; }
-   .strip-tag { font-size: var(--fs-xs); letter-spacing: 1.8px; padding: 0 0 0 12px; }
-   .strip-tag::before { width: 4px; height: 14px; }
+   /* .strip-tag font-size now handled by clamp() at the base rule —
+      no mobile override needed. Padding kept tight on phones. */
+   .strip-tag { padding: 0 0 0 12px; }
+   .strip-tag::before { width: 4px; }
    .strip-status { font-size: var(--fs-xs); }
-   /* Eyebrow */
-   .eyebrow { font-size: var(--fs-2xs); padding: 5px 12px 5px 9px; letter-spacing: 1.3px; }
+   /* Eyebrow — smaller font + tighter padding so the long compliance
+      copy ("OPERATED UNDER SINGAPORE'S CYBERSECURITY ACT · IM8-ALIGNED")
+      fits ON ONE LINE at narrow widths. white-space: nowrap is set on
+      the base rule. */
+   .eyebrow {
+     font-size: 9.5px;
+     padding: 5px 11px 5px 9px;
+     letter-spacing: 1.1px;
+     gap: 6px;
+   }
+   .eyebrow-icon { width: 11px; height: 11px; }
  }
  @media (max-width: 480px) {
    .section-row, .reliability-section, .infra-section, .audit-section { padding: 24px 4%; }
@@ -2563,6 +3091,24 @@
    .stat-icon { width: 60px; height: 60px; }
    .portfolio-icon-wrap { width: 72px; height: 72px; }
    .portfolio-icon { width: 60px; height: 60px; }
+   /* Eyebrow — even smaller on small phones so the full compliance
+      copy ("OPERATED UNDER SINGAPORE'S CYBERSECURITY ACT · IM8-ALIGNED")
+      fits in one line on a 360-380px viewport. */
+   .eyebrow {
+     font-size: 8.5px;
+     padding: 4px 10px 4px 8px;
+     letter-spacing: 0.9px;
+     gap: 5px;
+   }
+   .eyebrow-icon { width: 10px; height: 10px; }
+ }
+ /* Final fallback — at <340px (older small Androids) let the text
+    wrap to two lines rather than overflow horizontally. */
+ @media (max-width: 340px) {
+   .eyebrow {
+     white-space: normal;
+     line-height: 1.4;
+   }
  }
  /* ===========================
     Audit icons

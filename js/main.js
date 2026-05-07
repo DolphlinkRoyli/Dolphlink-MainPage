@@ -28,7 +28,10 @@ function expandDateTokens(s) {
   const Q = 'Q' + (Math.floor(m / 3) + 1);
   const MMM = MONTHS_3[m];
   const YYYY = String(now.getFullYear());
+  const D = String(now.getDate());
   return s
+    .replace(/\{D MMM YYYY\}/g, `${D} ${MMM} ${YYYY}`)
+    .replace(/\{D MMM\}/g, `${D} ${MMM}`)
     .replace(/\{Q-MMM YYYY\}/g, `${Q}-${MMM} ${YYYY}`)
     .replace(/\{Q-MMM\}/g, `${Q}-${MMM}`)
     .replace(/\{MMM YYYY\}/g, `${MMM} ${YYYY}`)
@@ -39,6 +42,12 @@ function expandDateTokens(s) {
 
 // Replace text of every [data-key] element with the matching JSON value.
 function applyTextContent(root) {
+  // [data-current-date] — live date stamps embedded in markup (e.g. the
+  // hero "Defragment Now · {D MMM YYYY}" status line). No content.json
+  // round-trip needed; just expand the token in place.
+  root.querySelectorAll('[data-current-date]').forEach(el => {
+    el.textContent = expandDateTokens(el.textContent || '{D MMM YYYY}');
+  });
   root.querySelectorAll('[data-key]').forEach(el => {
     let v = getByPath(CONTENT, el.dataset.key);
     if (typeof v !== 'string') return;
@@ -648,27 +657,41 @@ const REGULATOR_ICONS = {
 //   with a small inline SVG icon prefix — adds visual weight + recognition.
 function renderTrustWall(container, items, connect) {
   if (connect) {
+    // Network pane — region wordmarks as cards, BUT the stat item
+    // ("1,000+ Global Routes") is rendered as a non-card gold icon+text
+    // sitting at the end of the row. Removing the stat from the card
+    // grid means region cards can be equal-width without one of them
+    // being twice as wide as the others.
+    const goldHubIcon = `<svg class="trust-stat-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M12 12 L4 4 M12 12 L20 4 M12 12 L4 20 M12 12 L20 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="4" cy="4" r="1.6" fill="currentColor"/><circle cx="20" cy="4" r="1.6" fill="currentColor"/><circle cx="4" cy="20" r="1.6" fill="currentColor"/><circle cx="20" cy="20" r="1.6" fill="currentColor"/></svg>`;
     container.innerHTML = items.map((it) => {
       const name = it.name || '';
       const isStat = /\b\d[\d,]*\+?\b/.test(name);
-      const cls = isStat ? 'trust-mark trust-mark--stat' : 'trust-mark';
-      return `<span class="${cls}">${escapeHtml(name)}</span>`;
+      if (isStat) {
+        // Split "1,000+ Global Routes" → number + label so we can stack
+        // them on 2 lines (number big on top, label small below).
+        const m = name.match(/^(\S+\+?)\s+(.+)$/);
+        const num = m ? m[1] : name;
+        const label = m ? m[2] : '';
+        return `<div class="trust-stat">${goldHubIcon}<span class="trust-stat-text"><span class="trust-stat-number">${escapeHtml(num)}</span>${label ? `<span class="trust-stat-label">${escapeHtml(label)}</span>` : ''}</span></div>`;
+      }
+      return `<div class="trust-card"><span class="trust-card-text">${escapeHtml(name)}</span></div>`;
     }).join('');
   } else {
+    // Compliance pane — 6 gold-bordered credential pills with icons.
     container.innerHTML = items.map((it) => {
       const name = it.name || '';
       const iconPath = REGULATOR_ICONS[name];
       const icon = iconPath
-        ? `<svg class="trust-mark-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">${iconPath}</svg>`
+        ? `<svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">${iconPath}</svg>`
         : '';
-      return `<span class="trust-mark">${icon}<span class="trust-mark-label">${escapeHtml(name)}</span></span>`;
+      return `<div class="trust-card">${icon}<span class="trust-card-text">${escapeHtml(name)}</span></div>`;
     }).join('');
   }
 }
 
 // Content version — bump this when CSV/JSON changes so browsers bypass stale cache.
 // Ties together: cache-buster query param + visible version in <html data-content-version>.
-const CONTENT_VERSION = '20260507z';
+const CONTENT_VERSION = '20260507ag';
 
 // Hide the inline pre-read loader (defined in index.html). Called once
 // content.json is rendered, AND defensively after a 5s timeout in case
@@ -814,129 +837,11 @@ function debounce(fn, wait) {
 const reduceMotion = window.matchMedia &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-(function () {
-  const canvas = document.getElementById('bg-canvas');
-  if (!canvas) return;
-  // Decorative particle network retired. Sovereign-infrastructure brand
-  // language calls for stillness; a constant rAF loop drawing 80 particles
-  // + connection lines was decoration that competed with the trust strip
-  // marquee and burned battery on low-end Android. The canvas element
-  // remains so older HTML in caches doesn't 404 when querying it, but the
-  // module bails before running any draw calls.
-  canvas.remove();
-  return;
-  // eslint-disable-next-line no-unreachable
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  let rafId = null;
-  let running = true;
-
-  function init() {
-    const dpr = window.devicePixelRatio || 1;
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    canvas.style.width = w + 'px';
-    canvas.style.height = h + 'px';
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(dpr, dpr);
-    const count = reduceMotion ? 25 : 80;
-    particles = [];
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * (reduceMotion ? 0.05 : 0.3),
-        vy: (Math.random() - 0.5) * (reduceMotion ? 0.05 : 0.3)
-      });
-    }
-  }
-
-  // Pre-computed constants — kept outside animate() so they aren't redeclared every frame
-  const CONNECT_DIST = 150;
-  const CONNECT_DIST_SQ = CONNECT_DIST * CONNECT_DIST;
-  const TWO_PI = Math.PI * 2;
-  const PARTICLE_FILL = 'rgba(56, 189, 248, 0.4)';
-
-  function animate() {
-    if (!running) { rafId = null; return; }
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    const len = particles.length;
-    ctx.clearRect(0, 0, w, h);
-
-    // Pass 1: move + draw dots (single fillStyle set, batched paths)
-    ctx.fillStyle = PARTICLE_FILL;
-    for (let i = 0; i < len; i++) {
-      const p = particles[i];
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 1, 0, TWO_PI);
-      ctx.fill();
-    }
-
-    // Pass 2: connection lines (squared distance avoids per-pair sqrt)
-    for (let i = 0; i < len; i++) {
-      const p = particles[i];
-      for (let j = i + 1; j < len; j++) {
-        const p2 = particles[j];
-        const dx = p.x - p2.x, dy = p.y - p2.y;
-        const distSq = dx * dx + dy * dy;
-        if (distSq < CONNECT_DIST_SQ) {
-          const dist = Math.sqrt(distSq);
-          const opacity = 1 - dist / CONNECT_DIST;
-          ctx.lineWidth = 0.8 * opacity;
-          ctx.strokeStyle = `rgba(56, 189, 248, ${opacity * 0.4})`;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.stroke();
-        }
-      }
-    }
-
-    rafId = requestAnimationFrame(animate);
-  }
-
-  // Page Visibility API — pause when tab is hidden, resume on return (saves CPU / battery)
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      running = false;
-    } else if (!running) {
-      running = true;
-      if (!rafId) animate();
-    }
-  });
-
-  // Pause the rAF loop entirely while the hero video is playing. Even
-  // though CSS hides the canvas via `body.video-playing`, stopping the
-  // animation loop frees the main thread completely — measurable on
-  // low-end Android where every spare ms helps the H.264 decoder.
-  document.addEventListener('dolphlink:videoplay', () => {
-    running = false;
-  });
-  document.addEventListener('dolphlink:videopause', () => {
-    if (!running) {
-      running = true;
-      if (!rafId) animate();
-    }
-  });
-
-  window.addEventListener('resize', debounce(init, 150));
-  // Decorative particle-net is non-critical — defer its first paint until
-  // the browser is idle so it doesn't compete with above-the-fold render
-  // and content-pipeline hydration. Long-task profile shows this single
-  // IIFE was contributing meaningfully to the initial main-thread block.
-  const startNet = () => { init(); animate(); };
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(startNet, { timeout: 1500 });
-  } else {
-    setTimeout(startNet, 600);
-  }
-})();
+// (Decorative particle-network bg-canvas IIFE removed — feature retired
+//  long ago; the dead-code stub plus the unreachable 120-line animation
+//  body have been deleted from main.js, the matching #bg-canvas element
+//  removed from index.html, and the `display: none !important` rule
+//  cleaned out of style.css.)
 
 // ============================================================================
 // Smooth scroll — REVERTED to native scrolling.
@@ -1085,6 +990,34 @@ window.addEventListener('load', async function () {
       card.classList.add('active');
       activeCard = card;
 
+      // Auto-scroll so the section title sits just below the sticky nav,
+      // and the newly-revealed detail panel sits centred in the viewport.
+      // Without this, on mobile the panel often opens below the fold and
+      // the user has to manually scroll to find it.
+      // Applies to BOTH Reliability Matrix and Portfolio strips (this
+      // openPanel is shared). We wait two rAFs + a small timeout so the
+      // CSS `:has(.open)` selector has finished swapping the strip for
+      // the panel — without that wait, getBoundingClientRect() returns
+      // pre-reflow values and the scroll target is wrong.
+      const section = wrap.closest('.section-row') || wrap;
+      const navStr = getComputedStyle(document.documentElement)
+        .getPropertyValue('--nav-height').trim();
+      const navH = parseInt(navStr, 10) || 72;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            const rect = section.getBoundingClientRect();
+            const targetY = Math.max(0, window.scrollY + rect.top - navH - 12);
+            try {
+              window.scrollTo({ top: targetY, behavior: 'smooth' });
+            } catch (_) {
+              // Older browsers without options support
+              window.scrollTo(0, targetY);
+            }
+          }, 80);
+        });
+      });
+
       canHoverClose = false;
       clearTimeout(closeTimer);
       closeTimer = setTimeout(() => { canHoverClose = true; }, 600);
@@ -1110,10 +1043,24 @@ window.addEventListener('load', async function () {
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
     });
-    window.addEventListener('resize', () => { if (activeCard) positionPanel(activeCard); });
+    /* Expose a re-position hook for the shared resize listener registered
+       at module level below. Prevents duplicate window listeners that the
+       previous in-function registration created (one per bindCardDetail call). */
+    bindCardDetail._activeRepositioners = bindCardDetail._activeRepositioners || [];
+    bindCardDetail._activeRepositioners.push(() => {
+      if (activeCard) positionPanel(activeCard);
+    });
   }
   bindCardDetail('.stat-strip', 'stat-card-detail', '.stat-card');
   bindCardDetail('.portfolio-strip', 'portfolio-card-detail', '.btn-portfolio');
+  /* Single shared resize listener for both card detail panels.
+     (Was previously registered TWICE inside bindCardDetail() — duplicate
+     listener on every viewport resize. Consolidated here.) */
+  window.addEventListener('resize', () => {
+    if (bindCardDetail._activeRepositioners) {
+      bindCardDetail._activeRepositioners.forEach(fn => fn());
+    }
+  });
 
   // Hero video is now GIF-style ambient loop — autoplay loop muted,
   // no controls, no JS. The <video> element has the `autoplay loop muted`
@@ -1173,31 +1120,57 @@ window.addEventListener('load', async function () {
     const w = mapChart.getWidth();
     const h = mapChart.getHeight();
     const isMobile = w < 560;
-    const isNarrow = w < 380;
-    /* When card is wider than 2× height, scale up; when squarer, scale
-       down so the map fits without clipping. Aim: world width ≈
-       container width with ~10% padding on each side. */
-    const aspect = w / Math.max(h, 1);
-    let pct;
-    if (isNarrow)      pct = 130;
-    else if (isMobile) pct = 150;
-    else if (aspect > 1.9) pct = 175;   /* wide cards (stacked mode) */
-    else                   pct = 145;   /* tall cards (2-col mode)   */
-    const layoutSize = pct + '%';
-    const labelFontSize = isMobile ? 9 : 10;
-    const labelPad = isMobile ? [3, 5] : [4, 8];
+    /* SMOOTH RESPONSIVE SIZING (2026-05 v2): map scale is now a
+       continuous function of container width — no more binary 110%/
+       180% jump at the breakpoint.
+       Strategy: pick a TARGET RENDERED MAP WIDTH in pixels based on
+       viewport, then compute the % needed (relative to MIN(w,h),
+       which is what ECharts layoutSize uses). Roam is enabled
+       automatically whenever the target exceeds the container width.
+       Curve:
+         w ≥ 720: target = 0.95×w  (fits nicely with margin)
+         w 480-720: target = 0.95→1.40 × w (linear ramp)
+         w < 480 : target = 1.60×w  (60% overflow, comfortable pan)
+       Floor at 540px so labels stay readable on tiny phones. */
+    let targetMapW;
+    if (w >= 720) {
+      targetMapW = w * 0.95;
+    } else if (w >= 480) {
+      const t = (720 - w) / (720 - 480);          // 0→1 as w shrinks
+      targetMapW = w * (0.95 + t * 0.45);         // 0.95 → 1.40
+    } else {
+      targetMapW = w * 1.60;
+    }
+    targetMapW = Math.max(targetMapW, 540);       // readability floor
+    const minDim = Math.min(w, h);
+    const layoutSizePct = Math.round(targetMapW / minDim * 100) + '%';
+    const enableRoam = targetMapW > w + 6;        // 6px tolerance
+
+    const labelFontSize = isMobile ? 9.5 : 11;
+    const labelPad = isMobile ? [3, 6] : [4, 8];
+    // On mobile, shift initial centre slightly east so Singapore +
+    // Asia-Pacific cluster sits near the visible centre when the page
+    // first loads. User can drag to see Americas / Europe.
+    const layoutCenterX = enableRoam ? '40%' : '50%';
 
     return {
       textStyle: { fontFamily: CHART_FONT, fontWeight: 500 },
       geo: {
         map: 'world',
-        /* Geographic centre at 50% / 50% — with the conservative
-           layoutSize above, the world map fills the container without
-           clipping. Landmasses naturally weight to the upper half,
-           which is the visual reality of the planet. */
-        layoutCenter: ['50%', '50%'],
-        layoutSize: layoutSize,
-        roam: false,
+        /* layoutCenter + layoutSize: world map drawn at FIXED size
+           relative to MIN(width, height) of the container. With 180%
+           on mobile, the rendered map is ~1.8× the smaller container
+           dimension — bigger than the card, hence the need for roam. */
+        layoutCenter: [layoutCenterX, '50%'],
+        layoutSize: layoutSizePct,
+        aspectScale: 0.75,                    // ECharts default — preserves
+                                              // map aspect, never squashes
+        // Roam enabled whenever target map width exceeds container —
+        // i.e. there's content offscreen for the user to pan to. On
+        // wide desktops where the map already fits, roam stays off so
+        // accidental scroll doesn't shift the map.
+        roam: enableRoam ? 'move' : false,
+        scaleLimit: { min: 1, max: 1 },       // lock zoom — pan only
         label: { show: false },
         emphasis: {
           label: { show: false },
@@ -1293,7 +1266,18 @@ window.addEventListener('load', async function () {
   // renderIndustries/renderDepartments. Saves ~150 lines of ECharts
   // node/label layout math and makes the content SEO-readable.)
 
-  const renderMap = () => mapChart.setOption(buildMapOption(), true);
+  const renderMap = () => {
+    const opt = buildMapOption();
+    mapChart.setOption(opt, true);
+    // Sync the "Drag to explore" hint visibility with actual roam state
+    // (i.e. only show when the map is wider than the container at the
+    // current viewport — not on a fixed breakpoint).
+    const card = mapEl.parentElement;
+    if (card && card.classList) {
+      const roamOn = opt.geo && opt.geo.roam === 'move';
+      card.classList.toggle('map-roam-on', roamOn);
+    }
+  };
   if (echarts.getMap && echarts.getMap('world')) {
     renderMap();
   } else {

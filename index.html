@@ -176,7 +176,7 @@
        href="media/img/video-poster.webp" fetchpriority="high">
 
  <!-- Preload critical scripts so they download in parallel with HTML parse -->
- <link rel="preload" as="script" href="js/main.js?v=51">
+ <link rel="preload" as="script" href="js/main.js?v=73">
  <!-- Preload content.json so it lands the moment main.js calls fetch().
       Saves the round-trip of waiting for main.js to parse + execute first.
       Same query string main.js uses (CONTENT_VERSION = 20260507n) so the
@@ -187,31 +187,20 @@
       browser fetches content.json TWICE. With anonymous, preload uses
       cors+same-origin which matches the default fetch() behaviour and
       the preloaded response is reused by the fetch in main.js. -->
- <link rel="preload" as="fetch" href="content/content.json?v=20260507z" crossorigin="anonymous">
+ <link rel="preload" as="fetch" href="content/content.json?v=20260507ag" crossorigin="anonymous">
 
  <!-- Inter (variable font, 100..900 axis): single file, blocks first paint.
       Loaded as `preload` + onload-swap so it doesn't block render at all. -->
  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" rel="stylesheet"></noscript>
- <!-- JetBrains Mono is ONLY used by the page-loader status text — by the
-      time first paint happens that text is already gone.  Load it after a
-      short delay so it doesn't compete for connection slots during the
-      LCP race. -->
- <script>
-   addEventListener('load', function () {
-     setTimeout(function () {
-       var l = document.createElement('link');
-       l.rel = 'stylesheet';
-       l.href = 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap';
-       document.head.appendChild(l);
-     }, 1500);
-   });
- </script>
- <link rel="stylesheet" href="css/style.css?v=94">
+ <!-- (JetBrains Mono load deleted — that font was only used by the
+      retired page-loader. The new inline #dlpk-loader uses Inter,
+      same as the rest of the site, so no second font request needed.) -->
+ <link rel="stylesheet" href="css/style.css?v=153">
  <link rel="preload" as="style" href="css/register.css?v=1" onload="this.onload=null;this.rel='stylesheet'">
  <noscript><link rel="stylesheet" href="css/register.css?v=1"></noscript>
  <!-- ECharts lazy-loaded from local lib/ (injected only when charts viewport intersects) — saves 209 KiB initial JS -->
- <script src="js/main.js?v=51" defer></script>
+ <script src="js/main.js?v=73" defer></script>
 
  <!-- Speculation Rules — Chromium prerenders the linked URL in a hidden
       tab the moment we hint, so when the user actually clicks the QR
@@ -519,7 +508,6 @@
   document.write('<div id="dlpk-loader" role="status" aria-label="Loading"><div id="dlpk-loader-ring" aria-hidden="true"></div><span id="dlpk-loader-text">DOLPHLINK</span></div>');
  </script>
 
- <canvas id="bg-canvas" aria-hidden="true"></canvas>
  <nav>
  <a href="#h-sec" data-scroll-to="h-sec" class="brand">
  <img src="media/icon/3D/logo.webp" alt="DOLPHLINK logo" class="brand-logo" width="72" height="72" decoding="async" fetchpriority="high" />
@@ -549,34 +537,87 @@
  <!-- KPI stat row — 3 hard numbers, scannable in 1 second. Replaces
       the longer subTagline paragraph. JS populates from hero.stats. -->
  <div class="hero-stats" data-render="hero.stats" aria-label="Platform reliability metrics"><div class="hero-stat"><span class="hero-stat-value">99.999%</span><span class="hero-stat-label">Uptime</span></div><div class="hero-stat"><span class="hero-stat-value">1,000+</span><span class="hero-stat-label">Tier-1 Routes</span></div><div class="hero-stat"><span class="hero-stat-value">200+</span><span class="hero-stat-label">Countries</span></div></div>
- <div class="hero-cta">
- <a href="mailto:Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&amp;cc=Joycetsam@dolphlink.com" class="btn btn-primary"
-    data-href-key="hero.ctaPrimaryMailto" data-href-prefix="mailto:">
-   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-     <polyline points="22,6 12,13 2,6"/>
-   </svg>
-   <span data-key="hero.ctaPrimary">Request Briefing</span>
- </a>
- <a href="#n-sec" data-scroll-to="n-sec" class="btn btn-ghost">
-   <span data-key="hero.ctaSecondary">See Auto-Orchestration</span>
-   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-     <line x1="5" y1="12" x2="19" y2="12"/>
-     <polyline points="12 5 19 12 12 19"/>
-   </svg>
- </a>
+ <!-- TWO-ROW HERO CTA — stacked vertically, separated by a gold hairline.
+      ROW 1 (top)    — Enterprise on-ramps: See Auto-Orchestration (with
+                       live Defragment Now status) + Industry Insights
+                       (scrolls to "Industries We Serve"). Both use
+                       enterprise blue / white-on-dark — primary audience.
+      ROW 2 (bottom) — SME off-ramp: brand-blue prompt promises best-fit
+                       solution; gold button routes them out of this page. -->
+ <div class="hero-cta hero-cta--stacked">
+
+   <!-- Row 1: Enterprise track. Industry Insights LEFT (anchors the
+        row to the stats-strip's left edge above), See Auto RIGHT
+        (mirrors stats row's right edge via justify-content: space-between). -->
+   <div class="hero-cta-row hero-cta-row--enterprise">
+     <a href="#i-sec" data-scroll-to="i-sec" class="btn btn-industries">
+       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <path d="M3 21 V3"/>
+         <path d="M3 21 H21"/>
+         <rect x="6" y="13" width="3" height="6" fill="currentColor" stroke="none" opacity="0.85"/>
+         <rect x="11" y="9" width="3" height="10" fill="currentColor" stroke="none" opacity="0.85"/>
+         <rect x="16" y="5" width="3" height="14" fill="currentColor" stroke="none" opacity="0.85"/>
+       </svg>
+       <span>Industry Insights</span>
+       <svg class="btn-industries-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <polyline points="9 5 16 12 9 19"/>
+       </svg>
+     </a>
+     <a href="#n-sec" data-scroll-to="n-sec" class="btn btn-industries">
+       <!-- "Orchestration flow" icon — 3 connected nodes (source → hub
+            → endpoint) signalling an automated multi-channel pipeline.
+            Visually rhymes with the bar-chart icon on Industry Insights
+            but speaks to motion/flow instead of static metrics. -->
+       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <circle cx="5" cy="6" r="2.2" fill="currentColor"/>
+         <circle cx="12" cy="12" r="2.6" fill="currentColor"/>
+         <circle cx="19" cy="18" r="2.2" fill="currentColor"/>
+         <line x1="6.5" y1="7.5" x2="10.4" y2="10.4"/>
+         <line x1="13.6" y1="13.6" x2="17.5" y2="16.5"/>
+       </svg>
+       <span data-key="hero.ctaSecondary">See Auto-Orchestration</span>
+       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <polyline points="9 5 16 12 9 19"/>
+       </svg>
+     </a>
+   </div>
+
+   <!-- Gold hairline divider — visually splits the two audience tracks. -->
+   <span class="hero-cta-divider" aria-hidden="true"></span>
+
+   <!-- Row 2: SME track. Gold button on the left (same width as Industry
+        Insights above so right edges align), small intro tag on the
+        right (occupies same horizontal slot as See Auto above so its
+        left edge aligns with See Auto's left edge). -->
+   <div class="hero-cta-row hero-cta-row--sme">
+     <a href="/sme/" class="btn btn-sme" aria-label="Small and medium enterprise portal">
+       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <path d="M3 9 L5 4 H19 L21 9"/>
+         <path d="M4 9 H20 V20 H4 Z"/>
+         <path d="M9 20 V14 H15 V20"/>
+         <circle cx="12" cy="11.5" r="0.6" fill="currentColor"/>
+       </svg>
+       <span>SME · Best-Fit Plans</span>
+       <svg class="btn-sme-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <polyline points="9 5 16 12 9 19"/>
+       </svg>
+     </a>
+     <p class="hero-sme-tag">
+       <span class="hero-sme-tag-headline">Built for smaller teams.</span>
+       <span class="hero-sme-tag-sub">Same enterprise stack, right-sized for SME budgets &amp; speed.</span>
+     </p>
+   </div>
+
  </div>
- <!-- Trigger micro-copy under the CTAs — surfaces the differentiator
-      (other CPaaS are passive send/receive; we detect + auto-trigger).
-      Pulse dot suggests "live system", reinforces real-time perception.
-      data-key on the inner <span> only, so JS hydration replaces the
-      text without wiping the dot element next to it. -->
- <p class="hero-trigger">
-   <span class="hero-trigger-dot" aria-hidden="true"></span>
-   <span data-key="hero.triggerLine">Detects fragmentation events. Triggers orchestration automatically.</span>
- </p>
+ <!-- (Old hero-trigger micro-copy "Detects fragmentation events…" removed
+      per Roy. The Defragment-Now status pill inside the See-Auto button
+      now carries the live-system signal, so the trigger row was redundant.) -->
  </div>
  <!-- Cinematic full-bleed video — covers the entire hero section as
       ambient backdrop. Dark navy gradient overlay (in CSS) sits between
@@ -597,33 +638,41 @@
       pauses and only the illumination wave runs. -->
  <section class="section-row trust-section reveal" aria-label="Carrier network and compliance">
    <div class="trust-strip-wrap">
-     <!-- Hidden SVG sprite for the trophy icon — defined once, instanced
-          via <use> in the rating cluster. Lives at wrap-level so it's
-          available to any descendant <use> reference. -->
-     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-       <symbol id="trust-trophy-svg" viewBox="0 0 24 24">
-         <path d="M18 2H6v7a6 6 0 0 0 5 5.92V17.5c0 .28-.22.5-.5.5H9a2 2 0 0 0-2 2v2h10v-2a2 2 0 0 0-2-2h-1.5a.5.5 0 0 1-.5-.5v-2.58A6 6 0 0 0 18 9V2zM6 4v5a4 4 0 0 1-3-1.74A2.5 2.5 0 0 1 4.5 4H6zm14 4a2.5 2.5 0 0 1-1 1.93A4 4 0 0 1 18 9V4h1.5a2.5 2.5 0 0 1 .5 4z" fill="currentColor"/>
-       </symbol>
-     </svg>
-     <div class="trust-strip-header">
-       <span class="strip-tag" data-key="trustWall.headerTag">Carrier Network &amp; Compliance</span>
-       <span class="strip-rule"></span>
+     <h2 class="sec-title"><span data-key="trustWall.headerTag">Carrier Network &amp; Compliance</span><span class="audit-stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></span></h2>
+     <!-- Unified card with two labeled panes (NETWORK | COMPLIANCE).
+          Inside each pane: a header row (icon + uppercase label) at top,
+          then a horizontal grid of small CARDS (4 for network, 6 for
+          compliance). The 4th network card is gold-themed as a callout. -->
+     <div class="trust-row trust-row--unified">
+       <div class="trust-pane trust-pane--network">
+         <div class="trust-pane-header">
+           <svg class="trust-pane-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+             <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+             <ellipse cx="12" cy="12" rx="4" ry="9" stroke="currentColor" stroke-width="1.6"/>
+             <path d="M3 12 H21" stroke="currentColor" stroke-width="1.6"/>
+           </svg>
+           <span class="trust-pane-label">Network</span>
+         </div>
+         <div class="trust-cards trust-cards--network" data-render="trustWall.operators">
+           <div class="trust-card"><span class="trust-card-text">Asia-Pacific</span></div>
+           <div class="trust-card"><span class="trust-card-text">EMEA</span></div>
+           <div class="trust-card"><span class="trust-card-text">Americas</span></div>
+           <div class="trust-stat"><svg class="trust-stat-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M12 12 L4 4 M12 12 L20 4 M12 12 L4 20 M12 12 L20 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="4" cy="4" r="1.6" fill="currentColor"/><circle cx="20" cy="4" r="1.6" fill="currentColor"/><circle cx="4" cy="20" r="1.6" fill="currentColor"/><circle cx="20" cy="20" r="1.6" fill="currentColor"/></svg><span class="trust-stat-text"><span class="trust-stat-number">1,000+</span><span class="trust-stat-label">Global Routes</span></span></div>
+         </div>
+       </div>
+       <span class="trust-divider" aria-hidden="true"></span>
+       <div class="trust-pane trust-pane--compliance">
+         <div class="trust-pane-header">
+           <svg class="trust-pane-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+             <path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+             <path d="M9 12 L11 14 L15 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+           </svg>
+           <span class="trust-pane-label">Compliance</span>
+         </div>
+         <div class="trust-cards trust-cards--compliance" data-render="trustWall.regulators"><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12 L11 14 L15 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="trust-card-text">ISO 27001</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M3 12 L12 4 L21 12 L21 19 H3 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 19 V14 H15 V19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="trust-card-text">MAS TRM</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9 H16 M8 12 H16 M8 15 H13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="trust-card-text">IM8</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M12 2 L20 6 V13 C20 17.5 16.5 21 12 22 C7.5 21 4 17.5 4 13 V6 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><span class="trust-card-text">PDPA</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><span class="trust-card-text">GDPR</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor"/></svg><span class="trust-card-text">SOC 2</span></div></div>
+       </div>
      </div>
-     <div class="trust-row trust-row--ops" data-trust-row="operators">
-       <span class="trust-row-label" data-key="trustWall.operatorsLabel">Global Network</span>
-       <div class="trust-track" data-render="trustWall.operators"><span class="trust-mark">Asia-Pacific</span><span class="trust-mark">EMEA</span><span class="trust-mark">Americas</span><span class="trust-mark trust-mark--stat">1,000+ Global Routes</span></div>
-     </div>
-     <div class="trust-row trust-row--reg" data-trust-row="regulators">
-       <span class="trust-row-label" data-key="trustWall.regulatorsLabel">Aligned With</span>
-       <div class="trust-track" data-render="trustWall.regulators"><span class="trust-mark"><svg class="trust-mark-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12 L11 14 L15 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="trust-mark-label">ISO 27001</span></span><span class="trust-mark"><svg class="trust-mark-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M3 12 L12 4 L21 12 L21 19 H3 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 19 V14 H15 V19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="trust-mark-label">MAS TRM</span></span><span class="trust-mark"><svg class="trust-mark-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9 H16 M8 12 H16 M8 15 H13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="trust-mark-label">IM8</span></span><span class="trust-mark"><svg class="trust-mark-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M12 2 L20 6 V13 C20 17.5 16.5 21 12 22 C7.5 21 4 17.5 4 13 V6 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><span class="trust-mark-label">PDPA</span></span><span class="trust-mark"><svg class="trust-mark-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><span class="trust-mark-label">GDPR</span></span><span class="trust-mark"><svg class="trust-mark-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor"/></svg><span class="trust-mark-label">SOC 2</span></span></div>
-       <span class="trust-rating" aria-label="Gold-standard tier-1 partners">
-         <svg class="trust-trophy" viewBox="0 0 24 24" aria-hidden="true"><use href="#trust-trophy-svg"/></svg>
-         <svg class="trust-trophy" viewBox="0 0 24 24" aria-hidden="true"><use href="#trust-trophy-svg"/></svg>
-         <svg class="trust-trophy" viewBox="0 0 24 24" aria-hidden="true"><use href="#trust-trophy-svg"/></svg>
-       </span>
-     </div>
-     <!-- Audit fine print — strengthens credibility under the regulator
-          row. Sits flush at the bottom of the trust panel. -->
+     <!-- Audit fineprint — under the unified card -->
      <div class="trust-fineprint">
        Annually audited · Quarterly third-party attestation · Tamper-evident logs
      </div>
@@ -738,7 +787,7 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
      <h2 class="sec-title sec-title--light" id="departments-heading"
          data-key="departments.headerTag"></h2>
      <p class="sec-intro" data-key="departments.intro">Inside every customer organisation, DOLPHLINK serves four distinct teams with shared infrastructure, from front-line operations to bespoke AI-digital builds.</p>
-     <div class="departments-strip" data-render="departments.items"><div class="department-card" data-department="support"><h4 class="department-name">Customer Service</h4><p class="department-desc">Multi-channel support across every digital touchpoint with AI-Human handoff and full audit trail per ticket.</p></div><div class="department-card" data-department="growth"><h4 class="department-name">Marketing &amp; Sales</h4><p class="department-desc">Convert conversations into revenue. A/B test channels, segment by behaviour, measure ROI end to end in one console.</p></div><div class="department-card" data-department="ops"><h4 class="department-name">IT &amp; Operations</h4><p class="department-desc">Streamlined Conversational Commerce. A single API endpoint replaces dozens of legacy gateway integrations.</p></div><div class="department-card" data-department="innovation"><h4 class="department-name">Digital Transformation</h4><p class="department-desc">Custom AI-digital projects end-to-end. From greenfield sovereign architecture to legacy migration, our solution architects deliver bespoke integrations across communications, AI orchestration, and compliance layers. Delivered on your stack, your timeline, your governance requirements.</p></div></div>
+     <div class="departments-strip" data-render="departments.items"><div class="department-card" data-department="support"><h4 class="department-name">Customer Service</h4><p class="department-desc">Multi-channel support across every digital touchpoint with AI-Human handoff. Every ticket carries a full audit trail, sentiment scoring, and SLA enforcement. Tier-1 to Tier-3 escalation flows configurable per region.</p></div><div class="department-card" data-department="growth"><h4 class="department-name">Marketing &amp; Sales</h4><p class="department-desc">Convert conversations into revenue across channels. A/B test SMS, WhatsApp, and Email campaigns, segment by behaviour, and measure end-to-end ROI in one console. Pipeline attribution and lifecycle automation built in.</p></div><div class="department-card" data-department="ops"><h4 class="department-name">IT &amp; Operations</h4><p class="department-desc">Streamlined Conversational Commerce on enterprise-grade infrastructure. A single programmable API endpoint replaces dozens of legacy gateway integrations, with priority routing, automatic carrier failover, and 24/7 NOC monitoring.</p></div><div class="department-card" data-department="innovation"><h4 class="department-name">Digital Transformation</h4><p class="department-desc">Bespoke AI-digital projects from greenfield architecture to legacy migration. Solution architects deliver integrations on your stack, timeline, and governance requirements.</p></div></div>
    </div>
  </section>
 
@@ -754,6 +803,7 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
        <p class="sec-intro" data-key="footer.mapIntro">Strategic operational hubs anchoring DOLPHLINK across ASEAN, Greater China, EMEA, and the Americas.</p>
        <div class="footer-map-card">
          <div id="global-map" class="chart-container"></div>
+         <span class="map-pan-hint" aria-hidden="true">Drag to explore</span>
        </div>
      </div>
      <!-- Right column: top = compact info / bottom = business card -->
@@ -771,7 +821,7 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
              <p class="f-col-hours" data-key="footer.locationHours">Weekdays 09:00 – 18:00 SGT</p>
              <a href="https://maps.google.com/?q=9+Raffles+Place+%2329-04+Republic+Plaza+Singapore+048619" target="_blank" rel="noopener noreferrer"
                 data-href-key="footer.locationMapHref" data-key="footer.locationMapLabel"
-                class="f-col-maplink">View on Google Maps</a>
+                class="f-col-maplink">View on Google Maps ↗</a>
            </div>
            <div class="f-col">
              <h6 data-key="footer.connectivityLabel"></h6>
