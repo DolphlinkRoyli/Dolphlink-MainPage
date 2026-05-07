@@ -3,6 +3,7 @@
   "nav": {
     "brandName": "DOLPHLINK",
     "ctaLabel": "Mohon Taklimat",
+    "ctaTip": "Ketuk untuk taklimat",
     "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
     "menuItems": [
       { "label": "Laman Utama",         "scrollTo": "h-sec", "href": "", "target": "" },

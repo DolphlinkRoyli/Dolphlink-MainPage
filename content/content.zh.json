@@ -3,6 +3,7 @@
   "nav": {
     "brandName": "DOLPHLINK",
     "ctaLabel": "预约简报",
+    "ctaTip": "点击预约",
     "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
     "menuItems": [
       { "label": "首页",     "scrollTo": "h-sec", "href": "", "target": "" },

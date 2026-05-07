@@ -3,6 +3,7 @@
   "nav": {
     "brandName": "DOLPHLINK",
     "ctaLabel": "ブリーフィング予約",
+    "ctaTip": "タップで予約",
     "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
     "menuItems": [
       { "label": "ホーム",         "scrollTo": "h-sec", "href": "", "target": "" },

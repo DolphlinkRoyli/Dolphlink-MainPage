@@ -17,7 +17,7 @@
  */
 import { yieldToMain } from './utils.js';
 
-export const CONTENT_VERSION = '20260508c';
+export const CONTENT_VERSION = '20260508e';
 
 const _cache = new Map();        /* lang code → resolved content object */
 const _inflight = new Map();     /* lang code → in-flight fetch promise */

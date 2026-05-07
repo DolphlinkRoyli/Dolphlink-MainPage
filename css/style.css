@@ -154,7 +154,15 @@
  }
  .nav-cta svg { transition: transform 0.2s ease; }
  .nav-cta:hover { background: var(--baiwu-blue-deep); border-color: var(--baiwu-blue-deep); box-shadow: 0 5px 16px rgba(0, 45, 92, 0.4); }
- .nav-cta:hover svg { transform: translateX(3px); }
+ /* Scope the hover-translate to the arrow ONLY — otherwise the mobile
+    clipboard icon (also an svg child) skews on touch/hover and looks
+    crooked inside the icon button. */
+ .nav-cta:hover .nav-cta-arrow { transform: translateX(3px); }
+ /* Desktop hides the clipboard icon and the persistent tip — the text
+    label + arrow carry the CTA. The mobile (≤640px) override flips
+    this: icon + tip show, text + arrow hide. */
+ .nav-cta-icon,
+ .nav-cta-tip { display: none; }
 
  .wrapper { position: relative; z-index: 10; margin-top: var(--nav-height); width: 100%; }
  .section-row { padding: 40px 4%; }
@@ -3015,11 +3023,79 @@
    .brand-logo { height: 44px; flex-shrink: 0; }
    .nav-right { flex-shrink: 0; }
    .fixed-menu { display: none; }
+   /* MOBILE CTA — Roy spec May 2026 (icon-only edition):
+      Stays in the nav row next to the language picker, but collapses
+      to a compact icon-only button. The clipboard-with-check icon is
+      the universal "briefing / agenda" signifier — readers will tap it
+      when they want to schedule. The text label + arrow are hidden so
+      the button doesn't crowd the picker on narrow screens. Tap target
+      stays 36×36 (Apple HIG minimum). A small persistent tip floats
+      below the icon ("Click to brief") so first-time visitors don't
+      have to guess what the icon does. */
    .nav-cta {
-     height: 36px; padding: 0 12px;
-     font-size: var(--fs-xs);
-     letter-spacing: 1.0px;
+     position: relative;       /* anchor for .nav-cta-tip absolute float */
+     width: 36px;
+     height: 36px;
+     padding: 0;
+     border-radius: 10px;
+     gap: 0;
+     /* Subtle vertical gradient gives the icon button quiet depth. */
+     background: linear-gradient(180deg,
+       #1F75D9 0%,
+       var(--baiwu-blue-primary) 55%,
+       var(--baiwu-blue-deep, #003E80) 100%);
+     border: 1px solid rgba(255, 255, 255, 0.55);
+     box-shadow:
+       0 1px 0 rgba(255, 255, 255, 0.20) inset,
+       0 2px 6px rgba(0, 30, 60, 0.28),
+       0 6px 14px rgba(0, 30, 60, 0.18);
+     justify-content: center;
+     overflow: visible;        /* don't clip the tip that sticks out below */
+   }
+   .nav-cta-label,
+   .nav-cta-arrow { display: none; }
+   .nav-cta-icon  { display: block; width: 18px; height: 18px; }
+   /* Persistent floating micro-tip under the icon button — always
+      visible, localised, soft glassmorphism look. Larger, more
+      transparent, lower-case (sentence-cased) so it reads as a friendly
+      whisper rather than a system label. Translated automatically via
+      the data-key on the span (en/zh/ja/es/ms/hi). */
+   .nav-cta-tip {
+     display: block;
+     position: absolute;
+     top: calc(100% + 7px);
+     right: 0;
+     padding: 4px 10px;
+     font-size: 11px;
+     font-weight: 600;
+     letter-spacing: 0.1px;
+     line-height: 1.25;
      white-space: nowrap;
+     color: var(--baiwu-blue-primary);
+     background: rgba(255, 255, 255, 0.45);
+     -webkit-backdrop-filter: blur(10px) saturate(140%);
+     backdrop-filter: blur(10px) saturate(140%);
+     border: 1px solid rgba(255, 255, 255, 0.55);
+     border-radius: 6px;
+     box-shadow: 0 1px 3px rgba(0, 30, 60, 0.08);
+     pointer-events: none;
+     text-transform: none;
+     animation: nav-cta-tip-in .35s ease-out .15s both;
+   }
+   @keyframes nav-cta-tip-in {
+     from { opacity: 0; transform: translateY(-3px); }
+     to   { opacity: 1; transform: translateY(0);    }
+   }
+   .nav-cta:hover { transform: translateY(-1px); box-shadow:
+       0 1px 0 rgba(255, 255, 255, 0.20) inset,
+       0 4px 10px rgba(0, 30, 60, 0.32),
+       0 10px 22px rgba(0, 30, 60, 0.22);
+   }
+   .nav-cta:active {
+     transform: translateY(0) scale(0.96);
+     box-shadow:
+       0 1px 0 rgba(255, 255, 255, 0.20) inset,
+       0 1px 3px rgba(0, 30, 60, 0.30);
    }
    .audit-grid { grid-template-columns: 1fr; }
    .f-bottom-bar { justify-content: center; text-align: center; }

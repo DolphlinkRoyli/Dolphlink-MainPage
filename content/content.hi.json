@@ -3,6 +3,7 @@
   "nav": {
     "brandName": "DOLPHLINK",
     "ctaLabel": "ब्रीफिंग का अनुरोध",
+    "ctaTip": "ब्रीफिंग के लिए टैप",
     "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
     "menuItems": [
       { "label": "होम",         "scrollTo": "h-sec", "href": "", "target": "" },

@@ -3,6 +3,7 @@
   "nav": {
     "brandName": "DOLPHLINK",
     "ctaLabel": "Solicitar Briefing",
+    "ctaTip": "Toca para reunión",
     "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
     "menuItems": [
       { "label": "Inicio",            "scrollTo": "h-sec", "href": "", "target": "" },
