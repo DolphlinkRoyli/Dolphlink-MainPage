@@ -17,7 +17,10 @@
 
   if (window.DLPKScanner) return;
 
-  const JSQR_URL = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
+  // Local-first; CDN fallback set up inside loadJSQR(). Lib is only fetched
+  // the first time the user opens the QR scanner (rare path).
+  const JSQR_LOCAL = 'lib/jsQR.js';
+  const JSQR_CDN   = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
   const ROOT_ID  = 'dlpk-scanner-root';
 
   // ---------------------------------------------------------------------------
@@ -256,9 +259,15 @@
     if (window.jsQR) return Promise.resolve();
     return new Promise(function (resolve, reject) {
       const s = document.createElement('script');
-      s.src = JSQR_URL;
+      s.src = JSQR_LOCAL;
       s.onload = function () { resolve(); };
-      s.onerror = function () { reject(new Error('jsQR load failed')); };
+      s.onerror = function () {
+        const fb = document.createElement('script');
+        fb.src = JSQR_CDN;
+        fb.onload = function () { resolve(); };
+        fb.onerror = function () { reject(new Error('jsQR load failed')); };
+        document.head.appendChild(fb);
+      };
       document.head.appendChild(s);
     });
   }

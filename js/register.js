@@ -705,11 +705,20 @@
     const target = $('dlpk-card-qr');
     target.innerHTML = '';
     if (!window.qrcode) {
+      // Local-first (lib/qrcode.min.js), CDN fallback. Same lazy pattern
+      // as main.js so the briefing modal QR loads instantly on repeat
+      // visits (cached by service worker).
       qrLibLoading = qrLibLoading || new Promise(function (resolve, reject) {
         const s = document.createElement('script');
-        s.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+        s.src = 'lib/qrcode.min.js';
         s.onload = function () { resolve(); };
-        s.onerror = function () { reject(new Error('qr load failed')); };
+        s.onerror = function () {
+          const fb = document.createElement('script');
+          fb.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+          fb.onload = function () { resolve(); };
+          fb.onerror = function () { reject(new Error('qr load failed')); };
+          document.head.appendChild(fb);
+        };
         document.head.appendChild(s);
       });
       try { await qrLibLoading; } catch (e) {

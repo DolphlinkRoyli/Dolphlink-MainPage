@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v98';
+const CACHE_VERSION = 'dolphlink-v123';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -35,10 +35,17 @@ const PRECACHE = [
   SCOPE + 'c/index.html',
   SCOPE + 'c/c.css',
   SCOPE + 'js/c.js',
-  SCOPE + 'media/img/hero-bg.webp',
+  SCOPE + 'media/img/video-poster.webp',
+  SCOPE + 'media/video/current.mp4',
   SCOPE + 'media/icon/3D/logo.webp',
-  SCOPE + 'media/icon/3D/logo.svg',
-  SCOPE + 'seo/site.webmanifest'
+  SCOPE + 'seo/site.webmanifest',
+  // Local copies of external libs (populated by lib/download.ps1).
+  // Pre-cache on install so offline mode + repeat visits skip the CDN.
+  // If these files don't exist yet, addAll() rejects but we log + continue
+  // (see install handler) — the JS loaders fall back to jsdelivr.
+  SCOPE + 'lib/echarts.min.js',
+  SCOPE + 'lib/world.json',
+  SCOPE + 'lib/qrcode.min.js'
 ];
 
 self.addEventListener('install', (event) => {

@@ -55,6 +55,18 @@ function applyTextContent(root) {
   });
 }
 
+// Hero KPI stat row — 3 compact numbers (uptime / routes / countries).
+// Sits between the hero tagline and the CTA buttons. Pure visual,
+// no hover, no click. Each item is value (big) + label (small caps).
+function renderHeroStats(container, items) {
+  container.innerHTML = items.map(s => `
+    <div class="hero-stat">
+      <span class="hero-stat-value">${escapeHtml(s.value)}</span>
+      <span class="hero-stat-label">${escapeHtml(s.label)}</span>
+    </div>
+  `).join('');
+}
+
 // Render the 4 reliability stat-cards. Click → opens a modal with full description.
 function renderStats(container, stats) {
   container.innerHTML = stats.map(s => {
@@ -345,13 +357,14 @@ const SVG_ICON_BUILDERS = {
 // TOP PICK / NEW / etc.) sourced from content.json's `recommend` field.
 // `data-recommend-tier` lets CSS apply different chromatic accents per tier
 // (gold for premium tiers, blue for foundational, green for trending).
-function renderPortfolios(container, items) {
-  container.innerHTML = items.map(p => {
-    const tagline = p.tagline ? `<span class="portfolio-tagline">${escapeHtml(p.tagline)}</span>` : '';
-    const recommend = p.recommend
-      ? `<span class="portfolio-badge" data-tier="${escapeHtml(p.recommendTier || 'gold')}">${escapeHtml(p.recommend)}</span>`
-      : '';
-    return `
+// Build a single portfolio card. Pulled out so the pillar renderer can
+// call it per-item without duplicating the markup template.
+function buildPortfolioCard(p) {
+  const tagline = p.tagline ? `<span class="portfolio-tagline">${escapeHtml(p.tagline)}</span>` : '';
+  const recommend = p.recommend
+    ? `<span class="portfolio-badge" data-tier="${escapeHtml(p.recommendTier || 'gold')}">${escapeHtml(p.recommend)}</span>`
+    : '';
+  return `
     <button type="button" class="btn-portfolio" data-portfolio="${escapeHtml(p.key)}"
             data-modal-icon="${escapeHtml(p.icon)}"
             data-modal-eyebrow="${escapeHtml(p.tagline || '')}"
@@ -369,6 +382,39 @@ function renderPortfolios(container, items) {
       <span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span>
     </button>
   `;
+}
+
+// Render the portfolio grid. Three-pillar mode: when a `pillars`
+// array is present on the data, group items by `pillar` key and emit
+// a small section header above each group. Falls back to a flat
+// grid (legacy 9-card layout) if pillars are missing.
+function renderPortfolios(container, items) {
+  const pillars = (CONTENT.portfolios && CONTENT.portfolios.pillars) || null;
+  if (!pillars || !Array.isArray(pillars) || !pillars.length) {
+    container.innerHTML = items.map(buildPortfolioCard).join('');
+    return;
+  }
+  // Group + render pillar by pillar
+  const byPillar = {};
+  items.forEach(p => {
+    const k = p.pillar || 'other';
+    (byPillar[k] = byPillar[k] || []).push(p);
+  });
+  container.innerHTML = pillars.map(pillar => {
+    const list = byPillar[pillar.key] || [];
+    if (!list.length) return '';
+    return `
+      <div class="portfolio-pillar" data-pillar="${escapeHtml(pillar.key)}">
+        <header class="portfolio-pillar-head">
+          <span class="portfolio-pillar-name">${escapeHtml(pillar.name)}</span>
+          <span class="portfolio-pillar-tagline">${escapeHtml(pillar.tagline || '')}</span>
+        </header>
+        <p class="portfolio-pillar-desc">${escapeHtml(pillar.desc || '')}</p>
+        <div class="portfolio-pillar-grid">
+          ${list.map(buildPortfolioCard).join('')}
+        </div>
+      </div>
+    `;
   }).join('');
 }
 
@@ -412,21 +458,54 @@ function renderAudit(container, items) {
 // Departments strip below: white card on light section bg with a
 // brand-blue left blade. The blade picks up the industry's signature
 // color via `--accent` for subtle differentiation between cards.
-// No "Learn More" links yet (industry landing pages aren't built),
-// no numbered prefix — just name + description + compliance chips.
+// Industries renderer.
+// Two-tier mode: when items have a `tier` key ("primary" or "secondary"),
+// the four primary verticals render as full cards in a top grid, and the
+// remaining "Also Serving" sectors render as compact pill-style cards
+// underneath. This focuses buyer attention on the high-conversion verticals
+// (Banking / Government / Healthcare / Insurance) while keeping the longer
+// tail visible for SEO + completeness.
 function renderIndustries(container, items) {
-  container.innerHTML = items.map(it => {
+  const buildCard = (it, mini) => {
     const chips = (it.chips || [])
       .map(c => `<span class="industry-chip">${escapeHtml(c)}</span>`)
       .join('');
     const accent = it.color ? ` style="--accent:${escapeHtml(it.color)}"` : '';
+    if (mini) {
+      return `
+        <article class="industry-card industry-card--mini" data-industry="${escapeHtml(it.key)}"${accent}>
+          <h4 class="industry-name">${escapeHtml(it.name)}</h4>
+          <p class="industry-desc">${escapeHtml(it.desc)}</p>
+        </article>`;
+    }
     return `
-    <article class="industry-card" data-industry="${escapeHtml(it.key)}"${accent}>
-      <h3 class="industry-name">${escapeHtml(it.name)}</h3>
-      <p class="industry-desc">${escapeHtml(it.desc)}</p>
-      <div class="industry-chips">${chips}</div>
-    </article>`;
-  }).join('');
+      <article class="industry-card" data-industry="${escapeHtml(it.key)}"${accent}>
+        <h3 class="industry-name">${escapeHtml(it.name)}</h3>
+        <p class="industry-desc">${escapeHtml(it.desc)}</p>
+        <div class="industry-chips">${chips}</div>
+      </article>`;
+  };
+
+  // If no tiering metadata, fall back to the legacy flat grid
+  const hasTier = items.some(i => i.tier);
+  if (!hasTier) {
+    container.innerHTML = items.map(it => buildCard(it, false)).join('');
+    return;
+  }
+
+  const labels = (CONTENT.industries) || {};
+  const primary   = items.filter(i => i.tier === 'primary');
+  const secondary = items.filter(i => i.tier === 'secondary');
+  container.innerHTML =
+    `<div class="industries-tier industries-tier--primary">
+       ${primary.map(it => buildCard(it, false)).join('')}
+     </div>` +
+    (secondary.length
+      ? `<div class="industries-tier-label">${escapeHtml(labels.secondaryLabel || 'Also Serving')}</div>
+         <div class="industries-tier industries-tier--secondary">
+           ${secondary.map(it => buildCard(it, true)).join('')}
+         </div>`
+      : '');
 }
 
 // Departments strip — 3 functional teams that DOLPHLINK serves inside
@@ -455,16 +534,31 @@ function renderLegalLinks(container, items) {
 // to her public landing page (/c/?u=joycetsam). Lazy-loads the
 // `qrcode-generator` library on demand (same library + CDN as the
 // in-page Briefing modal — no duplicate dependency).
+// Local-first loader: try lib/qrcode.min.js (cached by SW + same-origin),
+// fall back to jsdelivr if the local copy is missing (e.g. before the user
+// runs lib/download.ps1).
 let qrLibLoadingP = null;
-async function loadQrLib() {
-  if (window.qrcode) return window.qrcode;
-  qrLibLoadingP = qrLibLoadingP || new Promise(function (resolve, reject) {
+function loadScriptOnce(localUrl, cdnUrl) {
+  return new Promise(function (resolve, reject) {
     const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
-    s.onload = function () { resolve(window.qrcode); };
-    s.onerror = function () { reject(new Error('qr load failed')); };
+    s.src = localUrl;
+    s.onload = function () { resolve(); };
+    s.onerror = function () {
+      const fb = document.createElement('script');
+      fb.src = cdnUrl;
+      fb.onload = function () { resolve(); };
+      fb.onerror = function () { reject(new Error('script load failed: ' + cdnUrl)); };
+      document.head.appendChild(fb);
+    };
     document.head.appendChild(s);
   });
+}
+async function loadQrLib() {
+  if (window.qrcode) return window.qrcode;
+  qrLibLoadingP = qrLibLoadingP || loadScriptOnce(
+    'lib/qrcode.min.js',
+    'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js'
+  ).then(function () { return window.qrcode; });
   return qrLibLoadingP;
 }
 async function renderFooterCard() {
@@ -533,31 +627,48 @@ function renderSocial(container, items) {
   }).join('');
 }
 
-// Trust wall — render carrier and regulator wordmarks as styled text.
-// Each mark gets its own --i index so a staggered "lighting wave" travels
-// through the row (CSS `animation-delay: calc(var(--i) * 0.18s)`). The
-// outer `.trust-loop` slides horizontally for marquee. Items are duplicated
-// once so the CSS can wrap with translateX(-50%) seamlessly.
-//
-// `connect: true` inserts a `<span class="trust-link">` between items so
-// the carrier row reads as a connected network bus (thin gold line + a
-// glowing node dot at the midpoint). Compliance row keeps simple gaps.
+// Tiny inline icons for the regulator pills that have publicly-known
+// public symbols (shield for ISO 27001, lock for SOC 2, EU stars for GDPR,
+// MAS roundel for MAS TRM, etc.). Pure SVG paths so no extra HTTP requests.
+const REGULATOR_ICONS = {
+  'ISO 27001': '<path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12 L11 14 L15 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+  'SOC 2':     '<rect x="5" y="11" width="14" height="9" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor"/>',
+  'GDPR':      '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="currentColor"/>',
+  'MAS TRM':   '<path d="M3 12 L12 4 L21 12 L21 19 H3 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 19 V14 H15 V19" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+  'IM8':       '<rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9 H16 M8 12 H16 M8 15 H13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  'PDPA':      '<path d="M12 2 L20 6 V13 C20 17.5 16.5 21 12 22 C7.5 21 4 17.5 4 13 V6 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/>'
+};
+
+// Trust wall — STATIC grid layout (no marquee).
+// Carriers (`connect: true`): 4 equal cells in a single-row grid.
+//   First three are real carrier wordmarks; last is a numeric stat
+//   ("1,000+ Global Routes") with a gold accent so it reads as the network
+//   indicator instead of a fourth wordmark.
+// Regulators (`connect: false`): static row of pill-style badges, each
+//   with a small inline SVG icon prefix — adds visual weight + recognition.
 function renderTrustWall(container, items, connect) {
-  const total = items.length;
-  const link = '<span class="trust-link" aria-hidden="true"></span>';
-  const buildSet = (offset) => items.map((it, idx) =>
-    `<span class="trust-mark" style="--i:${(offset + idx) % total}">${escapeHtml(it.name)}</span>`
-  ).join(connect ? link : '');
-  // For connected mode, also place a link BETWEEN the two duplicated sets
-  // so the connection wraps cleanly through the marquee loop.
-  const sep = connect ? link : '';
-  container.innerHTML =
-    `<div class="trust-loop" style="--n:${total}">${buildSet(0)}${sep}${buildSet(0)}</div>`;
+  if (connect) {
+    container.innerHTML = items.map((it) => {
+      const name = it.name || '';
+      const isStat = /\b\d[\d,]*\+?\b/.test(name);
+      const cls = isStat ? 'trust-mark trust-mark--stat' : 'trust-mark';
+      return `<span class="${cls}">${escapeHtml(name)}</span>`;
+    }).join('');
+  } else {
+    container.innerHTML = items.map((it) => {
+      const name = it.name || '';
+      const iconPath = REGULATOR_ICONS[name];
+      const icon = iconPath
+        ? `<svg class="trust-mark-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true">${iconPath}</svg>`
+        : '';
+      return `<span class="trust-mark">${icon}<span class="trust-mark-label">${escapeHtml(name)}</span></span>`;
+    }).join('');
+  }
 }
 
 // Content version — bump this when CSV/JSON changes so browsers bypass stale cache.
 // Ties together: cache-buster query param + visible version in <html data-content-version>.
-const CONTENT_VERSION = '20260507n';
+const CONTENT_VERSION = '20260507x';
 
 // Hide the inline pre-read loader (defined in index.html). Called once
 // content.json is rendered, AND defensively after a 5s timeout in case
@@ -603,10 +714,36 @@ function showEmergencyBanner() {
   if (reloadBtn) reloadBtn.addEventListener('click', () => location.reload());
 }
 
+// Yield to the browser so the long render pass becomes a series of short
+// tasks. Uses scheduler.yield() where available (Chrome 129+), falling back
+// to a 0ms postTask / setTimeout. Every yield gives the compositor a chance
+// to ship a frame and the input handler a chance to fire.
+function yieldToMain() {
+  if (window.scheduler && typeof window.scheduler.yield === 'function') {
+    return window.scheduler.yield();
+  }
+  return new Promise(r => setTimeout(r, 0));
+}
+
+// Above-the-fold renderers paint immediately; below-the-fold ones yield
+// between each so we never block the main thread for >50ms. Lighthouse
+// flagged a single 923ms long task in this function — splitting it lets
+// the browser interleave layout, paint and input handling.
+const ABOVE_FOLD_KEYS = new Set([
+  'reliability.stats',     // Hero stat-strip
+  'nav.menuItems',         // Top nav
+  'trustWall.operators',   // Trust strip (just below hero)
+  'trustWall.regulators'
+]);
+
 // Entry point — fetch content.json then patch the page
 async function loadAndRender() {
   try {
-    const r = await fetch(`content/content.json?v=${CONTENT_VERSION}`, { cache: 'no-cache' });
+    // No `cache: 'no-cache'` — the version-pinned URL already serves as
+    // a cache buster, AND letting the browser cache means the
+    // <link rel="preload" as="fetch"> in <head> can hand the result
+    // straight to this fetch (avoiding a duplicate request).
+    const r = await fetch(`content/content.json?v=${CONTENT_VERSION}`);
     if (!r.ok) throw new Error('fetch failed');
     CONTENT = await r.json();
   } catch (e) {
@@ -619,12 +756,14 @@ async function loadAndRender() {
   // 1) Patch [data-key] text + [data-href-key] hrefs
   applyTextContent(document);
 
-  // 2) Render repeating structures (stats / portfolios / audit boxes)
-  document.querySelectorAll('[data-render]').forEach(node => {
+  // 2) Render repeating structures. Above-fold renderers run synchronously;
+  // below-fold ones are deferred behind a yield to slice the long task.
+  const renderNode = (node) => {
     const key = node.dataset.render;
     const data = getByPath(CONTENT, key);
     if (!Array.isArray(data)) return;
     if (key === 'reliability.stats') renderStats(node, data);
+    else if (key === 'hero.stats') renderHeroStats(node, data);
     else if (key === 'portfolios.items') renderPortfolios(node, data);
     else if (key === 'audit.items') renderAudit(node, data);
     else if (key === 'nav.menuItems') renderMenu(node, data);
@@ -634,7 +773,14 @@ async function loadAndRender() {
     else if (key === 'departments.items') renderDepartments(node, data);
     else if (key === 'footer.legalLinks') renderLegalLinks(node, data);
     else if (key === 'footer.social') renderSocial(node, data);
-  });
+  };
+
+  const allNodes = Array.from(document.querySelectorAll('[data-render]'));
+  const above = allNodes.filter(n => ABOVE_FOLD_KEYS.has(n.dataset.render));
+  const below = allNodes.filter(n => !ABOVE_FOLD_KEYS.has(n.dataset.render));
+
+  // Above-fold: render now, in one tick.
+  above.forEach(renderNode);
 
   // 3) Map data (sector data no longer needed — industries render as
   // direct HTML cards via renderIndustries / renderDepartments)
@@ -642,8 +788,16 @@ async function loadAndRender() {
     baiwuLocations = CONTENT.charts.locations || [];
   }
 
-  // 4) Reveal — content is in, fade out the pre-read screen
+  // 4) Reveal — content is in, fade out the pre-read screen.
+  // We do this BEFORE finishing below-fold renders so the user sees the
+  // hero painted as soon as the above-fold structure is in.
   hideLoader();
+
+  // 5) Below-fold: yield between each so the main thread stays responsive.
+  for (const node of below) {
+    await yieldToMain();
+    renderNode(node);
+  }
 }
 
 // Kick off fetch immediately (don't wait for DOMContentLoaded — saves round-trip)
@@ -663,6 +817,15 @@ const reduceMotion = window.matchMedia &&
 (function () {
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
+  // Decorative particle network retired. Sovereign-infrastructure brand
+  // language calls for stillness; a constant rAF loop drawing 80 particles
+  // + connection lines was decoration that competed with the trust strip
+  // marquee and burned battery on low-end Android. The canvas element
+  // remains so older HTML in caches doesn't 404 when querying it, but the
+  // module bails before running any draw calls.
+  canvas.remove();
+  return;
+  // eslint-disable-next-line no-unreachable
   const ctx = canvas.getContext('2d');
   let particles = [];
   let rafId = null;
@@ -748,20 +911,63 @@ const reduceMotion = window.matchMedia &&
     }
   });
 
+  // Pause the rAF loop entirely while the hero video is playing. Even
+  // though CSS hides the canvas via `body.video-playing`, stopping the
+  // animation loop frees the main thread completely — measurable on
+  // low-end Android where every spare ms helps the H.264 decoder.
+  document.addEventListener('dolphlink:videoplay', () => {
+    running = false;
+  });
+  document.addEventListener('dolphlink:videopause', () => {
+    if (!running) {
+      running = true;
+      if (!rafId) animate();
+    }
+  });
+
   window.addEventListener('resize', debounce(init, 150));
-  init();
-  animate();
+  // Decorative particle-net is non-critical — defer its first paint until
+  // the browser is idle so it doesn't compete with above-the-fold render
+  // and content-pipeline hydration. Long-task profile shows this single
+  // IIFE was contributing meaningfully to the initial main-thread block.
+  const startNet = () => { init(); animate(); };
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(startNet, { timeout: 1500 });
+  } else {
+    setTimeout(startNet, 600);
+  }
 })();
 
+// ============================================================================
+// Smooth scroll — REVERTED to native scrolling.
+// ----------------------------------------------------------------------------
+// Earlier we hijacked the wheel event with preventDefault + a lerp loop, which
+// broke scrolling under some browser/extension combinations and was hard to
+// debug. We're back to the browser's native scroll: it's already smooth on
+// modern OSes, never blocks the page, and integrates correctly with extensions
+// (vimium, browser zoom, etc).
+//
+// `scrollToSec()` keeps a programmatic smooth scroll for in-page anchor
+// clicks via the standard `window.scrollTo({behavior:'smooth'})`. That's
+// supported in every browser since 2018 and looks identical to what Lenis
+// produced for the same operation.
+// ============================================================================
 function scrollToSec(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  window.scrollTo({ top: el.offsetTop - 40, behavior: 'smooth' });
+  // Instant jump — no smooth animation. Sovereign register prefers
+  // direct navigation over UX polish.
+  const y = el.getBoundingClientRect().top + window.scrollY - 40;
+  window.scrollTo(0, y);
 }
 
 window.addEventListener('load', async function () {
   // Wait for JSON render so stat-card / portfolio / audit DOM is stable before binding handlers
   await contentReady;
+
+  // (Custom smooth-scroll module removed — see scrollToSec() comment above.
+  // Native scroll handles wheel/touch; programmatic smooth-scroll is used
+  // only for in-page anchor jumps.)
 
   document.querySelectorAll('[data-scroll-to]').forEach(a => {
     a.addEventListener('click', function (ev) {
@@ -909,117 +1115,23 @@ window.addEventListener('load', async function () {
   bindCardDetail('.stat-strip', 'stat-card-detail', '.stat-card');
   bindCardDetail('.portfolio-strip', 'portfolio-card-detail', '.btn-portfolio');
 
-  // Hero video — play/pause toggle, no loop, rewind on end
-  const heroVideo = document.querySelector('.v-frame video');
-  const playBtn = document.querySelector('.v-play-btn');
-  if (heroVideo && playBtn) {
-    heroVideo.volume = 0.12;
-
-    const syncBtn = () => {
-      const isPlaying = !heroVideo.paused && !heroVideo.ended;
-      playBtn.classList.toggle('playing', isPlaying);
-    };
-
-    // Sync button state with video play/pause events
-    heroVideo.addEventListener('play', syncBtn);
-    heroVideo.addEventListener('pause', syncBtn);
-
-    // On end: rewind to start and show play button (no loop)
-    heroVideo.addEventListener('ended', () => {
-      heroVideo.currentTime = 0;
-      syncBtn();
-    });
-
-    playBtn.addEventListener('click', () => {
-      if (heroVideo.paused || heroVideo.ended) {
-        // Unmute on first click (browser autoplay policies require muted start)
-        heroVideo.muted = false;
-        heroVideo.volume = 0.12;
-        const p = heroVideo.play();
-        if (p && typeof p.catch === 'function') p.catch(() => {});
-      } else {
-        heroVideo.pause();
-      }
-    });
-
-    syncBtn(); // Initial state
-
-    // Volume slider (default 0.12)
-    const volSlider = document.querySelector('.v-vol-slider');
-    const muteBtn = document.querySelector('.v-mute-btn');
-    const fullBtn = document.querySelector('.v-full-btn');
-
-    const syncMuteIcon = () => {
-      if (!muteBtn) return;
-      const effectivelyMuted = heroVideo.muted || heroVideo.volume === 0;
-      muteBtn.classList.toggle('muted', effectivelyMuted);
-    };
-
-    if (volSlider) {
-      volSlider.value = '0.12';
-      volSlider.addEventListener('input', () => {
-        const v = parseFloat(volSlider.value);
-        heroVideo.volume = v;
-        if (v === 0) heroVideo.muted = true;
-        else if (heroVideo.muted) heroVideo.muted = false;
-        syncMuteIcon();
-      });
-    }
-
-    if (muteBtn) {
-      muteBtn.addEventListener('click', () => {
-        if (heroVideo.muted) {
-          heroVideo.muted = false;
-          if (heroVideo.volume === 0) {
-            heroVideo.volume = 0.12;
-            if (volSlider) volSlider.value = '0.12';
-          }
-        } else {
-          heroVideo.muted = true;
-        }
-        syncMuteIcon();
-      });
-    }
-
-    heroVideo.addEventListener('volumechange', syncMuteIcon);
-    syncMuteIcon();
-
-    // Fullscreen toggle (WebKit prefix fallback)
-    if (fullBtn) {
-      fullBtn.addEventListener('click', () => {
-        const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
-        if (fsEl) {
-          (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-        } else {
-          const target = heroVideo;
-          const req = target.requestFullscreen
-            || target.webkitRequestFullscreen
-            || target.webkitEnterFullscreen;
-          if (req) req.call(target);
-        }
-      });
-      const syncFullIcon = () => {
-        const fs = !!(document.fullscreenElement || document.webkitFullscreenElement);
-        fullBtn.classList.toggle('fullscreen', fs);
-      };
-      document.addEventListener('fullscreenchange', syncFullIcon);
-      document.addEventListener('webkitfullscreenchange', syncFullIcon);
-    }
-  }
+  // Hero video is now GIF-style ambient loop — autoplay loop muted,
+  // no controls, no JS. The <video> element has the `autoplay loop muted`
+  // attributes inline so the browser handles everything natively.
+  // (Old play/mute/fullscreen handlers retired along with their UI buttons.)
 
   const mapEl = document.getElementById('global-map');
   if (!mapEl) return;
 
-  // ECharts lazy-load — IntersectionObserver injects the CDN only when charts enter viewport
-  const loadECharts = () => new Promise((resolve, reject) => {
-    if (typeof window.echarts !== 'undefined') return resolve(window.echarts);
-    const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js';
-    s.async = true;
-    s.onload = () => resolve(window.echarts);
-    s.onerror = reject;
-    document.head.appendChild(s);
-  });
+  // ECharts lazy-load — local-first, jsdelivr fallback. Triggered only
+  // when chart container scrolls within 200px of the viewport.
+  const loadECharts = () => {
+    if (typeof window.echarts !== 'undefined') return Promise.resolve(window.echarts);
+    return loadScriptOnce(
+      'lib/echarts.min.js',
+      'https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js'
+    ).then(() => window.echarts);
+  };
 
   const initCharts = async () => {
     try {
@@ -1185,8 +1297,10 @@ window.addEventListener('load', async function () {
   if (echarts.getMap && echarts.getMap('world')) {
     renderMap();
   } else {
-    fetch('https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json')
-      .then(r => r.json())
+    // Local-first, jsdelivr fallback for the world GeoJSON
+    fetch('lib/world.json')
+      .then(r => r.ok ? r.json() : Promise.reject(new Error('local world.json missing')))
+      .catch(() => fetch('https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json').then(r => r.json()))
       .then(geo => { echarts.registerMap('world', geo); renderMap(); })
       .catch(err => console.error('Failed to load world map GeoJSON:', err));
   }
@@ -1212,3 +1326,4 @@ window.addEventListener('load', async function () {
 
   } // end runCharts
 });
+
