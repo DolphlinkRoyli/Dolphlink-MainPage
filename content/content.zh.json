@@ -108,12 +108,12 @@
     "headerTag": "产品矩阵",
     "intro": "三大支柱、九款产品、一个主权级平台。从最贴合现有技术栈的入口起步，随业务规模扩展至相邻支柱。",
     "pillars": [
-      { "key": "connectivity",  "name": "连接",     "tagline": "Tier-1 运营商触达",
-        "desc": "运营商级通信底座：经 Tier-1 路由覆盖全球 200 多个国家与地区的短信、语音和号码服务。" },
-      { "key": "orchestration", "name": "编排",     "tagline": "多通道 + 开发者",
-        "desc": "统一消息中心、可编程 API，以及面向 AI 与人工协同对话流的零代码聊天机器人构建器。" },
-      { "key": "governance",    "name": "AI 治理",  "tagline": "主权管控 + 迁移",
-        "desc": "AI Agent 全流程编排、完整审计轨迹、运营分析，以及定制化 AI 数字化迁移服务。" }
+      { "key": "connectivity",  "name": "通信连接基础设施",     "tagline": "Tier-1 运营商触达",
+        "desc": "承载全球关键通信的运营商级网络骨干" },
+      { "key": "orchestration", "name": "编排调度层",     "tagline": "多通道 + 开发者",
+        "desc": "面向企业可编程通信与 AI 工作流的执行层" },
+      { "key": "governance",    "name": "AI 治理层",  "tagline": "主权管控 + 迁移",
+        "desc": "驱动 AI 企业运营与合规的主权控制平面" }
     ],
     "items": [
       { "key": "sms", "pillar": "connectivity", "icon": "icon_4", "label": "SMS Platform",

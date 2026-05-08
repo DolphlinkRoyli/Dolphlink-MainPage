@@ -106,12 +106,12 @@
     "headerTag": "Portfolio",
     "intro": "Tiga tunjang, sembilan produk, satu platform berdaulat. Pilih titik masuk yang sesuai dengan tindanan teknologi anda hari ini, dan kembangkan ke tunjang bersebelahan apabila operasi anda berkembang.",
     "pillars": [
-      { "key": "connectivity",  "name": "Ketersambungan", "tagline": "Capaian Operator Tier-1",
-        "desc": "Tulang belakang gred operator. SMS, suara dan nombor telefon merentasi 200+ negara melalui laluan Tier-1." },
-      { "key": "orchestration", "name": "Orkestrasi", "tagline": "Pelbagai Saluran + Pembangun",
-        "desc": "Hab pemesejan bersepadu, API boleh diaturcara, dan pembina chatbot tanpa kod untuk aliran perbualan AI-Manusia." },
-      { "key": "governance",    "name": "Tadbir Urus AI",   "tagline": "Arahan Berdaulat + Migrasi",
-        "desc": "Orkestrasi ejen dengan jejak audit penuh, analitik operasi, dan perkhidmatan migrasi AI-Digital tersuai." }
+      { "key": "connectivity",  "name": "INFRASTRUKTUR KONEKTIVITI", "tagline": "Capaian Operator Tier-1",
+        "desc": "Tulang belakang komunikasi global merentasi rangkaian gred-pembawa" },
+      { "key": "orchestration", "name": "LAPISAN ORKESTRASI", "tagline": "Pelbagai Saluran + Pembangun",
+        "desc": "Lapisan pelaksanaan untuk komunikasi perusahaan boleh-program dan aliran kerja AI" },
+      { "key": "governance",    "name": "LAPISAN TADBIR URUS AI",   "tagline": "Arahan Berdaulat + Migrasi",
+        "desc": "Satah kawalan berdaulat untuk operasi perusahaan dipacu AI dan pematuhan" }
     ],
     "items": [
       { "key": "sms", "pillar": "connectivity", "icon": "icon_4", "label": "SMS Platform",

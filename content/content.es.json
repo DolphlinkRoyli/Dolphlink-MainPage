@@ -106,12 +106,12 @@
     "headerTag": "Portafolio",
     "intro": "Tres pilares, nueve productos, una plataforma soberana. Elija el punto de entrada que se adapte a su pila tecnológica actual y expándase a pilares adyacentes a medida que sus operaciones crezcan.",
     "pillars": [
-      { "key": "connectivity",  "name": "Conectividad", "tagline": "Alcance Operador Tier-1",
-        "desc": "Columna vertebral de grado operador. SMS, voz y números telefónicos en más de 200 países vía rutas Tier-1." },
-      { "key": "orchestration", "name": "Orquestación", "tagline": "Multicanal + Desarrolladores",
-        "desc": "Hub unificado de mensajería, API programable y constructor de chatbots sin código para flujos conversacionales IA-humano." },
-      { "key": "governance",    "name": "Gobernanza de IA",   "tagline": "Comando Soberano + Migración",
-        "desc": "Orquestación de agentes con trazabilidad completa, analítica operacional y servicios personalizados de migración IA-Digital." }
+      { "key": "connectivity",  "name": "INFRAESTRUCTURA DE CONECTIVIDAD", "tagline": "Alcance Operador Tier-1",
+        "desc": "Columna vertebral de comunicaciones globales sobre redes de grado operador" },
+      { "key": "orchestration", "name": "CAPA DE ORQUESTACIÓN", "tagline": "Multicanal + Desarrolladores",
+        "desc": "Capa de ejecución para comunicaciones empresariales programables y flujos de trabajo con IA" },
+      { "key": "governance",    "name": "CAPA DE GOBERNANZA DE IA",   "tagline": "Comando Soberano + Migración",
+        "desc": "Plano de control soberano para operaciones empresariales impulsadas por IA y cumplimiento" }
     ],
     "items": [
       { "key": "sms", "pillar": "connectivity", "icon": "icon_4", "label": "SMS Platform",
