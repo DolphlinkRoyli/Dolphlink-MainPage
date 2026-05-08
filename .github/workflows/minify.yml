@@ -1,0 +1,65 @@
+name: Auto Minify CSS/JS
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'css/**.css'
+      - 'js/**.js'
+      - '!css/**.min.css'
+      - '!js/**.min.js'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  minify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install minifiers
+        run: |
+          npm install -g clean-css-cli@^5 terser@^5
+
+      - name: Minify CSS
+        run: |
+          for f in css/*.css; do
+            base="${f%.css}"
+            # Skip files already minified
+            [[ "$base" == *.min ]] && continue
+            cleancss -O2 -o "${base}.min.css" "$f"
+            echo "✓ ${base}.min.css ($(stat -c%s ${base}.min.css) bytes)"
+          done
+
+      - name: Minify JS
+        run: |
+          for f in js/*.js; do
+            base="${f%.js}"
+            [[ "$base" == *.min ]] && continue
+            terser "$f" \
+              --compress passes=2,drop_console=false \
+              --mangle \
+              --output "${base}.min.js"
+            echo "✓ ${base}.min.js ($(stat -c%s ${base}.min.js) bytes)"
+          done
+
+      - name: Patch index.html to reference .min files
+        run: |
+          # Rewrite HTML refs: style.css → style.min.css, main.js → main.min.js
+          sed -i 's|href="css/style.css"|href="css/style.min.css"|g; s|src="js/main.js"|src="js/main.min.js"|g' index.html
+
+      - name: Commit minified files + patched HTML
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-minify CSS/JS + patch HTML refs [skip ci]"
+          file_pattern: "css/*.min.css js/*.min.js index.html"
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com

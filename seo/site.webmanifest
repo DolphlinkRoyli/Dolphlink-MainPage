@@ -6,7 +6,7 @@
   "scope": "/Dolphlink-MainPage/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#FFFFFF",
+  "background_color": "#0059B3",
   "theme_color": "#0059B3",
   "lang": "en",
   "dir": "ltr",
@@ -17,12 +17,6 @@
       "sizes": "any",
       "type": "image/webp",
       "purpose": "any"
-    },
-    {
-      "src": "../media/icon/3D/logo.webp",
-      "sizes": "any",
-      "type": "image/webp",
-      "purpose": "maskable"
     }
   ],
   "shortcuts": [

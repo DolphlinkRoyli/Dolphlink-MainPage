@@ -2652,7 +2652,27 @@
    letter-spacing: 0.4px !important;
  }
  .footer .f-col-maplink { margin-top: 6px !important; }
+ /* Install App is now a real <button> (not an <a>) for correct ARIA
+    semantics — it triggers a JS PWA-install prompt, no navigation.
+    Reset the browser's default button chrome so it visually matches
+    the surrounding gold action links. */
+ .footer .f-install-link {
+   background: transparent;
+   border: none;
+   padding: 6px 0;
+   margin: 0 0 4px;
+   display: block;
+   text-align: left;
+   cursor: pointer;
+   font-family: inherit;
+   line-height: 1.5;
+ }
  .footer .f-install-link:hover { color: #FFFFFF !important; }
+ .footer .f-install-link:focus-visible {
+   outline: 2px solid #FCD34D;
+   outline-offset: 2px;
+   border-radius: 2px;
+ }
 
  /* (Old `.f-quick-links` block removed — Quick Links section was retired
     when the footer was redesigned around the Business Inquiry card.) */
@@ -3014,13 +3034,16 @@
  }
  @media (max-width: 640px) {
    nav { padding: 0 3%; gap: 8px; flex-wrap: nowrap; min-width: 0; }
-   .brand { flex-shrink: 1; min-width: 0; overflow: hidden; }
+   .brand { flex-shrink: 1; min-width: 0; overflow: hidden; gap: 8px; }
+   /* Mobile brand sizing — Roy spec: bigger DOLPHLINK + logo on phones.
+      Now that the nav-CTA is a 36px icon (no longer a wide pill), there
+      is plenty of horizontal room for a bolder brand mark. */
    .brand-name {
-     font-size: 1.05rem;
+     font-size: 1.35rem;
      /* Avoid pushing the CTA off-screen on very narrow phones */
      overflow: hidden; text-overflow: clip; white-space: nowrap;
    }
-   .brand-logo { height: 44px; flex-shrink: 0; }
+   .brand-logo { height: 56px; flex-shrink: 0; }
    .nav-right { flex-shrink: 0; }
    .fixed-menu { display: none; }
    /* MOBILE CTA — Roy spec May 2026 (icon-only edition):

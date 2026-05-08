@@ -1,0 +1,46 @@
+key,icon,label,tagline,desc
+sms,icon_4,SMS Platform,"Global SMS API","Direct connections to 600+ tier-1 mobile operators deliver global SMS in under 10 seconds. Developer-first API with comprehensive documentation and unique keys, ready to integrate from any stack.
+
+Built-in Pages mobile landing pages, Campaigns for personalized bulk messaging, and two-way messaging via Short Codes, Long Numbers, and Opt-in keywords cover both transactional and marketing use cases.
+
+End-to-end TLS 1.3 encryption with priority routing for OTP and time-sensitive alerts. 24/7 NOC monitoring with automatic carrier failover keeps every message on the fastest available path."
+voice,icon_13,Voice & SIP,"Enterprise Voice","Geo-redundant SIP trunking with text-to-speech, audio notifications, call forwarding, and DTMF input forms a carrier-grade backbone for any voice workload.
+
+Detailed per-call insights power fraud monitoring and anti-fraud controls. Engineered for contact centers, SMBs, and IP PBX resellers that demand uptime and accountability.
+
+WebRTC bridge for browser-based agent consoles plus full G.711, G.729, and Opus codec support. Tamper-proof call recording, real-time jitter and packet-loss metrics, and one-click DID porting round out the stack."
+numbers,icon_14,Phone Numbers,"Global DID Numbers","Instant access to local, national, mobile, and toll-free numbers across 100+ countries. Provision a number in one region and another in the next within the same console session.
+
+Alphanumeric Sender IDs, Short Codes, and Hosted Numbers (SMS and Voice on existing landlines without switching carriers) plug into your current operations. Built-in Compliance Intelligence automatically evaluates each region's regulatory requirements.
+
+Number porting in under 48 hours where supported, plus vanity reservation and instant provisioning. A centralized inventory dashboard tracks usage, billing, and compliance status across every territory in one view."
+touch,icon_11,Dolphlink Touch,"Multi-Channel Hub","A unified business messaging hub. One platform for SMS, WhatsApp, RCS, Email, and emerging channels — every conversation in one place, no matter where it started.
+
+Marketing-friendly templates, a drag-and-drop campaign builder, and intelligent automatic fallback that switches channels if delivery fails. Built for revenue, marketing, and customer engagement teams that ship fast.
+
+Native WhatsApp Business Platform integration with template approval workflow, dynamic segment targeting from behavior signals, and A/B testing across channels. Conversion analytics measure ROI end-to-end."
+api,icon_8,Dolphlink One-API,"Developer Platform","One programmable API across SMS, voice, WhatsApp, Email, and emerging channels. Send a message or place a call with a single call regardless of channel.
+
+Drop-in SDK with intelligent automatic fallback that switches channels when primary delivery fails. Engineered for developers building mission-critical workflows where every message must land.
+
+Five language SDKs covering Node, Python, Go, Java, and PHP, an interactive sandbox with live test numbers, and signed webhook delivery with automatic retry. Comprehensive logs and request replay turn days of debugging into minutes."
+smart,icon_12,Dolphlink Smart,"AI Chatbot Builder","A no-code conversation builder for AI-Human workflows. Drag, configure, and ship without ever touching a deployment pipeline.
+
+Bots handle the routine, human agents handle the nuance, and seamless handoffs keep every conversation continuous. Context-aware understanding from your own data, with ISO 27001, GDPR, and RBAC built in for regulated environments.
+
+Knowledge base ingestion from PDF, web, and database sources, fine-tuning for domain terminology, and multilingual conversation across 40+ languages. Sentiment detection escalates sensitive issues to human agents in seconds."
+nexus,icon_1,Dolphlink Nexus,"AI Agent Orchestration","NEW. The sovereign command center for AI-Human orchestration. Unify every bot, RPA flow, custom model, and human reviewer into one auditable control plane.
+
+Engineered for governments and regulated enterprises with built-in migration support, full data residency, RBAC, and activity logs. Every action is traceable, every dataset stays where regulation demands.
+
+A visual workflow designer connects any LLM, RPA tool, or human reviewer with conditional logic and approval gates. Tamper-evident audit trails capture every decision and data touch for regulator review, ready out of the box."
+console,icon_2,Operations Hub,"Ops Analytics","The Messaging Gateway centralizes API codes and key management. One dashboard for every credential, every channel, every team.
+
+Message Log delivers full transparency on every message — status, content, and real-time costs. Aggregated insights and real-time trends optimize every communication strategy as data flows in.
+
+Threshold-based alerts notify you when delivery rates drop or costs spike unexpectedly. Cost forecasting projects monthly spend by channel and region, while CSV and Webhook exports feed BI, finance, and compliance pipelines."
+custom,icon_9,AI-Digital Solutions,"Custom Integration","Tailored AI-Digital migration services for existing infrastructure projects. We meet your stack where it lives — on-prem, hybrid, or sovereign cloud.
+
+We engineer bespoke integrations between your legacy systems and DOLPHLINK's communications, AI orchestration, and compliance layers, delivered on your timeline, your data residency, and your governance requirements.
+
+A phased rollout begins with a four-week discovery and architecture workshop, followed by parallel-run pilots and gradual cutover. A dedicated solution architect, 24/7 priority support, and custom SLA terms protect mission-critical workflows throughout."
