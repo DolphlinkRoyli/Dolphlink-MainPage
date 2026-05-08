@@ -100,7 +100,7 @@ templates/
 
 # ----------------------------------------------------------------------------
 # Architecture / template guide docs — useful for devs but not for end users
-# Keep README.md as the only public-facing doc.
 # ----------------------------------------------------------------------------
 ARCHITECTURE.md
 TEMPLATE-GUIDE.md
+README.md
