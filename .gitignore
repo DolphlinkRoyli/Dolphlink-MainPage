@@ -16,6 +16,7 @@ templates/
 push-to-github.bat
 push-to-github.ps1
 push.bat
+bump-version.bat
 
 # ---- Original source assets â€” kept locally for re-processing ---------------
 media/_orig/

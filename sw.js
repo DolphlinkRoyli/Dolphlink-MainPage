@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DOLPHLINK Service Worker
  * ============================================================================
  * Caches the core shell (HTML, CSS, JS, hero image, icons) so the site loads
@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v235';
+const CACHE_VERSION = 'dolphlink-v236';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -21,13 +21,13 @@ const SCOPE = self.registration && self.registration.scope
 //
 // Engine layout (single-entry hook dispatcher + per-page subtrees):
 //
-//   js/app.js                ← entry, dispatched on every page
-//   js/engine/dispatch.js    ← reads <html data-page>, lazy-loads page module
-//   js/engine/core/...       ← helpers shared by 2+ pages (drive, vcard,
+//   js/app.js                â† entry, dispatched on every page
+//   js/engine/dispatch.js    â† reads <html data-page>, lazy-loads page module
+//   js/engine/core/...       â† helpers shared by 2+ pages (drive, vcard,
 //                              clipboard, strings, loader-shell)
-//   js/engine/home/...       ← homepage tree (the bulk of the JS)
-//   js/engine/card/index.js  ← /card/ digital-card page (legacy /c/ redirects)
-//   js/engine/sme/index.js   ← /sme/ landing page (no-op for now)
+//   js/engine/home/...       â† homepage tree (the bulk of the JS)
+//   js/engine/card/index.js  â† /card/ digital-card page (legacy /c/ redirects)
+//   js/engine/sme/index.js   â† /sme/ landing page (no-op for now)
 //
 // Per-page subtrees own their utils, renderers, modules, and icon
 // libraries. They import shared helpers from ../core/ when needed.
@@ -37,9 +37,9 @@ const PRECACHE = [
   SCOPE,
   SCOPE + 'index.html',
   SCOPE + 'offline.html',
-  SCOPE + 'css/tokens.css',           // design tokens — must load before style.css
+  SCOPE + 'css/tokens.css',           // design tokens â€” must load before style.css
   SCOPE + 'css/style.css',
-  SCOPE + 'css/sme.css',              // SME × Lark landing page styles
+  SCOPE + 'css/sme.css',              // SME Ã— Lark landing page styles
   SCOPE + 'css/register.css',
 
   // ---- Single application entry + the only file every page uses ----
@@ -52,7 +52,7 @@ const PRECACHE = [
   SCOPE + 'js/engine/core/strings.js',
   SCOPE + 'js/engine/core/vcard.js',
   SCOPE + 'js/engine/core/clipboard.js',
-  SCOPE + 'js/engine/core/url.js',          // safeHttpUrl — XSS shield for href= sites
+  SCOPE + 'js/engine/core/url.js',          // safeHttpUrl â€” XSS shield for href= sites
   SCOPE + 'js/engine/core/i18n.js',         // runtime locale swap (zh/ja/es/ms/hi)
   SCOPE + 'content/i18n/zh.json',
   SCOPE + 'content/i18n/ja.json',
@@ -102,14 +102,14 @@ const PRECACHE = [
   // ---- SME-page tree (loaded only when <html data-page="sme">) ----
   SCOPE + 'js/engine/sme/index.js',
 
-  // Card-page tree — primary URL is /card/?u=<localpart>. The legacy
+  // Card-page tree â€” primary URL is /card/?u=<localpart>. The legacy
   // /c/?u=<localpart> still works because c/index.html is a redirect
   // stub that JS-replaces to ../card/ + the original query string.
   SCOPE + 'card/',
   SCOPE + 'card/index.html',
   SCOPE + 'c/',
   SCOPE + 'c/index.html',
-  SCOPE + 'sme/',                     // SME × Lark landing page (built artifact)
+  SCOPE + 'sme/',                     // SME Ã— Lark landing page (built artifact)
   SCOPE + 'sme/index.html',
   SCOPE + 'css/card.css',
   SCOPE + 'media/img/video-poster.webp',
@@ -119,7 +119,7 @@ const PRECACHE = [
   // Local copies of external libs (populated by lib/download.ps1).
   // Pre-cache on install so offline mode + repeat visits skip the CDN.
   // If these files don't exist yet, addAll() rejects but we log + continue
-  // (see install handler) — engine/home/fallbacks.js degrades the feature
+  // (see install handler) â€” engine/home/fallbacks.js degrades the feature
   // to a still-useful static substitute.
   SCOPE + 'lib/echarts.min.js',
   SCOPE + 'lib/world.json',
@@ -163,13 +163,13 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
 
   // Only handle our own origin (don't intercept third-party requests like
-  // Google Fonts, jsdelivr CDN — let the browser handle them normally)
+  // Google Fonts, jsdelivr CDN â€” let the browser handle them normally)
   if (url.origin !== self.location.origin) return;
 
   // Skip range / partial requests (mostly <video src> byte-range fetches).
   if (req.headers.has('range')) return;
 
-  // content.json — always try network first so editors' updates show fast.
+  // content.json â€” always try network first so editors' updates show fast.
   if (url.pathname.endsWith('/content.json') || url.pathname.includes('/content/')) {
     event.respondWith(
       fetch(req)
