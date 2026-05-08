@@ -23,7 +23,7 @@
   /* --------------------------------------------------------------------------
    * NEUTRAL SCALE — borders, text, dividers
    * ------------------------------------------------------------------------ */
-  --border-line:        #E2E8F0;       /* Hairlines + card borders */
+  --border-line:        #EEF2F7;       /* Hairlines + card borders (lightened — Roy spec) */
   --text-main:          #0F172A;       /* Primary text */
   --text-sub:           #64748B;       /* Secondary / supporting text */
   --text-copyright:     #1E293B;       /* Footer fineprint */

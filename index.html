@@ -224,7 +224,7 @@
       retired page-loader. The new inline #dlpk-loader uses Inter,
       same as the rest of the site, so no second font request needed.) -->
  <link rel="stylesheet" href="css/tokens.css?v=1">
- <link rel="stylesheet" href="css/style.css?v=203">
+ <link rel="stylesheet" href="css/style.css?v=205">
  <!-- Was a `rel=preload` + JS-promoted-to-stylesheet trick, but the
       preload fired ~1.5s before the deferred pwa.js could run the
       promotion and Chrome flagged "preloaded but not used". Direct
@@ -572,7 +572,8 @@
       omitted: hydrate uses textContent which would strip the inner
       span/strong/chip structure. -->
  <div class="hero-tagline-card">
-   <p class="hero-tagline"><span class="brand-name brand-name--dolphlink">Dolphlink</span><span data-key="hero.taglineSegA"> serves as the international headquarters for </span><span class="brand-name brand-name--baiwu">Baiwu Technology Group</span><span data-key="hero.taglineSegB">, delivering mission-critical infrastructure for global communications at scale. Licensed in Singapore and operating across 200+ countries, the platform powers secure AI orchestration, carrier-grade routing, and sovereign data control — purpose-built for governments, financial institutions, and regulated global enterprises that cannot afford communication failures or governance gaps. Every call, message, and AI-driven action is secured through tamper-evident audit trails, end-to-end encryption, and identity-first access control. The result is global reach with enterprise-grade governance, end to end — from the first policy decision to the auditor's signature, every cycle, in every jurisdiction we operate.</span></p>
+   <p class="hero-tagline"><span class="brand-name brand-name--dolphlink">Dolphlink</span><span data-key="hero.taglineSegA"> serves as the international headquarters for </span><span class="brand-name brand-name--baiwu">Baiwu Technology Group</span><span data-key="hero.taglineSegB">, delivering mission-critical infrastructure for global communications at scale.</span></p>
+   <p class="hero-tagline" data-key="hero.taglineSegC">Licensed in Singapore and operating in 200+ countries, the platform enables secure AI orchestration, global routing, and sovereign data control for governments and regulated enterprises. Every action is backed by end-to-end encryption, identity-first access, and tamper-evident auditability.</p>
  </div>
  <!-- KPI stat row — 3 hard numbers, scannable in 1 second. Replaces
       the longer subTagline paragraph. JS populates from hero.stats. -->

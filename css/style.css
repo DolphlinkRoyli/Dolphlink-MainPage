@@ -150,7 +150,7 @@
    text-transform: uppercase; text-decoration: none;
    color: var(--baiwu-white); background: var(--baiwu-blue-primary);
    border: 1px solid var(--baiwu-blue-primary); border-radius: 4px;
-   transition: 0.2s ease; box-shadow: 0 3px 12px rgba(0, 89, 179, 0.32);
+   transition: 0.2s ease; box-shadow: 0 3px 12px rgba(0, 89, 179, 0.14);
  }
  .nav-cta svg { transition: transform 0.2s ease; }
  .nav-cta:hover { background: var(--baiwu-blue-deep); border-color: var(--baiwu-blue-deep); box-shadow: 0 5px 16px rgba(0, 45, 92, 0.4); }
@@ -985,7 +985,7 @@
    display: flex; align-items: center;
    padding: 22px 28px;
    /* Brand-blue hairline — matches the enterprise-blue card borders below. */
-   border-bottom: 1px solid rgba(0, 89, 179, 0.32);
+   border-bottom: 1px solid rgba(0, 89, 179, 0.14);
    background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
  }
  /* `.strip-tag` and `.sec-title` are visually identical — both render the
@@ -1063,7 +1063,7 @@
    padding: 22px 10px 28px;
    background: var(--baiwu-white);
    /* Floating mini-card — brand-blue subtle border + soft shadow. */
-   border: 1px solid rgba(0, 89, 179, 0.32);
+   border: 1px solid rgba(0, 89, 179, 0.14);
    border-radius: 6px;
    box-shadow:
      0 1px 3px rgba(0, 45, 92, 0.04),
@@ -1176,7 +1176,7 @@
    letter-spacing: 1.4px;
    text-transform: uppercase;
    white-space: nowrap;
-   color: rgba(0, 89, 179, 0.32);
+   color: rgba(0, 89, 179, 0.14);
    pointer-events: none;
    transition: color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
                transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1286,7 +1286,7 @@
  }
  .portfolio-pillar {
    /* Brand-blue hairline matches the enterprise-blue card borders. */
-   border-bottom: 1px solid rgba(0, 89, 179, 0.32);
+   border-bottom: 1px solid rgba(0, 89, 179, 0.14);
  }
  .portfolio-pillar:last-child { border-bottom: none; }
  .portfolio-pillar-head {
@@ -1356,9 +1356,12 @@
    top: 8px; left: 8px;
    z-index: 3;
    font-family: 'Inter', system-ui, sans-serif;
-   font-size: 9px; font-weight: 900; letter-spacing: 1.2px;
+   /* Bumped down: longer labels (CORE INFRASTRUCTURE, MISSION-READY,
+      DEPLOYED, ACTIVE) need a smaller footprint to read as a marker
+      tag rather than a banner. */
+   font-size: 7.5px; font-weight: 900; letter-spacing: 0.5px;
    text-transform: uppercase;
-   padding: 2.5px 7px;
+   padding: 2px 6px;
    border-radius: 3px;
    pointer-events: none;
    white-space: nowrap;
@@ -1391,7 +1394,7 @@
    /* Floating mini-card — brand-blue subtle border + soft shadow,
       matching `.stat-card` so the 9 items (3 pillars × 3) read as a
       coherent grid of distinct cards. */
-   border: 1px solid rgba(0, 89, 179, 0.32);
+   border: 1px solid rgba(0, 89, 179, 0.14);
    border-radius: 6px;
    box-shadow:
      0 1px 3px rgba(0, 45, 92, 0.04),
@@ -2809,7 +2812,7 @@
    .reliability-section { padding: 28px 4%; }
    .stat-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
    .stat-card {
-     border-bottom: 1px solid rgba(0, 89, 179, 0.32);
+     border-bottom: 1px solid rgba(0, 89, 179, 0.14);
      justify-content: center;
      min-height: 108px;
    }
@@ -2938,7 +2941,7 @@
    }
    /* :not(:last-child) raises specificity to override the 1024px rule that
       stripped border-bottom from cards 3/4 (intended for the 2x2 layout). */
-   .stat-card:not(:last-child) { border-bottom: 1px solid rgba(0, 89, 179, 0.32); }
+   .stat-card:not(:last-child) { border-bottom: 1px solid rgba(0, 89, 179, 0.14); }
    .stat-card:last-child { border-bottom: none; }
    .stat-icon-wrap { width: 84px; height: 84px; }
    .stat-icon { width: 72px; height: 72px; }
@@ -2973,9 +2976,9 @@
    }
    /* NEW badge stays as a small corner accent — no longer collides with anything */
    .portfolio-badge {
-     font-size: 8px;
-     padding: 2px 4px;
-     letter-spacing: 0.8px;
+     font-size: 7px;
+     padding: 1.5px 4px;
+     letter-spacing: 0.4px;
      top: 6px; left: 6px;
    }
    /* Pillared layout on mobile: each pillar's 3-up grid collapses to a
@@ -2983,7 +2986,7 @@
       cards live inside individual 3-card pillar grids. */
    .portfolio-pillar-grid { grid-template-columns: 1fr; }
    .portfolio-pillar-grid > .btn-portfolio { border-right: none; }
-   .portfolio-pillar-grid > .btn-portfolio:not(:last-child) { border-bottom: 1px solid rgba(0, 89, 179, 0.32); }
+   .portfolio-pillar-grid > .btn-portfolio:not(:last-child) { border-bottom: 1px solid rgba(0, 89, 179, 0.14); }
    .portfolio-icon-wrap { width: 84px; height: 84px; }
    .portfolio-icon { width: 72px; height: 72px; }
    .portfolio-label { font-size: var(--fs-xs); letter-spacing: 1.2px; }
@@ -3238,7 +3241,7 @@
    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
    gap: 28px;
    padding: 28px 32px 24px;
-   border-bottom: 1px solid rgba(0, 89, 179, 0.32);
+   border-bottom: 1px solid rgba(0, 89, 179, 0.14);
    background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
    align-items: stretch;
    /* Isolate reflow boundary — when the video's `height: 100%` recalculates
