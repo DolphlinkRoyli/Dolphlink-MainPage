@@ -1,5 +1,0 @@
-key,icon,value,label,desc
-sla,icon_6,99.999%,Uptime,"Five-nines reliability across geo-redundant points of presence. Engineered for mission-critical communications with independently verified SLA and quarterly third-party attestation."
-loc,icon_5,220+,Countries,"Direct interconnect with 600+ tier-1 mobile operators worldwide for unmatched reach and carrier-grade message quality across every region, including last-mile coverage in regulated and emerging markets."
-lat,icon_10,<10s,Delivery,"SMS reaches recipients in under 10 seconds via tier-1 carrier routes, verified across global benchmarks, audited quarterly, and continuously optimized through real-time route intelligence."
-ain,icon_7,AI×H,Lifecycle,"From assist to augment to autonomous, then seamless handoff back to human. DOLPHLINK manages the full AI-Human Lifecycle. Bots handle the routine, agents handle the nuance, and continuous learning improves every iteration. Built-in migration tooling moves legacy workflows to next-generation operations on your timeline, with full audit trails at every handoff."
