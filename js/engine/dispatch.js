@@ -1,33 +1,27 @@
 /**
- * Page dispatcher — the only file js/app.js imports directly. Reads
- * <html data-page="…"> and lazy-loads the matching page module.
+ * Page dispatcher — the only file js/app.js imports directly.
+ * ============================================================================
+ *
+ * Boots the runtime, attaches global behaviours (prefetch, lazy sections),
+ * then routes to the page module based on `<html data-page="…">`.
  *
  *   <html data-page="home">  →  ./home/index.js
  *   <html data-page="card">  →  ./card/index.js
  *   <html data-page="sme">   →  ./sme/index.js
  *
- * Engine layout:
+ * Add a new page in three lines:
+ *   1. Create js/engine/<name>/index.js exporting `default async function`.
+ *   2. Add `<html data-page="<name>">` on the new page.
+ *   3. Add `'<name>': () => import('./<name>/index.js')` below.
  *
- *     js/engine/
- *     ├── dispatch.js            ← this file (the only file used by EVERY page)
- *     ├── core/                  ← helpers shared by 2+ pages
- *     │   ├── loader-shell.js    (hideLoader)
- *     │   ├── drive.js           (Drive URL flavours)
- *     │   ├── strings.js         (initialsOf, hasRealPhone)
- *     │   ├── vcard.js           (vCard composer + .vcf download)
- *     │   └── clipboard.js       (Clipboard API + Web Share fallbacks)
- *     ├── home/                  ← homepage modules (the bulk of the JS)
- *     ├── card/                  ← /card/?u=… digital card page (legacy /c/ redirects)
- *     └── sme/                   ← /sme/ landing page (currently no-op)
- *
- * Adding a new page is two steps:
- *   1. Mark the HTML with <html data-page="my-page">.
- *   2. Create js/engine/my-page/index.js with `export default async function () {…}`,
- *      then add a key in PAGE_LOADERS below pointing at it.
- *
- * Page modules import from ../core/ when they need a shared helper.
- * Anything used by exactly one page belongs inside that page's tree.
+ * The runtime + prefetch + lazy section observer + error boundary all
+ * apply automatically — page modules don't need to opt in.
+ * ============================================================================
  */
+
+import { dlpk } from './core/runtime.js';
+import { attachPrefetch } from './core/prefetch.js';
+import { observeLazySections } from './core/lazy-section.js';
 
 const PAGE_LOADERS = {
   'home': () => import('./home/index.js'),
@@ -38,19 +32,41 @@ const PAGE_LOADERS = {
 const DEFAULT_PAGE = 'home';
 
 export async function dispatch() {
+  /* Mark the start of dispatch on the Performance timeline so DevTools
+     shows our boot in the same view as LCP / FCP / CLS. */
+  dlpk.perf.mark('dispatch:start');
+
+  /* Wire up cross-cutting concerns BEFORE the page module so the page
+     can rely on them being available in setup(). */
+  attachPrefetch();   /* hover/touch prefetch for any <a> on the page */
+
   const root = document.documentElement;
   const name = (root && root.dataset && root.dataset.page) || DEFAULT_PAGE;
   const loader = PAGE_LOADERS[name];
+
   if (!loader) {
     console.warn('[dispatch] unknown page:', name, '— skipping setup');
     return;
   }
+
   try {
-    const mod = await loader();
+    /* Lazy import the page module. The browser only fetches the page-
+       specific JS the visitor needs — never the SME bundle on the home
+       page or vice versa. */
+    const mod = await dlpk.perf.time(`page:${name}:load`, () => loader());
+
     if (typeof mod.default === 'function') {
-      await mod.default();
+      await dlpk.perf.time(`page:${name}:setup`, () => mod.default());
     }
+
+    /* After page setup mounted everything eager, kick off the lazy
+       observer for `data-lazy` sections. */
+    observeLazySections();
+
+    dlpk.perf.measure('dispatch', 'dispatch:start');
+    dlpk.events.emit('page:ready', { name });
   } catch (err) {
     console.error('[dispatch] page setup failed:', name, err);
+    dlpk.events.emit('page:error', { name, error: err });
   }
 }

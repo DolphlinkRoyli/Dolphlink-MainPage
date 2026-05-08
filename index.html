@@ -185,6 +185,11 @@
  <link rel="modulepreload" href="js/app.js?v=2">
  <link rel="modulepreload" href="js/engine/dispatch.js">
  <link rel="modulepreload" href="js/engine/home/index.js">
+ <!-- V2 runtime modules — dispatch.js statically imports these. Preloading
+      saves the second-tier import waterfall on cold boot. -->
+ <link rel="modulepreload" href="js/engine/core/runtime.js">
+ <link rel="modulepreload" href="js/engine/core/prefetch.js">
+ <link rel="modulepreload" href="js/engine/core/lazy-section.js">
  <!-- register.js is loaded as a separate <script type="module"> at end-of-body
       for the Request-Briefing modal. Preloading here means the modal opens
       instantly on first .nav-cta click, no download wait. -->

@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v234';
+const CACHE_VERSION = 'dolphlink-v235';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -143,12 +143,17 @@ self.addEventListener('message', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-  // Drop old caches when CACHE_VERSION changes
-  event.waitUntil(
-    caches.keys().then(names => Promise.all(
-      names.filter(n => n !== CACHE_VERSION).map(n => caches.delete(n))
-    )).then(() => self.clients.claim())
-  );
+  // Drop old caches when CACHE_VERSION changes + enable navigation preload
+  // (lets the browser race the network alongside SW startup, saving the
+  // 100-300ms cold-start delay that SWs traditionally add to navigation).
+  event.waitUntil((async () => {
+    const names = await caches.keys();
+    await Promise.all(names.filter(n => n !== CACHE_VERSION).map(n => caches.delete(n)));
+    if (self.registration.navigationPreload) {
+      try { await self.registration.navigationPreload.enable(); } catch (_) {}
+    }
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener('fetch', (event) => {
