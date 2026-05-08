@@ -1,0 +1,24 @@
+# Hosts that honour Netlify / Cloudflare Pages `_headers` syntax pick
+# these up automatically. GitHub Pages ignores this file, so on GH
+# Pages the site is missing the directives below — see comments in
+# index.html.
+#
+# Why these aren't in <meta http-equiv> in index.html:
+#   - frame-ancestors / X-Frame-Options: spec-required to be HTTP
+#     header only; browsers IGNORE them from a meta tag.
+#   - Cross-Origin-Opener-Policy:        same — header-only.
+#   - Cross-Origin-Embedder-Policy:      same — header-only.
+#   - Strict-Transport-Security:         header-only.
+#
+# Test after deploy with https://securityheaders.com or
+# Mozilla Observatory.
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Permissions-Policy: camera=(self), microphone=(), geolocation=(), interest-cohort=()
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; require-trusted-types-for 'script'; trusted-types default

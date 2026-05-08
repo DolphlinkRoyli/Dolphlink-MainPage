@@ -306,9 +306,17 @@
  .hero-content {
    position: relative;
    z-index: 2;
-   /* Tighter max-width for a more restrained, designed hero. 620px is
-      ~75 chars at body size — comfortable reading width for the tagline,
-      and a natural anchor for the stats / CTA / trigger rows below. */
+   /* Outer width allows the tagline card to stretch wide. h1, stats,
+      and CTA rows below are individually constrained to the original
+      620px so only the card reads as "horizontally extended". */
+   max-width: 980px;
+ }
+ /* Lock the lower hero rows to the original narrower reading width.
+    Roy: the stats row + CTA stack should NOT inherit the card's
+    wider container — they look correct at ~620px. */
+ .hero-content > h1,
+ .hero-content > .hero-stats,
+ .hero-content > .hero-cta {
    max-width: 620px;
  }
 
@@ -408,13 +416,110 @@
    padding-bottom: 3px; border-bottom: 3px solid var(--baiwu-blue-primary);
  }
  .hero-content p {
-   font-size: var(--fs-base); color: rgba(255, 255, 255, 0.94);
+   /* Fluid bump from var(--fs-base) — tagline now reads bigger on
+      desktop while still scaling down on phones (mobile overrides
+      below clamp explicitly to var(--fs-sm)/0.95rem). */
+   font-size: clamp(1.02rem, 0.45vw + 0.94rem, 1.18rem);
+   color: rgba(255, 255, 255, 0.94);
    border-left: 3px solid var(--baiwu-blue-primary);
-   padding-left: 16px; line-height: 1.55;
+   padding-left: 16px; line-height: 1.6;
    /* max-width 520px removed — tagline now flows to .hero-content's
       720px max so its right edge aligns with the stats row below it. */
    font-weight: 500; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
  }
+ /* ============================================================
+    Hero tagline CARD — premium editorial panel.
+    Visual stack:
+      - Diagonal navy + brand-blue gradient backdrop (depth)
+      - Hairline brand-blue border (subtle frame)
+      - Vertical 4px gold blade on the left (site signature accent)
+      - Top-right gold L-bracket (editorial decoration)
+      - Dual-layer drop shadow (black depth + soft blue glow halo)
+      - Inner top-edge highlight (1px white sheen, "lit from above")
+    The result reads as a designed intro card, not a flat text block.
+    ============================================================ */
+ .hero-content .hero-tagline-card {
+   position: relative;
+   /* Neutral dark glass — subtle vertical gradient from slightly
+      lighter at top to deeper at bottom. No blue tint: the brand
+      accent comes from the gold blade + bracket alone, so the card
+      surface doesn't compete with the rest of the hero palette. */
+   background:
+     linear-gradient(180deg,
+       rgba(15, 23, 42, 0.50) 0%,
+       rgba(2, 8, 20, 0.55) 100%);
+   backdrop-filter: blur(16px) saturate(120%);
+   -webkit-backdrop-filter: blur(16px) saturate(120%);
+   border: 1px solid rgba(255, 255, 255, 0.08);
+   border-radius: 12px;
+   padding: 24px 28px 22px 32px;
+   margin: 16px 0 32px;
+   box-shadow:
+     0 18px 44px rgba(0, 0, 0, 0.45),
+     inset 0 1px 0 rgba(255, 255, 255, 0.07);
+   max-width: 100%;
+   overflow: hidden;
+ }
+ /* Vertical gold blade — left edge, full card height. Mirrors the
+    site's signature gold accent (sec-intro / strip-tag) so the hero
+    card ties visually back to the rest of the brand system. */
+ .hero-content .hero-tagline-card::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 4px;
+   height: 100%;
+   background: linear-gradient(180deg, #F59E0B, #FBBF24 50%, #F59E0B);
+   box-shadow: 0 0 14px rgba(245, 158, 11, 0.55);
+ }
+ /* Top-right L-bracket — small gold corner accent for editorial polish.
+    Pure CSS, no images. */
+ .hero-content .hero-tagline-card::after {
+   content: '';
+   position: absolute;
+   top: 14px;
+   right: 14px;
+   width: 26px;
+   height: 26px;
+   border-top: 2px solid rgba(245, 158, 11, 0.65);
+   border-right: 2px solid rgba(245, 158, 11, 0.65);
+   pointer-events: none;
+ }
+ /* Override the default .hero-content p chrome (left blade + padding)
+    when the paragraph lives inside the tagline card. Body text is
+    rendered in light slate-grey for editorial legibility against the
+    soft white-tint backdrop. */
+ .hero-content .hero-tagline-card .hero-tagline {
+   border-left: 0;
+   padding-left: 0;
+   margin: 0;
+   color: #CBD5E1;          /* slate-300 — soft grey, reads on the tinted card */
+   font-size: clamp(0.86rem, 0.3vw + 0.8rem, 0.98rem);
+   font-weight: 500;
+   line-height: 1.6;
+   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+ }
+ .hero-content .hero-tagline-card .hero-tagline + .hero-tagline {
+   margin-top: 12px;
+ }
+
+ /* Brand names — Dolphlink + Baiwu Technology Group. Pure white
+    text, larger + heavier than body copy, no chrome. The contrast of
+    pure white against the slate-grey body tone makes the names jump
+    out as corporate identity callouts. */
+ .hero-content .brand-name--dolphlink,
+ .hero-content .brand-name--baiwu {
+   color: #FFFFFF;
+   font-weight: 900;
+   font-size: 1.12em;
+   letter-spacing: 0.015em;
+   background: transparent;
+   padding: 0;
+   border-radius: 0;
+   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+ }
+
  /* (.hero-sub removed — KPI stat row replaced the secondary tagline.) */
  /* Hero KPI stat row — 3 compact numbers between tagline and CTA.
     Replaces the longer subTagline paragraph; lets buyers scan the
@@ -1221,25 +1326,26 @@
     is now a self-contained card with its own border + shadow + radius. */
  /* Tagline as a top-right pill badge — always-visible 1-line hint */
  .portfolio-tagline {
+   /* Roy spec: compact icon-sized badge in the top-right corner, not a
+      large pill. Tight padding + small letter-spacing so it reads as
+      a marker tag rather than a banner — never crowds the centred icon
+      below it, even on the narrowest cards. */
    position: absolute;
-   top: 8px; right: 8px;
+   top: 6px; right: 6px;
    z-index: 2;
-   font-size: 12px;
+   font-size: 9px;
    font-weight: 800;
-   letter-spacing: 0.4px;
+   letter-spacing: 0.3px;
    text-transform: uppercase;
    color: #FFFFFF;
    background: var(--baiwu-blue-primary);
-   padding: 5px 11px;
-   border-radius: 4px;
+   padding: 2.5px 7px;
+   border-radius: 3px;
    border: none;
    box-shadow: 0 1px 2px rgba(0, 45, 92, 0.12);
    pointer-events: none;
-   line-height: 1.25;
-   max-width: calc(100% - 18px);
+   line-height: 1.2;
    white-space: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
  }
  /* Recommendation badge — sourced from content.json's `recommend` field
     via main.js renderPortfolios. Replaces the old hardcoded NEW
@@ -1485,18 +1591,35 @@
    filter: drop-shadow(0 6px 18px rgba(0, 89, 179, 0.28));
  }
  .card-detail-content { min-width: 0; align-self: start; }
+ /* Detail-panel eyebrow — base style. Portfolio variant uses this
+    look (tagline like "Global DID Numbers" / "AI Chatbot Builder"),
+    bumped up from the old 10px so the panel feels editorial when
+    expanded. Stat variant overrides further down with hero-number
+    sizing for the metric value. */
  .card-detail-eyebrow {
    display: block;
-   font-size: var(--fs-2xs);
+   font-size: clamp(13px, 0.5vw + 10px, 17px);
    font-weight: 800;
-   letter-spacing: 2.2px;
+   letter-spacing: 1.4px;
    text-transform: uppercase;
    color: var(--baiwu-blue-primary);
-   margin-bottom: 8px;
+   margin-bottom: 10px;
+   line-height: 1.2;
+ }
+ /* Stat-strip variant (Reliability Matrix): the eyebrow holds the
+    metric value (99.999% / 1,000+ / 200+ / <10s / 98%), so render it
+    as a hero-sized number, not a label. */
+ .card-detail--stat .card-detail-eyebrow {
+   font-size: clamp(28px, 2vw + 18px, 46px);
+   font-weight: 900;
+   letter-spacing: -0.5px;
+   text-transform: none;
+   line-height: 1;
+   margin-bottom: 12px;
  }
  .card-detail-title {
    margin: 0 0 14px;
-   font-size: var(--fs-xl);
+   font-size: clamp(19px, 1.1vw + 13px, 28px);
    font-weight: 900;
    letter-spacing: -0.4px;
    text-transform: uppercase;
@@ -1505,7 +1628,7 @@
  }
  .card-detail-text {
    /* Container — paragraphs flow inside */
-   font-size: var(--fs-base);
+   font-size: clamp(14px, 0.3vw + 12.5px, 16.5px);
    color: #334155;
  }
  .card-detail-text p {
@@ -1707,7 +1830,7 @@
    .audit-box { animation: none; }
  }
  .audit-box h3 { font-size: var(--fs-sm); font-weight: 900; color: var(--baiwu-white); margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 2px solid var(--baiwu-blue-primary); padding-bottom: 6px; display: inline-block; }
- .audit-box p { font-size: var(--fs-sm); color: var(--baiwu-white); line-height: 1.6; font-weight: 500; }
+ .audit-box p { font-size: 0.78rem; color: var(--baiwu-white); line-height: 1.6; font-weight: 400; }
 
  /* ===========================
     Industries + Departments — TWO sections sharing the same visual
@@ -1833,7 +1956,8 @@
    line-height: 1.2;
  }
  .industry-desc {
-   font-size: var(--fs-sm);
+   font-size: 0.78rem;
+   font-weight: 400;
    color: var(--text-sub);
    line-height: 1.55;
    margin: 0 0 14px;
@@ -1861,24 +1985,31 @@
    grid-template-columns: repeat(4, 1fr);
    gap: 18px;
  }
- /* Highlight the 4th (Digital Transformation) card with a gold blade —
-    signals "this is the bespoke / custom path" entry point, separate
-    from the 3 standard team paths. */
- .departments-strip .department-card:last-child {
-   border-left-color: #F59E0B;
- }
+ /* All department cards share the enterprise-blue blade (Roy spec —
+    no gold differentiation on the 4th card; site-wide consistency). */
  .department-card {
    background: var(--baiwu-white);
    border: 1px solid var(--border-line);
    border-left: 4px solid var(--baiwu-blue-primary);
    border-radius: 6px;
    padding: 24px 24px 22px;
-   transition: transform 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   /* Defensive overflow handling: at narrow widths the long copy
+      ("Bespoke AI-digital projects from greenfield architecture…")
+      should still break at word boundaries, never per-character. */
+   min-width: 0;
+   overflow-wrap: break-word;
+   word-break: normal;
+ }
+ .department-card p,
+ .department-card .department-desc {
+   overflow-wrap: break-word;
+   word-break: normal;
+   hyphens: auto;
  }
  .department-card:hover {
    transform: translateY(-3px);
    box-shadow: 0 14px 32px rgba(0, 45, 92, 0.1);
-   border-left-color: #F59E0B;
  }
  .department-name {
    font-family: 'Inter', system-ui, sans-serif;
@@ -1890,7 +2021,8 @@
    margin: 0 0 10px;
  }
  .department-desc {
-   font-size: var(--fs-sm);
+   font-size: 0.78rem;
+   font-weight: 400;
    color: var(--text-sub);
    line-height: 1.55;
    margin: 0;
@@ -2201,17 +2333,28 @@
     no extra padding — so HQ and ENGAGE rows sit on the same vertical
     rhythm. */
  .footer .f-col a {
-   padding: 0;
+   /* Tap-target hygiene: pad 6px top/bottom so the link's hit area
+      reaches ~26px (Lighthouse / WCAG floor is 24px). The visual gap
+      between adjacent links stays compact because adjacent `a + a`
+      elements get no extra margin and the padding is symmetrical, so
+      the printed lines still sit close together. */
+   padding: 6px 0;
+   margin: 0;
    /* Shrink-to-fit: the longest email is "Salesmarketing@dolphlink.com"
       (28 chars). At narrower laptop widths the .f-col column drops to
       ~150-180px and the address-style font would wrap mid-domain. A
       slightly steeper clamp lets emails scale down enough to stay on
       one line, while keeping headquarters address legible. */
    font-size: clamp(9.5px, 0.55vw + 0.35rem, 12.5px);
+   line-height: 1.4;
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
  }
+ /* Adjacent email links collapse the duplicated 6px padding so the
+    visual gap stays slim while each link individually still has 24px+
+    of tap area. */
+ .footer .f-col a + a { margin-top: -4px; }
  .footer .f-col a:hover { color: #FCD34D; }
  .footer .brand-col p {
    color: rgba(255, 255, 255, 0.7);
@@ -2304,14 +2447,13 @@
    background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 50%, #F59E0B 100%);
  }
  .vcard-frame {
-   /* Even tighter top/bottom — the card is a name-card, not a
-      poster. Vertical padding 8px lets the QR + text sit close
-      to the card edges. */
+   /* Tighter QR + smaller gap so the left text column gets enough
+      room for the description without wrapping every 3-4 words. */
    flex: 1;
    display: grid;
-   grid-template-columns: 1fr 180px;
-   gap: 22px;
-   padding: 8px 22px;
+   grid-template-columns: 1fr 140px;
+   gap: 16px;
+   padding: 8px 16px;
    align-items: center;
    align-content: center;
  }
@@ -2417,12 +2559,12 @@
    gap: 10px;
  }
  .vcard-qr {
-   width: 160px; height: 160px;
+   width: 130px; height: 130px;
    display: flex; align-items: center; justify-content: center;
    background: var(--baiwu-white);
    border: 1px solid rgba(245, 158, 11, 0.55);
    border-radius: 8px;
-   padding: 6px;
+   padding: 5px;
  }
  .vcard-qr img {
    width: 100% !important;
@@ -2854,6 +2996,33 @@
      font-size: 0.95rem;
      padding-left: 14px;
    }
+   /* In-card variant: card already provides padding/border, kill the
+      blade-paragraph rules so we don't double-pad on mobile. Keep a
+      hair more left padding to clear the 4px gold blade. */
+   .hero-content .hero-tagline-card { padding: 16px 16px 14px 22px; }
+   .hero-content .hero-tagline-card .hero-tagline {
+     padding-left: 0;
+     line-height: 1.7;
+     font-size: 0.92rem;
+   }
+   /* Brand chips (Dolphlink + Baiwu) — drop the desktop 1.12em scale-up
+      on mobile so "Baiwu Technology Group" doesn't dominate the line.
+      Heavier weight downgraded from 900 → 800 for the same reason. */
+   .hero-content .brand-name--dolphlink,
+   .hero-content .brand-name--baiwu {
+     font-size: 1.0em;
+     font-weight: 800;
+   }
+   /* Top-right corner bracket — slightly smaller on phones */
+   .hero-content .hero-tagline-card::after {
+     width: 18px; height: 18px;
+     top: 10px; right: 10px;
+   }
+   /* Loop subnote 2-point cards — tighter padding + gap on phones */
+   .loop-subnote-pt {
+     padding: 10px 12px;
+     gap: 10px;
+   }
    .hero-cta { flex-direction: column; align-items: stretch; }
    .btn { padding: 13px 20px; min-height: 44px; }
    /* (Old video card mobile overrides removed — video is full-bleed now.) */
@@ -2885,6 +3054,12 @@
  @media (max-width: 480px) {
    .section-row, .reliability-section, .infra-section, .audit-section { padding: 24px 4%; }
    .hero { padding: 56px 5% 64px 5.5%; min-height: 480px; }
+   /* Reset desktop 620px child max-width on phones — at this width the
+      cap is wider than the viewport anyway, but defending against any
+      flex / grid parent that might compute width from max-width. */
+   .hero-content > h1,
+   .hero-content > .hero-stats,
+   .hero-content > .hero-cta { max-width: 100%; }
    .hero-content h1 {
      font-size: var(--fs-xl);
      /* Slight letter-spacing relax on small screens — heavy 900-weight
@@ -3052,17 +3227,31 @@
     Light-blue gradient + bottom hairline matches `.stat-strip-header`
     (Reliability Matrix / The Portfolio) so the loop card reads with the
     SAME visual language as every other floating white card. */
+ /* 2-col layout: header content on left, video on right. The video
+    column uses `align-items: stretch` (grid default) so its height is
+    auto-driven by the left column's content — eliminates the right-
+    column whitespace that the previous fixed-aspect-ratio video left
+    behind. As the left column grows / shrinks across viewports, the
+    video grows / shrinks with it. */
  .loop-card-top {
    display: grid;
-   grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+   grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
    gap: 28px;
-   /* Tighter bottom padding so the cards section sits closer to the
-      header — pulls the lower content up. */
-   padding: 28px 32px 16px;
-   align-items: start;
-   /* Enterprise-blue hairline — matches stat-strip-header + portfolio-pillar. */
+   padding: 28px 32px 24px;
    border-bottom: 1px solid rgba(0, 89, 179, 0.32);
    background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
+   align-items: stretch;
+   /* Isolate reflow boundary — when the video's `height: 100%` recalculates
+      from header content reflow (e.g. on language switch), repaint stays
+      inside this container instead of cascading up the document tree. */
+   contain: layout;
+ }
+ /* Stack on narrow viewports — header above, video below. */
+ @media (max-width: 880px) {
+   .loop-card-top {
+     grid-template-columns: 1fr;
+     gap: 18px;
+   }
  }
  /* `.sec-title` already uses a 6px solid blue border-left, same width
     and colour as `.strip-tag::before`. The blade glow on `.strip-tag`
@@ -3081,33 +3270,106 @@
    max-width: none;
    margin: 0 0 16px !important;
  }
- /* Subnote — clean descriptive paragraph. No left border, no padding.
-    !important defeats any inherited or accidentally-applied .sec-intro
-    rule (which has a gold border-left + 18px padding-left). */
+ /* Headline — heavier-weight variant of .sec-intro (used inside the loop
+    section for the "We close the loop on every customer interaction…"
+    title). When inside the video-bg loop card, text becomes white with
+    a dark text-shadow for legibility against the live video frame. */
+ .sec-intro--heavy {
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+ }
+ /* (Video-as-background overrides removed — layout reverted to
+    grid 2-col with video on the right. Text colours and Model A / B
+    card styles fall back to the base rules at lines 3260-3320 area:
+    dark text on light cards.) */
+
+ /* Subnote — 2-point Model A / B block. Wrapper has no visual chrome;
+    children carry the rhythm. On desktop the two model cards sit side
+    by side; on narrower viewports they stack. */
  .loop-card-head .loop-subnote,
  .loop-section .loop-card-head .loop-subnote,
- p.loop-subnote {
-   font-size: 0.86rem;
-   font-weight: 500;
-   color: var(--text-soft, #475569);
-   line-height: 1.6;
+ .loop-subnote {
    margin: 0 !important;
    padding: 0 !important;
    border: 0 !important;
    max-width: none !important;
  }
- .loop-card-head .loop-subnote strong,
- p.loop-subnote strong {
+ .loop-subnote-points {
+   list-style: none;
+   padding: 0;
+   margin: 0 0 14px;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+ }
+ .loop-subnote-pt {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   gap: 8px;
+   padding: 12px 14px;
+   background: rgba(15, 23, 42, 0.025);
+   border-left: 3px solid var(--baiwu-blue-primary, #1E3A8A);
+   border-radius: 4px;
+ }
+ .loop-subnote-pt:nth-child(2) {
+   border-left-color: #F59E0B;
+ }
+ /* Pill design — matches the site-wide portfolio-tagline style
+    (e.g. GLOBAL DID NUMBERS): solid colour, 4px radius rectangle,
+    12px uppercase, white text, soft drop shadow. */
+ .loop-subnote-tag {
+   font-size: 12px;
+   font-weight: 800;
+   letter-spacing: 0.4px;
+   text-transform: uppercase;
+   padding: 5px 11px;
+   border-radius: 4px;
+   color: #FFFFFF;
+   background: var(--baiwu-blue-primary, #0059B3);
+   white-space: nowrap;
+   line-height: 1.25;
+   box-shadow: 0 1px 2px rgba(0, 45, 92, 0.12);
+ }
+ .loop-subnote-tag--b {
+   background: #F59E0B;
+   color: #1F2937;
+   box-shadow: 0 1px 2px rgba(120, 80, 0, 0.14);
+ }
+ .loop-subnote-pt-text {
+   font-size: 0.85rem;
+   font-weight: 500;
    color: var(--text-main, #0F172A);
-   font-weight: 700;
+   line-height: 1.55;
+   margin: 0;
+ }
+ /* Headline phrase ("The deep partnership." / "The plug-in path.") —
+    bolded + coloured to match its Model A / Model B pill. Sits inline
+    at the start of the paragraph; rest of the body text keeps the
+    default dark-slate colour from .loop-subnote-pt-text above. */
+ .loop-subnote-pt-headline {
+   font-weight: 800;
+   color: var(--baiwu-blue-primary, #0059B3);
+   margin-right: 4px;
+ }
+ .loop-subnote-pt:nth-child(2) .loop-subnote-pt-headline {
+   color: #F59E0B;
+ }
+ .loop-subnote-foot {
+   font-size: 0.84rem;
+   font-weight: 500;
+   color: var(--text-soft, #475569);
+   line-height: 1.6;
+   margin: 0;
+   padding-top: 10px;
+   border-top: 1px dashed rgba(15, 23, 42, 0.08);
  }
  .loop-card-content {
    display: flex;
    flex-direction: column;
  }
- @media (max-width: 880px) {
-   .loop-card-top { grid-template-columns: 1fr; }
- }
+ /* (Old 880px grid-template-columns:1fr fallback removed — base rule
+    is now always single-column flex stack with video on top.) */
 
  /* Two stage rows — Full Cycle (4 cards) on top, Plug and Play (3 cards)
     below. Tighter top padding so the cards sit closer to the header
@@ -3181,8 +3443,9 @@
    .loop-row-grid { grid-template-columns: 1fr; }
  }
 
- /* Compact rich stage card — number, icon, title, short desc, benefit pill.
-    Hairline border + subtle bg so each stage reads as its own unit. */
+ /* Compact rich stage card — title, short desc, benefit pill.
+    (Numbers + icons removed from HTML per Roy spec.) Hairline border
+    + subtle bg so each stage reads as its own unit. */
  .loop-stage-card {
    position: relative;
    background: #FAFCFE;
@@ -3211,35 +3474,8 @@
    border-color: rgba(191, 148, 48, 0.55);
  }
 
- .loop-stage-num {
-   font-family: 'JetBrains Mono', ui-monospace, monospace;
-   font-size: 10.5px;
-   font-weight: 800;
-   color: var(--baiwu-blue-primary, #0059B3);
-   letter-spacing: 1.4px;
-   line-height: 1;
-   opacity: 0.55;
- }
- .loop-stage-card--accent .loop-stage-num,
- .loop-row--plug .loop-stage-num { color: #BF9430; }
-
- .loop-stage-icon-wrap {
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
-   width: 36px; height: 36px;
-   border-radius: 8px;
-   background: rgba(0, 89, 179, 0.08);
-   color: var(--baiwu-blue-primary, #0059B3);
- }
- .loop-stage-icon-wrap svg {
-   width: 20px; height: 20px;
- }
- .loop-stage-card--accent .loop-stage-icon-wrap,
- .loop-row--plug .loop-stage-icon-wrap {
-   background: rgba(191, 148, 48, 0.12);
-   color: #BF9430;
- }
+ /* (loop-stage-num + loop-stage-icon-wrap rules removed — both elements
+    were deleted from HTML per Roy spec; ~32 lines of dead CSS reclaimed. */
 
  .loop-stage-title {
    font-size: 0.86rem;
@@ -3250,6 +3486,7 @@
  }
  .loop-stage-desc {
    font-size: 0.72rem;
+   font-weight: 400;
    color: var(--text-soft, #475569);
    line-height: 1.5;
    margin: 0;
@@ -3421,18 +3658,25 @@
     inside is scaled 1.18x past the panel bounds so the source's black
     borders on top + left + right bleed past the panel and get cropped
     by overflow:hidden. Bottom ~1/4 of source also crops via object-position. */
+ /* Video sits in the right grid column. align-items:stretch on the
+    parent grid drives the video container's height to match the left
+    column's content — no fixed-aspect-ratio whitespace anymore. The
+    inner <video> uses object-fit:cover so the source frame fills the
+    container at whatever height the layout demands. min-height keeps
+    a sensible floor so it never collapses to zero on very short text. */
  .loop-card-video {
    position: relative;
-   height: 300px;
-   /* No margin — the video is now in a grid cell (.loop-card-top right
-      cell). The grid cell's outer padding (32px right on .loop-card-top)
-      already gives it the right inset. Adding margin here was pushing
-      the video's right edge 32px inward of the cards' right edge below. */
+   width: 100%;
+   min-height: 240px;
+   height: 100%;
    overflow: hidden;
    background: #0F172A;
    border-radius: 10px;
    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12);
    pointer-events: none;
+ }
+ @media (max-width: 880px) {
+   .loop-card-video { min-height: 200px; height: clamp(200px, 30vw, 260px); }
  }
  .loop-card-video video {
    position: absolute;
@@ -3447,9 +3691,9 @@
    transform-origin: center center;
    display: block;
  }
- @media (max-width: 880px) {
-   .loop-card-video { height: 220px; }
- }
+ /* Mobile height override removed — the base rule now uses
+    clamp(200px, 22vw, 320px) which scales smoothly across all
+    viewport widths without a binary breakpoint. */
  /* The single bold tagline that replaces the old H2. Smaller, with weight,
     sits just under the gold "How it actually works" eyebrow. */
  .loop-tagline {

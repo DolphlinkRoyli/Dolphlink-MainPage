@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v309';
+const CACHE_VERSION = 'dolphlink-v359';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -45,6 +45,9 @@ const PRECACHE = [
   // ---- Single application entry + the only file every page uses ----
   SCOPE + 'js/app.js',
   SCOPE + 'js/engine/dispatch.js',
+  // ---- Inline-removed boot scripts (CSP: dropped 'unsafe-inline') ----
+  SCOPE + 'js/boot/err-shim.js',
+  SCOPE + 'js/boot/pwa.js',
 
   // ---- Core helpers (shared by 2+ pages) ----
   SCOPE + 'js/engine/core/loader-shell.js',

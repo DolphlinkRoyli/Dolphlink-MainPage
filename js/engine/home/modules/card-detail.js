@@ -64,6 +64,12 @@ export function bindCardDetail(stripSelector, panelId, cardSelector) {
 
     positionPanel(card);
     panel.classList.add('open');
+    /* Variant flag — stat-strip eyebrow is the metric value (99.999%
+       etc.) and renders as a hero number; portfolio eyebrow is a
+       tagline and stays compact. CSS targets these via the modifier. */
+    const isStat = /\bstat-card\b/.test(cardSelector);
+    panel.classList.toggle('card-detail--stat', isStat);
+    panel.classList.toggle('card-detail--portfolio', !isStat);
 
     strip.querySelectorAll(cardSelector).forEach(c => c.classList.remove('active'));
     card.classList.add('active');

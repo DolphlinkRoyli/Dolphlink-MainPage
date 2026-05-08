@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-page="home">
-<head><meta charset="UTF-8"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Qvs/MYH5NgMInq3lPLn9u0l9OUeNrax9M+NJfICovvE=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests; require-trusted-types-for 'script'; trusted-types default">
  <title>Singapore Sovereign CPaaS & AI Orchestration Platform | DOLPHLINK</title>
  <meta name="description" content="Singapore's sovereign communications spine. CPaaS, AI orchestration, and human-in-the-loop AI governance for governments, FinTech, healthcare, and regulated enterprises. 1,000+ Tier-1 operators across 200+ countries at 99.999% uptime. ISO 27001 certified, MAS TRM and IM8-aligned. Operated under Singapore's Cybersecurity Act.">
  <meta name="keywords" content="CPaaS, Communications Platform as a Service, AI governance, AI gov, sovereign AI, AI-Human Lifecycle, agent orchestration, AI orchestration, digital solution, AI digital solution, enterprise communications platform, government communications platform, SMS API, voice API, SIP trunking, RCS messaging, conversational AI, no-code chatbot, government AI solutions, regulated industries CPaaS, ISO 27001 CPaaS, MAS TRM compliant, IM8-aligned, PDPA Singapore, GDPR compliant CPaaS, tier-1 carrier connectivity, mission-critical messaging, RFP-ready communications, RFP CPaaS, government tender CPaaS, B2B integration platform, REST API enterprise, SDK integration, webhook integration, Singapore CPaaS, ASEAN CPaaS, sovereign cloud Singapore, digital migration partner, AI migration services, FinTech communications, healthcare communications, retail communications, logistics communications, customer engagement platform, omnichannel messaging, two-factor authentication API, OTP delivery, transactional SMS, programmable voice, contact center API, SIP trunk Singapore, telco platform, carrier-grade communications, sovereign infrastructure">
@@ -197,9 +200,8 @@
  <!-- Critical home-page module chain — `<link rel=modulepreload>` lets
       the browser discover these BEFORE app.js parses + starts importing,
       cutting the network waterfall from sequential to parallel. Cuts a
-      few hundred ms off Time-to-Hydrate on cold loads. -->
- <link rel="modulepreload" href="js/engine/dispatch.js">
- <link rel="modulepreload" href="js/engine/home/index.js">
+      few hundred ms off Time-to-Hydrate on cold loads.
+      (dispatch.js + home/index.js dedupe — already preloaded above.) -->
  <link rel="modulepreload" href="js/engine/home/loader.js">
  <link rel="modulepreload" href="js/engine/home/hydrate.js">
  <link rel="modulepreload" href="js/engine/core/i18n.js">
@@ -224,9 +226,13 @@
       retired page-loader. The new inline #dlpk-loader uses Inter,
       same as the rest of the site, so no second font request needed.) -->
  <link rel="stylesheet" href="css/tokens.css?v=1">
- <link rel="stylesheet" href="css/style.css?v=163">
- <link rel="preload" as="style" href="css/register.css?v=1" onload="this.onload=null;this.rel='stylesheet'">
- <noscript><link rel="stylesheet" href="css/register.css?v=1"></noscript>
+ <link rel="stylesheet" href="css/style.css?v=202">
+ <!-- Was a `rel=preload` + JS-promoted-to-stylesheet trick, but the
+      preload fired ~1.5s before the deferred pwa.js could run the
+      promotion and Chrome flagged "preloaded but not used". Direct
+      stylesheet link is simpler — register.css is ~3KB and only
+      blocks paint trivially. -->
+ <link rel="stylesheet" href="css/register.css?v=1">
  <!-- ECharts lazy-loaded from local lib/ (injected only when charts viewport intersects) — saves 209 KiB initial JS -->
  <script type="module" src="js/app.js?v=2"></script>
 
@@ -255,39 +261,10 @@
      ]
    }
  </script>
- <!-- Tiny error-monitor stub — kept in <head> so it can catch errors
-      that fire before the main PWA/install script (which now lives at
-      end-of-body) executes. The full PWA SW registration + install
-      handler block was moved out of the head to unblock first paint. -->
- <script>
-   window.__dlpkErrors = [];
-   (function () {
-     var DLPK_ERR_MAX = 50;
-     var dlpkErrSeen = Object.create(null);
-     function pushErr(entry) {
-       var key = entry.type + '|' + entry.msg + '|' + (entry.src || '') + '|' + (entry.line || '');
-       if (dlpkErrSeen[key]) { dlpkErrSeen[key].count++; dlpkErrSeen[key].lastAt = entry.at; return; }
-       entry.count = 1; entry.lastAt = entry.at;
-       dlpkErrSeen[key] = entry;
-       window.__dlpkErrors.push(entry);
-       if (window.__dlpkErrors.length > DLPK_ERR_MAX) {
-         var d = window.__dlpkErrors.shift();
-         delete dlpkErrSeen[d.type + '|' + d.msg + '|' + (d.src || '') + '|' + (d.line || '')];
-       }
-     }
-     window.addEventListener('error', function (e) {
-       pushErr({ type: 'error', msg: e.message, src: e.filename, line: e.lineno, col: e.colno,
-         stack: e.error && e.error.stack || '', at: new Date().toISOString() });
-       console.warn('[dlpk:error]', e.message, e.filename + ':' + e.lineno);
-     });
-     window.addEventListener('unhandledrejection', function (e) {
-       pushErr({ type: 'unhandledrejection',
-         msg: (e.reason && e.reason.message) || String(e.reason),
-         stack: (e.reason && e.reason.stack) || '', at: new Date().toISOString() });
-       console.warn('[dlpk:reject]', e.reason);
-     });
-   })();
- </script>
+ <!-- Tiny error-monitor shim — externalised so script-src can drop
+      'unsafe-inline'. Synchronous so it catches errors that fire
+      before the main module graph parses. -->
+ <script src="js/boot/err-shim.js?v=1"></script>
 
  <!-- Structured Data: Organization + WebSite graph (boosts rich-result eligibility) -->
  <script type="application/ld+json">
@@ -539,12 +516,15 @@
   @keyframes dlpk-loader-autohide{to{opacity:0;visibility:hidden;pointer-events:none}}
   @media (prefers-reduced-motion:reduce){#dlpk-loader-ring{animation:none}}
  </style>
- <script>
-  // Inject loader only when JS is on. No-JS users see the
-  // pre-rendered content immediately, no overlay. Crawlers + AI
-  // agents that don't run JS get the same clean experience.
-  document.write('<div id="dlpk-loader" role="status" aria-label="Loading"><div id="dlpk-loader-ring" aria-hidden="true"></div><span id="dlpk-loader-text">DOLPHLINK</span></div>');
- </script>
+ <!-- Loader overlay — static HTML so we can drop `'unsafe-inline'` from
+      script-src. No-JS visitors see the pre-rendered content directly;
+      this overlay is hidden via JS (hideLoader()) the moment hydrate
+      finishes. The `noscript` style below covers the no-JS case. -->
+ <div id="dlpk-loader" role="status" aria-label="Loading">
+   <div id="dlpk-loader-ring" aria-hidden="true"></div>
+   <span id="dlpk-loader-text">DOLPHLINK</span>
+ </div>
+ <noscript><style>#dlpk-loader{display:none !important}</style></noscript>
 
  <nav>
  <a href="#h-sec" data-scroll-to="h-sec" class="brand">
@@ -587,7 +567,15 @@
       "Behind Every Great Customer Experience". Translated per locale via
       content.<lang>.json's hero.h1 key (English fallback if missing). -->
  <h1 data-key="hero.h1">Behind Every Great Customer Experience</h1>
- <p data-key="hero.tagline">The carrier-grade communications and AI-orchestration backbone for governments and regulated enterprises that cannot fail. Singapore-licensed and MAS TRM-aligned, with every message, call, and AI agent action carrying sovereign-grade audit trails, end-to-end encryption, and tamper-evident logs across 200+ countries.</p>
+ <!-- Hero tagline card — glass panel wrapping two paragraphs. Brand
+      names sit in white chip pills for max legibility on the dark
+      hero, replacing the previous coloured-text-on-navy approach
+      that the user flagged as unreadable. data-key intentionally
+      omitted: hydrate uses textContent which would strip the inner
+      span/strong/chip structure. -->
+ <div class="hero-tagline-card">
+   <p class="hero-tagline"><span class="brand-name brand-name--dolphlink">Dolphlink</span><span data-key="hero.taglineSegA"> serves as the international headquarters for </span><span class="brand-name brand-name--baiwu">Baiwu Technology Group</span><span data-key="hero.taglineSegB">, delivering mission-critical infrastructure for global communications at scale. Licensed in Singapore and operating across 200+ countries, the platform powers secure AI orchestration, carrier-grade routing, and sovereign data control — purpose-built for governments, financial institutions, and regulated global enterprises that cannot afford communication failures or governance gaps. Every call, message, and AI-driven action is secured through tamper-evident audit trails, end-to-end encryption, and identity-first access control. The result is global reach with enterprise-grade governance, end to end — from the first policy decision to the auditor's signature, every cycle, in every jurisdiction we operate.</span></p>
+ </div>
  <!-- KPI stat row — 3 hard numbers, scannable in 1 second. Replaces
       the longer subTagline paragraph. JS populates from hero.stats. -->
  <div class="hero-stats" data-render="hero.stats" aria-label="Platform reliability metrics"><div class="hero-stat"><span class="hero-stat-value">99.999%</span><span class="hero-stat-label">Uptime</span></div><div class="hero-stat"><span class="hero-stat-value">1,000+</span><span class="hero-stat-label">Tier-1 Routes</span></div><div class="hero-stat"><span class="hero-stat-value">200+</span><span class="hero-stat-label">Countries</span></div></div>
@@ -619,7 +607,7 @@
          <polyline points="9 5 16 12 9 19"/>
        </svg>
      </a>
-     <a href="#n-sec" data-scroll-to="n-sec" class="btn btn-industries">
+     <a href="#hiw" data-scroll-to="hiw" class="btn btn-industries">
        <!-- "Orchestration flow" icon — 3 connected nodes (source → hub
             → endpoint) signalling an automated multi-channel pipeline.
             Visually rhymes with the bar-chart icon on Industry Insights
@@ -723,17 +711,35 @@
       Top row: header (left) + video horizontal band (right, top/bottom
       cropped to a clean middle band). Bottom row: Full Cycle (4 cards)
       and Plug-and-Play (3 cards), both spanning the FULL card width. -->
- <section class="section-row loop-section reveal" aria-labelledby="loop-heading">
+ <section id="hiw" class="section-row loop-section reveal" aria-labelledby="loop-heading">
    <div class="loop-card">
      <!-- Top row: header on left, video on right (2-col grid) -->
      <div class="loop-card-top">
        <header class="loop-card-head">
          <h2 class="sec-title sec-title--light" id="loop-heading" data-key="loop.headerTag">How it actually works</h2>
-         <p class="sec-intro" data-key="loop.title"><strong>We help you close the loop. Your team sets policy. We run the playbook.</strong></p>
-         <p class="loop-subnote" data-key="loop.subnote" style="border:0;padding-left:0;padding-right:0;margin:0;max-width:none;">Two engagement paths on a single platform. <strong>Plug and Play</strong> handles fast, same-day adoption with audit-ready logs from the first message — built for teams that need to be live this week. <strong>Full Cycle</strong> handles sovereign migrations and bespoke integrations with a sprint cadence, named human sign-offs at every gate, and full regulator hand-off when the program closes. Both share the same Tier-1 backbone, the same pre-send compliance gates, the same human-in-the-loop control.</p>
+         <p class="sec-intro sec-intro--heavy" data-key="loop.title">We close the loop on every customer interaction your business runs. From policy and delivery through governance and audit, then straight back into the next cycle.</p>
+         <div class="loop-subnote" style="border:0;padding-left:0;padding-right:0;margin:0;max-width:none;">
+           <ul class="loop-subnote-points" role="list">
+             <li class="loop-subnote-pt">
+               <span class="loop-subnote-tag loop-subnote-tag--a">Model A</span>
+               <p class="loop-subnote-pt-text">
+                 <strong class="loop-subnote-pt-headline" data-key="loop.subnoteAHead">The deep partnership.</strong>
+                 <span data-key="loop.subnoteABody">We run the full lifecycle alongside your team, from policy intake through the auditor's signature.</span>
+               </p>
+             </li>
+             <li class="loop-subnote-pt">
+               <span class="loop-subnote-tag loop-subnote-tag--b">Model B</span>
+               <p class="loop-subnote-pt-text">
+                 <strong class="loop-subnote-pt-headline" data-key="loop.subnoteBHead">The plug-in path.</strong>
+                 <span data-key="loop.subnoteBBody">You keep the systems you already trust, and we add only the AI and governance layers you need.</span>
+               </p>
+             </li>
+           </ul>
+           <p class="loop-subnote-foot" data-key="loop.subnoteFoot">Either way, your data stays where it is, your governance stays in your hands, and what you learn this cycle carries straight into the next.</p>
+         </div>
        </header>
        <div class="loop-card-video" aria-hidden="true">
-         <video autoplay loop muted playsinline preload="auto"
+         <video autoplay loop muted playsinline preload="metadata"
                 aria-hidden="true" tabindex="-1">
            <source src="media/video/ai-human.mp4" type="video/mp4">
          </video>
@@ -747,58 +753,32 @@
          <!-- ===== FULL CYCLE — 4 rich stage cards in a row ============== -->
          <section class="loop-row loop-row--full">
            <header class="loop-row-head">
-             <span class="loop-row-tag" data-key="loop.tracks.full.tag">Full Cycle</span>
-             <span class="loop-row-name" data-key="loop.tracks.full.name">Custom rollout</span>
+             <span class="loop-row-tag" data-key="loop.tracks.full.tag">Model A. Full Lifecycle Partnership</span>
            </header>
            <ol class="loop-row-grid" role="list">
 
              <li class="loop-stage-card">
-               <span class="loop-stage-num">01</span>
-               <span class="loop-stage-icon-wrap" aria-hidden="true">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                   <rect x="6" y="4" width="12" height="16" rx="2"/>
-                   <path d="M9 8h6M9 12h6M9 16h4"/>
-                 </svg>
-               </span>
-               <h4 class="loop-stage-title">Plan &amp; Authorize</h4>
-               <p class="loop-stage-desc">Solution architect locks scope, residency, regulatory mapping. Named SOW signature.</p>
-               <span class="loop-stage-metric">Signed SLA · Audit-ready</span>
+               <h3 class="loop-stage-title" data-key="loop.cards.a1.title">Design and Authorize</h3>
+               <p class="loop-stage-desc" data-key="loop.cards.a1.desc">Before any traffic flows, we sit down with your team and learn how your compliance world actually works. Your regulators. Your data residency rules. Your internal sign-off chain. Nothing goes live until your name is on the paperwork.</p>
+               <span class="loop-stage-metric" data-key="loop.cards.a1.metric">Signed before traffic flows</span>
              </li>
 
              <li class="loop-stage-card">
-               <span class="loop-stage-num">02</span>
-               <span class="loop-stage-icon-wrap" aria-hidden="true">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                   <path d="M14 4l6 6-9 9-6-6 9-9z"/><path d="M11 7l6 6"/>
-                 </svg>
-               </span>
-               <h4 class="loop-stage-title">Build, test, deploy</h4>
-               <p class="loop-stage-desc">Two-week sprints. Green test suites at every demo. Migration runs alongside legacy.</p>
-               <span class="loop-stage-metric">Sprints · Tests green · Cutover</span>
-             </li>
-
-             <li class="loop-stage-card loop-stage-card--accent">
-               <span class="loop-stage-num">03</span>
-               <span class="loop-stage-icon-wrap" aria-hidden="true">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                   <circle cx="12" cy="12" r="9"/><path d="M10 8l5 4-5 4z" fill="currentColor"/>
-                 </svg>
-               </span>
-               <h4 class="loop-stage-title">Operate at scale</h4>
-               <p class="loop-stage-desc">Sub-10s on Tier-1 routes. Auto-fallback across channels. Out-of-policy events flagged with full context.</p>
-               <span class="loop-stage-metric">Sub-10s · Tier-1 redundancy</span>
+               <h3 class="loop-stage-title" data-key="loop.cards.a2.title">Build, Test, Migrate</h3>
+               <p class="loop-stage-desc" data-key="loop.cards.a2.desc">We work in two-week sprints with a green test suite at every demo, so you always know exactly where we are. When it's time to migrate, the new system runs alongside your legacy stack and we shift traffic over gradually. Nobody loses a message during cutover.</p>
+               <span class="loop-stage-metric" data-key="loop.cards.a2.metric">No message lost in cutover</span>
              </li>
 
              <li class="loop-stage-card">
-               <span class="loop-stage-num">04</span>
-               <span class="loop-stage-icon-wrap" aria-hidden="true">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                   <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/>
-                 </svg>
-               </span>
-               <h4 class="loop-stage-title">Audit &amp; Seal</h4>
-               <p class="loop-stage-desc">Tamper-evident bundle. Compliance lead digitally signs. Auditor accepts. Both signatures sealed.</p>
-               <span class="loop-stage-metric">Tamper-evident · Two-signature</span>
+               <h3 class="loop-stage-title" data-key="loop.cards.a3.title">Run at Scale</h3>
+               <p class="loop-stage-desc" data-key="loop.cards.a3.desc">Once you're live, your messages move on tier-1 carrier routes in under ten seconds, and we automatically reroute the moment a channel hiccups. Anything outside the policy you defined gets flagged with full context. Your team makes the call. We hold the conversation steady until you do.</p>
+               <span class="loop-stage-metric" data-key="loop.cards.a3.metric">Your team always makes the call</span>
+             </li>
+
+             <li class="loop-stage-card">
+               <h3 class="loop-stage-title" data-key="loop.cards.a4.title">Audit and Renew</h3>
+               <p class="loop-stage-desc" data-key="loop.cards.a4.desc">At the close of every cycle, your compliance lead receives a single tamper-evident package. Every action, every approval, every signature, in whatever format your auditor wants. They co-sign, and what you learned this cycle goes straight into how we run the next one.</p>
+               <span class="loop-stage-metric" data-key="loop.cards.a4.metric">Auditor signs once, learnings carry forward</span>
              </li>
 
            </ol>
@@ -807,45 +787,26 @@
          <!-- ===== PLUG AND PLAY — 3 rich stage cards in a row =========== -->
          <section class="loop-row loop-row--plug">
            <header class="loop-row-head">
-             <span class="loop-row-tag" data-key="loop.tracks.plug.tag">Plug and Play</span>
-             <span class="loop-row-name" data-key="loop.tracks.plug.name">Standard adoption</span>
+             <span class="loop-row-tag" data-key="loop.tracks.plug.tag">Model B. Operate and Optimize</span>
            </header>
            <ol class="loop-row-grid loop-row-grid--three" role="list">
 
              <li class="loop-stage-card">
-               <span class="loop-stage-num">01</span>
-               <span class="loop-stage-icon-wrap" aria-hidden="true">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                   <path d="M12 3v8"/><path d="M7 7a7 7 0 1 0 10 0"/>
-                 </svg>
-               </span>
-               <h4 class="loop-stage-title">Sign up &amp; activate</h4>
-               <p class="loop-stage-desc">Pick a plan, upload KYC, accept the compliance terms. Live the same day.</p>
-               <span class="loop-stage-metric">Self-serve · Same-day</span>
+               <h3 class="loop-stage-title" data-key="loop.cards.b1.title">Plug In, Don't Rip Out</h3>
+               <p class="loop-stage-desc" data-key="loop.cards.b1.desc">You've spent years building the stack you trust, and the last thing you need is another vendor asking you to rip it all out. Our plugins sit on top of what you already run. Your CRM. Your contact centre. Your messaging gateway. We're usually live the same day we sign. No migration, no retraining, no disruption to the team you've built.</p>
+               <span class="loop-stage-metric" data-key="loop.cards.b1.metric">Live the same day, on the systems you already trust</span>
              </li>
 
              <li class="loop-stage-card">
-               <span class="loop-stage-num">02</span>
-               <span class="loop-stage-icon-wrap" aria-hidden="true">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                   <path d="M3 12h12"/><path d="M14 7l5 5-5 5"/>
-                 </svg>
-               </span>
-               <h4 class="loop-stage-title">Send &amp; run</h4>
-               <p class="loop-stage-desc">Console or API. Tier-1 delivery, auto-fallback, compliance gates pre-send.</p>
-               <span class="loop-stage-metric">Sub-10s · Auto-fallback</span>
+               <h3 class="loop-stage-title" data-key="loop.cards.b2.title">Govern the AI</h3>
+               <p class="loop-stage-desc" data-key="loop.cards.b2.desc">We know what stops AI projects in their tracks. The security review. So we don't ask your team to take a leap of faith. Every plugin runs inside the policy you wrote, with deterministic guardrails that decide what the model can and can't do before it ever speaks to a customer. Your CISO gets the audit trail. Your operations lead gets the speed. Nobody gets a 2 a.m. surprise.</p>
+               <span class="loop-stage-metric" data-key="loop.cards.b2.metric">Speed your ops team wants, controls your CISO can defend</span>
              </li>
 
              <li class="loop-stage-card">
-               <span class="loop-stage-num">03</span>
-               <span class="loop-stage-icon-wrap" aria-hidden="true">
-                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                   <rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/>
-                 </svg>
-               </span>
-               <h4 class="loop-stage-title">Pay &amp; audit</h4>
-               <p class="loop-stage-desc">Real-time billing. Audit-ready logs in standard formats. One-click export.</p>
-               <span class="loop-stage-metric">Real-time · One-click export</span>
+               <h3 class="loop-stage-title" data-key="loop.cards.b3.title">Own the Loop</h3>
+               <p class="loop-stage-desc" data-key="loop.cards.b3.desc">The honest worry every buyer has is this: what happens to my data and my history if this vendor disappears? So we built it the other way around. Your conversations, your logs, your audit trail all stay in your environment. You can see every efficiency gain in real time, you can export everything in one click, and the kill switch is yours. If we ever stop earning the seat at your table, you walk away with the whole loop intact.</p>
+               <span class="loop-stage-metric" data-key="loop.cards.b3.metric">Your data, your logs, your kill switch. Always yours.</span>
              </li>
 
            </ol>
@@ -1198,8 +1159,7 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
                   it correct ARIA semantics, removes the misleading href="#"
                   that Lighthouse flags, and improves keyboard navigation. -->
              <button type="button" class="f-install-link"
-                     aria-label="Install DOLPHLINK as an app"
-                     onclick="if (typeof window.dolphlinkInstall === 'function') window.dolphlinkInstall();">
+                     aria-label="Install DOLPHLINK as an app">
                <span data-key="footer.installLabel">Install App</span>
                <svg class="f-install-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -1229,138 +1189,9 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
  <!-- Mobile-only "Connect" floating button — fully isolated; desktop noop -->
  <script type="module" src="js/engine/home/register.js?v=19"></script>
 
- <!-- PWA service worker + install handler.  Moved from <head> to end-of-body
-      so the ~200-line synchronous parse no longer blocks first paint.  All
-      logic here either waits for the `load` event or registers passive
-      listeners — order doesn't affect behaviour. -->
- <script>
-   if ('serviceWorker' in navigator) {
-     window.addEventListener('load', function () {
-       navigator.serviceWorker.register('sw.js').then(function (reg) {
-         // Surface a "new build available" toast when the next SW finishes
-         // installing while a previous one still controls the page.
-         reg.addEventListener('updatefound', function () {
-           var sw = reg.installing;
-           if (!sw) return;
-           sw.addEventListener('statechange', function () {
-             if (sw.state === 'installed' && navigator.serviceWorker.controller) {
-               showUpdateToast();
-             }
-           });
-         });
-       }).catch(function (err) {
-         console.warn('[pwa] service worker registration failed:', err);
-       });
-
-       var reloading = false;
-       navigator.serviceWorker.addEventListener('controllerchange', function () {
-         if (reloading) return;
-         reloading = true;
-         location.reload();
-       });
-     });
-
-     function showUpdateToast() {
-       if (document.getElementById('dlpk-update-toast')) return;
-       var t = document.createElement('div');
-       t.id = 'dlpk-update-toast';
-       t.style.cssText =
-         'position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));' +
-         'transform:translateX(-50%);z-index:9001;display:flex;align-items:center;gap:14px;' +
-         'padding:12px 18px;background:#0F172A;color:#FFFFFF;border-radius:999px;' +
-         'border:1px solid rgba(191,148,48,.4);font-family:Inter,system-ui,sans-serif;' +
-         'font-size:12px;font-weight:700;letter-spacing:.6px;' +
-         'box-shadow:0 12px 32px rgba(15,23,42,.32);';
-       t.innerHTML =
-         '<span>A new version is available.</span>' +
-         '<button type="button" style="background:#0059B3;color:#FFFFFF;border:none;' +
-         'padding:7px 14px;border-radius:999px;font:inherit;cursor:pointer;' +
-         'letter-spacing:1.2px;text-transform:uppercase;font-size:10px;font-weight:800;">' +
-         'Refresh</button>';
-       document.body.appendChild(t);
-       t.querySelector('button').addEventListener('click', function () {
-         navigator.serviceWorker.getRegistration().then(function (reg) {
-           if (reg && reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-           else location.reload();
-         });
-       });
-     }
-   }
-
-   // PWA install — captured `beforeinstallprompt` is exposed via
-   // `window.dolphlinkInstall()` for the footer "Install App ↗" link.
-   (function () {
-     var deferred = null;
-     var pop = null;
-
-     var standalone = false;
-     try {
-       if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) standalone = true;
-       if (window.navigator.standalone === true) standalone = true;
-     } catch (_) {}
-
-     var ua = (navigator.userAgent || '').toLowerCase();
-     var isIOS = /iphone|ipad|ipod/.test(ua) && !window.MSStream;
-     var isAndroid = /android/.test(ua);
-     var isChromium = /chrome|edg\//.test(ua) && !/firefox/.test(ua);
-
-     function triggerInstall() {
-       if (standalone) {
-         showHowTo("DOLPHLINK is already installed on this device. You should see it on your home screen or app drawer.");
-         return;
-       }
-       if (deferred) {
-         deferred.prompt();
-         deferred.userChoice.then(function () { deferred = null; });
-         return;
-       }
-       showHowTo();
-     }
-
-     function showHowTo(customMsg) {
-       if (pop && pop.parentNode) pop.parentNode.removeChild(pop);
-       var msg = customMsg
-         || (isIOS
-             ? 'Tap the <strong>Share</strong> icon at the bottom of Safari, then choose <strong>&ldquo;Add to Home Screen&rdquo;</strong>.'
-             : isAndroid
-             ? 'Open the browser <strong>menu (⋮)</strong>, then tap <strong>&ldquo;Install app&rdquo;</strong> or <strong>&ldquo;Add to Home screen&rdquo;</strong>.'
-             : isChromium
-             ? 'Look for the <strong>install icon (⊕)</strong> on the right side of the URL bar, or open the browser menu and choose <strong>&ldquo;Install DOLPHLINK&rdquo;</strong>.'
-             : 'In your browser menu, choose <strong>&ldquo;Install DOLPHLINK&rdquo;</strong> or <strong>&ldquo;Add to Home screen&rdquo;</strong>.');
-       pop = document.createElement('div');
-       pop.id = 'dlpk-install-howto';
-       pop.style.cssText =
-         'position:fixed;left:max(16px,env(safe-area-inset-left));' +
-         'bottom:calc(max(16px,env(safe-area-inset-bottom)) + 56px);z-index:9001;' +
-         'max-width:300px;padding:16px 18px;background:#FFFFFF;color:#0F172A;' +
-         'border:1.5px solid #BF9430;border-radius:14px;font-family:Inter,system-ui,sans-serif;' +
-         'font-size:13px;line-height:1.55;box-shadow:0 14px 32px rgba(15,23,42,.22);' +
-         'animation:dlpkInstallPop .2s ease-out;';
-       pop.innerHTML =
-         '<div style="font-weight:800;color:#0059B3;letter-spacing:1.4px;font-size:11px;' +
-         'text-transform:uppercase;margin-bottom:8px;">Install DOLPHLINK</div>' +
-         '<div>' + msg + '</div>';
-       document.body.appendChild(pop);
-       var autoClose = setTimeout(removePop, 20000);
-       function removePop() {
-         clearTimeout(autoClose);
-         if (pop && pop.parentNode) pop.parentNode.removeChild(pop);
-         document.removeEventListener('click', onOutside);
-         pop = null;
-       }
-       function onOutside(e) { if (pop && !pop.contains(e.target)) removePop(); }
-       requestAnimationFrame(function () { document.addEventListener('click', onOutside); });
-     }
-
-     window.addEventListener('beforeinstallprompt', function (e) {
-       e.preventDefault();
-       deferred = e;
-     });
-     window.addEventListener('appinstalled', function () { standalone = true; });
-
-     window.dolphlinkInstall = function () { triggerInstall(); };
-   })();
- </script>
+ <!-- PWA service worker + install handler. Externalised so script-src
+      can drop 'unsafe-inline'. `defer` keeps it off the critical path. -->
+ <script src="js/boot/pwa.js?v=1" defer></script>
 
 </body>
 </html>

@@ -17,6 +17,8 @@
     "h1Line1": "La columna vertebral de comunicaciones",
     "h1Line2": "soberana de Singapur.",
     "tagline": "Plataforma de comunicaciones y orquestación de IA de grado carrier, diseñada para gobiernos e industrias reguladas donde fallar no es una opción. Con licencia en Singapur y alineada con el marco MAS TRM, ofrece cobertura en más de 200 países. Cada SMS, cada llamada y cada acción de un agente de IA queda registrada con trazabilidad de auditoría de nivel gubernamental, cifrado de extremo a extremo y logs a prueba de manipulación.",
+    "taglineSegA": "es la sede internacional de",
+    "taglineSegB": ", que entrega infraestructura misión-crítica para comunicaciones globales a escala. Con licencia en Singapur, presencia en 200+ países, orquestación IA segura, enrutamiento carrier-grade y soberanía de datos. Diseñado específicamente para gobiernos, instituciones financieras y empresas reguladas que no toleran fallos de comunicación o vacíos de gobernanza. Cada llamada, mensaje y acción IA está protegido por auditoría inviolable, cifrado extremo a extremo y control de acceso basado en identidad. Resultado: alcance global + gobernanza empresarial de punta a punta, cada ciclo, cada jurisdicción.",
     "ctaPrimary": "Solicitar reunión informativa",
     "ctaPrimaryMailto": "Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&cc=Joycetsam@dolphlink.com",
     "ctaSecondary": "Ver auto-orquestación",
@@ -44,9 +46,17 @@
     ]
   },
   "loop": {
-    "headerTag": "Cómo funciona realmente",
-    "title": "IA y humanos, con una división de labor clara — en cada despliegue regulado.",
-    "intro": "Los programas gubernamentales y empresariales regulados a escala soberana no se ejecutan solos. Exigen una división de labor precisa entre IA y personas: las personas donde hace falta juicio y responsabilidad, la IA donde hace falta ejecución y consistencia. **Cada una de las cuatro etapas siguientes tiene un único responsable explícito.** Este es el ciclo operativo que DOLPHLINK ejecuta.",
+    "headerTag": "El ciclo en la práctica",
+    "title": "Un ciclo completo en cada interacción: definición de política, entrega, gobernanza, auditoría. Luego de nuevo.",
+    "intro": "Un ciclo completo en cada interacción: definición de política, entrega, gobernanza, auditoría. Luego de nuevo.",
+    "subnoteLead": "Dos caminos. Ambos terminan igual: un ciclo cerrado totalmente bajo su control.",
+    "subnoteA": "Alianza profunda. Ejecutamos el ciclo completo con su equipo, de inicio de política a firma de auditor.",
+    "subnoteAHead": "Alianza profunda",
+    "subnoteABody": "Ejecutamos el ciclo completo con su equipo, de inicio de política a firma de auditor.",
+    "subnoteB": "Vía plug-in. Conserva sus sistemas actuales, agregamos solo las capas IA y gobernanza que necesita.",
+    "subnoteBHead": "Vía plug-in",
+    "subnoteBBody": "Conserva sus sistemas actuales, agregamos solo las capas IA y gobernanza que necesita.",
+    "subnoteFoot": "En cualquier vía, datos donde están, gobernanza en sus manos, lo aprendido pasa directo al siguiente ciclo.",
     "stages": {
       "intake": {
         "owner": "Humano",
@@ -73,7 +83,24 @@
         "metric": "Compilar · Exportar · Firmar · Sellar"
       }
     },
-    "feedback": "Cada programa actualiza el guion · La IA acelera, las personas intervienen menos"
+    "tracks": {
+      "full": {
+        "tag": "Camino A: Alianza de Ciclo Completo"
+      },
+      "plug": {
+        "tag": "Camino B: Operar y Optimizar"
+      }
+    },
+    "feedback": "Cada programa actualiza el guion · La IA acelera, las personas intervienen menos",
+    "cards": {
+      "a1": {"title": "Diseño y Autorización", "desc": "Antes de flujo de tráfico, nos sentamos con su equipo. Aprendemos: reguladores, residencia de datos, cadena de aprobación. Nada sale vivo sin su firma.", "metric": "Firma primero, tráfico después"},
+      "a2": {"title": "Construir, Probar, Migrar", "desc": "Sprints de dos semanas, pruebas verdes en cada demo. Sabemos exactamente dónde estamos. Migración: sistema nuevo corre con su pila actual, tráfico cambia gradual. Cero pérdida.", "metric": "Cero pérdida en cutover"},
+      "a3": {"title": "Operar a Escala", "desc": "En vivo: mensajes por Tier-1 en <10s, failover automático. Lo que sale de política se marca con contexto. Su equipo decide. Guardamos la conversación hasta que la manejan.", "metric": "Su equipo, siempre"},
+      "a4": {"title": "Auditar y Aprender", "desc": "Fin de ciclo: responsable de cumplimiento recibe paquete inviolable. Todas acciones, aprobaciones, firmas en formato que el auditor pida. Firman ambos, aprendizaje del ciclo va al siguiente.", "metric": "Una firma, aprendizaje continuo"},
+      "b1": {"title": "Conecte, no desmantele", "desc": "Años construyendo una pila que confía. Lo último que quiere es otro vendedor pidiendo lo desmantele. Nuestro plug-in se monta sobre lo que ya corre. CRM, contacto, mensajería. Mismo día de firma = vivo. Sin migración, sin recapacitación, sin disruption.", "metric": "Vivo día uno, en sus sistemas"},
+      "b2": {"title": "Gobierne la IA", "desc": "Lo que frena proyectos IA: revisión de seguridad. No le pedimos fe ciega. Cada plug-in corre dentro de su política, guardarraíles deterministas deciden qué hace el modelo antes de hablar con clientes. CISO obtiene auditoría. Ops obtiene velocidad. Sin sorpresas nocturnas.", "metric": "Velocidad que quiere + controles que CISO defiende"},
+      "b3": {"title": "Dueño del bucle", "desc": "Cada comprador se pregunta: si desaparece el vendedor, ¿mis datos qué? Construimos inverso. Conversaciones, registros, auditoría: su entorno. Ve cada ganancia en tiempo real, exporta todo con un clic, corte en su mano. Si un día no merecemos estar, se van con el bucle intacto.", "metric": "Sus datos, registros, corte. Siempre suyos."}
+    }
   },
   "portfolios": {
     "headerTag": "Portafolio",
