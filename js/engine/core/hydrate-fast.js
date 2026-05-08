@@ -41,7 +41,27 @@
  * ============================================================================
  */
 
-import { expandDateTokens } from '../home/tokens.js';
+/* Inlined date-token expander — kept here so core/ has zero dependencies
+   on page-specific modules. Same algorithm as home/tokens.js. */
+const _MONTHS_3 = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+function expandDateTokens(s) {
+  if (typeof s !== 'string' || s.indexOf('{') === -1) return s;
+  const now = new Date();
+  const m = now.getMonth();
+  const Q = 'Q' + (Math.floor(m / 3) + 1);
+  const MMM = _MONTHS_3[m];
+  const YYYY = String(now.getFullYear());
+  const D = String(now.getDate());
+  return s
+    .replace(/\{D MMM YYYY\}/g, `${D} ${MMM} ${YYYY}`)
+    .replace(/\{D MMM\}/g, `${D} ${MMM}`)
+    .replace(/\{Q-MMM YYYY\}/g, `${Q}-${MMM} ${YYYY}`)
+    .replace(/\{Q-MMM\}/g, `${Q}-${MMM}`)
+    .replace(/\{MMM YYYY\}/g, `${MMM} ${YYYY}`)
+    .replace(/\{Q\}/g, Q)
+    .replace(/\{MMM\}/g, MMM)
+    .replace(/\{YYYY\}/g, YYYY);
+}
 
 let _content = null;
 

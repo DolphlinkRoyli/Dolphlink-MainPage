@@ -52,10 +52,27 @@ function prefetchHref(href) {
   const m = href.match(/\/(sme|card|about)\/(?:[?#]|$)/);
   if (m) {
     const slug = m[1];
-    const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('dlpk:lang')) || '';
-    const jsonUrl = lang && lang !== 'en'
-      ? `content/${slug}.${lang}.json`
-      : `content/${slug}.json`;
+    /* Read the same localStorage key i18n.js writes — keeping these in
+       sync is critical, otherwise we'd prefetch the English JSON for a
+       Chinese visitor and the click-time fetch wouldn't hit cache. */
+    let lang = '';
+    try { lang = localStorage.getItem('dolphlink.lang') || ''; } catch (_) {}
+
+    /* Build an ABSOLUTE URL relative to the destination page, not the
+       current page. From /sme/ the destination is /sme/, but the JSON
+       lives at /content/{slug}.json (one level up from the sub-page).
+       Use URL constructor with the destination href as base. */
+    let jsonUrl;
+    try {
+      const dest = new URL(href, location.href);
+      const baseDir = dest.href.replace(/[^\/]+\/?(?:[?#].*)?$/, '');  /* strip trailing file/page */
+      const file = lang && lang !== 'en' ? `${slug}.${lang}.json` : `${slug}.json`;
+      /* Walk up to the project root: dest is /<repo>/<slug>/, so ../content/ */
+      jsonUrl = new URL(`../content/${file}`, baseDir).href;
+    } catch (_) {
+      return;  /* malformed URL, skip JSON prefetch but still keep document prefetch */
+    }
+
     const link2 = document.createElement('link');
     link2.rel = 'prefetch';
     link2.href = jsonUrl;

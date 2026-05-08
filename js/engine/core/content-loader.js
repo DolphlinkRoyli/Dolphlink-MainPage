@@ -26,7 +26,8 @@ import { dlpk } from './runtime.js';
  */
 
 const _mem = new Map();              /* key → parsed object */
-const _inflight = new Map();         /* key → AbortController */
+const _inflight = new Map();         /* key → Promise (in-progress fetch) */
+const _ac = new Map();               /* key → AbortController (cancel handle) */
 const _etags = new Map();            /* key → last ETag */
 
 const IDB_NAME = 'dlpk-content';
@@ -87,27 +88,39 @@ export async function loadJson(url, version) {
   /* Memory tier — instant hit. */
   if (_mem.has(key)) return _mem.get(key);
 
-  /* Cancel any in-flight fetch for the same URL. */
-  if (_inflight.has(key)) {
-    _inflight.get(key).abort();
-  }
+  /* Promise dedupe — if another caller already started fetching the same
+     key, await the SAME promise rather than starting a duplicate fetch
+     (or worse, aborting the first one and starving its caller of data). */
+  if (_inflight.has(key)) return _inflight.get(key);
 
-  /* IndexedDB tier — survives page reloads, faster than re-parsing. */
-  const idbHit = await idbGet(key);
-  if (idbHit) {
-    _mem.set(key, idbHit);
-    /* Background revalidate (stale-while-revalidate). */
-    queueMicrotask(() => fetchAndStore(key, url, version, true));
-    return idbHit;
-  }
+  /* Build the foreground promise and pin it in _inflight so concurrent
+     callers can join. */
+  const p = (async () => {
+    /* IndexedDB tier — survives page reloads, faster than re-parsing. */
+    const idbHit = await idbGet(key);
+    if (idbHit) {
+      _mem.set(key, idbHit);
+      /* Background revalidate (stale-while-revalidate). */
+      queueMicrotask(() => fetchAndStore(key, url, version, true));
+      return idbHit;
+    }
+    /* Network tier. */
+    return fetchAndStore(key, url, version, false);
+  })();
 
-  /* Network tier. */
-  return fetchAndStore(key, url, version, false);
+  _inflight.set(key, p);
+  try { return await p; }
+  finally { _inflight.delete(key); }
 }
 
 async function fetchAndStore(key, url, version, isBackground) {
+  /* Cancel any prior background revalidation for this key, but DON'T cancel
+     a foreground in-flight (those are deduped via _inflight in loadJson). */
+  const prior = _ac.get(key);
+  if (prior && isBackground) prior.abort();
+
   const ac = new AbortController();
-  _inflight.set(key, ac);
+  _ac.set(key, ac);
 
   const headers = {};
   const lastETag = _etags.get(key);
@@ -119,11 +132,11 @@ async function fetchAndStore(key, url, version, isBackground) {
 
     if (res.status === 304) {
       /* Server says nothing changed — keep what's in memory. */
-      _inflight.delete(key);
+      _ac.delete(key);
       return _mem.get(key);
     }
     if (!res.ok) {
-      _inflight.delete(key);
+      _ac.delete(key);
       if (isBackground) return null;
       throw new Error(`fetch ${url} failed: ${res.status}`);
     }
@@ -134,7 +147,7 @@ async function fetchAndStore(key, url, version, isBackground) {
     const data = await res.json();
     _mem.set(key, data);
     idbPut(key, data);  /* fire-and-forget */
-    _inflight.delete(key);
+    _ac.delete(key);
 
     /* Background refresh found newer data — broadcast via the runtime
        event bus (no global namespace required). */
@@ -144,7 +157,7 @@ async function fetchAndStore(key, url, version, isBackground) {
     }
     return data;
   } catch (err) {
-    _inflight.delete(key);
+    _ac.delete(key);
     if (err.name === 'AbortError' || isBackground) return null;
     throw err;
   }

@@ -12,9 +12,10 @@ build/
 cms/
 templates/
 
-# ---- Personal deploy script (lives at root for double-click convenience) ---
+# ---- Personal deploy scripts (live at root for double-click convenience) ---
 push-to-github.bat
 push-to-github.ps1
+push.bat
 
 # ---- Original source assets â€” kept locally for re-processing ---------------
 media/_orig/
