@@ -224,7 +224,7 @@
       retired page-loader. The new inline #dlpk-loader uses Inter,
       same as the rest of the site, so no second font request needed.) -->
  <link rel="stylesheet" href="css/tokens.css?v=1">
- <link rel="stylesheet" href="css/style.css?v=205">
+ <link rel="stylesheet" href="css/style.css?v=212">
  <!-- Was a `rel=preload` + JS-promoted-to-stylesheet trick, but the
       preload fired ~1.5s before the deferred pwa.js could run the
       promotion and Chrome flagged "preloaded but not used". Direct
@@ -606,7 +606,7 @@
          <polyline points="9 5 16 12 9 19"/>
        </svg>
      </a>
-     <a href="#hiw" data-scroll-to="hiw" class="btn btn-industries">
+     <a href="#hiw" data-scroll-to="hiw" class="btn btn-industries btn-see-auto">
        <!-- "Orchestration flow" icon — 3 connected nodes (source → hub
             → endpoint) signalling an automated multi-channel pipeline.
             Visually rhymes with the bar-chart icon on Industry Insights
@@ -620,42 +620,14 @@
          <line x1="13.6" y1="13.6" x2="17.5" y2="16.5"/>
        </svg>
        <span data-key="hero.ctaSecondary" data-i18n="home.hero.cta.auto">See Auto-Orchestration</span>
-       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-         <polyline points="9 5 16 12 9 19"/>
-       </svg>
+       <span class="btn-industries-arrow btn-industries-arrow--char" aria-hidden="true">&rsaquo;</span>
      </a>
-   </div>
-
-   <!-- Gold hairline divider — visually splits the two audience tracks. -->
-   <span class="hero-cta-divider" aria-hidden="true"></span>
-
-   <!-- Row 2: SME track. Gold button on the left (same width as Industry
-        Insights above so right edges align), small intro tag on the
-        right (occupies same horizontal slot as See Auto above so its
-        left edge aligns with See Auto's left edge). -->
-   <div class="hero-cta-row hero-cta-row--sme">
-     <a href="sme/" class="btn btn-sme" aria-label="Small and medium enterprise portal">
-       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-         <path d="M3 9 L5 4 H19 L21 9"/>
-         <path d="M4 9 H20 V20 H4 Z"/>
-         <path d="M9 20 V14 H15 V20"/>
-         <circle cx="12" cy="11.5" r="0.6" fill="currentColor"/>
-       </svg>
-       <span data-i18n="home.hero.cta.sme">SME · Best-Fit Plans</span>
-       <svg class="btn-sme-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-         <polyline points="9 5 16 12 9 19"/>
-       </svg>
-     </a>
-     <p class="hero-sme-tag">
-       <span class="hero-sme-tag-headline" data-i18n="home.hero.sme.tag.headline">Built for smaller teams.</span>
-       <span class="hero-sme-tag-sub" data-i18n="home.hero.sme.tag.sub">Same enterprise stack, right-sized for SME budgets &amp; speed.</span>
-     </p>
    </div>
 
  </div>
+ <!-- (Gold divider + SME row removed from hero per Roy spec; the SME
+      bridge now lives below the AI Governance pillar in the portfolio
+      section as a 3-service brief — see #sme-bridge.) -->
  <!-- (Old hero-trigger micro-copy "Detects fragmentation events…" removed
       per Roy. The Defragment-Now status pill inside the See-Auto button
       now carries the live-system signal, so the trigger row was redundant.) -->
@@ -1080,6 +1052,45 @@ We engineer bespoke integrations between your legacy systems and DOLPHLINK's com
 
 A phased rollout begins with a four-week discovery and architecture workshop, followed by parallel-run pilots and gradual cutover. A dedicated solution architect, 24/7 priority support, and custom SLA terms protect mission-critical workflows throughout." aria-haspopup="dialog"><span class="portfolio-badge" data-tier="blue">PROVEN</span><span class="portfolio-tagline">Migration Services</span><span class="portfolio-icon-wrap"></span><span class="portfolio-label">AI-Digital Solutions</span><span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span></button></div></div></div>
  </div>
+ </section>
+
+ <!-- ============================================================
+      SME bridge — sits directly below the portfolio section so it
+      reads as the natural "and for smaller teams…" extension of
+      the AI Governance pillar above. NO cards (Roy spec): three
+      flat clickable text columns with brand-blue tags, gold accent
+      rule, and a compact arrow CTA on each. All three click through
+      to /sme/ which carries the full SME × Lark landing page.
+      ============================================================ -->
+ <section id="sme-bridge" class="section-row sme-bridge-section reveal" aria-labelledby="sme-bridge-heading">
+   <div class="sme-bridge-wrap">
+     <span class="sme-bridge-eyebrow" data-key="smeBridge.eyebrow">SME · Best-Fit Plans</span>
+     <h2 class="sec-title sec-title--light" id="sme-bridge-heading" data-key="smeBridge.title">Built for smaller teams.</h2>
+     <p class="sme-bridge-intro" data-key="smeBridge.intro">Same enterprise stack, right-sized for SME budgets and speed. Three ready-to-deploy service tracks — pick a lane and we get you live in days, not quarters.</p>
+     <ul class="sme-bridge-grid" role="list">
+       <li>
+         <a href="sme/" class="sme-bridge-item" aria-label="SME Cloud Services — explore the SME portal">
+           <span class="sme-bridge-tag" data-key="smeBridge.cloud.tag">Cloud Services</span>
+           <span class="sme-bridge-desc" data-key="smeBridge.cloud.desc">SME-tier sovereign cloud hosting, region-aware data residency, and pay-as-you-grow capacity. No long contracts, no rip-and-replace.</span>
+           <span class="sme-bridge-cta"><span data-key="smeBridge.cta">Explore</span> <span class="sme-bridge-arrow" aria-hidden="true">&rarr;</span></span>
+         </a>
+       </li>
+       <li>
+         <a href="sme/" class="sme-bridge-item" aria-label="SME Platform Services — explore the SME portal">
+           <span class="sme-bridge-tag" data-key="smeBridge.platform.tag">Platform Services</span>
+           <span class="sme-bridge-desc" data-key="smeBridge.platform.desc">Drop-in messaging hub, programmable APIs, and a no-code chatbot builder. Billed per message, scaled by usage. Live in 10 minutes.</span>
+           <span class="sme-bridge-cta"><span data-key="smeBridge.cta">Explore</span> <span class="sme-bridge-arrow" aria-hidden="true">&rarr;</span></span>
+         </a>
+       </li>
+       <li>
+         <a href="sme/" class="sme-bridge-item" aria-label="SME Connectivity Services — explore the SME portal">
+           <span class="sme-bridge-tag" data-key="smeBridge.connectivity.tag">Connectivity Services</span>
+           <span class="sme-bridge-desc" data-key="smeBridge.connectivity.desc">SMS, voice, and WhatsApp on tier-1 carrier routes at SME-tier prices. No volume floor, no hidden setup fees, no enterprise overhead.</span>
+           <span class="sme-bridge-cta"><span data-key="smeBridge.cta">Explore</span> <span class="sme-bridge-arrow" aria-hidden="true">&rarr;</span></span>
+         </a>
+       </li>
+     </ul>
+   </div>
  </section>
 
  <section id="a-sec" class="audit-section">

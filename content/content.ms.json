@@ -143,6 +143,24 @@
         "desc": "Perkhidmatan migrasi AI-Digital tersuai untuk projek infrastruktur sedia ada. Kami bertemu tindanan anda di mana ia berada hari ini: on-premise, hibrid atau awan berdaulat.\n\nKami merekayasa integrasi tersuai antara sistem warisan anda dan lapisan komunikasi, orkestrasi AI dan pematuhan DOLPHLINK, disampaikan mengikut jadual anda, kediaman data anda dan keperluan tadbir urus anda.\n\nPelancaran berperingkat bermula dengan bengkel penemuan dan seni bina empat minggu, diikuti oleh juruterbang larian selari dan peralihan beransur-ansur. Arkitek penyelesaian khusus, sokongan keutamaan 24/7 dan terma SLA tersuai melindungi aliran kerja misi-kritikal anda." }
     ]
   },
+  "smeBridge": {
+    "eyebrow": "SME · Pelan Padanan Terbaik",
+    "title": "Direka untuk pasukan yang lebih kecil.",
+    "intro": "Tindanan perusahaan yang sama, disesuaikan dengan bajet dan kelajuan SME. Tiga laluan perkhidmatan sedia digunakan — pilih satu dan kami mengaktifkannya dalam beberapa hari, bukan beberapa suku tahun.",
+    "cta": "Terokai",
+    "cloud": {
+      "tag": "Perkhidmatan Awan",
+      "desc": "Hosting awan berdaulat peringkat SME, residensi data ikut wilayah, kapasiti bayar mengikut keperluan. Tiada kontrak panjang, tiada gantian sistem."
+    },
+    "platform": {
+      "tag": "Perkhidmatan Platform",
+      "desc": "Hab pemesejan plug-and-play, API boleh-program dan pembina chatbot tanpa kod. Bil setiap mesej, skala mengikut penggunaan. Aktif dalam 10 minit."
+    },
+    "connectivity": {
+      "tag": "Perkhidmatan Sambungan",
+      "desc": "SMS, suara dan WhatsApp pada laluan pembawa Tier-1 pada harga SME. Tiada had minimum, tiada kos pemasangan tersembunyi, tiada beban perusahaan."
+    }
+  },
   "audit": {
     "title": "Lapisan Kepercayaan",
     "items": [

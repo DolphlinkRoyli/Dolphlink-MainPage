@@ -143,6 +143,24 @@
         "desc": "Servicios de migración IA-Digital para proyectos de infraestructura existentes. Nos reunimos con su pila donde está hoy: on-premise, híbrido o nube soberana.\n\nDiseñamos integraciones personalizadas entre sus sistemas heredados y las capas de comunicación, orquestación de IA y cumplimiento de DOLPHLINK, entregadas según su cronograma, residencia de datos y requisitos de gobernanza.\n\nLanzamientos por fases comienzan con un workshop de descubrimiento y arquitectura de cuatro semanas, seguido de pilotos paralelos y migraciones por etapas. Arquitecto de soluciones dedicado, soporte prioritario 24/7 y cláusulas SLA personalizadas protegen sus flujos de trabajo de misión crítica." }
     ]
   },
+  "smeBridge": {
+    "eyebrow": "SME · Planes a la medida",
+    "title": "Diseñado para equipos más pequeños.",
+    "intro": "La misma plataforma empresarial, ajustada al presupuesto y la velocidad de la SME. Tres vías listas para activar — elija una y la ponemos en marcha en días, no en trimestres.",
+    "cta": "Explorar",
+    "cloud": {
+      "tag": "Servicios en la Nube",
+      "desc": "Hospedaje en nube soberana de nivel SME, con residencia de datos por región y capacidad escalable según el uso. Sin contratos largos ni reemplazo de su stack actual."
+    },
+    "platform": {
+      "tag": "Servicios de Plataforma",
+      "desc": "Hub de mensajería listo para conectar, APIs programables y constructor de chatbots sin código. Facturación por mensaje, escalado por uso. En vivo en 10 minutos."
+    },
+    "connectivity": {
+      "tag": "Servicios de Conectividad",
+      "desc": "SMS, voz y WhatsApp sobre rutas de operadores Tier-1 a precios SME. Sin volumen mínimo, sin costos ocultos de activación, sin sobrecarga empresarial."
+    }
+  },
   "audit": {
     "title": "Capa de confianza",
     "items": [

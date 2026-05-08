@@ -850,6 +850,65 @@
    opacity: 1;
  }
 
+ /* See Auto-Orchestration — APPLE-STYLE secondary text link. Roy spec:
+    hollow, no border, no chrome. Pattern lifted from Apple.com's
+    "Learn more ›" CTAs: pure text + chevron, single colour, no
+    underline, no glow. The only motion is the chevron drifting right
+    on hover with a gentle Material ease. The beauty is in restraint. */
+ .btn-industries.btn-see-auto {
+   background: transparent !important;
+   border: 0 !important;
+   box-shadow: none !important;
+   color: #FFFFFF !important;
+   padding: clamp(8px, 0.55vw, 12px) 0;
+   font-weight: 700;
+   letter-spacing: 0.6px;
+   text-shadow: none;
+   transition: opacity 0.2s ease;
+ }
+ .btn-industries.btn-see-auto > svg:first-of-type {
+   color: #FFFFFF;
+   opacity: 0.95;
+ }
+ .btn-industries.btn-see-auto .btn-industries-arrow {
+   color: #FFFFFF;
+   opacity: 0.95;
+   margin-left: 2px;
+   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+ /* Typographic chevron variant — Apple-style "›" U+203A character.
+    Font-rendered, so it scales perfectly with the label text and sits
+    naturally on the baseline. Light weight + slight letter-spacing
+    bump gives the proper "thin, refined" look. */
+ .btn-industries.btn-see-auto .btn-industries-arrow--char {
+   font-size: 1.45em;
+   font-weight: 300;
+   line-height: 1;
+   letter-spacing: 0;
+   margin-left: 4px;
+   margin-top: -2px;
+   display: inline-block;
+   transform-origin: center;
+ }
+ .btn-industries.btn-see-auto:hover {
+   background: transparent !important;
+   border-color: transparent !important;
+   box-shadow: none !important;
+   color: #FFFFFF !important;
+   transform: none !important;
+   opacity: 0.92;
+ }
+ .btn-industries.btn-see-auto:hover > svg:first-of-type { color: #FFFFFF; }
+ .btn-industries.btn-see-auto:hover .btn-industries-arrow {
+   color: #FFFFFF;
+   transform: translateX(4px);
+ }
+ .btn-industries.btn-see-auto:focus-visible {
+   outline: none;
+   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55) !important;
+   border-radius: 3px;
+ }
+
  /* SME entry button — restored to ENTERPRISE BLUE per Roy. Visual treatment
     mirrors .btn-industries (solid brand-blue + white text + storefront
     icon) so the SME path reads as "another enterprise-style action"
@@ -4116,4 +4175,115 @@
    .loop-stage-desc { font-size: 0.8rem; }
    .loop-feedback-label { font-size: 10px; padding: 4px 10px; }
    .loop-feedback-svg { height: 40px; }
+ }
+
+ /* ============================================================
+    SME BRIDGE — sits below the AI Governance pillar in the portfolio
+    section. NO cards (Roy spec): three flat clickable text columns,
+    each linking to /sme/. Gold eyebrow + brand-blue tags + soft hover
+    background + arrow that nudges right on hover.
+    ============================================================ */
+ .sme-bridge-section {
+   background: linear-gradient(180deg, rgba(245, 158, 11, 0.04), transparent);
+   border-top: 1px solid rgba(245, 158, 11, 0.18);
+   padding: 44px 4% 48px;
+ }
+ .sme-bridge-wrap {
+   max-width: 1200px;
+   margin: 0 auto;
+ }
+ .sme-bridge-eyebrow {
+   font-size: 11px;
+   font-weight: 800;
+   letter-spacing: 2.4px;
+   text-transform: uppercase;
+   color: #F59E0B;
+   display: block;
+   margin-bottom: 8px;
+ }
+ .sme-bridge-section .sec-title {
+   margin-bottom: 14px;
+ }
+ .sme-bridge-intro {
+   font-size: 0.92rem;
+   color: var(--text-soft, #475569);
+   max-width: 760px;
+   margin: 0 0 28px;
+   line-height: 1.6;
+   font-weight: 400;
+ }
+ .sme-bridge-grid {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 0;
+   border-top: 1px solid var(--border-line);
+ }
+ .sme-bridge-grid > li {
+   border-right: 1px solid var(--border-line);
+ }
+ .sme-bridge-grid > li:last-child { border-right: 0; }
+ .sme-bridge-item {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   padding: 24px 22px 22px;
+   text-decoration: none;
+   color: inherit;
+   transition: background 0.2s ease, border-left-color 0.2s ease;
+   height: 100%;
+   border-left: 3px solid transparent;
+ }
+ .sme-bridge-item:hover,
+ .sme-bridge-item:focus-visible {
+   background: rgba(245, 158, 11, 0.05);
+   border-left-color: #F59E0B;
+   outline: none;
+ }
+ .sme-bridge-tag {
+   font-size: clamp(13px, 0.4vw + 11px, 16px);
+   font-weight: 800;
+   color: var(--baiwu-blue-primary, #0059B3);
+   letter-spacing: 0.4px;
+   text-transform: uppercase;
+   line-height: 1.2;
+ }
+ .sme-bridge-desc {
+   font-size: 0.82rem;
+   font-weight: 400;
+   color: var(--text-soft, #475569);
+   line-height: 1.6;
+   flex: 1;
+ }
+ .sme-bridge-cta {
+   font-size: 11px;
+   font-weight: 800;
+   letter-spacing: 1.2px;
+   text-transform: uppercase;
+   color: #F59E0B;
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   margin-top: 4px;
+ }
+ .sme-bridge-arrow {
+   transition: transform 0.2s ease;
+   display: inline-block;
+ }
+ .sme-bridge-item:hover .sme-bridge-arrow {
+   transform: translateX(4px);
+ }
+ @media (max-width: 880px) {
+   .sme-bridge-grid {
+     grid-template-columns: 1fr;
+     border-top: 0;
+   }
+   .sme-bridge-grid > li {
+     border-right: 0;
+     border-bottom: 1px solid var(--border-line);
+   }
+   .sme-bridge-grid > li:last-child { border-bottom: 0; }
+   .sme-bridge-item { padding: 20px 16px; }
  }
