@@ -28,22 +28,6 @@
     ],
     "triggerLine": "サービスの分断を検知し、自動で復旧オーケストレーションを発動します。"
   },
-  "trustWall": {
-    "headerTag": "キャリアネットワークとコンプライアンス",
-    "statusLabel": "ライブ · Tier-1 ルート",
-    "operatorsLabel": "グローバルネットワーク",
-    "regulatorsLabel": "整合する規制",
-    "operators": [
-      { "name": "アジア太平洋" },
-      { "name": "EMEA" },
-      { "name": "アメリカ" },
-      { "name": "1,000+ グローバルルート" }
-    ],
-    "regulators": [
-      { "name": "ISO 27001" }, { "name": "MAS TRM" }, { "name": "IM8" },
-      { "name": "PDPA" }, { "name": "GDPR" }, { "name": "SOC 2" }
-    ]
-  },
   "reliability": {
     "headerTag": "信頼性マトリクス",
     "stats": [
@@ -58,6 +42,43 @@
       { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "開封率",
         "desc": "Tier-1 キャリア経由のトランザクション SMS において、検証済みの開封率 98% を達成。緊急の OTP、不正利用アラート、重要通知は数秒以内にお客様へ届き、実際に読まれています。トランザクションをマーケティング配信より優先するルーティング設計と、四半期ごとの第三者測定監査により裏付けられた数値です。" }
     ]
+  },
+  "loop": {
+    "headerTag": "実際の運用",
+    "title": "AI とヒトが DOLPHLINK 上で連携——主権、監査可能、リアルタイム。",
+    "intro": "規模の大きい政府・規制業界プログラムには精密な役割分担が必要です：判断はヒト、実行は AI。両方が DOLPHLINK 上で稼働。**各ステージに単一の責任主体、指定の製品、保証された成果。**",
+    "poweredBy": "Powered by DOLPHLINK",
+    "stages": {
+      "intake": {
+        "owner": "ヒト",
+        "title": "ヒトがスコープ策定と承認",
+        "desc": "ソリューションアーキテクトが範囲、データレジデンシー、規制マッピング、具名エスカレーション責任者、SLA・監査義務を確定。具名の個人が SOW に署名——署名前にトラフィックは流れません。",
+        "products": "AI-Digital Solutions · Operations Hub",
+        "metric": "主権レジデンシー · 署名済 SLA · 監査即応"
+      },
+      "orchestrate": {
+        "owner": "AI",
+        "title": "AI が大規模に実行",
+        "desc": "AI が主系統と冗長系統へ配分、テレメトリを常時監視、自動フェイルオーバー、各バッチ後に照合。すべてのメッセージは送出前にコンプライアンスゲートを通過。",
+        "products": "SMS · Voice & SIP · Numbers · One-API · Touch",
+        "metric": "10 秒級配信 · Tier-1 冗長 · 送出前検証"
+      },
+      "resolve": {
+        "owner": "ヒト",
+        "title": "例外はヒトが裁定",
+        "desc": "ポリシー外の事象は、完全な文脈・履歴・推奨アクション付きで具名責任者へルーティング。承認・上書き・停止をワンクリック。すべて記録。",
+        "products": "Dolphlink Nexus · Dolphlink Smart",
+        "metric": "正しいヒト · 正しい文脈 · 具名責任"
+      },
+      "audit": {
+        "owner": "AI + ヒト",
+        "title": "AI が編纂 · ヒトが署名",
+        "desc": "AI が監査向け形式の改ざん不可バンドルを構築。具名コンプライアンス責任者がデジタル署名。監査が承認。両署名がレコードに封印。",
+        "products": "Operations Hub · Dolphlink Nexus",
+        "metric": "改ざん不可 · 監査即応 · 二重署名封印"
+      }
+    },
+    "feedback": "各プログラムがプレイブックを更新——AI 加速、ヒト減少、監査緻密化"
   },
   "portfolios": {
     "headerTag": "ポートフォリオ",

@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v237';
+const CACHE_VERSION = 'dolphlink-v309';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -82,11 +82,9 @@ const PRECACHE = [
   SCOPE + 'js/engine/home/render/portfolio.js',
   SCOPE + 'js/engine/home/render/audit.js',
   SCOPE + 'js/engine/home/render/menu.js',
-  SCOPE + 'js/engine/home/render/trust.js',
   SCOPE + 'js/engine/home/render/industries.js',
   SCOPE + 'js/engine/home/render/departments.js',
   SCOPE + 'js/engine/home/render/legal.js',
-  SCOPE + 'js/engine/home/render/social.js',
   SCOPE + 'js/engine/home/render/icon-html.js',  // shared SVG-or-webp helper
   SCOPE + 'js/engine/home/modules/loader-shell.js',
   SCOPE + 'js/engine/home/modules/scroll.js',

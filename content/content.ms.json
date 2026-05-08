@@ -28,22 +28,6 @@
     ],
     "triggerLine": "Mengesan gangguan perkhidmatan dan secara automatik mencetuskan pemulihan."
   },
-  "trustWall": {
-    "headerTag": "Rangkaian Telekomunikasi & Pematuhan",
-    "statusLabel": "Langsung · Laluan Tier-1",
-    "operatorsLabel": "Rangkaian Global",
-    "regulatorsLabel": "Pematuhan",
-    "operators": [
-      { "name": "Asia-Pasifik" },
-      { "name": "Eropah, Timur Tengah & Afrika" },
-      { "name": "Amerika" },
-      { "name": "1,000+ Laluan Global" }
-    ],
-    "regulators": [
-      { "name": "ISO 27001" }, { "name": "MAS TRM" }, { "name": "IM8" },
-      { "name": "PDPA" }, { "name": "GDPR" }, { "name": "SOC 2" }
-    ]
-  },
   "reliability": {
     "headerTag": "Matriks Kebolehpercayaan",
     "stats": [
@@ -58,6 +42,38 @@
       { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "Kadar Bacaan",
         "desc": "Kadar bacaan 98% yang disahkan untuk SMS transaksi yang dihantar menerusi pengendali Tier-1 di seluruh dunia. OTP segera, amaran penipuan dan notifikasi keutamaan tinggi sampai kepada pelanggan dalam beberapa saat dan benar-benar dibaca. Trafik transaksi diberi keutamaan berbanding kempen pemasaran, dengan audit pengukuran pihak ketiga setiap suku tahun." }
     ]
+  },
+  "loop": {
+    "headerTag": "Bagaimana ia sebenarnya berjalan",
+    "title": "AI dan manusia, pembahagian tugas yang jelas — pada setiap pelancaran terkawal.",
+    "intro": "Program kerajaan dan perusahaan terkawal pada skala berdaulat tidak berjalan sendiri. Ia menuntut pembahagian tugas yang tepat antara AI dan manusia: manusia di mana penghakiman dan akauntabiliti diperlukan, AI di mana pelaksanaan dan konsistensi diperlukan. **Setiap satu daripada empat peringkat berikut mempunyai pemilik tunggal yang jelas.** Inilah gelung operasi yang DOLPHLINK jalankan.",
+    "stages": {
+      "intake": {
+        "owner": "Manusia",
+        "title": "Manusia menetapkan dan meluluskan projek",
+        "desc": "Arkitek penyelesaian berunding dengan pasukan pematuhan, perundangan dan operasi pelanggan. Bersama mereka mentakrifkan skop program, mengunci residensi data, memetakan rangka kerja kawal selia yang berkenaan, menamakan pemilik eskalasi di kedua-dua belah, dan mempersetujui SLA, KPI dan kewajipan audit. AI tidak terlibat pada peringkat ini. SOW ditandatangani oleh individu dinamakan — sebelum tandatangan itu, tiada trafik mengalir.",
+        "metric": "Arkitek penyelesaian · Skop · Residensi · SOW ditandatangani"
+      },
+      "orchestrate": {
+        "owner": "AI",
+        "title": "AI melaksana pada skala",
+        "desc": "Setelah SOW aktif, AI mengambil alih pelaksanaan: memperuntukkan laluan dan kapasiti, mengagihkan trafik antara laluan utama dan sandaran, memantau telemetri penghantaran masa nyata, gagal-pindah secara automatik apabila laluan merosot, dan menyelaraskan setiap kelompok dengan sistem sumber kebenaran pelanggan. Setiap mesej melalui pintu pematuhan (had kadar, peraturan serantau, polisi kandungan) sebelum dihantar. Berjalan tanpa penyeliaan, sepanjang masa.",
+        "metric": "Memperuntuk · Mengagih · Memantau · Menyelaras"
+      },
+      "resolve": {
+        "owner": "Manusia",
+        "title": "Manusia memutuskan setiap pengecualian",
+        "desc": "Apabila peristiwa terkeluar dari polisi yang dipersetujui — ambang risiko, pencetus kawal selia, kandungan sensitif, trafik anomali — AI tidak bertindak. Ia membungkus kes (konteks penuh, sejarah, tindakan dicadangkan) dan merutekan kepada pemilik manusia dinamakan. Pemilik meluluskan, mengatasi atau menjeda program dengan satu tindakan. Setiap keputusan direkodkan dengan nama, cap masa dan rasional. AI mencadang; manusia memutuskan.",
+        "metric": "Tanda · Rute · Putus · Rekod"
+      },
+      "audit": {
+        "owner": "AI + Manusia",
+        "title": "AI menyusun · Manusia menandatangani · Juruaudit menutup",
+        "desc": "Pada penutupan program, AI menghimpunkan bungkusan kalis pindaan: setiap tindakan, setiap keputusan, setiap cubaan semula, setiap kelulusan manusia, dieksport dalam format yang juruaudit anda perlukan. Ketua pematuhan manusia dinamakan menyemak dan menerapkan tandatangan digital dengan cap masa. Juruaudit menyemak dan menerima. Kedua-dua tandatangan — mesin dan manusia — dimeterai dalam rekod. Buku panduan dikemas kini untuk program seterusnya.",
+        "metric": "Susun · Eksport · Tandatangan · Meterai"
+      }
+    },
+    "feedback": "Setiap program mengemas kini buku panduan · AI mempercepat, manusia campur tangan kurang"
   },
   "portfolios": {
     "headerTag": "Portfolio",

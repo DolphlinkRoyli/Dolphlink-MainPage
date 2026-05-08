@@ -17,6 +17,12 @@ push-to-github.bat
 push-to-github.ps1
 push.bat
 bump-version.bat
+compress-video.bat
+
+# ---- Portable ffmpeg auto-downloaded by compress-video.bat (~80MB) --------
+lib/ffmpeg/
+lib/_ffmpeg.zip
+lib/_ffmpeg_tmp/
 
 # ---- Original source assets â€” kept locally for re-processing ---------------
 media/_orig/

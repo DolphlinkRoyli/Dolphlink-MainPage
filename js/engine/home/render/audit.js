@@ -11,12 +11,31 @@ const AUDIT_ICONS = [
   '<circle cx="8" cy="14" r="4"/><line x1="11" y1="11" x2="22" y2="2"/><line x1="17" y1="7" x2="20" y2="10"/><line x1="14" y1="10" x2="17" y2="13"/>'
 ];
 
+/* Key compliance terms that should render in gold + bold inside an
+   audit-box description. Order matters — longest matches first so
+   "PDPA Singapore" wins over plain "PDPA". Word boundaries prevent
+   partial-word hits. */
+const AUDIT_KEYWORDS = [
+  'PDPA Singapore', 'ISO 27001', 'MAS TRM', 'SOC 2',
+  'GDPR', 'PDPA', 'IM8'
+];
+function highlightAuditKeywords(escapedText) {
+  let out = escapedText;
+  for (const kw of AUDIT_KEYWORDS) {
+    // kw is plain ASCII so a literal regex with `g` flag is safe.
+    const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(`(?<![\\w])${escaped}(?![\\w])`, 'g');
+    out = out.replace(re, (m) => `<span class="audit-keyword">${m}</span>`);
+  }
+  return out;
+}
+
 export function renderAudit(container, items) {
   container.innerHTML = items.map((a, i) => `
     <div class="audit-box">
       <svg class="audit-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${AUDIT_ICONS[i] || AUDIT_ICONS[0]}</svg>
       <h3>${escapeHtml(a.title)}</h3>
-      <p>${escapeHtml(a.desc)}</p>
+      <p>${highlightAuditKeywords(escapeHtml(a.desc))}</p>
     </div>
   `).join('');
 }

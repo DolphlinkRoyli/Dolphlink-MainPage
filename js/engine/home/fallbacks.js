@@ -60,6 +60,7 @@ export function qrFallback(slot, url, label) {
     <div style="display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:16px;background:#FFF;border:1px solid #E2E8F0;border-radius:10px;font-family:inherit">
       <div style="font-size:10px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:#0059B3">${safeLabel}</div>
       <input id="${id}" type="text" readonly value="${escapeHtml(safeUrlStr)}"
+             autocomplete="off" aria-label="QR fallback URL — copy to share"
              style="width:100%;padding:10px 12px;font-size:12px;font-family:ui-monospace,Menlo,Consolas,monospace;color:#0F172A;background:#F8FAFC;border:1px solid #CBD5E1;border-radius:6px;outline:none">
       <button type="button" data-qr-fallback-copy="${id}"
               style="padding:9px 14px;font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#FFF;background:#0059B3;border:none;border-radius:6px;cursor:pointer">

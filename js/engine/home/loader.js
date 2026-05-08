@@ -17,7 +17,7 @@
  */
 import { yieldToMain } from './utils.js';
 
-export const CONTENT_VERSION = '20260508e';
+export const CONTENT_VERSION = '20260508bx';
 
 const _cache = new Map();        /* lang code â†’ resolved content object */
 const _inflight = new Map();     /* lang code â†’ in-flight fetch promise */
@@ -31,7 +31,15 @@ export async function loadContent(lang = 'en') {
   if (_cache.has(lang)) return _cache.get(lang);
   if (_inflight.has(lang)) return _inflight.get(lang);
 
-  const promise = fetch(urlFor(lang))
+  /* `credentials: 'omit'` is REQUIRED for the browser to reuse the
+     `<link rel=preload as=fetch crossorigin=anonymous>` resource declared
+     in index.html. Without it, the preload runs as CORS-anonymous (no
+     cookies) but the bare fetch() defaults to same-origin (sends cookies)
+     — credentials don't match, so the preload is discarded and we pay
+     for the JSON twice (and Chrome logs the "preloaded but not used"
+     warning). With omit, both requests carry identical metadata so the
+     preloaded response is consumed by this fetch. */
+  const promise = fetch(urlFor(lang), { credentials: 'omit' })
     .then(r => {
       if (r.ok) return r.json();
       /* 404 / 5xx â€” try English fallback. Don't throw; non-English visitors

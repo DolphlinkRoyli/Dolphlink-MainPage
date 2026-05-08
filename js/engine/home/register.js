@@ -236,7 +236,7 @@ function buildModalDOM() {
             </div>
             <div class="field">
               <label for="dlpk-field-email">Email <small>(verified by Google)</small></label>
-              <input id="dlpk-field-email" name="email" type="email" readonly>
+              <input id="dlpk-field-email" name="email" type="email" readonly autocomplete="email">
             </div>
             <div class="field">
               <label for="dlpk-field-phone">Phone<span class="req">*</span></label>

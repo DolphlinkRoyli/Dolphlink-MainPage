@@ -28,22 +28,6 @@
     ],
     "triggerLine": "Detecta interrupciones de servicio y activa la recuperación automáticamente."
   },
-  "trustWall": {
-    "headerTag": "Red de operadores y cumplimiento",
-    "statusLabel": "En vivo · Rutas Tier-1",
-    "operatorsLabel": "Red global",
-    "regulatorsLabel": "Cumplimiento normativo",
-    "operators": [
-      { "name": "Asia-Pacífico" },
-      { "name": "Europa, Oriente Medio y África" },
-      { "name": "Américas" },
-      { "name": "Más de 1.000 rutas globales" }
-    ],
-    "regulators": [
-      { "name": "ISO 27001" }, { "name": "MAS TRM" }, { "name": "IM8" },
-      { "name": "PDPA" }, { "name": "GDPR" }, { "name": "SOC 2" }
-    ]
-  },
   "reliability": {
     "headerTag": "Matriz de fiabilidad",
     "stats": [
@@ -58,6 +42,38 @@
       { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "Tasa de apertura",
         "desc": "Tasa de apertura verificada del 98% en SMS transaccionales enviados por operadores Tier-1 a nivel global. Los OTP urgentes, las alertas de fraude y las notificaciones prioritarias llegan a sus clientes en segundos y se leen de verdad. El enrutamiento prioriza el tráfico transaccional sobre los envíos de marketing, con auditorías de medición trimestrales por parte de terceros." }
     ]
+  },
+  "loop": {
+    "headerTag": "Cómo funciona realmente",
+    "title": "IA y humanos, con una división de labor clara — en cada despliegue regulado.",
+    "intro": "Los programas gubernamentales y empresariales regulados a escala soberana no se ejecutan solos. Exigen una división de labor precisa entre IA y personas: las personas donde hace falta juicio y responsabilidad, la IA donde hace falta ejecución y consistencia. **Cada una de las cuatro etapas siguientes tiene un único responsable explícito.** Este es el ciclo operativo que DOLPHLINK ejecuta.",
+    "stages": {
+      "intake": {
+        "owner": "Humano",
+        "title": "Las personas definen y autorizan el proyecto",
+        "desc": "Un arquitecto de soluciones se reúne con los responsables de cumplimiento, legal y operaciones del cliente. Juntos definen el alcance del programa, fijan la residencia de datos, mapean el marco regulatorio aplicable, nombran a los responsables de escalación de ambas partes y acuerdan los SLA, KPI y obligaciones de auditoría. La IA no participa en esta etapa. El SOW lo firman personas nombradas — antes de esa firma no circula ni un mensaje.",
+        "metric": "Arquitecto de soluciones · Alcance · Residencia · SOW firmado"
+      },
+      "orchestrate": {
+        "owner": "IA",
+        "title": "La IA ejecuta a escala",
+        "desc": "Con el SOW activo, la IA toma la ejecución: aprovisiona rutas y capacidad, distribuye tráfico entre rutas primarias y de respaldo, monitorea telemetría de entrega en tiempo real, hace fallback automático cuando una ruta se degrada, y reconcilia cada lote contra el sistema fuente de verdad del cliente. Antes de salir, cada mensaje pasa por las puertas de cumplimiento (límites de tasa, reglas regionales, políticas de contenido). Ejecuta sin supervisión humana, las 24 horas.",
+        "metric": "Aprovisionar · Distribuir · Monitorear · Reconciliar"
+      },
+      "resolve": {
+        "owner": "Humano",
+        "title": "Las personas resuelven cada excepción",
+        "desc": "Cuando un evento sale de la política acordada — umbrales de riesgo, disparadores regulatorios, contenido sensible, tráfico anómalo — la IA no actúa. Empaqueta el caso (contexto completo, historial, acción sugerida) y lo enruta al responsable humano nombrado. El responsable aprueba, anula o pausa el programa con un clic. Cada decisión queda registrada con nombre, marca de tiempo y motivo declarado. La IA propone; la persona dispone.",
+        "metric": "Marcar · Enrutar · Decidir · Registrar"
+      },
+      "audit": {
+        "owner": "IA + Humano",
+        "title": "IA compila · Humano firma · Auditor cierra",
+        "desc": "Al cierre del programa, la IA arma un paquete inalterable: cada acción, cada decisión, cada reintento y cada aprobación humana, exportado en los formatos que sus auditores requieren. El responsable humano de cumplimiento revisa y aplica firma digital con sello horario. El auditor revisa y acepta. Ambas firmas — máquina y humana — quedan selladas en el registro. El guion se actualiza para el próximo programa.",
+        "metric": "Compilar · Exportar · Firmar · Sellar"
+      }
+    },
+    "feedback": "Cada programa actualiza el guion · La IA acelera, las personas intervienen menos"
   },
   "portfolios": {
     "headerTag": "Portafolio",

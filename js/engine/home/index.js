@@ -26,11 +26,9 @@ import { renderStats }       from './render/stats.js';
 import { renderPortfolios }  from './render/portfolio.js';
 import { renderAudit }       from './render/audit.js';
 import { renderMenu }        from './render/menu.js';
-import { renderTrustWall }   from './render/trust.js';
 import { renderIndustries }  from './render/industries.js';
 import { renderDepartments } from './render/departments.js';
 import { renderLegalLinks }  from './render/legal.js';
-import { renderSocial }      from './render/social.js';
 
 import { bindCardDetail }    from './modules/card-detail.js';
 import { renderFooterCard }  from './modules/footer-card.js';
@@ -44,19 +42,14 @@ const RENDERERS = {
   'portfolios.items':    renderPortfolios,
   'audit.items':         renderAudit,
   'nav.menuItems':       renderMenu,
-  'trustWall.operators': (node, data) => renderTrustWall(node, data, true),
-  'trustWall.regulators':(node, data) => renderTrustWall(node, data, false),
   'industries.items':    renderIndustries,
   'departments.items':   renderDepartments,
   'footer.legalLinks':   renderLegalLinks,
-  'footer.social':       renderSocial,
 };
 
 const ABOVE_FOLD_KEYS = new Set([
   'reliability.stats',
   'nav.menuItems',
-  'trustWall.operators',
-  'trustWall.regulators',
 ]);
 
 function renderNode(content, node) {

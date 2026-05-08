@@ -28,26 +28,6 @@
     ],
     "triggerLine": "自动检测服务异常，秒级触发恢复编排。"
   },
-  "trustWall": {
-    "headerTag": "运营商网络与合规",
-    "statusLabel": "实时 · Tier-1 路由",
-    "operatorsLabel": "全球网络",
-    "regulatorsLabel": "合规对标",
-    "operators": [
-      { "name": "亚太" },
-      { "name": "欧洲、中东及非洲" },
-      { "name": "美洲" },
-      { "name": "全球 1,000+ 路由" }
-    ],
-    "regulators": [
-      { "name": "ISO 27001" },
-      { "name": "MAS TRM" },
-      { "name": "IM8" },
-      { "name": "PDPA" },
-      { "name": "GDPR" },
-      { "name": "SOC 2" }
-    ]
-  },
   "reliability": {
     "headerTag": "可靠性矩阵",
     "stats": [
@@ -62,6 +42,40 @@
       { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "打开率",
         "desc": "全球 Tier-1 运营商发送的交易类短信，经验证打开率高达 98%。OTP、欺诈预警、高优先级通知在数秒内触达客户，且被真正阅读。路由层面优先处理交易类流量，由第三方机构每季度测量审计。" }
     ]
+  },
+  "loop": {
+    "headerTag": "实际怎么运作",
+    "title": "千万级项目全流程——每一步人做什么、AI 做什么。",
+    "intro": "立项、迁移、运营、审计：一个真实的政企通信大项目走完这四个阶段。每一步人负责判断、AI 负责执行，DOLPHLINK 产品把活儿干完。",
+    "roleHumanLabel": "人工",
+    "roleAiLabel": "AI",
+    "stages": {
+      "intake": {
+        "title": "立项与授权",
+        "humanRole": "锁定范围、数据驻留、监管映射、具名上报链路、SLA 与审计义务。签字 SOW。",
+        "aiRole": "AI-Digital Solutions 起草上线方案与号码迁移图谱；Operations Hub 预占 Tier-1 容量、把 SLA 写进合同。",
+        "metric": "主权驻留 · 签字 SLA · 可审计"
+      },
+      "orchestrate": {
+        "title": "迁移与部署",
+        "humanRole": "复核切换方案，签字确认试点 KPI、并行运行验证、正式上线时间。",
+        "aiRole": "AI-Digital Solutions 端口号码、迁移模板、通过 API 对接客户 CRM / 核心系统；Operations Hub 与旧网关并行试运行，按批次对账 DLR（送达回执）。",
+        "metric": "零停机切换 · 并行验证 · CRM 对账"
+      },
+      "resolve": {
+        "title": "规模化运营",
+        "humanRole": "一键裁定标记案件——批准、覆盖或暂停。每个决定带姓名、时间、理由。",
+        "aiRole": "SMS / Voice / Numbers 经 Tier-1 线路送达；One-API 跨通道自动回落；Touch 保持跨通道状态。Nexus 标记策略外事件；Smart 在交接时保持对话连贯。",
+        "metric": "10 秒级送达 · Tier-1 双活 · 出库即合规"
+      },
+      "audit": {
+        "title": "审计封存",
+        "humanRole": "合规负责人复核归档包并加数字签字；审计读完即放行。",
+        "aiRole": "Operations Hub 汇出按监管格式（CSV / JSON / 监管专用 schema）输出的不可篡改归档包；Nexus 封存决策图谱以备交接。",
+        "metric": "不可篡改 · 监管即取即用 · 双签封存"
+      }
+    },
+    "feedback": "立项 · 迁移 · 运营 · 审计——一个平台，端到端"
   },
   "portfolios": {
     "headerTag": "产品矩阵",

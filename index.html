@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-page="home">
-<head><meta charset="UTF-8"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head><meta charset="UTF-8"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Singapore Sovereign CPaaS & AI Orchestration Platform | DOLPHLINK</title>
  <meta name="description" content="Singapore's sovereign communications spine. CPaaS, AI orchestration, and human-in-the-loop AI governance for governments, FinTech, healthcare, and regulated enterprises. 1,000+ Tier-1 operators across 200+ countries at 99.999% uptime. ISO 27001 certified, MAS TRM and IM8-aligned. Operated under Singapore's Cybersecurity Act.">
  <meta name="keywords" content="CPaaS, Communications Platform as a Service, AI governance, AI gov, sovereign AI, AI-Human Lifecycle, agent orchestration, AI orchestration, digital solution, AI digital solution, enterprise communications platform, government communications platform, SMS API, voice API, SIP trunking, RCS messaging, conversational AI, no-code chatbot, government AI solutions, regulated industries CPaaS, ISO 27001 CPaaS, MAS TRM compliant, IM8-aligned, PDPA Singapore, GDPR compliant CPaaS, tier-1 carrier connectivity, mission-critical messaging, RFP-ready communications, RFP CPaaS, government tender CPaaS, B2B integration platform, REST API enterprise, SDK integration, webhook integration, Singapore CPaaS, ASEAN CPaaS, sovereign cloud Singapore, digital migration partner, AI migration services, FinTech communications, healthcare communications, retail communications, logistics communications, customer engagement platform, omnichannel messaging, two-factor authentication API, OTP delivery, transactional SMS, programmable voice, contact center API, SIP trunk Singapore, telco platform, carrier-grade communications, sovereign infrastructure">
@@ -194,17 +194,27 @@
       for the Request-Briefing modal. Preloading here means the modal opens
       instantly on first .nav-cta click, no download wait. -->
  <link rel="modulepreload" href="js/engine/home/register.js?v=19">
- <!-- Preload content.json so it lands the moment main.js calls fetch().
-      Saves the round-trip of waiting for main.js to parse + execute first.
-      Same query string main.js uses (CONTENT_VERSION = 20260507n) so the
-      preloaded response is matched to the actual fetch — otherwise the
-      browser fetches it twice. -->
- <!-- crossorigin="anonymous" required: without it, preload uses no-cors
-      mode while fetch() defaults to cors mode — mismatch means the
-      browser fetches content.json TWICE. With anonymous, preload uses
-      cors+same-origin which matches the default fetch() behaviour and
-      the preloaded response is reused by the fetch in main.js. -->
- <link rel="preload" as="fetch" href="content/content.json?v=20260507ag" crossorigin="anonymous">
+ <!-- Critical home-page module chain — `<link rel=modulepreload>` lets
+      the browser discover these BEFORE app.js parses + starts importing,
+      cutting the network waterfall from sequential to parallel. Cuts a
+      few hundred ms off Time-to-Hydrate on cold loads. -->
+ <link rel="modulepreload" href="js/engine/dispatch.js">
+ <link rel="modulepreload" href="js/engine/home/index.js">
+ <link rel="modulepreload" href="js/engine/home/loader.js">
+ <link rel="modulepreload" href="js/engine/home/hydrate.js">
+ <link rel="modulepreload" href="js/engine/core/i18n.js">
+ <!-- (Content preload removed. Reasons:
+      1. The i18n loader fetches `content.<lang>.json` (or `content.json`
+         for English) based on the runtime locale pick. A static preload
+         tag in HTML can only point at ONE URL, so it was guaranteed to
+         miss for every non-English visitor — preload fired, response
+         was never consumed, Chrome logged "preloaded but not used".
+      2. Even for English visitors, the JS chain
+         (app.js → dispatch.js → home/index.js → loadContent) sometimes
+         exceeds Chrome's few-second match window between preload and
+         the actual fetch().
+      Service-worker cache + module preload below cover the same ground
+      without the false-positive warning storm.) -->
 
  <!-- (Google Fonts removed by policy — no third-party origins. Body
       typography falls back to the system font stack defined in
@@ -214,7 +224,7 @@
       retired page-loader. The new inline #dlpk-loader uses Inter,
       same as the rest of the site, so no second font request needed.) -->
  <link rel="stylesheet" href="css/tokens.css?v=1">
- <link rel="stylesheet" href="css/style.css?v=156">
+ <link rel="stylesheet" href="css/style.css?v=163">
  <link rel="preload" as="style" href="css/register.css?v=1" onload="this.onload=null;this.rel='stylesheet'">
  <noscript><link rel="stylesheet" href="css/register.css?v=1"></noscript>
  <!-- ECharts lazy-loaded from local lib/ (injected only when charts viewport intersects) — saves 209 KiB initial JS -->
@@ -675,53 +685,6 @@
         tabindex="-1"><source src="media/video/current.mp4" type="video/mp4"></video>
  </section>
 
- <!-- Trust wall - tier-1 carriers + regulatory frameworks. Animation
-      always runs (illumination wave + horizontal marquee), regardless of
-      OS reduced-motion preference, because the wave IS the value of this
-      strip. JS detects whether content fits in one row; if so, scroll
-      pauses and only the illumination wave runs. -->
- <section class="section-row trust-section reveal" aria-label="Carrier network and compliance">
-   <div class="trust-strip-wrap">
-     <h2 class="sec-title"><span data-key="trustWall.headerTag">Carrier Network &amp; Compliance</span><span class="audit-stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></span></h2>
-     <!-- Unified card with two labeled panes (NETWORK | COMPLIANCE).
-          Inside each pane: a header row (icon + uppercase label) at top,
-          then a horizontal grid of small CARDS (4 for network, 6 for
-          compliance). The 4th network card is gold-themed as a callout. -->
-     <div class="trust-row trust-row--unified">
-       <div class="trust-pane trust-pane--network">
-         <div class="trust-pane-header">
-           <svg class="trust-pane-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
-             <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
-             <ellipse cx="12" cy="12" rx="4" ry="9" stroke="currentColor" stroke-width="1.6"/>
-             <path d="M3 12 H21" stroke="currentColor" stroke-width="1.6"/>
-           </svg>
-           <span class="trust-pane-label">Network</span>
-         </div>
-         <div class="trust-cards trust-cards--network" data-render="trustWall.operators">
-           <div class="trust-card"><span class="trust-card-text">Asia-Pacific</span></div>
-           <div class="trust-card"><span class="trust-card-text">EMEA</span></div>
-           <div class="trust-card"><span class="trust-card-text">Americas</span></div>
-           <div class="trust-stat"><svg class="trust-stat-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M12 12 L4 4 M12 12 L20 4 M12 12 L4 20 M12 12 L20 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="4" cy="4" r="1.6" fill="currentColor"/><circle cx="20" cy="4" r="1.6" fill="currentColor"/><circle cx="4" cy="20" r="1.6" fill="currentColor"/><circle cx="20" cy="20" r="1.6" fill="currentColor"/></svg><span class="trust-stat-text"><span class="trust-stat-number">1,000+</span><span class="trust-stat-label">Global Routes</span></span></div>
-         </div>
-       </div>
-       <span class="trust-divider" aria-hidden="true"></span>
-       <div class="trust-pane trust-pane--compliance">
-         <div class="trust-pane-header">
-           <svg class="trust-pane-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
-             <path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-             <path d="M9 12 L11 14 L15 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-           </svg>
-           <span class="trust-pane-label">Compliance</span>
-         </div>
-         <div class="trust-cards trust-cards--compliance" data-render="trustWall.regulators"><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M12 2 L20 5 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V5 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12 L11 14 L15 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="trust-card-text">ISO 27001</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M3 12 L12 4 L21 12 L21 19 H3 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 19 V14 H15 V19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="trust-card-text">MAS TRM</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9 H16 M8 12 H16 M8 15 H13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="trust-card-text">IM8</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M12 2 L20 6 V13 C20 17.5 16.5 21 12 22 C7.5 21 4 17.5 4 13 V6 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><span class="trust-card-text">PDPA</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg><span class="trust-card-text">GDPR</span></div><div class="trust-card"><svg class="trust-card-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor"/></svg><span class="trust-card-text">SOC 2</span></div></div>
-       </div>
-     </div>
-     <!-- Audit fineprint — under the unified card -->
-     <div class="trust-fineprint">
-       Annually audited · Quarterly third-party attestation · Tamper-evident logs
-     </div>
-   </div>
- </section>
 
  <!-- Reliability Matrix - dedicated section -->
  <section id="r-sec" class="section-row reliability-section">
@@ -746,6 +709,357 @@
  </div>
  <div class="stat-strip" data-render="reliability.stats"><button type="button" class="stat-card" data-stat="sla" data-modal-icon="icon_6" data-modal-eyebrow="99.999%" data-modal-title="Uptime" data-modal-text="Five-nines reliability across geo-redundant points of presence. Engineered for mission-critical communications with independently verified SLA and quarterly third-party attestation." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">99.999%</span><span class="stat-label">Uptime</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span></button><button type="button" class="stat-card" data-stat="loc" data-modal-icon="icon_5" data-modal-eyebrow="200+" data-modal-title="Countries" data-modal-text="Routes across 1,000+ tier-1 mobile operators worldwide for unmatched reach and carrier-grade message quality across every region, including last-mile coverage in regulated and emerging markets." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">200+</span><span class="stat-label">Countries</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span></button><button type="button" class="stat-card" data-stat="lat" data-modal-icon="icon_10" data-modal-eyebrow="&lt;10s" data-modal-title="Delivery" data-modal-text="SMS reaches recipients in under 10 seconds via tier-1 carrier routes, verified across global benchmarks, audited quarterly, and continuously optimized through real-time route intelligence." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">&lt;10s</span><span class="stat-label">Delivery</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span></button><button type="button" class="stat-card" data-stat="ain" data-modal-icon="icon_7" data-modal-eyebrow="AI×H" data-modal-title="Orchestration" data-modal-text="Full agent orchestration with human-in-the-loop AI governance. Bots handle the routine, agents handle the nuance, and seamless handoff returns control to a human reviewer the moment policy or risk thresholds trigger. Built-in migration tooling moves legacy workflows onto next-generation operations on your timeline, with tamper-evident audit trails at every handoff." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">AI×H</span><span class="stat-label">Orchestration</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span></button><button type="button" class="stat-card" data-stat="open" data-modal-icon="icon_3" data-modal-eyebrow="98%" data-modal-title="Open Rate" data-modal-text="98% verified open rate on transactional SMS across global tier-1 operators. Time-sensitive OTPs, fraud alerts, and high-priority notifications reach customers within seconds, and they actually read them. Engineered routing prioritises transactional traffic ahead of marketing batches, with quarterly third-party measurement audits." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">98%</span><span class="stat-label">Open Rate</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span></button></div>
  </div>
+ </section>
+
+ <!-- ============================================================
+      AI × HUMAN CLOSED-LOOP — sits between Reliability Matrix and
+      The Portfolio. Visualises the 4-stage operational cycle:
+      Intake → Orchestrate → Resolve → Audit, with outcomes looping
+      back to improve the AI. Built for governments and regulated
+      enterprises where every interaction must be tracked, governed,
+      and outcome-driven.
+      ============================================================ -->
+ <!-- ===== HOW IT ACTUALLY WORKS — floating white card.
+      Top row: header (left) + video horizontal band (right, top/bottom
+      cropped to a clean middle band). Bottom row: Full Cycle (4 cards)
+      and Plug-and-Play (3 cards), both spanning the FULL card width. -->
+ <section class="section-row loop-section reveal" aria-labelledby="loop-heading">
+   <div class="loop-card">
+     <!-- Top row: header on left, video on right (2-col grid) -->
+     <div class="loop-card-top">
+       <header class="loop-card-head">
+         <h2 class="sec-title sec-title--light" id="loop-heading" data-key="loop.headerTag">How it actually works</h2>
+         <p class="sec-intro" data-key="loop.title"><strong>We help you close the loop. Your team sets policy. We run the playbook.</strong></p>
+         <p class="loop-subnote" data-key="loop.subnote" style="border:0;padding-left:0;padding-right:0;margin:0;max-width:none;">Two engagement paths on a single platform. <strong>Plug and Play</strong> handles fast, same-day adoption with audit-ready logs from the first message — built for teams that need to be live this week. <strong>Full Cycle</strong> handles sovereign migrations and bespoke integrations with a sprint cadence, named human sign-offs at every gate, and full regulator hand-off when the program closes. Both share the same Tier-1 backbone, the same pre-send compliance gates, the same human-in-the-loop control.</p>
+       </header>
+       <div class="loop-card-video" aria-hidden="true">
+         <video autoplay loop muted playsinline preload="auto"
+                aria-hidden="true" tabindex="-1">
+           <source src="media/video/ai-human.mp4" type="video/mp4">
+         </video>
+       </div>
+     </div>
+
+     <!-- Bottom: cards full width -->
+     <div class="loop-card-content">
+       <div class="loop-rows">
+
+         <!-- ===== FULL CYCLE — 4 rich stage cards in a row ============== -->
+         <section class="loop-row loop-row--full">
+           <header class="loop-row-head">
+             <span class="loop-row-tag" data-key="loop.tracks.full.tag">Full Cycle</span>
+             <span class="loop-row-name" data-key="loop.tracks.full.name">Custom rollout</span>
+           </header>
+           <ol class="loop-row-grid" role="list">
+
+             <li class="loop-stage-card">
+               <span class="loop-stage-num">01</span>
+               <span class="loop-stage-icon-wrap" aria-hidden="true">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <rect x="6" y="4" width="12" height="16" rx="2"/>
+                   <path d="M9 8h6M9 12h6M9 16h4"/>
+                 </svg>
+               </span>
+               <h4 class="loop-stage-title">Plan &amp; Authorize</h4>
+               <p class="loop-stage-desc">Solution architect locks scope, residency, regulatory mapping. Named SOW signature.</p>
+               <span class="loop-stage-metric">Signed SLA · Audit-ready</span>
+             </li>
+
+             <li class="loop-stage-card">
+               <span class="loop-stage-num">02</span>
+               <span class="loop-stage-icon-wrap" aria-hidden="true">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <path d="M14 4l6 6-9 9-6-6 9-9z"/><path d="M11 7l6 6"/>
+                 </svg>
+               </span>
+               <h4 class="loop-stage-title">Build, test, deploy</h4>
+               <p class="loop-stage-desc">Two-week sprints. Green test suites at every demo. Migration runs alongside legacy.</p>
+               <span class="loop-stage-metric">Sprints · Tests green · Cutover</span>
+             </li>
+
+             <li class="loop-stage-card loop-stage-card--accent">
+               <span class="loop-stage-num">03</span>
+               <span class="loop-stage-icon-wrap" aria-hidden="true">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <circle cx="12" cy="12" r="9"/><path d="M10 8l5 4-5 4z" fill="currentColor"/>
+                 </svg>
+               </span>
+               <h4 class="loop-stage-title">Operate at scale</h4>
+               <p class="loop-stage-desc">Sub-10s on Tier-1 routes. Auto-fallback across channels. Out-of-policy events flagged with full context.</p>
+               <span class="loop-stage-metric">Sub-10s · Tier-1 redundancy</span>
+             </li>
+
+             <li class="loop-stage-card">
+               <span class="loop-stage-num">04</span>
+               <span class="loop-stage-icon-wrap" aria-hidden="true">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/>
+                 </svg>
+               </span>
+               <h4 class="loop-stage-title">Audit &amp; Seal</h4>
+               <p class="loop-stage-desc">Tamper-evident bundle. Compliance lead digitally signs. Auditor accepts. Both signatures sealed.</p>
+               <span class="loop-stage-metric">Tamper-evident · Two-signature</span>
+             </li>
+
+           </ol>
+         </section>
+
+         <!-- ===== PLUG AND PLAY — 3 rich stage cards in a row =========== -->
+         <section class="loop-row loop-row--plug">
+           <header class="loop-row-head">
+             <span class="loop-row-tag" data-key="loop.tracks.plug.tag">Plug and Play</span>
+             <span class="loop-row-name" data-key="loop.tracks.plug.name">Standard adoption</span>
+           </header>
+           <ol class="loop-row-grid loop-row-grid--three" role="list">
+
+             <li class="loop-stage-card">
+               <span class="loop-stage-num">01</span>
+               <span class="loop-stage-icon-wrap" aria-hidden="true">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <path d="M12 3v8"/><path d="M7 7a7 7 0 1 0 10 0"/>
+                 </svg>
+               </span>
+               <h4 class="loop-stage-title">Sign up &amp; activate</h4>
+               <p class="loop-stage-desc">Pick a plan, upload KYC, accept the compliance terms. Live the same day.</p>
+               <span class="loop-stage-metric">Self-serve · Same-day</span>
+             </li>
+
+             <li class="loop-stage-card">
+               <span class="loop-stage-num">02</span>
+               <span class="loop-stage-icon-wrap" aria-hidden="true">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <path d="M3 12h12"/><path d="M14 7l5 5-5 5"/>
+                 </svg>
+               </span>
+               <h4 class="loop-stage-title">Send &amp; run</h4>
+               <p class="loop-stage-desc">Console or API. Tier-1 delivery, auto-fallback, compliance gates pre-send.</p>
+               <span class="loop-stage-metric">Sub-10s · Auto-fallback</span>
+             </li>
+
+             <li class="loop-stage-card">
+               <span class="loop-stage-num">03</span>
+               <span class="loop-stage-icon-wrap" aria-hidden="true">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/>
+                 </svg>
+               </span>
+               <h4 class="loop-stage-title">Pay &amp; audit</h4>
+               <p class="loop-stage-desc">Real-time billing. Audit-ready logs in standard formats. One-click export.</p>
+               <span class="loop-stage-metric">Real-time · One-click export</span>
+             </li>
+
+           </ol>
+         </section>
+
+       </div>
+     </div>
+   </div>
+ </section>
+
+ <!-- (full original card-grid backup lives at _local/loop-section-backup.html
+      in case we want to restore it later) -->
+ <section style="display:none" aria-hidden="true">
+   <div class="loop-wrap">
+     <span class="strip-tag">How it actually works</span>
+     <p class="loop-tagline"><strong>We help you close the loop. Your team sets policy. We run the playbook.</strong></p>
+
+     <!-- ===== FULL CYCLE TRACK — custom rollouts, 4 parallel workstreams ===== -->
+     <div class="loop-track loop-track--full">
+       <header class="loop-track-head">
+         <span class="loop-track-tag" data-key="loop.tracks.full.tag">Full Cycle</span>
+         <span class="loop-track-name" data-key="loop.tracks.full.name">Custom rollout</span>
+         <span class="loop-track-sub" data-key="loop.tracks.full.sub">Migration, integration, audit.</span>
+       </header>
+       <div class="loop-cadence" aria-hidden="true">
+         <span class="loop-cadence-pulse"></span>
+         <span class="loop-cadence-label" data-key="loop.cadence.label">Sprint cadence</span>
+         <span class="loop-cadence-text" data-key="loop.cadence.full">Two-week sprints. All four workstreams run in parallel every sprint, from day one. There is no phase to wait for.</span>
+       </div>
+       <ol class="loop-stages" role="list">
+
+       <!-- Stage 01 — PLAN. Solution architect + customer compliance team scope the SOW; DOLPHLINK drafts the plan. -->
+       <li class="loop-stage" data-stage="intake">
+         <span class="loop-stage-num" aria-hidden="true">01</span>
+         <span class="loop-stage-icon-wrap">
+           <!-- Person + speech bubble: customer side speaks -->
+           <svg class="loop-stage-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+             <circle cx="9" cy="8" r="3"/>
+             <path d="M3 21 C3 17 5.5 14.5 9 14.5 C12.5 14.5 15 17 15 21"/>
+             <path d="M14 5 H20 A2 2 0 0 1 22 7 V11 A2 2 0 0 1 20 13 H17 L15 15 V13 H14 A2 2 0 0 1 12 11 V7 A2 2 0 0 1 14 5 Z"/>
+           </svg>
+         </span>
+         <h3 class="loop-stage-title" data-key="loop.stages.intake.title">Plan and Authorize</h3>
+         <span class="loop-stage-role loop-stage-role--human">
+           <span class="loop-stage-role-label">Your Team</span>
+           <span data-key="loop.stages.intake.humanRole">Your team reviews the design package against your internal policies, names the escalation owners on your side, and signs the SOW. That is the only place a human signature is mandatory before traffic flows.</span>
+         </span>
+         <span class="loop-stage-role loop-stage-role--ai">
+           <span class="loop-stage-role-label">DOLPHLINK</span>
+           <span data-key="loop.stages.intake.aiRole">We deliver the complete design package in seventy-two hours. Solution architecture and network topology, capacity model with peak-load redundancy, data residency map by region, regulatory compliance matrix against every applicable framework, number-porting plan, integration design for your CRM and core systems, SLA targets, risk register with mitigations, and a rollback plan if anything goes off-script.</span>
+         </span>
+         <span class="loop-stage-metric" data-key="loop.stages.intake.metric">Design package &middot; In-region residency &middot; Signed SLA</span>
+       </li>
+
+<!-- Stage 02 — MIGRATE & DEPLOY. Number porting, template migration, CRM/core-system integration, pilot, cutover. -->
+       <li class="loop-stage" data-stage="orchestrate">
+         <span class="loop-stage-num" aria-hidden="true">02</span>
+         <span class="loop-stage-icon-wrap">
+           <!-- Two arrows facing each other: agent-to-agent handshake -->
+           <svg class="loop-stage-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+             <circle cx="6" cy="12" r="2.5"/>
+             <circle cx="18" cy="12" r="2.5"/>
+             <path d="M9 10 H15"/>
+             <path d="M15 14 H9"/>
+             <path d="M13 8 L15 10 L13 12" stroke-linecap="round"/>
+             <path d="M11 12 L9 14 L11 16" stroke-linecap="round"/>
+           </svg>
+         </span>
+         <h3 class="loop-stage-title" data-key="loop.stages.orchestrate.title">Build, test, then migrate or deploy</h3>
+         <span class="loop-stage-role loop-stage-role--human">
+           <span class="loop-stage-role-label">Your Team</span>
+           <span data-key="loop.stages.orchestrate.humanRole">Your product owner joins every sprint demo, signs off on the test results, and gives the green light for the migration cutover or the go-live date.</span>
+         </span>
+         <span class="loop-stage-role loop-stage-role--ai">
+           <span class="loop-stage-role-label">DOLPHLINK</span>
+           <span data-key="loop.stages.orchestrate.aiRole">We work in two-week sprints. Each one ends with a demo and a green test suite. When you are migrating from a legacy gateway, we run alongside it and switch traffic over gradually so nothing drops. For new builds we deploy with zero downtime and a one-command rollback if anything looks off.</span>
+         </span>
+         <span class="loop-stage-metric" data-key="loop.stages.orchestrate.metric">Two-week sprints &middot; Tests green &middot; Gradual cutover</span>
+       </li>
+
+       <!-- Connector arrow 2→3 -->
+
+       <!-- Stage 03 — OPERATE. Live execution at scale + human exception adjudication. -->
+       <li class="loop-stage loop-stage--accent" data-stage="resolve">
+         <span class="loop-stage-num" aria-hidden="true">03</span>
+         <span class="loop-stage-icon-wrap">
+           <!-- Path that splits: AI auto-resolve or human handoff -->
+           <svg class="loop-stage-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+             <path d="M3 12 H10"/>
+             <path d="M10 12 L17 6"/>
+             <path d="M10 12 L17 18"/>
+             <circle cx="3" cy="12" r="1.6" fill="currentColor"/>
+             <circle cx="19" cy="6" r="2"/>
+             <path d="M19 16 H17 V20 H21 V16 H19 Z M19 14 a1.5 1.5 0 1 0 0 -3 a1.5 1.5 0 0 0 0 3 Z"/>
+           </svg>
+         </span>
+         <h3 class="loop-stage-title" data-key="loop.stages.resolve.title">Operate at scale</h3>
+         <span class="loop-stage-role loop-stage-role--human">
+           <span class="loop-stage-role-label">Your Team</span>
+           <span data-key="loop.stages.resolve.humanRole">When something gets flagged, your team makes the call in one click. Approve it, override it, or pause the program. Every choice is recorded with the person, the time, and the reason.</span>
+         </span>
+         <span class="loop-stage-role loop-stage-role--ai">
+           <span class="loop-stage-role-label">DOLPHLINK</span>
+           <span data-key="loop.stages.resolve.aiRole">We carry the traffic on Tier-1 routes, fall back across channels when something fails, and keep cross-channel state coherent. When an event sits outside the agreed policy, we flag it with full context and hold the conversation steady while your operator picks it up.</span>
+         </span>
+         <span class="loop-stage-metric" data-key="loop.stages.resolve.metric">Sub-10s &middot; Tier-1 redundancy &middot; Pre-send compliance</span>
+       </li>
+
+       <!-- Connector arrow 3→4 -->
+
+       <!-- Stage 04 — AUDIT & SEAL. AI compiles bundle; human compliance lead signs; auditor accepts. -->
+       <li class="loop-stage" data-stage="audit">
+         <span class="loop-stage-num" aria-hidden="true">04</span>
+         <span class="loop-stage-icon-wrap">
+           <!-- Document with seal: outcome delivered + audit-stamped -->
+           <svg class="loop-stage-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+             <path d="M6 3 H15 L19 7 V19 A2 2 0 0 1 17 21 H6 A2 2 0 0 1 4 19 V5 A2 2 0 0 1 6 3 Z"/>
+             <path d="M14 3 V8 H19"/>
+             <path d="M8 12 L11 15 L16 10"/>
+           </svg>
+         </span>
+         <h3 class="loop-stage-title" data-key="loop.stages.audit.title">Audit &amp; Seal</h3>
+         <span class="loop-stage-role loop-stage-role--human">
+           <span class="loop-stage-role-label">Your Team</span>
+           <span data-key="loop.stages.audit.humanRole">Your compliance lead reviews what we put together and digitally signs the bundle. The auditor reads it and accepts.</span>
+         </span>
+         <span class="loop-stage-role loop-stage-role--ai">
+           <span class="loop-stage-role-label">DOLPHLINK</span>
+           <span data-key="loop.stages.audit.aiRole">We compile a tamper-evident bundle of every action, decision and approval in whatever format your auditor wants, whether that is CSV, JSON or a regulator-specific schema, and seal the decision graph ready for handoff.</span>
+         </span>
+         <span class="loop-stage-metric" data-key="loop.stages.audit.metric">Tamper-evident &middot; Regulator-ready &middot; Two-signature seal</span>
+       </li>
+       </ol>
+     </div><!-- /.loop-track--full -->
+
+     <!-- ===== PLUG & PLAY TRACK — standard adoption, 3 stages ===== -->
+     <div class="loop-track loop-track--plug">
+       <header class="loop-track-head">
+         <span class="loop-track-tag" data-key="loop.tracks.plug.tag">Plug &amp; Play</span>
+         <span class="loop-track-name" data-key="loop.tracks.plug.name">Standard adoption</span>
+         <span class="loop-track-sub" data-key="loop.tracks.plug.sub">Self-serve, same-day, no rip-and-replace.</span>
+       </header>
+       <div class="loop-cadence" aria-hidden="true">
+         <span class="loop-cadence-pulse"></span>
+         <span class="loop-cadence-label" data-key="loop.cadence.label">Sprint cadence</span>
+         <span class="loop-cadence-text" data-key="loop.cadence.plug">Activate once, then run and pay run continuously side by side. No staged rollout.</span>
+       </div>
+       <ol class="loop-stages loop-stages--three" role="list">
+
+         <!-- Plug Stage 01 — SIGN UP. Pick plan, KYC, accept terms; DOLPHLINK provisions instantly. -->
+         <li class="loop-stage" data-stage="signup">
+           <span class="loop-stage-num" aria-hidden="true">01</span>
+           <span class="loop-stage-icon-wrap">
+             <svg class="loop-stage-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+               <path d="M12 5 V19"/><path d="M5 12 H19"/>
+             </svg>
+           </span>
+           <h3 class="loop-stage-title" data-key="loop.plug.signup.title">Sign up &amp; activate</h3>
+           <span class="loop-stage-role loop-stage-role--human">
+             <span class="loop-stage-role-label">Your Team</span>
+             <span data-key="loop.plug.signup.humanRole">Pick a plan, upload KYC, accept compliance terms in the console.</span>
+           </span>
+           <span class="loop-stage-role loop-stage-role--ai">
+             <span class="loop-stage-role-label">DOLPHLINK</span>
+             <span data-key="loop.plug.signup.aiRole">We provision your numbers, API keys, SDKs and dashboards in seconds, with data residency locked to your region automatically.</span>
+           </span>
+           <span class="loop-stage-metric" data-key="loop.plug.signup.metric">Self-serve &middot; Same-day &middot; Region-locked</span>
+         </li>
+
+
+         <!-- Plug Stage 02 — SEND & RUN. Console + API; DOLPHLINK delivers, fails over, gates compliance. -->
+         <li class="loop-stage" data-stage="run">
+           <span class="loop-stage-num" aria-hidden="true">02</span>
+           <span class="loop-stage-icon-wrap">
+             <svg class="loop-stage-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+               <path d="M3 12 H17"/><path d="M14 7 L19 12 L14 17"/>
+             </svg>
+           </span>
+           <h3 class="loop-stage-title" data-key="loop.plug.run.title">Send &amp; run</h3>
+           <span class="loop-stage-role loop-stage-role--human">
+             <span class="loop-stage-role-label">Your Team</span>
+             <span data-key="loop.plug.run.humanRole">Compose campaigns in the console or call the API. Watch delivery in the dashboard.</span>
+           </span>
+           <span class="loop-stage-role loop-stage-role--ai">
+             <span class="loop-stage-role-label">DOLPHLINK</span>
+             <span data-key="loop.plug.run.aiRole">We deliver on Tier-1 routes, fall back across channels when something fails, and run every message through compliance gates before it leaves.</span>
+           </span>
+           <span class="loop-stage-metric" data-key="loop.plug.run.metric">Sub-10s &middot; Auto-fallback &middot; Pre-send compliance</span>
+         </li>
+
+
+         <!-- Plug Stage 03 — PAY & AUDIT. Invoices + compliance reports on demand. -->
+         <li class="loop-stage" data-stage="settle">
+           <span class="loop-stage-num" aria-hidden="true">03</span>
+           <span class="loop-stage-icon-wrap">
+             <svg class="loop-stage-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+               <rect x="3" y="6" width="18" height="13" rx="2"/>
+               <path d="M3 10 H21"/><path d="M7 15 H11"/>
+             </svg>
+           </span>
+           <h3 class="loop-stage-title" data-key="loop.plug.settle.title">Pay &amp; audit</h3>
+           <span class="loop-stage-role loop-stage-role--human">
+             <span class="loop-stage-role-label">Your Team</span>
+             <span data-key="loop.plug.settle.humanRole">Receive monthly invoice and audit log. Download compliance reports on demand.</span>
+           </span>
+           <span class="loop-stage-role loop-stage-role--ai">
+             <span class="loop-stage-role-label">DOLPHLINK</span>
+             <span data-key="loop.plug.settle.aiRole">We meter your usage in real time, generate the invoices, and export audit-ready logs in standard formats.</span>
+           </span>
+           <span class="loop-stage-metric" data-key="loop.plug.settle.metric">Real-time billing &middot; Audit-ready logs &middot; One-click export</span>
+         </li>
+       </ol>
+     </div><!-- /.loop-track--plug -->
+   </div>
  </section>
 
  <section id="n-sec" class="section-row infra-section">
@@ -809,8 +1123,10 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
  </section>
 
  <section id="a-sec" class="audit-section">
- <h2 class="sec-title"><span data-key="audit.title">The Trust Layer</span><span class="audit-stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></span></h2>
- <div class="audit-grid reveal" data-render="audit.items"><div class="audit-box"><h3>Compliance Certified</h3><p>ISO 27001 and GDPR certified. PDPA Singapore, MAS TRM, and regional regulatory frameworks supported across ASEAN, EMEA, and the Americas. Independent third-party audits annually, attestation reports available under NDA.</p></div><div class="audit-box"><h3>Data Sovereignty</h3><p>Sovereign-grade infrastructure rooted in Singapore, with regional data residency spanning ASEAN, EMEA, and the Americas. Every customer record stays in the precise jurisdiction your regulator demands. Quarterly third-party attestation with full chain-of-custody.</p></div><div class="audit-box"><h3>Verified Reliability</h3><p>99.999% verified uptime across geo-redundant points of presence. TLS 1.3 in transit, AES-256 at rest, with quarterly third-party penetration testing.</p></div><div class="audit-box"><h3>Access Governance</h3><p>Role-based access control (RBAC) across the entire platform. Fine-grained permissions for every team, tenant, and workflow, with detailed activity logs and SSO integration built in.</p></div></div>
+   <div class="audit-wrap">
+     <h2 class="sec-title"><span data-key="audit.title">The Trust Layer</span><span class="audit-stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></span></h2>
+     <div class="audit-grid reveal" data-render="audit.items"><div class="audit-box"><h3>Compliance Certified</h3><p><span class="audit-keyword">ISO 27001</span>, <span class="audit-keyword">GDPR</span>, and <span class="audit-keyword">SOC 2</span> certified. <span class="audit-keyword">PDPA Singapore</span>, <span class="audit-keyword">MAS TRM</span>, <span class="audit-keyword">IM8</span>, and regional regulatory frameworks supported across ASEAN, EMEA, and the Americas. Independent third-party audits annually, attestation reports available under NDA.</p></div><div class="audit-box"><h3>Data Sovereignty</h3><p>Sovereign-grade infrastructure rooted in Singapore, with regional data residency spanning ASEAN, EMEA, and the Americas. Every customer record stays in the precise jurisdiction your regulator demands. Quarterly third-party attestation with full chain-of-custody.</p></div><div class="audit-box"><h3>Verified Reliability</h3><p>99.999% verified uptime across geo-redundant points of presence. TLS 1.3 in transit, AES-256 at rest, with quarterly third-party penetration testing.</p></div><div class="audit-box"><h3>Access Governance</h3><p>Role-based access control (RBAC) across the entire platform. Fine-grained permissions for every team, tenant, and workflow, with detailed activity logs and SSO integration built in.</p></div></div>
+   </div>
  </section>
 
  <!-- Industries — 6 cards, white card + brand-blue blade visual (same
@@ -820,8 +1136,8 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
    <div class="industries-wrap">
      <h2 class="sec-title sec-title--light" id="industries-heading"
          data-key="industries.headerTag">Industries We Serve</h2>
-     <p class="sec-intro" data-key="industries.intro">Built for regulated, mission-critical communications. Four primary verticals where DOLPHLINK's sovereign architecture and agent orchestration deliver measurable advantage. Five additional sectors served on the same backbone.</p>
-     <div class="industries-grid" data-render="industries.items"><div class="industries-tier industries-tier--primary"><article class="industry-card" data-industry="banking" style="--accent:#0059B3"><h3 class="industry-name">Banking &amp; FinTech</h3><p class="industry-desc">Secure 2FA/OTP, real-time fraud alerts, statement delivery, and automated repayment reminders via bulk voice campaigns.</p><div class="industry-chips"><span class="industry-chip">MAS TRM</span><span class="industry-chip">PDPA</span><span class="industry-chip">PCI-DSS</span></div></article><article class="industry-card" data-industry="government" style="--accent:#1F2937"><h3 class="industry-name">Government &amp; Public Sector</h3><p class="industry-desc">Citizen alerts, public-service notifications, and emergency broadcasts on sovereign infrastructure. IM8-aligned, audit-ready, and deployable across multiple regulator-licensed jurisdictions in ASEAN, EMEA, and the Americas.</p><div class="industry-chips"><span class="industry-chip">IM8</span><span class="industry-chip">Sovereign Cloud</span><span class="industry-chip">Multi-Jurisdiction</span></div></article><article class="industry-card" data-industry="healthcare" style="--accent:#10B981"><h3 class="industry-name">Healthcare</h3><p class="industry-desc">Automated appointment reminders and AI chatbot triage cut no-shows. Patient privacy preserved with sovereign data residency.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">HIPAA-Ready</span><span class="industry-chip">ISO 27001</span></div></article><article class="industry-card" data-industry="insurance" style="--accent:#7C3AED"><h3 class="industry-name">Insurance</h3><p class="industry-desc">Policy renewal reminders, claim-status notifications, and KYC verification flows. Tamper-evident audit trails for every regulated touchpoint.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">GDPR</span><span class="industry-chip">ISO 27001</span></div></article></div><div class="industries-tier-label">Also Serving</div><div class="industries-tier industries-tier--secondary"><article class="industry-card industry-card--mini" data-industry="retail" style="--accent:#0059B3"><h3 class="industry-name">Retail &amp; E-Commerce</h3><p class="industry-desc">Personalised engagement from first-party data, real-time order updates, abandoned-cart recovery, and Pages-embedded landings inside SMS.</p></article><article class="industry-card industry-card--mini" data-industry="education" style="--accent:#0059B3"><h3 class="industry-name">Education</h3><p class="industry-desc">Enrolment confirmations, course reminders, and parent-school chat in one inbox. Multilingual support across regional language pairs.</p></article><article class="industry-card industry-card--mini" data-industry="logistics" style="--accent:#0059B3"><h3 class="industry-name">Logistics</h3><p class="industry-desc">Unified inbox across WhatsApp, Email, and Chat with automated tracking notifications. Driver dispatch via voice IVR and SMS confirmations.</p></article><article class="industry-card industry-card--mini" data-industry="entertainment" style="--accent:#0059B3"><h3 class="industry-name">Entertainment &amp; Gaming</h3><p class="industry-desc">International SMS and Voice verification for overseas game publishers and social apps. Country-aware routing handles emerging-market last mile.</p></article><article class="industry-card industry-card--mini" data-industry="hospitality" style="--accent:#0059B3"><h3 class="industry-name">Hospitality</h3><p class="industry-desc">Guest engagement on every preferred channel with no-code self-service bots. Pre-arrival, in-stay, and post-stay flows automated end to end.</p></article></div></div>
+     <p class="sec-intro" data-key="industries.intro">Built for regulated, mission-critical communications across nine verticals where DOLPHLINK's sovereign architecture and agent orchestration deliver measurable advantage.</p>
+     <div class="industries-grid" data-render="industries.items"><article class="industry-card" data-industry="banking" style="--accent:#0059B3"><h3 class="industry-name">Banking &amp; FinTech</h3><p class="industry-desc">Secure 2FA/OTP, real-time fraud alerts, statement delivery, and automated repayment reminders via bulk voice campaigns.</p><div class="industry-chips"><span class="industry-chip">MAS TRM</span><span class="industry-chip">PDPA</span><span class="industry-chip">PCI-DSS</span></div></article><article class="industry-card" data-industry="government" style="--accent:#1F2937"><h3 class="industry-name">Government &amp; Public Sector</h3><p class="industry-desc">Citizen alerts, public-service notifications, and emergency broadcasts on sovereign infrastructure. IM8-aligned, audit-ready, and deployable across multiple regulator-licensed jurisdictions in ASEAN, EMEA, and the Americas.</p><div class="industry-chips"><span class="industry-chip">IM8</span><span class="industry-chip">Sovereign Cloud</span><span class="industry-chip">Multi-Jurisdiction</span></div></article><article class="industry-card" data-industry="healthcare" style="--accent:#10B981"><h3 class="industry-name">Healthcare</h3><p class="industry-desc">Automated appointment reminders and AI chatbot triage cut no-shows. Patient privacy preserved with sovereign data residency.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">HIPAA-Ready</span><span class="industry-chip">ISO 27001</span></div></article><article class="industry-card" data-industry="insurance" style="--accent:#7C3AED"><h3 class="industry-name">Insurance</h3><p class="industry-desc">Policy renewal reminders, claim-status notifications, and KYC verification flows. Tamper-evident audit trails for every regulated touchpoint.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">GDPR</span><span class="industry-chip">ISO 27001</span></div></article><article class="industry-card" data-industry="retail" style="--accent:#EC4899"><h3 class="industry-name">Retail &amp; E-Commerce</h3><p class="industry-desc">Personalised engagement from first-party data, real-time order updates, abandoned-cart recovery, and Pages-embedded landings inside SMS.</p><div class="industry-chips"><span class="industry-chip">GDPR</span><span class="industry-chip">PDPA</span></div></article><article class="industry-card" data-industry="education" style="--accent:#F59E0B"><h3 class="industry-name">Education</h3><p class="industry-desc">Enrolment confirmations, course reminders, and parent-school chat in one inbox. Multilingual support across regional language pairs.</p><div class="industry-chips"><span class="industry-chip">PDPA</span><span class="industry-chip">Multi-Lingual</span></div></article><article class="industry-card" data-industry="logistics" style="--accent:#06B6D4"><h3 class="industry-name">Logistics</h3><p class="industry-desc">Unified inbox across WhatsApp, Email, and Chat with automated tracking notifications. Driver dispatch via voice IVR and SMS confirmations.</p><div class="industry-chips"><span class="industry-chip">Omnichannel</span><span class="industry-chip">GDPR</span></div></article><article class="industry-card" data-industry="entertainment" style="--accent:#F97316"><h3 class="industry-name">Entertainment &amp; Gaming</h3><p class="industry-desc">International SMS and Voice verification for overseas game publishers and social apps. Country-aware routing handles emerging-market last mile.</p><div class="industry-chips"><span class="industry-chip">200+ Countries</span><span class="industry-chip">GDPR</span></div></article><article class="industry-card" data-industry="hospitality" style="--accent:#14B8A6"><h3 class="industry-name">Hospitality</h3><p class="industry-desc">Guest engagement on every preferred channel with no-code self-service bots. Pre-arrival, in-stay, and post-stay flows automated end to end.</p><div class="industry-chips"><span class="industry-chip">No-Code Bots</span><span class="industry-chip">Multi-Lingual</span></div></article></div>
    </div>
  </section>
 
@@ -882,10 +1198,14 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
                   it correct ARIA semantics, removes the misleading href="#"
                   that Lighthouse flags, and improves keyboard navigation. -->
              <button type="button" class="f-install-link"
-                     data-key="footer.installLabel"
                      aria-label="Install DOLPHLINK as an app"
                      onclick="if (typeof window.dolphlinkInstall === 'function') window.dolphlinkInstall();">
-               Install App ↗
+               <span data-key="footer.installLabel">Install App</span>
+               <svg class="f-install-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                 <polyline points="7 10 12 15 17 10"/>
+                 <line x1="12" y1="3" x2="12" y2="15"/>
+               </svg>
              </button>
            </div>
          </div>
@@ -897,11 +1217,10 @@ A phased rollout begins with a four-week discovery and architecture workshop, fo
        </aside>
      </div>
    </div>
-   <!-- Legal links + Social + Copyright bar -->
+   <!-- Legal links + Copyright bar — social icons relocated INTO the
+        Book-a-Briefing card (`renderFooterCard()` → `.vcard-connect`). -->
    <div class="f-bottom-bar">
      <ul class="f-legal-links" data-render="footer.legalLinks"><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms and Conditions</a></li></ul>
-     <div class="f-social-row" data-render="footer.social"
-          aria-label="Connect with DOLPHLINK"><a class="f-social-link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a class="f-social-link" href="mailto:Salesmarketing@dolphlink.com" target="_blank" rel="noopener noreferrer" aria-label="Email Sales" title="Email Sales"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a><a class="f-social-link" href="mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call" target="_blank" rel="noopener noreferrer" aria-label="Schedule a Call" title="Schedule a Call"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></a></div>
      <span class="f-copyright" data-key="footer.copyright">© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED.</span>
    </div>
  </footer>

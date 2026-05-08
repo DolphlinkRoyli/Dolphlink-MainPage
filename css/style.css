@@ -119,14 +119,14 @@
  .brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; transition: 0.2s ease; }
  .brand:hover { transform: translateY(-1px); }
  .brand-logo {
-   height: 72px;
+   height: 96px;
    width: auto;
    display: block;
    user-select: none;
    -webkit-user-drag: none;
    filter: contrast(1.05) brightness(1.02);
  }
- .brand-name { font-size: 1.75rem; font-weight: 900; color: var(--baiwu-blue-primary); letter-spacing: -0.8px; line-height: 1; }
+ .brand-name { font-size: 1.95rem; font-weight: 900; color: var(--baiwu-blue-primary); letter-spacing: -0.8px; line-height: 1; }
  .nav-right { display: flex; align-items: center; gap: 12px; }
  .fixed-menu { display: flex; align-items: center; gap: 2px; }
  .menu-item {
@@ -171,9 +171,9 @@
     Section dividers — laser emitter + bright flowing ribbon
     =========================== */
  .reliability-section,
+ .loop-section,
  .infra-section,
  .audit-section,
- .trust-section,
  .industries-section,
  .departments-section,
  .footer {
@@ -186,9 +186,9 @@
     accent reads on both bgs. Earlier "white-comet + blue-glow"
     combination created an ugly double-line at section boundaries. */
  .reliability-section::before,
+ .loop-section::before,
  .infra-section::before,
  .audit-section::before,
- .trust-section::before,
  .industries-section::before,
  .departments-section::before,
  .footer::before {
@@ -319,14 +319,22 @@
  .eyebrow {
    display: inline-flex;
    align-items: center;
-   gap: 7px;
-   padding: 6px 14px 6px 11px;
+   gap: clamp(5px, 0.6vw, 7px);
+   padding: 5px clamp(8px, 1.2vw, 14px) 5px clamp(7px, 1vw, 11px);
    margin-bottom: 16px;
-   font-size: var(--fs-xs);
+   /* Fluid font + letter-spacing + padding + gap so the long compliance
+      copy ("OPERATED UNDER SINGAPORE'S CYBERSECURITY ACT · IM8-ALIGNED",
+      ~56 chars) keeps fitting on a single line at every viewport,
+      including narrow laptop windows with DevTools docked. The ceiling
+      is intentionally LOWER than the prior 12px so the pill is visibly
+      smaller at desktop too — it had been hitting `var(--fs-xs)` (12px)
+      everywhere over ~900px, defeating the shrink. */
+   font-size: clamp(7px, 0.3vw + 0.25rem, 9px);
    font-weight: 800;
-   letter-spacing: 1.6px;
+   letter-spacing: clamp(0.3px, 0.1vw + 0.1px, 1.1px);
    text-transform: uppercase;
    color: var(--baiwu-white);
+   max-width: 100%;
    /* Subtle vertical gradient (top-light, bottom-darker) so the pill
       reads as a "lit-from-above" tablet floating over the dark hero,
       not a flat washed-out chip. */
@@ -359,12 +367,39 @@
    font-size: var(--fs-3xl); font-weight: 900; letter-spacing: -0.05em;
    color: var(--baiwu-white); margin-bottom: 14px; line-height: 1;
    text-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
-   /* Defensive: long brand-style headlines + heavy weight + negative
-      letter-spacing can make the leftmost glyph render slightly OUTSIDE
-      its layout box on some Chrome builds, which combined with tight
-      mobile padding looks like the first letter is clipped. Both rules
-      below let the renderer break onto a second line if needed instead
-      of overflowing horizontally. */
+ }
+ /* CJK + Hindi headlines — keep on a single line on desktop. The
+    full-fat 3xl font + tight max-width forces awkward 2-line wraps in
+    Chinese, Japanese, and Hindi at typical desktop widths. Drop the
+    font slightly + lock to nowrap so the headline reads as one
+    confident line. Mobile (<=768px) reverts to natural wrapping. */
+ html[lang="zh"] .hero-content h1,
+ html[lang="ja"] .hero-content h1,
+ html[lang="hi"] .hero-content h1 {
+   font-size: clamp(1.4rem, 3vw, 2.4rem);
+   letter-spacing: 0;
+   white-space: nowrap;
+ }
+ @media (max-width: 768px) {
+   /* On phones, CJK + Hindi headlines drop the desktop nowrap and
+      match the English mobile h1 size (`--fs-2xl`) for legibility.
+      Two lines are fine on a narrow viewport — what mattered was the
+      desktop layout staying as one confident line. */
+   html[lang="zh"] .hero-content h1,
+   html[lang="ja"] .hero-content h1,
+   html[lang="hi"] .hero-content h1 {
+     font-size: var(--fs-2xl);
+     white-space: normal;
+     line-height: 1.2;
+   }
+ }
+ /* Defensive: long brand-style headlines + heavy weight + negative
+    letter-spacing can make the leftmost glyph render slightly OUTSIDE
+    its layout box on some Chrome builds, which combined with tight
+    mobile padding looks like the first letter is clipped. Both rules
+    below let the renderer break onto a second line if needed instead
+    of overflowing horizontally. */
+ .hero-content h1 {
    overflow-wrap: break-word;
    word-break: break-word;
  }
@@ -789,462 +824,31 @@
     =========================== */
 
  /* ===========================
-    Trust Layer — tier-1 carriers + regulators
-    Visual identity: GOLD trust layer. Outer card width / spacing identical
-    to .stat-strip-wrap below, so the two strips read as one column.
-    Animation: gold "pulse wave" travels left→right through carrier names,
-    right→left through compliance pills — like a current flowing through
-    a trust bus. Border + edge accents are gold; never blue chip fills.
-    Animation runs ALWAYS — the wave IS the message, so it must not be
-    suppressed by OS reduced-motion settings (we keep it tasteful: slow,
-    no flicker, no axis flip).
+    Trust Layer wrapper — dark card with gold ring holding the 4
+    audit-boxes. (The Carrier Network section was deleted, taking
+    every `.trust-*` selector + the `trust-gold-pulse` keyframe with
+    it. Old wrapper rules live in git history if ever needed.)
     =========================== */
- /* ============================================================
-    UPSTREAM TWIN OF .audit-section (THE TRUST LAYER)
-    Both sections render as full-width deep-navy bands with white
-    sec-title + gold animated stars + gold-bordered breathing-glow
-    cards. The two sections bookend the page (Carrier on top of the
-    light marketing zone, Trust Layer just below the dark map).
-    Visual identity is intentionally identical — they are the
-    "twin sovereign" panels, mirrored.
-    ============================================================ */
- .trust-section {
-   background: #1E3A6B;
-   color: var(--baiwu-white);
-   padding: 40px 4%;
-   contain: paint;
- }
- /* The wrap is no longer a white card — it's just a transparent
-    container that holds the title + the two row-cards inside the
-    deep-navy section. Old white background, gold border, and outer
-    glow are all dropped to match audit-section's open layout. */
- .trust-strip-wrap {
+ .audit-wrap {
    position: relative;
-   background: transparent;
-   border: none;
-   border-radius: 0;
-   box-shadow: none;
-   overflow: visible;
-   display: flex;
-   flex-direction: column;
-   gap: 14px;             /* same as .audit-grid > .audit-box gap */
- }
- /* (Legacy gold inner rails removed — they were leftover from the
-    earlier dark-navy card design and were the actual source of the
-    "yellow lines" appearing 4px from the top + bottom edges of the
-    trust card.) */
-
- /* SINGLE unified card — deep-navy bg, gold 2px border, multi-layer
-    breathing-glow halo. Identical visual treatment to .audit-box but
-    only ONE card holding both panes, separated by a gold vertical
-    hairline. align-items: stretch so the divider spans full height
-    and both panes' headers sit on the same baseline at top. */
- .trust-row {
-   display: flex;
-   align-items: stretch;
-   gap: clamp(16px, 2vw, 32px);
-   padding: clamp(14px, 1.4vw, 20px) clamp(20px, 2vw, 30px);
-   position: relative;
-   min-height: 64px;
-   background: var(--baiwu-blue-deep);
-   border: 2px solid #F59E0B;
+   background: rgba(255, 255, 255, 0.025);
+   border: 1px solid rgba(245, 158, 11, 0.22);
    border-radius: 8px;
    box-shadow:
-     0 0 0 1px rgba(245, 158, 11, 0.28),
-     0 0 18px rgba(245, 158, 11, 0.45),
-     inset 0 0 22px rgba(245, 158, 11, 0.10);
-   animation: audit-glow 3.6s ease-in-out infinite;
-   transition: transform 0.3s ease, background 0.3s ease;
-   will-change: box-shadow, border-color, transform;
+     0 14px 40px rgba(0, 0, 0, 0.35),
+     0 2px 6px rgba(0, 0, 0, 0.18);
+   overflow: hidden;
+   padding: 28px;
  }
- .trust-row:hover {
-   animation-play-state: paused;
-   transform: translateY(-3px);
-   background: linear-gradient(180deg, var(--baiwu-blue-deep) 0%, #003673 100%);
-   border-color: #FBBF24;
-   box-shadow:
-     0 0 0 2px rgba(251, 191, 36, 0.7),
-     0 0 32px rgba(251, 191, 36, 0.85),
-     0 0 70px rgba(245, 158, 11, 0.45),
-     0 12px 32px rgba(0, 0, 0, 0.4),
-     inset 0 0 36px rgba(251, 191, 36, 0.22);
- }
-
- /* Each pane = one labeled half of the unified card. Stack vertically:
-    mini-header (icon + uppercase label) on top, then a horizontal
-    grid of cards below. */
- .trust-pane {
-   display: flex;
-   flex-direction: column;
-   gap: clamp(8px, 0.85vw, 12px);
-   min-width: 0;
- }
- /* Pane widths in 4:6 ratio = matches the cell COUNT in each pane.
-    With matching 4-cell and 6-cell grids inside, all 10 cells across
-    the unified card end up the EXACT SAME WIDTH — visual harmony,
-    no oversized network cells next to crammed compliance cells. */
- .trust-pane--network    { flex: 4 1 0; min-width: 0; }
- .trust-pane--compliance { flex: 6 1 0; min-width: 0; }
-
- /* Headers in BOTH panes sit on the same top baseline because both
-    panes use flex-direction: column and align-items: stretch on the
-    parent. Same min-height keeps them locked to identical y. */
- .trust-pane-header {
-   display: inline-flex;
-   align-items: center;
-   gap: 8px;
-   min-height: 18px;
-   color: #F59E0B;
-   font-family: 'Inter', system-ui, sans-serif;
-   font-size: clamp(10px, 0.85vw, 12px);
-   font-weight: 900;
-   letter-spacing: 2px;
-   text-transform: uppercase;
-   line-height: 1;
- }
- .trust-pane-icon {
-   flex-shrink: 0;
-   width: clamp(14px, 1.1vw, 16px);
-   height: clamp(14px, 1.1vw, 16px);
-   color: #F59E0B;
-   opacity: 0.9;
- }
-
- /* Compliance pane uses a 6-cell grid. Network is FLEX so the 3
-    region cards take 1fr each and the gold .trust-stat at the end
-    sizes to its own content (no card border/bg) — no overflow. */
- .trust-cards {
-   align-items: stretch;
- }
- /* DEFAULT: 3 cols × 2 rows for compliance pills.
-    At every typical desktop / tablet / phone size, 3 cols feels
-    balanced and never crowds icons next to neighbouring pills.
-    Override flips to 6 cols only on very wide screens (≥1600px)
-    where the compliance pane has enough room to comfortably show
-    all 6 in a single line. */
- .trust-cards--compliance {
-   display: grid;
-   grid-template-columns: repeat(3, minmax(0, 1fr));
-   column-gap: clamp(6px, 0.7vw, 10px);
-   row-gap: clamp(6px, 0.6vw, 8px);
- }
- @media (min-width: 1600px) {
-   .trust-cards--compliance {
-     grid-template-columns: repeat(6, minmax(0, 1fr));
-   }
- }
- .trust-cards--network {
-   display: flex;
-   align-items: stretch;
-   /* Bigger row-gap than column-gap so when the gold stat wraps to its
-      own line it doesn't sit crammed against the cards above. */
-   column-gap: clamp(6px, 0.7vw, 10px);
-   row-gap: clamp(12px, 1.3vw, 20px);
-   flex-wrap: wrap;
- }
- .trust-cards--network .trust-card {
-   /* `max-content` floor — the card never shrinks below its rendered
-      text width, so "ASIA-PACIFIC" (the longest label) is always fully
-      visible. flex-grow:1 still lets all cards distribute extra space
-      equally when there's room. flex-wrap moves a card to a new row
-      rather than clipping when the row is too narrow. */
-   flex: 1 1 auto;
-   min-width: max-content;
- }
-
- /* ============================================================
-    TWO DISTINCT CARD STYLES — Network vs Compliance use different
-    visual treatments so the two halves of the unified panel read
-    as TWO DIFFERENT KINDS OF CREDENTIALS, not one homogeneous list.
-    -----------------------------------------------------------
-    Network  = "data widgets": filled rectangle cards, brand-blue
-               left blade, solid background gradient. Reads like a
-               dashboard cell — concrete operational fact.
-    Compliance = "credential badges": gold-bordered rounded pills
-               with hairline gold ring, transparent bg, like
-               certifications stamped on a passport.
-    ============================================================ */
- .trust-card {
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
-   gap: clamp(7px, 0.85vw, 12px);   /* icon-to-text gap, scales smoothly */
-   font-family: 'Inter', system-ui, sans-serif;
-   font-weight: 900;
-   font-size: clamp(11px, 1.05vw, 14px);
-   letter-spacing: clamp(0.4px, 0.08vw, 0.8px);
-   text-transform: uppercase;
-   line-height: 1.15;
-   color: rgba(255, 255, 255, 0.96);
-   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-   min-width: 0;
- }
- .trust-card-text {
-   flex: 0 1 auto;
-   min-width: 0;
-   white-space: nowrap;
-   /* No `overflow: hidden` / `text-overflow: ellipsis` — we'd rather
-      the auto-fit grid wrap a card to the next row than show "IS..."
-      truncation. The minmax floor on the grid track guarantees enough
-      space for the longest label. */
- }
- .trust-card-icon {
-   flex-shrink: 0;
-   width: clamp(13px, 1.1vw, 16px);
-   height: clamp(13px, 1.1vw, 16px);
- }
-
- /* ── NETWORK CARDS — "dashboard cell" treatment ───────────── */
- .trust-cards--network .trust-card {
-   /* Uniform gold border on ALL FOUR sides — visually rhymes with the
-      unified .trust-row card border that wraps everything, and treats
-      each region cell as a small gold-framed plate. No more
-      asymmetric "3px gold blade left + 1px cyan top/right/bottom". */
-   padding: clamp(12px, 1.3vw, 18px) clamp(10px, 1.1vw, 16px);
+ .audit-wrap > .sec-title {
+   margin: -28px -28px 24px;
+   padding: 22px 28px;
+   border-bottom: 1px solid rgba(245, 158, 11, 0.32);
    background: linear-gradient(180deg,
-     rgba(0, 89, 179, 0.22) 0%,
-     rgba(0, 45, 92, 0.55) 100%);
-   border: 1.5px solid rgba(245, 158, 11, 0.55);
-   border-radius: 4px;
-   justify-content: flex-start;
-   text-align: left;
-   box-shadow:
-     0 4px 12px rgba(0, 0, 0, 0.25),
-     inset 0 1px 0 rgba(245, 158, 11, 0.18);
- }
- .trust-cards--network .trust-card:hover {
-   background: linear-gradient(180deg,
-     rgba(0, 89, 179, 0.35) 0%,
-     rgba(0, 45, 92, 0.7) 100%);
-   border-color: #FBBF24;
-   transform: translateY(-1px);
-   box-shadow:
-     0 6px 18px rgba(0, 0, 0, 0.35),
-     0 0 16px rgba(245, 158, 11, 0.30),
-     inset 0 1px 0 rgba(245, 158, 11, 0.30);
- }
-
- /* GOLD STAT — replaces what was a gold "1,000+ Routes" card. Now
-    inline icon + uppercase gold text, NO border, NO background, NO
-    pill — just bright gold typography sitting at the end of the row.
-    No more cell-width overflow because the element sizes to its
-    content. Acts like a hand-stamped seal saying "and 1,000+ more"
-    on the row of region wordmarks. */
- .trust-stat {
-   flex: 0 0 auto;
-   display: inline-flex;
-   align-items: center;
-   gap: clamp(6px, 0.7vw, 10px);
-   padding: 0 clamp(4px, 0.5vw, 8px);
-   font-family: 'Inter', system-ui, sans-serif;
-   color: #FCD34D;
-   text-shadow:
-     0 0 6px rgba(251, 191, 36, 0.50),
-     0 0 14px rgba(245, 158, 11, 0.28);
-   white-space: nowrap;
-   /* margin auto centres the element when it wraps to its own line
-      (no siblings to share the row → all leftover space is split
-      between left+right margins → centred). When it shares the row
-      with the 3 region cards the cards' flex-grow consumes free
-      space first, so the auto margins collapse and the stat stays
-      where it would normally sit. Best of both behaviours. */
-   margin-left: auto;
-   margin-right: auto;
-   /* Subtle slow gold shimmer so it still reads as the "premium" token */
-   animation: trust-gold-pulse 3.4s ease-in-out infinite;
- }
- /* Two-line stack: NUMBER on top (big), LABEL below (small uppercase).
-    Stacking instead of one long horizontal line cuts the element's
-    width roughly in half — leaves more room for the 3 region cards. */
- .trust-stat-text {
-   flex: 0 0 auto;
-   display: inline-flex;
-   flex-direction: column;
-   align-items: flex-start;
-   line-height: 1;
-   gap: 2px;
- }
- .trust-stat-number {
-   font-size: clamp(13px, 1.2vw, 16px);
-   font-weight: 900;
-   letter-spacing: 0.4px;
- }
- .trust-stat-label {
-   font-size: clamp(8.5px, 0.75vw, 10px);
-   font-weight: 800;
-   letter-spacing: clamp(0.8px, 0.12vw, 1.4px);
-   text-transform: uppercase;
-   opacity: 0.85;
- }
- .trust-stat-icon {
-   flex-shrink: 0;
-   color: #FCD34D;
-   /* Icon now matches the height of the 2-line stack so it visually
-      anchors the number+label as one unit. */
-   width: clamp(20px, 1.7vw, 26px);
-   height: clamp(20px, 1.7vw, 26px);
-   filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.55));
- }
- /* Gold pulse cycles only the text-shadow + drop-shadow so there's
-    a soft glow breathing — no layout shift, no border ripple. */
- @keyframes trust-gold-pulse {
-   0%, 100% {
-     text-shadow:
-       0 0 6px rgba(251, 191, 36, 0.50),
-       0 0 14px rgba(245, 158, 11, 0.28);
-   }
-   50% {
-     text-shadow:
-       0 0 11px rgba(251, 191, 36, 0.85),
-       0 0 22px rgba(245, 158, 11, 0.45);
-   }
- }
- @media (prefers-reduced-motion: reduce) {
-   .trust-stat { animation: none; }
- }
-
- /* ── COMPLIANCE CARDS — "credential badge" treatment ──────── */
- .trust-cards--compliance .trust-card {
-   /* Gold-outlined rounded pill — transparent on dark navy bg, with
-      a hairline 1.5px gold ring and small gold icon. Reads as a
-      certification stamp. Tighter horizontal padding so the icon
-      and text fit even at narrow grid cell widths (~140px). */
-   padding: clamp(10px, 1.1vw, 14px) clamp(8px, 1.1vw, 16px);
-   background: rgba(255, 255, 255, 0.03);
-   border: 1.5px solid rgba(245, 158, 11, 0.5);
-   border-radius: 999px;
-   box-shadow:
-     0 0 0 1px rgba(245, 158, 11, 0.08),
-     0 2px 8px rgba(0, 0, 0, 0.20);
- }
- .trust-cards--compliance .trust-card:hover {
-   background: rgba(245, 158, 11, 0.10);
-   border-color: rgba(251, 191, 36, 0.85);
-   transform: translateY(-1px);
-   box-shadow:
-     0 0 0 1px rgba(245, 158, 11, 0.25),
-     0 0 16px rgba(245, 158, 11, 0.35),
-     0 4px 12px rgba(0, 0, 0, 0.30);
- }
- .trust-cards--compliance .trust-card-icon {
-   color: #F59E0B;
-   opacity: 0.92;
- }
-
- /* Vertical gold divider between regions and pills */
- .trust-divider {
-   flex: 0 0 1px;
-   align-self: stretch;
-   background: linear-gradient(180deg,
-     transparent 0%,
-     rgba(245, 158, 11, 0.55) 20%,
-     rgba(245, 158, 11, 0.55) 80%,
+     rgba(0, 89, 179, 0.10) 0%,
+     rgba(245, 158, 11, 0.04) 60%,
      transparent 100%);
-   margin: 0 clamp(2px, 0.4vw, 6px);
  }
-
- /* (Old `.trust-pills`, `.trust-mark`, `.trust-region*` rules removed —
-    superseded by `.trust-cards` + `.trust-card` which render both
-    panes uniformly as a horizontal grid of dark cards.) */
-
- /* Audit fine print — bottom-right of the unified card, like a watermark
-    or signature line under a regulator certificate. Right-aligned reads
-    as "filed by", separating it from the body content above. */
- .trust-fineprint {
-   padding: 8px 4px 0;
-   background: transparent;
-   color: rgba(255, 255, 255, 0.5);
-   font-family: 'Inter', system-ui, sans-serif;
-   font-size: 10.5px;
-   font-weight: 600;
-   letter-spacing: 1.6px;
-   text-transform: uppercase;
-   text-align: right;
-   border-top: none;
- }
-
- /* Trophy cluster removed — the 3 gold trophies were redundant once
-    the regulator pills carried their own gold icons. The .audit-stars
-    on the section heading now carry the "premium tier" signal. */
-
- /* Marquee scroll is the ONE animation kept on this strip — the
-    horizontal drift IS the storytelling for "live carrier traffic
-    flowing through DOLPHLINK". Everything else (per-mark pulse,
-    trophy glow) was decoration competing with the marquee for
-    attention, so it's been retired. */
-
- /* Tablet (~1100px and below): stack the two panes vertically with a
-    horizontal gold divider. Side-by-side layout starts to crush cells
-    below this width even with the 4:6 flex ratio + min-width on
-    individual cards — better to give each pane the full row. */
- @media (max-width: 1100px) {
-   .trust-row {
-     flex-direction: column;
-     align-items: stretch;
-     gap: 16px;
-   }
-   .trust-pane--network,
-   .trust-pane--compliance {
-     flex: 1 1 auto;
-   }
-   .trust-divider {
-     flex: 0 0 1px;
-     height: 1px;
-     width: 100%;
-     align-self: auto;
-     background: linear-gradient(90deg,
-       transparent 0%,
-       rgba(245, 158, 11, 0.55) 20%,
-       rgba(245, 158, 11, 0.55) 80%,
-       transparent 100%);
-     margin: 0;
-   }
-   /* (compliance grid 3-col override moved up to the 1280px breakpoint
-      so it also applies in the 1100-1280 side-by-side zone) */
- }
-
- @media (max-width: 720px) {
-   .trust-section { padding: 28px 4% 0; }
-   .trust-row { padding: 16px; gap: 14px; }
-   /* Mobile: 4 items in 2×2 grid — row 1: APAC | EMEA, row 2: AMERICAS | 1,000+
-      (so the gold stat shares its row with AMERICAS instead of sitting
-      alone on a 3rd row, halving the network pane's vertical space). */
-   .trust-cards--network {
-     gap: 8px;
-   }
-   .trust-cards--network .trust-card {
-     /* Mobile 2×2 grid — keep `max-content` floor so ASIA-PACIFIC is
-        never clipped. Card may push to its own row at very narrow
-        widths, which is preferable to a cropped label. */
-     flex: 1 1 calc(50% - 4px);
-     min-width: max-content;
-   }
-   .trust-stat {
-     flex: 1 1 calc(50% - 4px);
-     justify-content: center;
-     padding: 6px 4px;
-   }
-   .trust-cards--compliance { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-   .trust-card {
-     font-size: 11px;
-     letter-spacing: 0.6px;
-     gap: 6px;
-   }
-   .trust-cards--network .trust-card {
-     padding: 12px 10px;
-   }
-   .trust-cards--compliance .trust-card {
-     padding: 9px 10px;
-   }
-   .trust-card-icon { width: 12px; height: 12px; }
-   .trust-fineprint {
-     padding: 10px 4px 0;
-     font-size: 9px;
-     letter-spacing: 1px;
-     text-align: right;
-   }
- }
-
  /* ===========================
     Reliability Matrix — Light enterprise panel (own section)
     =========================== */
@@ -1275,7 +879,8 @@
  .stat-strip-header {
    display: flex; align-items: center;
    padding: 22px 28px;
-   border-bottom: 1px solid var(--border-line);
+   /* Brand-blue hairline — matches the enterprise-blue card borders below. */
+   border-bottom: 1px solid rgba(0, 89, 179, 0.32);
    background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
  }
  /* `.strip-tag` and `.sec-title` are visually identical — both render the
@@ -1332,7 +937,8 @@
       Lifecycle / Open Rate), 3 columns 720-1023, 2 columns < 720,
       1 column < 480. */
    grid-template-columns: repeat(5, minmax(0, 1fr));
-   gap: 0;
+   gap: 14px;
+   padding: 20px 22px 24px;
  }
  @media (max-width: 1080px) {
    .stat-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -1351,8 +957,12 @@
    gap: 10px;
    padding: 22px 10px 28px;
    background: var(--baiwu-white);
-   border: none;
-   border-right: 1px solid var(--border-line);
+   /* Floating mini-card — brand-blue subtle border + soft shadow. */
+   border: 1px solid rgba(0, 89, 179, 0.32);
+   border-radius: 6px;
+   box-shadow:
+     0 1px 3px rgba(0, 45, 92, 0.04),
+     0 4px 14px rgba(0, 45, 92, 0.05);
    cursor: pointer;
    transition: background 0.25s ease, box-shadow 0.25s ease;
    text-align: center;
@@ -1529,7 +1139,7 @@
    transition: color 0.25s ease;
  }
  .stat-label {
-   font-size: var(--fs-xs); font-weight: 800;
+   font-size: var(--fs-sm); font-weight: 800;
    text-transform: uppercase; letter-spacing: 1.4px;
    color: var(--baiwu-blue-primary);
    transition: color 0.25s ease;
@@ -1570,7 +1180,8 @@
    /* Legacy fallback only — when JS renders without pillars metadata. */
  }
  .portfolio-pillar {
-   border-bottom: 1px solid var(--border-line);
+   /* Brand-blue hairline matches the enterprise-blue card borders. */
+   border-bottom: 1px solid rgba(0, 89, 179, 0.32);
  }
  .portfolio-pillar:last-child { border-bottom: none; }
  .portfolio-pillar-head {
@@ -1603,24 +1214,23 @@
  .portfolio-pillar-grid {
    display: grid;
    grid-template-columns: repeat(3, 1fr);
-   gap: 0;
+   gap: 14px;
+   padding: 4px 22px 22px;
  }
- /* Inside each pillar grid, kill right-border on the last card per row.
-    Each pillar holds 3 items so this is a 3-column single row. */
- .portfolio-pillar-grid > .btn-portfolio:nth-child(3n) { border-right: none; }
- .portfolio-pillar-grid > .btn-portfolio { border-bottom: none; }
+ /* Right/bottom-border separators no longer needed — each .btn-portfolio
+    is now a self-contained card with its own border + shadow + radius. */
  /* Tagline as a top-right pill badge — always-visible 1-line hint */
  .portfolio-tagline {
    position: absolute;
    top: 8px; right: 8px;
    z-index: 2;
-   font-size: 10.5px;
+   font-size: 12px;
    font-weight: 800;
-   letter-spacing: 0.3px;
+   letter-spacing: 0.4px;
    text-transform: uppercase;
    color: #FFFFFF;
    background: var(--baiwu-blue-primary);
-   padding: 4px 10px;
+   padding: 5px 11px;
    border-radius: 4px;
    border: none;
    box-shadow: 0 1px 2px rgba(0, 45, 92, 0.12);
@@ -1672,14 +1282,28 @@
    gap: 6px;
    padding: 16px 12px 30px;     /* a touch of bottom space for click-hint */
    background: var(--baiwu-white);
-   border: none;
-   border-right: 1px solid var(--border-line);
+   /* Floating mini-card — brand-blue subtle border + soft shadow,
+      matching `.stat-card` so the 9 items (3 pillars × 3) read as a
+      coherent grid of distinct cards. */
+   border: 1px solid rgba(0, 89, 179, 0.32);
+   border-radius: 6px;
+   box-shadow:
+     0 1px 3px rgba(0, 45, 92, 0.04),
+     0 4px 14px rgba(0, 45, 92, 0.05);
    cursor: pointer;
-   transition: background 0.25s ease, box-shadow 0.25s ease;
+   transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease, border-color 0.2s ease;
    text-align: center;
    color: inherit;
    font: inherit;
    min-height: 142px;
+ }
+ .btn-portfolio:hover,
+ .stat-card:hover {
+   transform: translateY(-2px);
+   border-color: rgba(0, 89, 179, 0.55);
+   box-shadow:
+     0 2px 6px rgba(0, 45, 92, 0.08),
+     0 12px 28px rgba(0, 45, 92, 0.1);
  }
  .btn-portfolio:last-child { border-right: none; }
  .btn-portfolio::after {
@@ -2018,6 +1642,16 @@
  @media (prefers-reduced-motion: reduce) {
    .audit-stars > span { animation: none; }
  }
+ /* Compliance keywords inside audit-box descriptions — gold + bold +
+    soft glow so the regulatory framework names (ISO 27001, GDPR,
+    SOC 2, PDPA, MAS TRM, IM8) pop against the body copy. Auto-applied
+    by the audit renderer (see js/engine/home/render/audit.js). */
+ .audit-keyword {
+   color: #FCD34D;
+   text-shadow:
+     0 0 6px rgba(251, 191, 36, 0.55),
+     0 0 14px rgba(245, 158, 11, 0.30);
+ }
  /* Audit cards — heavier gold border + staggered breathing glow */
  .audit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; background: transparent; }
  .audit-box {
@@ -2094,12 +1728,41 @@
  }
  .industries-section  { contain-intrinsic-size: 1px 880px; }
  .departments-section { contain-intrinsic-size: 1px 460px; }
- /* Wraps no longer apply max-width — content spans the same section-content
-    box as `.audit-section`'s heading + grid so left edges of every section's
-    sec-title line up at the same 4% from viewport edge. */
+ /* Wraps render as floating white cards — IDENTICAL visual language as
+    `.stat-strip-wrap` (Reliability Matrix / The Portfolio) and
+    `.loop-card` (How it actually works) above. Same border + radius +
+    shadow + light-blue gradient header so all four sections read as
+    one coherent system instead of mixed conventions. */
  .industries-wrap,
  .departments-wrap {
+   position: relative;
    width: 100%;
+   background: var(--baiwu-white);
+   border: 1px solid var(--border-line);
+   border-radius: 8px;
+   box-shadow:
+     0 14px 40px rgba(0, 45, 92, 0.08),
+     0 2px 6px rgba(0, 45, 92, 0.04);
+   padding: 32px 32px 36px;
+   overflow: hidden;
+ }
+ /* Light-blue gradient header band — same colour/curve as .stat-strip-header
+    + .loop-card-top so the wrap reads with the matching wash at top. */
+ .industries-wrap::before,
+ .departments-wrap::before {
+   content: '';
+   position: absolute;
+   top: 0; left: 0; right: 0;
+   height: 110px;
+   background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
+   z-index: 0;
+   pointer-events: none;
+ }
+ /* Lift children above the gradient layer so text/cards aren't tinted. */
+ .industries-wrap > *,
+ .departments-wrap > * {
+   position: relative;
+   z-index: 1;
  }
 
  /* Light-variant of `.sec-title` — same blade + size + weight + uppercase
@@ -2130,84 +1793,11 @@
     references it, the variant was retired when the dark map section
     moved into the footer.) */
 
- /* ----- Industries grid ----- */
- /* When tiered (primary + secondary), `.industries-grid` becomes the
-    outer container; the JS renders an `.industries-tier--primary` block
-    (full-fat 4-card grid) and an `.industries-tier--secondary` block
-    (compact pill cards) inside it. Legacy flat-grid fallback still
-    works because the `industries-grid` selector still applies its grid
-    semantics when `.industries-tier` wrappers are absent. */
+ /* ----- Industries grid — flat 3×3 of 9 cards (no tiers). ----- */
  .industries-grid {
    display: grid;
    grid-template-columns: repeat(3, 1fr);
    gap: 18px;
- }
- .industries-grid:has(.industries-tier) {
-   display: block;   /* Tiered mode — let inner .industries-tier handle grid */
- }
- .industries-tier {
-   display: grid;
-   gap: 14px;
- }
- .industries-tier--primary {
-   grid-template-columns: repeat(2, 1fr);
-   gap: 16px;
- }
- .industries-tier--secondary {
-   grid-template-columns: repeat(5, 1fr);
-   gap: 10px;
-   margin-top: 14px;
- }
- .industries-tier-label {
-   margin-top: 28px; margin-bottom: 10px;
-   font-size: var(--fs-xs);
-   font-weight: 800;
-   letter-spacing: 1.6px;
-   text-transform: uppercase;
-   color: var(--text-sub);
- }
- /* Compact "Also Serving" cards — smaller padding, no chips, no big
-    border-blade. Shows just name + 1-line desc. */
- .industry-card--mini {
-   padding: 14px 14px 12px;
-   border-left-width: 4px;
- }
- .industry-card--mini .industry-name {
-   font-size: var(--fs-2xs);
-   letter-spacing: 1.4px;
-   margin-bottom: 6px;
- }
- .industry-card--mini .industry-desc {
-   font-size: 12px;
-   line-height: 1.5;
-   color: var(--text-sub);
- }
- @media (max-width: 1024px) {
-   .industries-tier--primary { grid-template-columns: repeat(2, 1fr); }
-   /* 5 items at 3 cols = 3+2 (last row 2 cards). Acceptable on tablet. */
-   .industries-tier--secondary { grid-template-columns: repeat(3, 1fr); }
- }
- @media (max-width: 720px) {
-   .industries-tier--primary { grid-template-columns: 1fr; }
-   /* 5 items at 2 cols would leave a lonely 5th card on its own row.
-      Switch to 1 column → all 5 cards stack cleanly, full-width. */
-   .industries-tier--secondary { grid-template-columns: 1fr; gap: 8px; }
-   .industries-tier-label { margin-top: 22px; }
-   /* Mini cards on mobile: a bit more padding so they read like full
-      list rows, not squeezed thumbnails. */
-   .industry-card--mini {
-     padding: 16px 18px;
-     border-left-width: 3px;
-   }
-   .industry-card--mini .industry-name {
-     font-size: var(--fs-xs);
-     letter-spacing: 1.2px;
-     margin-bottom: 4px;
-   }
-   .industry-card--mini .industry-desc {
-     font-size: 13px;
-     line-height: 1.55;
-   }
  }
  .industry-card {
    position: relative;
@@ -2393,7 +1983,7 @@
     was being overridden by source-order cascade — same specificity,
     last-declared wins, so the base 2fr/1fr always defeated the
     1fr-stack rule regardless of viewport. */
- @media (max-width: 1600px) {
+ @media (max-width: 960px) {
    .footer-grid {
      grid-template-columns: 1fr;
      gap: 28px;
@@ -2601,20 +2191,26 @@
    letter-spacing: -0.1px;        /* compress for long emails */
    text-decoration: none;
    display: block;
-   margin-bottom: 4px;
+   margin: 0;
    font-weight: 500;
    line-height: 1.5;
-   /* Long unbreakable strings (emails, addresses) wrap if needed. */
-   overflow-wrap: anywhere;
-   word-break: break-word;
    min-width: 0;
  }
- /* Touch-target floor — every footer link gets ≥24px tap height + a
-    consistent 8px gap from the next item. Lighthouse flagged the old
-    block-level mailto links as too small / too tightly spaced. */
+ /* `<p>line1<br>line2</p>` (HQ address) and adjacent `<a>` blocks (ENGAGE
+    emails) now inherit the same line-height, the same zero margin, and
+    no extra padding — so HQ and ENGAGE rows sit on the same vertical
+    rhythm. */
  .footer .f-col a {
-   padding: 6px 0;
-   margin-bottom: 4px;
+   padding: 0;
+   /* Shrink-to-fit: the longest email is "Salesmarketing@dolphlink.com"
+      (28 chars). At narrower laptop widths the .f-col column drops to
+      ~150-180px and the address-style font would wrap mid-domain. A
+      slightly steeper clamp lets emails scale down enough to stay on
+      one line, while keeping headquarters address legible. */
+   font-size: clamp(9.5px, 0.55vw + 0.35rem, 12.5px);
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
  }
  .footer .f-col a:hover { color: #FCD34D; }
  .footer .brand-col p {
@@ -2659,9 +2255,11 @@
  .footer .f-install-link {
    background: transparent;
    border: none;
-   padding: 6px 0;
-   margin: 0 0 4px;
-   display: block;
+   padding: 2px 0;
+   margin: 0;
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
    text-align: left;
    cursor: pointer;
    font-family: inherit;
@@ -2734,32 +2332,84 @@
    margin: 6px 0 12px;
  }
  .vcard-eyebrow {
-   font-size: 11px;
+   font-size: 10px;
    font-weight: 800;
-   letter-spacing: 1.8px;
+   letter-spacing: 1.6px;
    text-transform: uppercase;
    color: #F59E0B;
-   margin-bottom: 4px;
+   margin-bottom: 3px;
  }
  .vcard-heading {
    font-family: 'Inter', system-ui, sans-serif;
-   font-size: 26px;
+   /* Fluid — scales 16px → 20px so the card never feels oversized at
+      narrow widths but still reads as a proper headline at desktop. */
+   font-size: clamp(16px, 1.1vw + 0.6rem, 20px);
    font-weight: 900;
    color: var(--baiwu-blue-deep);
-   letter-spacing: -0.5px;
-   margin: 0 0 8px;
-   line-height: 1.1;
+   letter-spacing: -0.3px;
+   margin: 0 0 6px;
+   line-height: 1.15;
  }
  .vcard-line {
-   font-size: 13px;
+   font-size: 12px;
    color: var(--text-main);
-   line-height: 1.55;
-   margin: 0 0 6px;
+   line-height: 1.5;
+   margin: 0 0 4px;
    font-weight: 500;
  }
  .vcard-line--muted {
    color: var(--text-sub);
-   font-size: 12px;
+   font-size: 11.5px;
+ }
+ /* Social icon row inside the Book-a-Briefing card — sits below the
+    description copy, separated by a thin gold rule. Compact 28px circles
+    in brand-blue with a gold-glow hover so they read as the same
+    "premium accent" language as the gold top-bar above. */
+ .vcard-connect {
+   margin-top: 10px;
+   padding-top: 10px;
+   border-top: 1px solid rgba(245, 158, 11, 0.32);
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   flex-wrap: wrap;
+ }
+ .vcard-connect-label {
+   font-size: 9.5px;
+   font-weight: 800;
+   letter-spacing: 1.4px;
+   text-transform: uppercase;
+   color: var(--text-sub);
+ }
+ .vcard-connect-row {
+   display: inline-flex;
+   gap: 6px;
+   align-items: center;
+ }
+ .vcard-social-link {
+   width: 28px; height: 28px;
+   min-width: 28px; min-height: 28px;
+   flex-shrink: 0; flex-grow: 0;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 50%;
+   background: rgba(0, 89, 179, 0.06);
+   border: 1px solid rgba(0, 89, 179, 0.4);
+   color: var(--baiwu-blue-primary);
+   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+   box-sizing: border-box;
+ }
+ .vcard-social-link:hover {
+   background: rgba(245, 158, 11, 0.12);
+   border-color: #F59E0B;
+   color: #F59E0B;
+   transform: translateY(-1px);
+   box-shadow: 0 4px 12px rgba(245, 158, 11, 0.20);
+ }
+ .vcard-social-link svg {
+   width: 13px; height: 13px;
+   flex-shrink: 0;
  }
  .vcard-right {
    display: flex; flex-direction: column;
@@ -2780,9 +2430,9 @@
    image-rendering: pixelated;
  }
  .vcard-qr-hint {
-   font-size: 11px;
+   font-size: 10px;
    font-weight: 800;
-   letter-spacing: 1.4px;
+   letter-spacing: 1.2px;
    text-transform: uppercase;
    color: var(--baiwu-blue-primary);
    text-align: center;
@@ -2795,7 +2445,7 @@
    }
    .vcard-right { align-items: flex-start; }
    .vcard-qr { width: 150px; height: 150px; }
-   .vcard-heading { font-size: 22px; }
+   .vcard-heading { font-size: 18px; }
  }
 
  /* Social row — sits in the bottom-bar between legal links and the
@@ -2885,7 +2535,7 @@
    padding: 16px 4% 14px;
    background: var(--baiwu-white);
    display: grid;
-   grid-template-columns: 1fr auto 1fr;
+   grid-template-columns: 1fr auto;
    align-items: center;
    gap: 18px;
    font-size: 11px;
@@ -2895,8 +2545,7 @@
    text-transform: uppercase;
  }
  .f-bottom-bar > .f-legal-links { justify-self: start; }
- .f-bottom-bar > .f-social-row { justify-self: center; }
- .f-bottom-bar > .f-copyright { justify-self: end; }
+ .f-bottom-bar > .f-copyright   { justify-self: end; text-align: right; }
  /* Force single-line for legal links + use a generous hide threshold
     (1180px) — ANY width below that, the entire legal-links cluster
     is hidden so it can never wrap to a second row alongside the
@@ -2908,17 +2557,31 @@
  .f-legal-links a { white-space: nowrap; }
  @media (max-width: 1180px) {
    .f-bottom-bar {
-     grid-template-columns: 1fr auto;
-     padding: 16px 4% 14px;
+     grid-template-columns: auto 1fr;
+     padding: 16px 18px 14px;
      gap: 14px;
    }
    .f-bottom-bar > .f-legal-links { display: none; }
    .f-bottom-bar > .f-social-row  { justify-self: start; }
    .f-bottom-bar > .f-copyright   { justify-self: end; text-align: right; }
  }
+ /* Phones: stack the bottom bar vertically — icons on row 1, copyright
+    on row 2 below. Keeps the social icons clear of the right-side
+    copyright text (which used to wrap into the icon column on a
+    320-400px viewport). */
  @media (max-width: 600px) {
-   .f-bottom-bar { padding: 12px 4% 10px; }
-   .f-copyright { font-size: 9px; letter-spacing: 1px; }
+   .f-bottom-bar {
+     grid-template-columns: 1fr;
+     row-gap: 10px;
+     padding: 12px 4% 10px;
+   }
+   .f-bottom-bar > .f-copyright {
+     justify-self: center;
+     text-align: center;
+     line-height: 1.5;
+     font-size: 9px;
+     letter-spacing: 1px;
+   }
  }
  /* Standard site comet ribbon — same animation + colours + box-shadow
     as the section dividers (`.reliability-section::before` family). */
@@ -3004,7 +2667,7 @@
    .reliability-section { padding: 28px 4%; }
    .stat-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
    .stat-card {
-     border-bottom: 1px solid var(--border-line);
+     border-bottom: 1px solid rgba(0, 89, 179, 0.32);
      justify-content: center;
      min-height: 108px;
    }
@@ -3133,7 +2796,7 @@
    }
    /* :not(:last-child) raises specificity to override the 1024px rule that
       stripped border-bottom from cards 3/4 (intended for the 2x2 layout). */
-   .stat-card:not(:last-child) { border-bottom: 1px solid var(--border-line); }
+   .stat-card:not(:last-child) { border-bottom: 1px solid rgba(0, 89, 179, 0.32); }
    .stat-card:last-child { border-bottom: none; }
    .stat-icon-wrap { width: 84px; height: 84px; }
    .stat-icon { width: 72px; height: 72px; }
@@ -3178,7 +2841,7 @@
       cards live inside individual 3-card pillar grids. */
    .portfolio-pillar-grid { grid-template-columns: 1fr; }
    .portfolio-pillar-grid > .btn-portfolio { border-right: none; }
-   .portfolio-pillar-grid > .btn-portfolio:not(:last-child) { border-bottom: 1px solid var(--border-line); }
+   .portfolio-pillar-grid > .btn-portfolio:not(:last-child) { border-bottom: 1px solid rgba(0, 89, 179, 0.32); }
    .portfolio-icon-wrap { width: 84px; height: 84px; }
    .portfolio-icon { width: 72px; height: 72px; }
    .portfolio-label { font-size: var(--fs-xs); letter-spacing: 1.2px; }
@@ -3196,6 +2859,7 @@
    /* (Old video card mobile overrides removed — video is full-bleed now.) */
    /* Thinner section divider on narrow screens */
    .reliability-section::before,
+   .loop-section::before,
    .infra-section::before,
    .audit-section::before,
    .footer::before { box-shadow: 0 0 4px rgba(56, 189, 248, 0.55); }
@@ -3211,16 +2875,11 @@
    .strip-tag { padding: 0 0 0 12px; }
    .strip-tag::before { width: 4px; }
    .strip-status { font-size: var(--fs-xs); }
-   /* Eyebrow — smaller font + tighter padding so the long compliance
-      copy ("OPERATED UNDER SINGAPORE'S CYBERSECURITY ACT · IM8-ALIGNED")
-      fits ON ONE LINE at narrow widths. white-space: nowrap is set on
-      the base rule. */
-   .eyebrow {
-     font-size: 9.5px;
-     padding: 5px 11px 5px 9px;
-     letter-spacing: 1.1px;
-     gap: 6px;
-   }
+   /* Eyebrow — base clamp() at the root rule already shrinks the
+      compliance copy fluidly. No fixed-size override here so mobile
+      scales smoothly down to the 7px floor instead of jumping back
+      up to a larger value. Only the icon size + padding stay tight. */
+   .eyebrow { padding: 4px 9px 4px 7px; gap: 5px; }
    .eyebrow-icon { width: 11px; height: 11px; }
  }
  @media (max-width: 480px) {
@@ -3248,25 +2907,16 @@
    .stat-icon { width: 60px; height: 60px; }
    .portfolio-icon-wrap { width: 72px; height: 72px; }
    .portfolio-icon { width: 60px; height: 60px; }
-   /* Eyebrow — even smaller on small phones so the full compliance
-      copy ("OPERATED UNDER SINGAPORE'S CYBERSECURITY ACT · IM8-ALIGNED")
-      fits in one line on a 360-380px viewport. */
-   .eyebrow {
-     font-size: 8.5px;
-     padding: 4px 10px 4px 8px;
-     letter-spacing: 0.9px;
-     gap: 5px;
-   }
+   /* Eyebrow — let the base clamp() handle font/letter-spacing fluidly,
+      tighten the icon + padding for the very narrow phone viewports. */
+   .eyebrow { padding: 3px 8px 3px 6px; gap: 4px; }
    .eyebrow-icon { width: 10px; height: 10px; }
  }
- /* Final fallback — at <340px (older small Androids) let the text
-    wrap to two lines rather than overflow horizontally. */
- @media (max-width: 340px) {
-   .eyebrow {
-     white-space: normal;
-     line-height: 1.4;
-   }
- }
+ /* User requirement: the compliance eyebrow MUST stay on a single line
+    at every viewport size. The previous narrow-screen fallback that
+    let it wrap to 2 lines has been removed — the fluid clamp() on the
+    base rule already shrinks the text small enough to fit on phones,
+    so wrapping is no longer needed. */
  /* ===========================
     Audit icons
     =========================== */
@@ -3367,3 +3017,856 @@
     so there's no longer any background animation that needs pausing
     while the hero video plays. The .video-playing class still toggles —
     other JS hooks listen for it — but no CSS overrides remain.) */
+
+ /* ============================================================================
+    AI × HUMAN CLOSED LOOP — sits between Reliability Matrix and Portfolio.
+    A 4-stage horizontal flow with closed-loop feedback arrow. Built for the
+    government/enterprise narrative: every signal tracked, governed, resolved.
+    ============================================================================ */
+ /* Loop section: light bg matching the rest of the page, padding aligned
+    with .section-row neighbors. The actual content lives in .loop-card
+    (a white floating card matching .stat-strip-wrap above). */
+ .loop-section {
+   background: var(--baiwu-bg-light, #F8FAFC);
+   padding: 40px 4%;
+   position: relative;
+ }
+ /* Floating white card — same elevation language and SAME WIDTH as the
+    Reliability Matrix's .stat-strip-wrap above. Two-row layout:
+      Row 1 (.loop-card-top)     : header (left) + horizontal video (right)
+      Row 2 (.loop-card-content) : full-width Full Cycle + Plug-and-Play */
+ .loop-card {
+   background: var(--baiwu-white, #FFFFFF);
+   border: 1px solid var(--border-line, #E2E8F0);
+   border-radius: 8px;
+   box-shadow:
+     0 14px 40px rgba(0, 45, 92, 0.08),
+     0 2px 6px rgba(0, 45, 92, 0.04);
+   overflow: hidden;
+   position: relative;
+ }
+
+ /* Top row — 2-col grid: header on left (sec-title + sec-intro + subnote),
+    video on right. Top-aligned so the title sits at the top of the row,
+    same vertical position as the top of the video panel.
+    Light-blue gradient + bottom hairline matches `.stat-strip-header`
+    (Reliability Matrix / The Portfolio) so the loop card reads with the
+    SAME visual language as every other floating white card. */
+ .loop-card-top {
+   display: grid;
+   grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+   gap: 28px;
+   /* Tighter bottom padding so the cards section sits closer to the
+      header — pulls the lower content up. */
+   padding: 28px 32px 16px;
+   align-items: start;
+   /* Enterprise-blue hairline — matches stat-strip-header + portfolio-pillar. */
+   border-bottom: 1px solid rgba(0, 89, 179, 0.32);
+   background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
+ }
+ /* `.sec-title` already uses a 6px solid blue border-left, same width
+    and colour as `.strip-tag::before`. The blade glow on `.strip-tag`
+    is on a positioned ::before — `border-left` can't carry its own
+    box-shadow without leaking around the whole title block, so we keep
+    the blade itself clean and let the matching gradient header carry
+    the visual rhythm. */
+ /* Lock both vertical gaps in the header to the SAME explicit value so
+    title→subtitle and subtitle→subnote distances are visually identical
+    at every viewport size (the global .sec-title margin-bottom drops to
+    16px on mobile, which would otherwise break the rhythm). */
+ .loop-card-head .sec-title {
+   margin-bottom: 16px !important;
+ }
+ .loop-card-head .sec-intro {
+   max-width: none;
+   margin: 0 0 16px !important;
+ }
+ /* Subnote — clean descriptive paragraph. No left border, no padding.
+    !important defeats any inherited or accidentally-applied .sec-intro
+    rule (which has a gold border-left + 18px padding-left). */
+ .loop-card-head .loop-subnote,
+ .loop-section .loop-card-head .loop-subnote,
+ p.loop-subnote {
+   font-size: 0.86rem;
+   font-weight: 500;
+   color: var(--text-soft, #475569);
+   line-height: 1.6;
+   margin: 0 !important;
+   padding: 0 !important;
+   border: 0 !important;
+   max-width: none !important;
+ }
+ .loop-card-head .loop-subnote strong,
+ p.loop-subnote strong {
+   color: var(--text-main, #0F172A);
+   font-weight: 700;
+ }
+ .loop-card-content {
+   display: flex;
+   flex-direction: column;
+ }
+ @media (max-width: 880px) {
+   .loop-card-top { grid-template-columns: 1fr; }
+ }
+
+ /* Two stage rows — Full Cycle (4 cards) on top, Plug and Play (3 cards)
+    below. Tighter top padding so the cards sit closer to the header
+    section — pulls everything up the page. */
+ .loop-rows {
+   display: flex;
+   flex-direction: column;
+   gap: 22px;
+   padding: 14px 32px 24px;
+ }
+ .loop-row { margin: 0; }
+ .loop-row + .loop-row {
+   padding-top: 22px;
+   border-top: 1px solid var(--border-line, #E2E8F0);
+ }
+ .loop-row-head {
+   display: flex;
+   align-items: baseline;
+   gap: 12px;
+   margin-bottom: 14px;
+   flex-wrap: wrap;
+ }
+ .loop-row-tag {
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   padding: 3px 8px;
+   border-radius: 4px;
+   border: 1px solid;
+   line-height: 1.2;
+ }
+ .loop-row--full .loop-row-tag {
+   background: rgba(0, 89, 179, 0.08);
+   border-color: rgba(0, 89, 179, 0.40);
+   color: var(--baiwu-blue-primary, #0059B3);
+ }
+ .loop-row--plug .loop-row-tag {
+   background: rgba(191, 148, 48, 0.10);
+   border-color: rgba(191, 148, 48, 0.45);
+   color: #8B6920;
+ }
+ .loop-row-name {
+   font-size: 0.95rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+ }
+
+ /* Fixed-column grids: 4 cards for Full Cycle, 3 for Plug and Play.
+    This guarantees the rightmost card sits at exactly the right edge
+    of the .loop-rows content area — same x-position as the video
+    panel's right edge in the row above. Auto-fit was leaving slack
+    columns at certain widths and breaking the right-edge alignment. */
+ .loop-row-grid {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 12px;
+ }
+ .loop-row-grid--three {
+   grid-template-columns: repeat(3, 1fr);
+ }
+ @media (max-width: 960px) {
+   .loop-row-grid { grid-template-columns: repeat(2, 1fr); }
+   .loop-row-grid--three { grid-template-columns: 1fr; }
+ }
+ @media (max-width: 600px) {
+   .loop-row-grid { grid-template-columns: 1fr; }
+ }
+
+ /* Compact rich stage card — number, icon, title, short desc, benefit pill.
+    Hairline border + subtle bg so each stage reads as its own unit. */
+ .loop-stage-card {
+   position: relative;
+   background: #FAFCFE;
+   border: 1px solid var(--border-line, #E2E8F0);
+   border-top: 3px solid var(--baiwu-blue-primary, #0059B3);
+   border-radius: 8px;
+   padding: 14px 14px 12px;
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+ }
+ .loop-stage-card:hover {
+   transform: translateY(-2px);
+   border-color: rgba(0, 89, 179, 0.55);
+   background: var(--baiwu-white, #FFFFFF);
+   box-shadow:
+     0 2px 6px rgba(0, 45, 92, 0.08),
+     0 12px 28px rgba(0, 45, 92, 0.10);
+ }
+ .loop-stage-card--accent { border-top-color: #BF9430; }
+ .loop-row--plug .loop-stage-card { border-top-color: #BF9430; }
+ /* Plug-and-Play row hover keeps the gold accent on the top blade. */
+ .loop-row--plug .loop-stage-card:hover,
+ .loop-stage-card--accent:hover {
+   border-color: rgba(191, 148, 48, 0.55);
+ }
+
+ .loop-stage-num {
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 10.5px;
+   font-weight: 800;
+   color: var(--baiwu-blue-primary, #0059B3);
+   letter-spacing: 1.4px;
+   line-height: 1;
+   opacity: 0.55;
+ }
+ .loop-stage-card--accent .loop-stage-num,
+ .loop-row--plug .loop-stage-num { color: #BF9430; }
+
+ .loop-stage-icon-wrap {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   width: 36px; height: 36px;
+   border-radius: 8px;
+   background: rgba(0, 89, 179, 0.08);
+   color: var(--baiwu-blue-primary, #0059B3);
+ }
+ .loop-stage-icon-wrap svg {
+   width: 20px; height: 20px;
+ }
+ .loop-stage-card--accent .loop-stage-icon-wrap,
+ .loop-row--plug .loop-stage-icon-wrap {
+   background: rgba(191, 148, 48, 0.12);
+   color: #BF9430;
+ }
+
+ .loop-stage-title {
+   font-size: 0.86rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+   line-height: 1.25;
+   margin: 4px 0 0;
+ }
+ .loop-stage-desc {
+   font-size: 0.72rem;
+   color: var(--text-soft, #475569);
+   line-height: 1.5;
+   margin: 0;
+   flex: 1;
+ }
+ .loop-stage-metric {
+   display: inline-block;
+   margin-top: 4px;
+   padding: 3px 8px;
+   border-radius: 999px;
+   background: rgba(0, 89, 179, 0.08);
+   color: var(--baiwu-blue-primary, #0059B3);
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 0.3px;
+   align-self: flex-start;
+ }
+ .loop-stage-card--accent .loop-stage-metric,
+ .loop-row--plug .loop-stage-metric {
+   background: rgba(191, 148, 48, 0.14);
+   color: #8B6920;
+ }
+ .loop-flow-track + .loop-flow-track {
+   padding-top: 22px;
+   border-top: 1px solid var(--border-line, #E2E8F0);
+ }
+ .loop-flow-head {
+   display: flex;
+   align-items: baseline;
+   gap: 12px;
+   margin-bottom: 14px;
+   flex-wrap: wrap;
+ }
+ .loop-flow-tag {
+   display: inline-block;
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   padding: 3px 8px;
+   border-radius: 4px;
+   border: 1px solid;
+   line-height: 1.2;
+ }
+ .loop-flow-track--full .loop-flow-tag {
+   background: rgba(0, 89, 179, 0.08);
+   border-color: rgba(0, 89, 179, 0.40);
+   color: var(--baiwu-blue-primary, #0059B3);
+ }
+ .loop-flow-track--plug .loop-flow-tag {
+   background: rgba(191, 148, 48, 0.10);
+   border-color: rgba(191, 148, 48, 0.45);
+   color: #8B6920;
+ }
+ .loop-flow-name {
+   font-size: 0.95rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+ }
+
+ .loop-flow-stages {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   display: flex;
+   align-items: center;
+   gap: 0;
+ }
+ .loop-flow-stage {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 8px;
+   flex: 1 1 0;
+   min-width: 0;
+ }
+ .loop-flow-icon {
+   width: 48px;
+   height: 48px;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: 1.5px solid;
+ }
+ .loop-flow-track--full .loop-flow-icon {
+   background: rgba(0, 89, 179, 0.08);
+   border-color: rgba(0, 89, 179, 0.35);
+   color: var(--baiwu-blue-primary, #0059B3);
+ }
+ .loop-flow-track--plug .loop-flow-icon {
+   background: rgba(191, 148, 48, 0.10);
+   border-color: rgba(191, 148, 48, 0.40);
+   color: #8B6920;
+ }
+ .loop-flow-label {
+   font-size: 11.5px;
+   font-weight: 700;
+   color: var(--text-main, #0F172A);
+   letter-spacing: 0.2px;
+   text-align: center;
+ }
+ .loop-flow-arrow {
+   flex: 0 0 28px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--text-soft, #475569);
+   opacity: 0.55;
+   /* Pull arrow up so it aligns with the icon centre, not the label */
+   margin-bottom: 19px;
+ }
+
+ @media (max-width: 880px) {
+   .loop-card { padding-right: 0; min-height: 0; }
+   .loop-card-video {
+     position: relative !important;
+     height: 280px;
+     border-radius: 0;
+   }
+ }
+ .loop-mini-tag {
+   display: inline-block;
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 1.5px;
+   text-transform: uppercase;
+   padding: 3px 8px;
+   border-radius: 4px;
+   border: 1px solid;
+   line-height: 1.2;
+   margin-bottom: 4px;
+ }
+ .loop-mini--full .loop-mini-tag {
+   background: rgba(0, 89, 179, 0.08);
+   border-color: rgba(0, 89, 179, 0.40);
+   color: var(--baiwu-blue-primary, #0059B3);
+ }
+ .loop-mini--plug .loop-mini-tag {
+   background: rgba(191, 148, 48, 0.10);
+   border-color: rgba(191, 148, 48, 0.45);
+   color: #8B6920;
+ }
+ .loop-mini-name {
+   font-size: 1.05rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+   margin: 6px 0 10px;
+   line-height: 1.25;
+ }
+ .loop-mini-steps {
+   margin: 0;
+   padding-left: 22px;
+   color: var(--text-soft, #475569);
+   font-size: 0.86rem;
+   line-height: 1.6;
+ }
+ .loop-mini-steps li { margin-bottom: 6px; }
+ .loop-mini-steps li:last-child { margin-bottom: 0; }
+ .loop-mini-steps strong {
+   color: var(--text-main, #0F172A);
+   font-weight: 700;
+ }
+
+ /* Video banner — full width below the header, indented from the card
+    edges by 32px so it doesn't flush with the card border. The video
+    inside is scaled 1.18x past the panel bounds so the source's black
+    borders on top + left + right bleed past the panel and get cropped
+    by overflow:hidden. Bottom ~1/4 of source also crops via object-position. */
+ .loop-card-video {
+   position: relative;
+   height: 300px;
+   /* No margin — the video is now in a grid cell (.loop-card-top right
+      cell). The grid cell's outer padding (32px right on .loop-card-top)
+      already gives it the right inset. Adding margin here was pushing
+      the video's right edge 32px inward of the cards' right edge below. */
+   overflow: hidden;
+   background: #0F172A;
+   border-radius: 10px;
+   box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12);
+   pointer-events: none;
+ }
+ .loop-card-video video {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   object-position: center top;
+   /* Scale up to crop the source frame's black borders (top + sides) past
+      the panel edges. Adjust 1.18 → higher if borders still show. */
+   transform: scale(1.18);
+   transform-origin: center center;
+   display: block;
+ }
+ @media (max-width: 880px) {
+   .loop-card-video { height: 220px; }
+ }
+ /* The single bold tagline that replaces the old H2. Smaller, with weight,
+    sits just under the gold "How it actually works" eyebrow. */
+ .loop-tagline {
+   font-size: 1.05rem;
+   line-height: 1.45;
+   color: var(--text-main, #0F172A);
+   margin: 6px 0 24px;
+   max-width: 920px;
+ }
+ .loop-tagline strong { font-weight: 800; }
+ /* Ambient AI×Human background video. EXACT SAME PATTERN as .hero-bg-video:
+    a direct child of the section, position:absolute filling it, video and
+    overlay layered on top of the section's own background gradient. */
+ .loop-bg-video {
+   position: absolute;
+   top: 0; bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   z-index: 0;
+   pointer-events: none;
+ }
+ .loop-bg-overlay {
+   position: absolute;
+   inset: 0;
+   z-index: 0;
+   pointer-events: none;
+   background:
+     linear-gradient(180deg, rgba(248, 250, 252, 0.55) 0%, rgba(255, 255, 255, 0.65) 100%);
+ }
+ @media (prefers-reduced-motion: reduce) {
+   .loop-bg-video { display: none; }
+ }
+ .loop-wrap {
+   max-width: 1280px;
+   margin: 0 auto;
+   position: relative;
+   z-index: 1;
+ }
+ .loop-section .strip-tag {
+   /* same brand-blue eyebrow as other sections */
+   color: var(--baiwu-blue-primary);
+   display: inline-block;
+   margin-bottom: 12px;
+ }
+ .loop-section .sec-intro {
+   max-width: 780px;
+   margin-bottom: 40px;
+   color: var(--text-soft, #475569);
+ }
+
+ /* Two-track wrapper — Full Cycle (4 workstreams) on top, Plug & Play (3
+    workstreams) below. Each track gets its own labeled header. The four
+    cards in a track represent PARALLEL workstreams, not sequential phases —
+    every sprint touches all of them. No directional arrows between cards. */
+ .loop-track {
+   margin-bottom: 36px;
+ }
+ .loop-track:last-child {
+   margin-bottom: 0;
+ }
+ .loop-track-head {
+   display: flex;
+   align-items: baseline;
+   gap: 12px;
+   margin: 0 0 8px;
+   flex-wrap: wrap;
+ }
+ /* Sprint cadence strip — sits between the track header and the lanes,
+    explicitly marking the rhythm so no one mistakes the row of cards for a
+    waterfall sequence. */
+ .loop-cadence {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   margin: 0 0 14px;
+   padding: 6px 10px;
+   border-left: 2px solid #BF9430;
+   background: rgba(191, 148, 48, 0.06);
+   border-radius: 0 6px 6px 0;
+   font-size: 11.5px;
+   color: var(--text-soft, #475569);
+ }
+ .loop-cadence-pulse {
+   display: inline-block;
+   width: 8px; height: 8px;
+   border-radius: 50%;
+   background: #16A34A;
+   box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55);
+   animation: loopPulse 1.6s ease-out infinite;
+   flex: none;
+ }
+ @keyframes loopPulse {
+   0%   { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.55); }
+   70%  { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+   100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+ }
+ .loop-cadence-label {
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 9.5px;
+   font-weight: 800;
+   letter-spacing: 1.4px;
+   text-transform: uppercase;
+   color: #8B6920;
+ }
+ .loop-cadence-text {
+   color: var(--text-main, #0F172A);
+   font-weight: 600;
+ }
+ .loop-track-tag {
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 10.5px;
+   font-weight: 800;
+   letter-spacing: 1.6px;
+   text-transform: uppercase;
+   padding: 4px 10px;
+   border-radius: 4px;
+   border: 1px solid;
+   line-height: 1.2;
+ }
+ /* Both track tags now use enterprise blue. Full Cycle = solid blue
+    fill with white text (the "primary" track), Plug-and-Play = light
+    blue outline with blue text (the "secondary" track) — same family,
+    different weight, no gold drama. */
+ .loop-track--full .loop-track-tag {
+   background: var(--baiwu-blue-primary);
+   border-color: var(--baiwu-blue-primary);
+   color: var(--baiwu-white);
+ }
+ .loop-track--plug .loop-track-tag {
+   background: rgba(0, 89, 179, 0.10);
+   border-color: rgba(0, 89, 179, 0.50);
+   color: var(--baiwu-blue-primary);
+ }
+ .loop-track-name {
+   font-size: 1.05rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+   line-height: 1.3;
+ }
+ .loop-track-sub {
+   font-size: 0.82rem;
+   color: var(--text-soft, #475569);
+   font-weight: 500;
+ }
+
+ /* The N parallel workstream lanes. No connector arrows — these run
+    concurrently every sprint, not sequentially. Equal columns. */
+ .loop-stages {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   align-items: stretch;
+   gap: 14px;
+ }
+ .loop-stages--three {
+   grid-template-columns: repeat(3, 1fr);
+ }
+ .loop-stage {
+   background: #FFFFFF;
+   border: 1px solid var(--border-line, #E2E8F0);
+   border-top: 3px solid var(--baiwu-blue-primary);
+   border-radius: 10px;
+   padding: 22px 18px 20px;
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+   position: relative;
+   box-shadow: 0 1px 0 rgba(15,23,42,.02), 0 4px 14px rgba(15,23,42,.04);
+   transition: transform .18s ease, box-shadow .18s ease;
+ }
+ .loop-stage:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 2px 0 rgba(15,23,42,.03), 0 10px 24px rgba(15,23,42,.08);
+ }
+ /* Stage 03 (Resolve) is the climax — gold accent line on top to draw the
+    eye to where AI and human meet. */
+ .loop-stage--accent {
+   border-top-color: #BF9430;
+ }
+ .loop-stage-num {
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 11px;
+   font-weight: 700;
+   color: var(--baiwu-blue-primary);
+   letter-spacing: 1.5px;
+   line-height: 1;
+   opacity: .55;
+ }
+ .loop-stage--accent .loop-stage-num { color: #BF9430; }
+ .loop-stage-icon-wrap {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   width: 44px; height: 44px;
+   border-radius: 10px;
+   background: rgba(0, 89, 179, 0.08);
+   color: var(--baiwu-blue-primary);
+   margin-bottom: 2px;
+ }
+ .loop-stage--accent .loop-stage-icon-wrap {
+   background: rgba(191, 148, 48, 0.12);
+   color: #BF9430;
+ }
+ .loop-stage-title {
+   font-size: 1rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+   margin: 0;
+   line-height: 1.25;
+ }
+ .loop-stage-desc {
+   font-size: 0.82rem;
+   color: var(--text-soft, #475569);
+   line-height: 1.55;
+   margin: 0;
+   flex: 1;
+ }
+ /* Per-stage "POWERED BY" row — surfaces the DOLPHLINK products that
+    power each stage. Sits above the benefit pill so the eye scans:
+    work → products → outcome. */
+ .loop-stage-products {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+   margin-top: 10px;
+   padding-top: 10px;
+   border-top: 1px dashed rgba(15, 23, 42, 0.10);
+ }
+ .loop-stage-products-label {
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 9px;
+   font-weight: 700;
+   letter-spacing: 1.2px;
+   text-transform: uppercase;
+   color: var(--baiwu-blue-primary);
+   opacity: 0.65;
+ }
+ .loop-stage-products-list {
+   font-size: 11.5px;
+   font-weight: 700;
+   color: #0F172A;
+   line-height: 1.4;
+ }
+ .loop-stage--accent .loop-stage-products-label { color: #BF9430; }
+
+ .loop-stage-metric {
+   display: inline-block;
+   margin-top: 8px;
+   padding: 4px 9px;
+   border-radius: 999px;
+   background: rgba(0, 89, 179, 0.08);
+   color: var(--baiwu-blue-primary);
+   font-size: 11px;
+   font-weight: 800;
+   letter-spacing: 0.3px;
+   align-self: flex-start;
+ }
+ .loop-stage--accent .loop-stage-metric {
+   background: rgba(191, 148, 48, 0.14);
+   color: #8B6920;
+ }
+
+ /* Per-stage dual-role block — every stage shows what HUMAN does AND
+    what AI does, with our products woven into the AI line. The two roles
+    sit one above the other, color-coded:
+       Human  → gold accent  (judgment / accountability)
+       AI     → blue accent  (execution / consistency, names DOLPHLINK products)        */
+ .loop-stage-role {
+   display: block;
+   margin-top: 8px;
+   font-size: 0.78rem;
+   line-height: 1.5;
+   color: var(--text-soft, #475569);
+ }
+ .loop-stage-role-label {
+   display: inline-block;
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 9.5px;
+   font-weight: 800;
+   letter-spacing: 1.3px;
+   text-transform: uppercase;
+   margin-right: 6px;
+   padding: 2px 7px;
+   border-radius: 4px;
+   border: 1px solid;
+   line-height: 1.2;
+   vertical-align: 1px;
+ }
+ .loop-stage-role--human .loop-stage-role-label {
+   background: rgba(191, 148, 48, 0.10);
+   border-color: rgba(191, 148, 48, 0.45);
+   color: #8B6920;
+ }
+ .loop-stage-role--ai .loop-stage-role-label {
+   background: rgba(0, 89, 179, 0.07);
+   border-color: rgba(0, 89, 179, 0.40);
+   color: var(--baiwu-blue-primary);
+ }
+
+ .loop-connector {
+   list-style: none;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--baiwu-blue-primary);
+   opacity: 0.55;
+   padding: 0 8px;
+ }
+
+ /* Always-on operational fabric — replaces the closed-loop curved arrow.
+    Three cards across (self-healing / monitoring / alerting) representing
+    the continuous-runtime services that wrap around every stage above. */
+ .loop-fabric {
+   margin-top: 32px;
+   padding: 18px 18px 16px;
+   background: linear-gradient(180deg, rgba(0,89,179,0.04), rgba(191,148,48,0.04));
+   border: 1px solid rgba(15, 23, 42, 0.10);
+   border-radius: 12px;
+ }
+ .loop-fabric-head {
+   display: flex;
+   align-items: baseline;
+   gap: 10px;
+   flex-wrap: wrap;
+   margin-bottom: 12px;
+ }
+ .loop-fabric-tag {
+   font-family: 'JetBrains Mono', ui-monospace, monospace;
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 1.6px;
+   text-transform: uppercase;
+   padding: 3px 8px;
+   border-radius: 4px;
+   border: 1px solid rgba(0, 89, 179, 0.40);
+   background: rgba(0, 89, 179, 0.08);
+   color: var(--baiwu-blue-primary);
+   line-height: 1.2;
+ }
+ .loop-fabric-name {
+   font-size: 0.95rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+ }
+ .loop-fabric-grid {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   gap: 12px;
+ }
+ .loop-fabric-card {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+   padding: 12px 14px;
+   background: #FFFFFF;
+   border: 1px solid rgba(15, 23, 42, 0.08);
+   border-left: 3px solid #BF9430;
+   border-radius: 8px;
+ }
+ .loop-fabric-card-title {
+   font-size: 0.92rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+   line-height: 1.2;
+ }
+ .loop-fabric-card-desc {
+   font-size: 0.78rem;
+   color: var(--text-soft, #475569);
+   line-height: 1.5;
+ }
+ @media (max-width: 720px) {
+   .loop-fabric-grid {
+     grid-template-columns: 1fr;
+   }
+ }
+
+ /* Center watermark — diagonal text across the row signalling that
+    human-in-the-loop runs through every stage, not just one. */
+ .loop-watermark {
+   position: absolute;
+   top: 52%;
+   left: 50%;
+   transform: translate(-50%, -50%) rotate(-2deg);
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 3px;
+   text-transform: uppercase;
+   color: rgba(15, 23, 42, 0.07);
+   pointer-events: none;
+   white-space: nowrap;
+   z-index: 0;
+ }
+
+ /* TABLET — 2 stages per row, connectors hidden (cards self-imply order via 01/02/03/04). */
+ @media (max-width: 960px) {
+   .loop-stages {
+     grid-template-columns: 1fr 1fr;
+     gap: 12px;
+   }
+   .loop-connector { display: none; }
+   .loop-watermark { display: none; }
+ }
+
+ /* MOBILE — single column stack with vertical connector hint between cards. */
+ @media (max-width: 600px) {
+   .loop-section { padding: 36px 4% 44px; }
+   .loop-stages {
+     grid-template-columns: 1fr;
+     gap: 10px;
+   }
+   .loop-stage { padding: 18px 16px 16px; }
+   .loop-stage-title { font-size: 0.95rem; }
+   .loop-stage-desc { font-size: 0.8rem; }
+   .loop-feedback-label { font-size: 10px; padding: 4px 10px; }
+   .loop-feedback-svg { height: 40px; }
+ }
