@@ -21,7 +21,7 @@ export function buildPortfolioCard(p) {
       ${tagline}
       <span class="portfolio-icon-wrap">${iconHTML(p.icon, 72, 'portfolio-icon')}</span>
       <span class="portfolio-label">${escapeHtml(p.label)}</span>
-      <span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span>
+      <span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span>
     </button>
   `;
 }

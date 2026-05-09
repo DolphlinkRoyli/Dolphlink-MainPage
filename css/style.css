@@ -22,7 +22,7 @@
   display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 12px; border-radius: 999px;
   color: var(--baiwu-blue-primary, #0059B3);
-  border: 1.5px solid var(--baiwu-blue-primary, #0059B3);
+  border: 1px solid var(--baiwu-blue-primary, #0059B3);
   background: rgba(0,89,179,.04);
   font-weight: 700; letter-spacing: .3px;
   transition: background .12s, border-color .12s, transform .12s;
@@ -150,10 +150,28 @@
    text-transform: uppercase; text-decoration: none;
    color: var(--baiwu-white); background: var(--baiwu-blue-primary);
    border: 1px solid var(--baiwu-blue-primary); border-radius: 4px;
-   transition: 0.2s ease; box-shadow: 0 3px 12px rgba(0, 89, 179, 0.14);
+   transition: 0.2s ease;
+   /* Two-layer shadow recipe shared with .btn-industries:
+      1. inset 1px white top highlight (10% alpha) — modern button
+         bevel, gives a subtle "polished" sheen without being candy
+      2. drop shadow — soft brand-blue tint, lifts off the surface */
+   box-shadow:
+     inset 0 1px 0 rgba(255, 255, 255, 0.10),
+     0 3px 12px rgba(0, 89, 179, 0.18);
  }
  .nav-cta svg { transition: transform 0.2s ease; }
- .nav-cta:hover { background: var(--baiwu-blue-deep); border-color: var(--baiwu-blue-deep); box-shadow: 0 5px 16px rgba(0, 45, 92, 0.4); }
+ .nav-cta:hover {
+   background: var(--baiwu-blue-deep);
+   border-color: var(--baiwu-blue-deep);
+   /* HIGH ELEVATION pattern — 2px lift + larger 3-layer shadow gives
+      the button a clear "floating" feel.  Same motion language as
+      .btn-industries:hover so both CTAs share identical hover behaviour. */
+   transform: translateY(-2px);
+   box-shadow:
+     inset 0 1px 0 rgba(255, 255, 255, 0.16),
+     0 10px 24px rgba(0, 45, 92, 0.42),
+     0 2px 6px rgba(0, 45, 92, 0.22);
+ }
  /* Scope the hover-translate to the arrow ONLY — otherwise the mobile
     clipboard icon (also an svg child) skews on touch/hover and looks
     crooked inside the icon button. */
@@ -165,7 +183,7 @@
  .nav-cta-tip { display: none; }
 
  .wrapper { position: relative; z-index: 10; margin-top: var(--nav-height); width: 100%; }
- .section-row { padding: 40px 4%; }
+ .section-row { padding: 64px 4%; }
 
  /* ===========================
     Section dividers — laser emitter + bright flowing ribbon
@@ -227,7 +245,7 @@
    position: relative;
    display: block;            /* no more flex 50/50 — text floats over video */
    min-height: 640px;
-   padding: 96px 6% 100px;
+   padding: 80px 6%;
    color: var(--baiwu-white);
    overflow: hidden;
    /* Solid navy floor — only visible if both video AND poster fail. */
@@ -349,7 +367,7 @@
    background: linear-gradient(180deg,
      rgba(255, 255, 255, 0.18) 0%,
      rgba(255, 255, 255, 0.08) 100%);
-   border: 1px solid rgba(255, 255, 255, 0.32);
+   border: 1px solid rgba(255, 255, 255, 0.16);
    border-radius: 999px;
    /* Two-layer shadow:
       - inner top highlight (1px white) gives the bevel/sheen
@@ -373,7 +391,7 @@
 
  .hero-content h1 {
    font-size: var(--fs-3xl); font-weight: 900; letter-spacing: -0.05em;
-   color: var(--baiwu-white); margin-bottom: 14px; line-height: 1;
+   color: var(--baiwu-white); margin-bottom: 16px; line-height: 1;
    text-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
  }
  /* CJK + Hindi headlines — keep on a single line on desktop. The
@@ -421,7 +439,7 @@
       below clamp explicitly to var(--fs-sm)/0.95rem). */
    font-size: clamp(1.02rem, 0.45vw + 0.94rem, 1.18rem);
    color: rgba(255, 255, 255, 0.94);
-   border-left: 3px solid var(--baiwu-blue-primary);
+   border-left: 2px solid var(--baiwu-blue-primary);
    padding-left: 16px; line-height: 1.6;
    /* max-width 520px removed — tagline now flows to .hero-content's
       720px max so its right edge aligns with the stats row below it. */
@@ -452,7 +470,7 @@
    -webkit-backdrop-filter: blur(16px) saturate(120%);
    border: 1px solid rgba(255, 255, 255, 0.08);
    border-radius: 12px;
-   padding: 24px 28px 22px 32px;
+   padding: 24px 32px;
    margin: 16px 0 32px;
    box-shadow:
      0 18px 44px rgba(0, 0, 0, 0.45),
@@ -482,8 +500,8 @@
    right: 14px;
    width: 26px;
    height: 26px;
-   border-top: 2px solid rgba(245, 158, 11, 0.65);
-   border-right: 2px solid rgba(245, 158, 11, 0.65);
+   border-top: 2px solid rgba(245, 158, 11, 0.32);
+   border-right: 2px solid rgba(245, 158, 11, 0.32);
    pointer-events: none;
  }
  /* Override the default .hero-content p chrome (left blade + padding)
@@ -531,10 +549,10 @@
       space-between so right edge anchors to the tagline's right edge. */
    justify-content: space-between;
    gap: 24px;
-   margin: 26px 0 22px;
-   padding: 18px 24px;
+   margin: 24px 0 24px;
+   padding: 20px 24px;
    background: rgba(255, 255, 255, 0.05);
-   border-left: 3px solid #F59E0B;
+   border-left: 2px solid #F59E0B;
    border-radius: 0 4px 4px 0;
    backdrop-filter: blur(6px);
    -webkit-backdrop-filter: blur(6px);
@@ -572,8 +590,8 @@
      align-items: flex-start;
      justify-content: flex-start;
      gap: 0;
-     padding: 18px 18px 20px;
-     margin: 26px 0 22px;
+     padding: 20px;
+     margin: 24px 0 24px;
      background: rgba(255, 255, 255, 0.07);
      border-left-width: 4px;
    }
@@ -583,8 +601,8 @@
      flex-direction: row;
      align-items: baseline;
      gap: 12px;
-     padding: 14px 0;
-     border-bottom: 1px solid rgba(245, 158, 11, 0.22);
+     padding: 16px 0;
+     border-bottom: 1px solid rgba(245, 158, 11, 0.11);
    }
    .hero-stat:first-child { padding-top: 4px; }
    .hero-stat:last-child  { padding-bottom: 4px; border-bottom: none; }
@@ -607,7 +625,7 @@
  }
 
  .hero-cta {
-   margin-top: 18px;
+   margin-top: 20px;
    display: flex;
    gap: 12px;
    flex-wrap: wrap;
@@ -624,12 +642,12 @@
    flex-direction: column;
    align-items: stretch;
    gap: 0;
-   margin-top: 22px;
+   margin-top: 24px;
  }
  .hero-cta-row {
    display: flex;
    align-items: center;
-   gap: 14px;
+   gap: 16px;
    flex-wrap: wrap;
    padding: 4px 0;
  }
@@ -657,8 +675,7 @@
  :root {
    --hero-side-btn-w: clamp(220px, 22vw, 300px);
  }
- .hero-cta-row .btn-industries,
- .hero-cta-row .btn-sme {
+ .hero-cta-row .btn-industries {
    flex: 0 0 var(--hero-side-btn-w);
    width: var(--hero-side-btn-w);
    justify-content: center;
@@ -668,109 +685,34 @@
    font-size: clamp(11px, 0.85vw + 0.45rem, 13px);
    letter-spacing: clamp(0.8px, 0.1vw, 1.2px);
  }
- /* See Auto-Orchestration (.btn-industries) on row 1 + SME tag on row 2
-    both stretch to fill remaining row width, anchoring their right
-    edges to the stats-row's right edge (200+ COUNTRIES). */
- .hero-cta-row--enterprise > .btn-industries:not(:first-child),
- .hero-cta-row--sme .hero-sme-tag {
+ /* See Auto-Orchestration (.btn-industries) on row 1 stretches to fill
+    remaining row width, anchoring its right edge to the stats-row's
+    right edge (200+ COUNTRIES). */
+ .hero-cta-row--enterprise > .btn-industries:not(:first-child) {
    flex: 1 1 0;
    min-width: 0;
    width: auto;
  }
 
- /* SME row's right slot — small marketing intro that mirrors See Auto's
-    horizontal position above. Two-line copy: bold headline + light
-    sub-line ending with a "Click left ←" cue that points back to the
-    gold button. All sizes fluid via clamp() to match the button scale. */
- .hero-sme-tag {
-   margin: 0;
-   padding: clamp(3px, 0.4vw, 6px) 0 clamp(3px, 0.4vw, 6px) clamp(12px, 1.2vw, 18px);
-   border-left: 2px solid rgba(245, 158, 11, 0.45);
-   font-family: 'Inter', system-ui, sans-serif;
-   line-height: 1.55;
- }
- .hero-sme-tag-headline {
-   display: block;
-   font-size: clamp(11px, 0.9vw + 0.4rem, 13.5px);
-   font-weight: 800;
-   letter-spacing: clamp(0.8px, 0.1vw, 1.4px);
-   text-transform: uppercase;
-   color: #FCD34D;
-   text-shadow: 0 0 6px rgba(245, 158, 11, 0.32);
-   margin-bottom: 6px;
-   line-height: 1.25;
- }
- .hero-sme-tag-sub {
-   display: block;
-   font-size: clamp(10.5px, 0.8vw + 0.35rem, 12.5px);
-   font-weight: 500;
-   color: rgba(255, 255, 255, 0.82);
-   /* Generous line-height for the body sub-line — Roy specifically asked
-      for more breathing room so the wrapped 2-3 lines on phones don't
-      feel cramped. 1.7 is the sweet spot for body copy at 11px on a
-      dark hero — readable without feeling stretched. */
-   line-height: 1.72;
-   letter-spacing: 0.1px;
- }
- /* (.hero-sme-tag-cta + horizontal/vertical variants deleted — explicit
-    text cues "Click left ←" / "Click up ↑" replaced by a subtle pulse
-    animation on the .btn-sme button itself, which signals "interactive"
-    intuitively without spelling it out. Modern UX, less patchwork.) */
- /* Gold hairline that visually splits the two audience tracks.
-    Symmetric 14px gap above/below so the divider sits dead-center
-    between the two rows — eliminates the uneven "12px-then-4px"
-    rhythm Roy noticed earlier. */
- .hero-cta-divider {
-   display: block;
-   height: 1px;
-   width: 100%;
-   margin: 14px 0;
-   background: linear-gradient(90deg,
-     rgba(245, 158, 11, 0.0)  0%,
-     rgba(245, 158, 11, 0.55) 50%,
-     rgba(245, 158, 11, 0.0)  100%);
- }
- /* Wrap point: when the row is too narrow for [button | tag] to
-    coexist comfortably, stack them. 600px gives breathing room before
-    the tag text gets squished into a sliver. The directional cue
-    swaps from "Click left ←" to "Click up ↑" since the button now
-    sits ABOVE the tag instead of to its left. */
+ /* (Removed: .hero-sme-tag / .hero-sme-tag-headline / .hero-sme-tag-sub
+    / .hero-sme-tag-cta variants / .hero-cta-divider / .hero-cta-row--sme.
+    These belonged to the earlier dual-track hero with an SME badge row
+    + gold divider + marketing tag column.  That row was deleted from
+    the HTML in an earlier round (SME bridge now lives below the AI
+    Governance pillar), and these rules were left orphaned.) */
+
+ /* Stack hero CTA vertically on narrow viewports so each button
+    takes the full row width as a proper stacked CTA. */
  @media (max-width: 600px) {
-   .hero-cta-row--enterprise,
-   .hero-cta-row--sme {
+   .hero-cta-row--enterprise {
      flex-direction: column;
      align-items: stretch;
      gap: 12px;
    }
-   /* Drop the fixed clamp width — each button now takes the full row
-      width so it reads as a proper stacked CTA on narrow viewports.
-      Use selector specificity matching the desktop See-Auto override
-      (`.hero-cta-row--enterprise > .btn-industries:not(:first-child)`)
-      so this mobile rule wins via source-order. */
-   .hero-cta-row--enterprise > .btn-industries,
-   .hero-cta-row--sme        > .btn-sme {
+   .hero-cta-row--enterprise > .btn-industries {
      flex: 1 1 auto;
      width: 100%;
    }
-   .hero-sme-tag {
-     /* Border on left becomes border on top so the gold accent still
-        marks the SME track but in the new vertical context. */
-     border-left: none;
-     border-top: 2px solid rgba(245, 158, 11, 0.45);
-     padding: 12px 0 0;
-   }
-   /* Mobile body copy gets slightly looser line-height since the text
-      wraps to 2-3 lines on phones — needs more space between rows. */
-   .hero-sme-tag-sub {
-     line-height: 1.78;
-     letter-spacing: 0.15px;
-   }
-   .hero-sme-tag-headline {
-     margin-bottom: 8px;
-   }
-   /* Swap directional cue: button is now ABOVE the tag, not to the LEFT. */
-   .hero-sme-tag-cta--horizontal { display: none; }
-   .hero-sme-tag-cta--vertical   { display: inline; }
  }
 
  /* Trigger micro-copy under the CTAs — communicates the platform's
@@ -794,60 +736,68 @@
  }
  .btn svg { transition: transform .2s ease; flex-shrink: 0; }
  .btn:hover svg { transform: translateX(2px); }
- /* (.btn-primary deleted — Request Briefing CTA was removed from the
-    hero in an earlier round; .btn-industries replaced it as the
-    enterprise-blue solid button. No remaining HTML uses .btn-primary.) */
- .btn-ghost { background: rgba(255, 255, 255, 0.06); color: var(--baiwu-white); border-color: rgba(191, 148, 48, 0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
- .btn-ghost:hover { background: var(--baiwu-white); color: var(--baiwu-blue-deep); border-color: var(--baiwu-white); }
- /* Borderless variant — used in hero where a hard outline visually
-    fights the solid Industry Insights button next to it. Keep the
-    transparent surface + blur, drop the gold ring. */
- .btn-ghost--borderless {
-   border-color: transparent !important;
-   background: rgba(255, 255, 255, 0.04);
- }
- .btn-ghost--borderless:hover {
-   border-color: transparent !important;
-   background: var(--baiwu-white);
- }
-
- /* (.hero-sme-track / .hero-sme-prompt rules deleted — the brand-blue
-    "best-fit" prompt pill was retired in favour of baking the message
-    into the SME button's own label ("SME · Best-Fit Plans"). One
-    button, no extra elements competing for alignment.) */
+ /* (Removed dead variants — old hero CTA generations:
+       .btn-primary       — Request Briefing CTA (now lives in nav-cta only)
+       .btn-ghost         — transparent gold-ringed CTA
+       .btn-ghost--borderless — borderless variant
+       .hero-sme-track / .hero-sme-prompt — brand-blue "best-fit" pill
+    Hero now has just [Industry Insights | See Auto-Orchestration].
+    The .btn-see-auto variant below IS still alive — second button in
+    the row, defined as `.btn-industries.btn-see-auto`.) */
 
  /* Industry Insights — solid enterprise-blue CTA paired with See-Auto
     in the hero's enterprise row. Same body copy register as See-Auto
     (8px gap icon-text-arrow), but inverted color (blue on white-ish
     fill) so the two buttons read as a paired set, not duplicates. The
     bar-chart icon signals "verticals / industries we know". */
+ /* Unified with .nav-cta visual register so the hero's "Industry
+    Insights" button and the top nav's "Request Briefing" button feel
+    like ONE pattern, not two competing ones.  Earlier rev had:
+      base   — heavy 0.35-alpha shadow + inset 1px white highlight
+      hover  — bg INVERTS to white + deep-navy text + 24px cyan glow
+    That was a louder, candy-er treatment than the nav's restrained
+    "darken to deep navy" hover.  Now both buttons share:
+      base   — solid brand blue, single subtle 0.14-alpha shadow
+      hover  — bg deepens to deep navy, white text stays white,
+               shadow ramps up — same motion as nav-cta. */
  .btn-industries {
    background: var(--baiwu-blue-primary);
    color: #FFFFFF;
    border: 1px solid var(--baiwu-blue-primary);
+   /* IDENTICAL shadow recipe as .nav-cta — inset 1px white top
+      highlight + brand-blue tinted drop shadow.  Two CTAs now share
+      a unified visual language at the static state. */
    box-shadow:
-     0 4px 14px rgba(0, 89, 179, 0.35),
-     inset 0 1px 0 rgba(255, 255, 255, 0.18);
+     inset 0 1px 0 rgba(255, 255, 255, 0.10),
+     0 3px 12px rgba(0, 89, 179, 0.18);
  }
  .btn-industries svg { color: #FFFFFF; flex-shrink: 0; }
  .btn-industries .btn-industries-arrow {
    margin-left: 2px;
-   opacity: 0.85;
-   transition: transform 0.2s ease, opacity 0.2s ease;
+   opacity: 0.95;
+   transition: transform 0.2s ease;
  }
  .btn-industries:hover {
-   background: var(--baiwu-white);
-   color: var(--baiwu-blue-deep);
-   border-color: var(--baiwu-white);
+   background: var(--baiwu-blue-deep);
+   color: #FFFFFF;
+   /* THIN BORDER + HIGH ELEVATION — Roy spec.
+      The existing 1px border (already brand-blue from base rule) acts
+      as a natural "contrast ring" against the now-darker fill — no
+      chunky 2px box-shadow halo needed.  Visibility on the dark hero
+      video then comes from the LIFT itself: translateY(-2px) raises
+      the button off the surface, paired with a deeper, wider drop
+      shadow so the eye reads "this thing is hovering above the page".
+      Far more refined than the earlier 2px ring approach. */
+   border-color: var(--baiwu-blue-primary);   /* keep border brand blue, NOT deep navy */
+   transform: translateY(-2px);
    box-shadow:
-     0 6px 22px rgba(0, 89, 179, 0.45),
-     0 0 24px rgba(56, 189, 248, 0.28),
-     inset 0 1px 0 rgba(255, 255, 255, 0.45);
+     inset 0 1px 0 rgba(255, 255, 255, 0.18),
+     0 14px 34px rgba(0, 45, 92, 0.55),
+     0 4px 10px rgba(0, 89, 179, 0.32);
  }
- .btn-industries:hover svg { color: var(--baiwu-blue-deep); }
+ .btn-industries:hover svg { color: #FFFFFF; }   /* stays white too */
  .btn-industries:hover .btn-industries-arrow {
    transform: translateX(4px);
-   opacity: 1;
  }
 
  /* See Auto-Orchestration — APPLE-STYLE secondary text link. Roy spec:
@@ -909,71 +859,11 @@
    border-radius: 3px;
  }
 
- /* SME entry button — restored to ENTERPRISE BLUE per Roy. Visual treatment
-    mirrors .btn-industries (solid brand-blue + white text + storefront
-    icon) so the SME path reads as "another enterprise-style action"
-    not a separate gold side-track. Bottom-row position + storefront
-    icon still differentiate audience without color-coding the segment. */
- .btn-sme {
-   background: var(--baiwu-blue-primary);
-   color: #FFFFFF;
-   border: 1px solid var(--baiwu-blue-primary);
-   position: relative;
-   box-shadow:
-     0 4px 14px rgba(0, 89, 179, 0.35),
-     inset 0 1px 0 rgba(255, 255, 255, 0.18);
-   /* Subtle "interactable" pulse — gentle 3s cycle on the outer glow.
-      Replaces the explicit "Click ←/↑" text cue with a micro-animation
-      that signals "tap me" intuitively. Pauses on hover so the user
-      doesn't get a fighting hover state. */
-   animation: btn-sme-pulse 3.2s ease-in-out infinite;
- }
- @keyframes btn-sme-pulse {
-   0%, 100% {
-     box-shadow:
-       0 4px 14px rgba(0, 89, 179, 0.35),
-       inset 0 1px 0 rgba(255, 255, 255, 0.18);
-   }
-   50% {
-     box-shadow:
-       0 6px 22px rgba(0, 89, 179, 0.55),
-       0 0 22px rgba(56, 189, 248, 0.35),
-       inset 0 1px 0 rgba(255, 255, 255, 0.28);
-   }
- }
- .btn-sme svg { color: #FFFFFF; flex-shrink: 0; }
- .btn-sme .btn-sme-arrow {
-   margin-left: 2px;
-   opacity: 0.85;
-   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
-   /* Idle "drift" on the trailing arrow — gently slides 0 ↔ 3px along
-      with the pulse, suggesting forward motion without being hyper. */
-   animation: btn-sme-arrow-drift 3.2s ease-in-out infinite;
- }
- @keyframes btn-sme-arrow-drift {
-   0%, 100% { transform: translateX(0);   opacity: 0.85; }
-   50%      { transform: translateX(3px); opacity: 1; }
- }
- .btn-sme:hover {
-   animation: none;                         /* freeze pulse on hover */
-   background: var(--baiwu-white);
-   color: var(--baiwu-blue-deep);
-   border-color: var(--baiwu-white);
-   box-shadow:
-     0 6px 22px rgba(0, 89, 179, 0.45),
-     0 0 24px rgba(56, 189, 248, 0.28),
-     inset 0 1px 0 rgba(255, 255, 255, 0.45);
- }
- .btn-sme:hover svg { color: var(--baiwu-blue-deep); }
- .btn-sme:hover .btn-sme-arrow {
-   animation: none;
-   transform: translateX(5px);
-   opacity: 1;
- }
- @media (prefers-reduced-motion: reduce) {
-   .btn-sme,
-   .btn-sme .btn-sme-arrow { animation: none; }
- }
+ /* (Removed dead .btn-sme block — pulse animation, drift arrow,
+    invert-on-hover treatment, and reduced-motion override.  The SME
+    entry button was deleted from the hero in an earlier round; the
+    SME bridge now lives below the AI Governance pillar in the
+    portfolio section, using the standard .btn / link pattern.) */
 
  /* (`.btn-with-status` + `.btn-status*` + green Defragment-Now status
     row deleted — Roy retired the live status row from the See Auto
@@ -996,18 +886,18 @@
  .audit-wrap {
    position: relative;
    background: rgba(255, 255, 255, 0.025);
-   border: 1px solid rgba(245, 158, 11, 0.22);
+   border: 1px solid rgba(245, 158, 11, 0.11);
    border-radius: 8px;
    box-shadow:
      0 14px 40px rgba(0, 0, 0, 0.35),
      0 2px 6px rgba(0, 0, 0, 0.18);
    overflow: hidden;
-   padding: 28px;
+   padding: 32px;
  }
  .audit-wrap > .sec-title {
-   margin: -28px -28px 24px;
-   padding: 22px 28px;
-   border-bottom: 1px solid rgba(245, 158, 11, 0.32);
+   margin: -32px -32px 24px;
+   padding: 24px 32px;
+   border-bottom: 1px solid rgba(245, 158, 11, 0.16);
    background: linear-gradient(180deg,
      rgba(0, 89, 179, 0.10) 0%,
      rgba(245, 158, 11, 0.04) 60%,
@@ -1018,7 +908,7 @@
     =========================== */
  .reliability-section {
    background: var(--baiwu-bg-light);
-   padding: 40px 4%;
+   padding: 64px 4%;
    /* Skip paint until viewport intersect — saves initial-load CPU. */
    content-visibility: auto;
    contain-intrinsic-size: 1px 540px;
@@ -1042,7 +932,7 @@
 
  .stat-strip-header {
    display: flex; align-items: center;
-   padding: 22px 28px;
+   padding: 24px 32px;
    /* Brand-blue hairline — matches the enterprise-blue card borders below. */
    border-bottom: 1px solid rgba(0, 89, 179, 0.14);
    background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
@@ -1101,8 +991,8 @@
       Lifecycle / Open Rate), 3 columns 720-1023, 2 columns < 720,
       1 column < 480. */
    grid-template-columns: repeat(5, minmax(0, 1fr));
-   gap: 14px;
-   padding: 20px 22px 24px;
+   gap: 16px;
+   padding: 20px 24px;
  }
  @media (max-width: 1080px) {
    .stat-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -1119,7 +1009,7 @@
    align-items: center;
    justify-content: flex-start;
    gap: 10px;
-   padding: 22px 10px 28px;
+   padding: 24px 12px 32px;
    background: var(--baiwu-white);
    /* Floating mini-card — brand-blue subtle border + soft shadow. */
    border: 1px solid rgba(0, 89, 179, 0.14);
@@ -1128,13 +1018,76 @@
      0 1px 3px rgba(0, 45, 92, 0.04),
      0 4px 14px rgba(0, 45, 92, 0.05);
    cursor: pointer;
-   transition: background 0.25s ease, box-shadow 0.25s ease;
+   transition: background 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
    text-align: center;
    color: inherit;
    font: inherit;
    overflow: hidden;
    min-width: 0;
  }
+ /* ============================================================
+    Performance Dashboard — SEMANTIC HIERARCHY (Roy spec):
+    sla   (Uptime)        → FOUNDATION — heaviest emphasis (deep navy + bold + shadow)
+    loc   (Countries)     → SUPPORTING — standard baseline
+    lat   (Delivery)      → SUPPORTING — standard baseline
+    ain   (Orchestration) → DIFFERENTIATOR — gold accent (the "why us")
+    open  (Open Rate)     → OUTCOME — green success accent (the "result")
+    Selectors keyed by [data-stat] (NOT :nth-child) because connector
+    spans (›) are interleaved between cards and would shift indices.
+    ============================================================ */
+ /* FOUNDATION — uptime */
+ .stat-strip > .stat-card[data-stat="sla"] {
+   border-color: rgba(0, 89, 179, 0.32);
+   box-shadow:
+     0 2px 10px rgba(0, 45, 92, 0.10),
+     0 16px 32px rgba(0, 45, 92, 0.12);
+ }
+ .stat-strip > .stat-card[data-stat="sla"] .stat-value {
+   font-weight: 900;
+   color: var(--baiwu-blue-primary);
+ }
+ /* AUTO-ORCHESTRATION — second anchor card.  Mirrors data-stat="sla"
+    (FOUNDATION) styling: deep-navy bold value + heavy shadow halo so
+    Auto-Orchestration carries the same "anchor" weight as Uptime.  The
+    two anchors bookend the 3 supporting cards in the middle. */
+ .stat-strip > .stat-card[data-stat="ain"] {
+   border-color: rgba(0, 89, 179, 0.32);
+   box-shadow:
+     0 2px 10px rgba(0, 45, 92, 0.10),
+     0 16px 32px rgba(0, 45, 92, 0.12);
+ }
+ .stat-strip > .stat-card[data-stat="ain"] .stat-value {
+   font-weight: 900;
+   color: var(--baiwu-blue-primary);
+ }
+ /* OUTCOME — open rate.  Only signal is the 2px GREEN top accent line.
+    The stat-value uses brand blue (same as the two anchor cards) so all
+    three big numbers are unified — feels enterprise-grade and professional
+    rather than over-coloured. */
+ .stat-strip > .stat-card[data-stat="open"] {
+   border-top: 2px solid #10B981;
+ }
+ .stat-strip > .stat-card[data-stat="open"] .stat-value {
+   color: var(--baiwu-blue-primary);
+   font-weight: 900;
+ }
+ .stat-strip > .stat-card[data-stat="open"]::before {
+   content: '✓';
+   position: absolute;
+   top: 12px;
+   right: 12px;
+   width: 20px;
+   height: 20px;
+   border-radius: 50%;
+   background: rgba(16, 185, 129, 0.16);
+   color: #059669;
+   font-size: 11px;
+   font-weight: 900;
+   line-height: 20px;
+   text-align: center;
+   pointer-events: none;
+ }
+
  .stat-card:last-child { border-right: none; }
  .stat-card::after {
    content: '';
@@ -1218,24 +1171,30 @@
    position: relative;          /* anchor for absolute click-hint */
  }
  .btn-portfolio {
-   padding-bottom: 38px;        /* reserve room so click-hint sits well clear of the label */
+   padding-bottom: 40px;        /* reserve room so click-hint sits well clear of the label */
  }
  .stat-card .click-hint,
  .btn-portfolio .click-hint {
+   /* Modernised "View details ›" affordance.
+      Was: 8.5px UPPERCASE, 1.4px letter-spacing, 14% alpha — looked
+        like a 2014-era SaaS micro-tag, barely readable.
+      Now: 11px sentence-case, weight 500, 55% alpha — a proper
+        clickable link cue that's visible at rest, hits full brand
+        blue + slides on hover.  No uppercase tracking, no shouting. */
    position: absolute;
    left: 50%;
-   bottom: 8px;
+   bottom: 10px;
    transform: translateX(-50%);
    display: inline-flex;
    align-items: center;
-   gap: 4px;
+   gap: 5px;
    font-family: 'Inter', system-ui, sans-serif;
-   font-size: 8.5px;
-   font-weight: 600;
-   letter-spacing: 1.4px;
-   text-transform: uppercase;
+   font-size: 11px;
+   font-weight: 500;
+   letter-spacing: 0;
+   text-transform: none;
    white-space: nowrap;
-   color: rgba(0, 89, 179, 0.14);
+   color: rgba(0, 89, 179, 0.55);
    pointer-events: none;
    transition: color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
                transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1244,9 +1203,15 @@
  }
  .stat-card .click-hint .hint-arrow,
  .btn-portfolio .click-hint .hint-arrow {
-   display: inline-block;
-   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+   /* Lighter weight on the arrow gives a refined, modern silhouette
+      vs. the body weight of the label */
+   font-weight: 300;
+   font-size: 1.15em;
+   line-height: 1;
  }
+ /* Hover / focus states — colour ramps to full brand blue and the
+    arrow slides 5px right.  expo-out easing matches the rest of
+    the site's motion language. */
  .stat-card:hover .click-hint,
  .btn-portfolio:hover .click-hint,
  .stat-card:focus-visible .click-hint,
@@ -1258,18 +1223,15 @@
  .stat-card:focus-visible .click-hint .hint-arrow,
  .btn-portfolio:focus-visible .click-hint .hint-arrow {
    transform: translateX(5px);
+   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
  }
- /* On stat-card the layout is horizontal (icon | meta), so put the hint
-    flush to the bottom right of the meta column instead of dead-center
-    so it doesn't fight the star row visually. */
- /* Stat-card click-hint inherits the centered position from the shared
-    rule above. (Earlier override pinned it to right: 14px when the
-    layout was horizontal — now that cards stack vertically the centered
-    bottom position reads naturally.) */
- .stat-card:hover .click-hint,
- .stat-card:focus-visible .click-hint {
-   transform: none;
- }
+ /* (Removed orphan rule that set `transform: none` on stat-card hover —
+    it was a leftover from when stat-cards used a horizontal icon|meta
+    layout that pinned the hint to the right.  Now that cards stack
+    vertically, that override KILLED the translateX(-50%) centering
+    on hover, so the "View details ›" text shifted right at the moment
+    the user hovered.  Deleted — cards now stay centered through the
+    full hover state.) */
  @media (prefers-reduced-motion: reduce) {
    .stat-card .click-hint, .btn-portfolio .click-hint,
    .stat-card .click-hint .hint-arrow, .btn-portfolio .click-hint .hint-arrow {
@@ -1324,7 +1286,7 @@
     Industrial Portfolios — same panel style as stat-strip
     =========================== */
  .infra-section {
-   background: var(--baiwu-bg-light); padding: 40px 4%;
+   background: var(--baiwu-bg-light); padding: 64px 4%;
    /* Content-visibility — section is huge (portfolio grid + detail panels);
       skip layout/paint until it intersects viewport. */
    content-visibility: auto;
@@ -1351,8 +1313,8 @@
  .portfolio-pillar-head {
    display: flex;
    align-items: baseline;
-   gap: 14px;
-   padding: 22px 28px 6px;
+   gap: 16px;
+   padding: 24px 32px 8px;
    flex-wrap: wrap;
  }
  .portfolio-pillar-name {
@@ -1369,7 +1331,7 @@
    color: var(--baiwu-blue-primary);
  }
  .portfolio-pillar-desc {
-   padding: 0 28px 16px;
+   padding: 0 32px 16px;
    color: var(--text-sub);
    font-size: var(--fs-sm);
    line-height: 1.55;
@@ -1378,8 +1340,8 @@
  .portfolio-pillar-grid {
    display: grid;
    grid-template-columns: repeat(3, 1fr);
-   gap: 14px;
-   padding: 4px 22px 22px;
+   gap: 16px;
+   padding: 4px 24px 24px;
  }
  /* Right/bottom-border separators no longer needed — each .btn-portfolio
     is now a self-contained card with its own border + shadow + radius. */
@@ -1430,17 +1392,17 @@
  .portfolio-badge[data-tier="gold"] {
    color: #F59E0B;
    background: rgba(245, 158, 11, 0.12);
-   border: 1px solid rgba(245, 158, 11, 0.55);
+   border: 1px solid rgba(245, 158, 11, 0.28);
  }
  .portfolio-badge[data-tier="blue"] {
    color: var(--baiwu-blue-primary);
    background: rgba(0, 89, 179, 0.1);
-   border: 1px solid rgba(0, 89, 179, 0.45);
+   border: 1px solid rgba(0, 89, 179, 0.22);
  }
  .portfolio-badge[data-tier="green"] {
    color: #059669;
    background: rgba(5, 150, 105, 0.1);
-   border: 1px solid rgba(5, 150, 105, 0.45);
+   border: 1px solid rgba(5, 150, 105, 0.22);
  }
 
  .btn-portfolio {
@@ -1448,7 +1410,7 @@
    display: flex; flex-direction: column;
    align-items: center; justify-content: center;
    gap: 6px;
-   padding: 16px 12px 30px;     /* a touch of bottom space for click-hint */
+   padding: 16px 12px 32px;     /* a touch of bottom space for click-hint */
    background: var(--baiwu-white);
    /* Floating mini-card — brand-blue subtle border + soft shadow,
       matching `.stat-card` so the 9 items (3 pillars × 3) read as a
@@ -1615,7 +1577,7 @@
    display: grid;
    grid-template-columns: 112px 1fr;
    gap: 32px;
-   padding: 28px 60px 28px 28px;
+   padding: 32px 64px 32px 32px;
    align-items: start;
  }
  .card-detail-icon-wrap {
@@ -1680,7 +1642,7 @@
    margin-bottom: 12px;
  }
  .card-detail-title {
-   margin: 0 0 14px;
+   margin: 0 0 16px;
    font-size: clamp(19px, 1.1vw + 13px, 28px);
    font-weight: 900;
    letter-spacing: -0.4px;
@@ -1694,7 +1656,7 @@
    color: #334155;
  }
  .card-detail-text p {
-   margin: 0 0 14px 0;
+   margin: 0 0 16px 0;
    font-weight: 400;
    line-height: 1.7;
    letter-spacing: 0.005em;
@@ -1720,7 +1682,7 @@
  .card-detail.is-mobile .card-detail-body {
    grid-template-columns: 1fr;
    gap: 16px;
-   padding: 24px 18px 22px;
+   padding: 24px 20px;
    align-content: start;
    align-items: start;
    overflow-y: auto;
@@ -1757,7 +1719,7 @@
     cost reduction on initial load. contain-intrinsic-size reserves the
     approximate scroll height so the scrollbar doesn't jump on enter. */
  .audit-section {
-   background: #1E3A6B; color: var(--baiwu-white); padding: 40px 4%;
+   background: #1E3A6B; color: var(--baiwu-white); padding: 64px 4%;
    content-visibility: auto;
    contain-intrinsic-size: 1px 800px;
  }
@@ -1770,7 +1732,7 @@
    font-weight: 900;
    text-transform: uppercase;
    letter-spacing: -0.4px;
-   margin-bottom: 18px;
+   margin-bottom: 20px;
    border-left: 6px solid var(--baiwu-blue-primary);
    padding-left: 16px;
    color: var(--baiwu-white);
@@ -1838,11 +1800,11 @@
      0 0 14px rgba(245, 158, 11, 0.30);
  }
  /* Audit cards — heavier gold border + staggered breathing glow */
- .audit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; background: transparent; }
+ .audit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; background: transparent; }
  .audit-box {
    position: relative;
    background: var(--baiwu-blue-deep);
-   padding: 20px;
+   padding: 20px 24px;
    border: 2px solid #F59E0B;
    box-shadow:
      0 0 0 1px rgba(245, 158, 11, 0.28),
@@ -1892,7 +1854,7 @@
    .audit-box { animation: none; }
  }
  .audit-box h3 { font-size: var(--fs-sm); font-weight: 900; color: var(--baiwu-white); margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 2px solid var(--baiwu-blue-primary); padding-bottom: 6px; display: inline-block; }
- .audit-box p { font-size: 0.78rem; color: var(--baiwu-white); line-height: 1.6; font-weight: 400; }
+ .audit-box p { font-size: 0.82rem; color: var(--baiwu-white); line-height: 1.6; font-weight: 400; }
 
  /* ===========================
     Industries + Departments — TWO sections sharing the same visual
@@ -1905,7 +1867,7 @@
  .industries-section,
  .departments-section {
    background: var(--baiwu-bg-light);
-   padding: 40px 4%;             /* match `.section-row` / `.audit-section`
+   padding: 64px 4%;             /* match `.section-row` / `.audit-section`
                                     standard so titles align horizontally */
    /* Both below the LCP fold — skip layout/paint until viewport
       intersect for faster initial load. */
@@ -1928,7 +1890,7 @@
    box-shadow:
      0 14px 40px rgba(0, 45, 92, 0.08),
      0 2px 6px rgba(0, 45, 92, 0.04);
-   padding: 32px 32px 36px;
+   padding: 32px;
    overflow: hidden;
  }
  /* Light-blue gradient header band — same colour/curve as .stat-strip-header
@@ -1966,9 +1928,9 @@
    color: var(--text-sub);
    line-height: 1.6;
    max-width: 760px;
-   margin: 14px 0 32px;
-   padding-left: 18px;
-   border-left: 3px solid #F59E0B;
+   margin: 16px 0 32px;
+   padding-left: 16px;
+   border-left: 2px solid #F59E0B;
    font-weight: 500;
  }
  /* Dark-section variant (e.g. inside .map-section over the navy bg) —
@@ -1978,116 +1940,326 @@
     references it, the variant was retired when the dark map section
     moved into the footer.) */
 
- /* ----- Industries grid — flat 3×3 of 9 cards (no tiers). ----- */
+ /* ============================================================
+    INDUSTRIES — substantial 3×3 card grid with per-industry icons
+    ============================================================
+    Each industry gets its own monochrome line-art icon as the
+    visual anchor — that's what differentiates 9 cards from each
+    other and makes the section read as a "client showcase" rather
+    than a generic data list.
+
+    Card chrome is ONE restrained register (10px radius + thin
+    brand-blue border + white fill) — no per-industry rainbow, no
+    gold pills, no UPPERCASE.  Hover lifts -3px with a brand-blue
+    halo and intensifies the icon's tint.
+
+    Compared to Departments below (4 horizontal cards, blue blade,
+    no icons): different cell shape, more visual weight per cell,
+    distinct rhythm.
+    ============================================================ */
  .industries-grid {
    display: grid;
    grid-template-columns: repeat(3, 1fr);
    gap: 18px;
  }
+
  .industry-card {
    position: relative;
-   display: flex; flex-direction: column;
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   padding: 24px 24px 20px;
    background: var(--baiwu-white);
-   border: 1px solid var(--border-line);
-   /* 6px blade in the industry's signature `--accent` colour — each of
-      the 9 industries has its own distinct blade colour, set via
-      `style="--accent:#XXXXXX"` from content.json's `color` field. */
-   border-left: 6px solid var(--accent, var(--baiwu-blue-primary));
-   border-radius: 6px;
-   padding: 24px 24px 22px;
-   color: var(--text-main);
-   transition: transform 0.3s ease, box-shadow 0.3s ease;
- }
- .industry-card:hover {
-   transform: translateY(-3px);
-   /* Hover keeps the original blade colour (no gold override) so each
-      industry remains visually distinct in either state. Add a soft
-      shadow tint matching the accent so the lift is felt. */
-   box-shadow:
-     0 14px 32px rgba(0, 45, 92, 0.1),
-     -4px 0 16px color-mix(in srgb, var(--accent, #0059B3) 25%, transparent);
- }
- .industry-name {
-   font-family: 'Inter', system-ui, sans-serif;
-   font-size: var(--fs-base);
-   font-weight: 900;
-   color: var(--baiwu-blue-primary);
-   text-transform: uppercase;
-   letter-spacing: 1.2px;
-   margin: 0 0 10px;
-   line-height: 1.2;
- }
- .industry-desc {
-   font-size: 0.78rem;
-   font-weight: 400;
-   color: var(--text-sub);
-   line-height: 1.55;
-   margin: 0 0 14px;
-   flex: 1;
- }
- .industry-chips {
-   display: flex; flex-wrap: wrap; gap: 6px;
- }
- .industry-chip {
-   font-size: 9.5px; font-weight: 800;
-   letter-spacing: 1.2px;
-   text-transform: uppercase;
-   padding: 4px 9px;
-   border-radius: 999px;
-   color: #B8770A;
-   background: rgba(245, 158, 11, 0.08);
-   border: 1px solid rgba(245, 158, 11, 0.45);
+   border: 1px solid rgba(0, 89, 179, 0.12);
+   border-radius: 10px;
+   min-height: 240px;
+   transition:
+     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+     box-shadow 0.3s ease,
+     border-color 0.3s ease;
  }
 
- /* ----- Departments strip ----- */
- /* 4 cards: 4-col grid on desktop. On medium (≤1024px) it auto-folds
-    to 2×2 via the existing media query below. */
- .departments-strip {
-   display: grid;
-   grid-template-columns: repeat(4, 1fr);
-   gap: 18px;
- }
- /* All department cards share the enterprise-blue blade (Roy spec —
-    no gold differentiation on the 4th card; site-wide consistency). */
- .department-card {
-   background: var(--baiwu-white);
-   border: 1px solid var(--border-line);
-   border-left: 4px solid var(--baiwu-blue-primary);
-   border-radius: 6px;
-   padding: 24px 24px 22px;
-   transition: transform 0.3s ease, box-shadow 0.3s ease;
-   /* Defensive overflow handling: at narrow widths the long copy
-      ("Bespoke AI-digital projects from greenfield architecture…")
-      should still break at word boundaries, never per-character. */
-   min-width: 0;
-   overflow-wrap: break-word;
-   word-break: normal;
- }
- .department-card p,
- .department-card .department-desc {
-   overflow-wrap: break-word;
-   word-break: normal;
-   hyphens: auto;
- }
- .department-card:hover {
-   transform: translateY(-3px);
-   box-shadow: 0 14px 32px rgba(0, 45, 92, 0.1);
- }
- .department-name {
-   font-family: 'Inter', system-ui, sans-serif;
-   font-size: var(--fs-base);
-   font-weight: 900;
+ /* Leading icon — line-art SVG (industries.js renders one per key)
+    rendered in brand blue inside a soft rounded square.  Same square
+    size + tint for all 9 cards; only the silhouette changes. */
+ .industry-icon {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   width: 38px;
+   height: 38px;
+   border-radius: 9px;
+   background: rgba(0, 89, 179, 0.06);
    color: var(--baiwu-blue-primary);
-   text-transform: uppercase;
-   letter-spacing: 1.2px;
-   margin: 0 0 10px;
+   transition: background 0.3s ease;
  }
- .department-desc {
-   font-size: 0.78rem;
+ .industry-icon svg {
+   width: 22px;
+   height: 22px;
+ }
+
+ .industry-name {
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: 1.05rem;
+   font-weight: 700;
+   color: var(--baiwu-blue-deep);
+   text-transform: none;
+   letter-spacing: -0.2px;
+   margin: 0;
+   line-height: 1.3;
+ }
+
+ .industry-desc {
+   font-size: 0.85rem;
    font-weight: 400;
    color: var(--text-sub);
-   line-height: 1.55;
+   line-height: 1.6;
    margin: 0;
+   flex: 1;            /* push chips to the bottom of the card */
+ }
+
+ .industry-chips {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 6px;
+   padding-top: 12px;
+   margin-top: auto;
+   border-top: 1px solid rgba(0, 89, 179, 0.08);
+ }
+
+ .industry-card:hover {
+   transform: translateY(-3px);
+   border-color: rgba(0, 89, 179, 0.25);
+   box-shadow:
+     0 4px 14px rgba(0, 89, 179, 0.08),
+     0 16px 36px rgba(0, 89, 179, 0.12);
+ }
+ .industry-card:hover .industry-icon {
+   background: rgba(0, 89, 179, 0.10);
+ }
+ .industry-chip {
+   /* Ghost outlined pill — transparent background, thin brand-blue
+      border, brand-blue text.  Replaces the gold-fill UPPERCASE
+      pills which were 2010s SaaS visual language and (with their
+      gold colour) clashed with the rest of the site palette.
+      Keeps acronyms (ISO 27001, PDPA, MAS TRM) and proper-case
+      tags (Sovereign Cloud, Multi-Jurisdiction) readable in their
+      authored case. */
+   font-size: 10.5px;
+   font-weight: 600;
+   letter-spacing: 0.2px;
+   text-transform: none;
+   padding: 3px 10px;
+   border-radius: 999px;
+   color: var(--baiwu-blue-primary);
+   background: transparent;
+   border: 1px solid rgba(0, 89, 179, 0.20);
+   transition: background 0.2s ease, border-color 0.2s ease;
+ }
+ .industry-card:hover .industry-chip {
+   background: rgba(0, 89, 179, 0.05);
+   border-color: rgba(0, 89, 179, 0.32);
+ }
+
+ /* ============================================================
+    DEPARTMENTS — integrated explorer (tabs + active panel)
+    ============================================================
+    Replaces the earlier separate persona-banner + 4-card strip.
+    The persona quote and the corresponding department description
+    now live in ONE panel inside ONE container, with a tab strip
+    above marking which department is active.  Visitor can no
+    longer be confused about which voice belongs to which team —
+    the tab → panel linkage is explicit.
+    ============================================================ */
+ .dept-explorer {
+   background: var(--baiwu-white);
+   border: 1px solid rgba(0, 89, 179, 0.14);
+   border-radius: 10px;
+   overflow: hidden;
+ }
+
+ /* Tab strip — 4 tabs sit on top with subtle hairline divider below.
+    Active tab gets brand-blue text + bottom underline indicator. */
+ .dept-tabs {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   border-bottom: 1px solid rgba(0, 89, 179, 0.10);
+   background: rgba(0, 89, 179, 0.018);
+ }
+ .dept-tab {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: clamp(6px, 0.6vw, 10px);
+   padding: clamp(14px, 1.4vw, 18px) clamp(10px, 1vw, 16px);
+   background: transparent;
+   border: 0;
+   border-bottom: 2px solid transparent;
+   cursor: pointer;
+   font-family: 'Inter', system-ui, sans-serif;
+   /* Fluid 13 → 15px: at 360-720px viewport stays 13px so the 4
+      tabs fit "Digital Transformation" without wrapping; at desktop
+      ≥1024px scales up to 15px for proper tab-heading register. */
+   font-size: clamp(13px, 0.6vw + 0.5rem, 15px);
+   font-weight: 600;
+   letter-spacing: -0.05px;
+   color: rgba(0, 45, 92, 0.88);
+   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+   text-align: center;
+   line-height: 1.25;
+   min-width: 0;
+ }
+ .dept-tab:not(:last-child) {
+   border-right: 1px solid rgba(0, 89, 179, 0.06);
+ }
+ .dept-tab:hover {
+   color: var(--baiwu-blue-primary);
+   background: rgba(0, 89, 179, 0.030);
+ }
+ .dept-tab.is-active {
+   color: var(--baiwu-blue-deep);
+   font-weight: 800;     /* was 700 — stronger weight bump to reinforce active */
+   border-bottom-color: var(--baiwu-blue-primary);
+   border-bottom-width: 3px;  /* was 2px — thicker active indicator */
+   background: var(--baiwu-white);
+ }
+ .dept-tab-icon {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   /* Larger icons to match the bumped-up tab font size */
+   width: 24px;
+   height: 24px;
+   color: inherit;
+   flex-shrink: 0;
+   opacity: 0.85;
+   transition: opacity 0.2s ease, transform 0.2s ease;
+ }
+ .dept-tab-icon svg { width: 100%; height: 100%; }
+ .dept-tab.is-active .dept-tab-icon { opacity: 1; }
+ .dept-tab-name {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+ }
+ .dept-tab:focus-visible {
+   outline: 2px solid var(--baiwu-blue-primary);
+   outline-offset: -2px;
+ }
+
+ /* Panels container — uses CSS GRID-STACK so all 4 panels overlay
+    in the same cell.  Container auto-grows to fit the TALLEST
+    panel, no absolute-positioning + fixed inset anymore — that
+    caused mobile to clip the bottom whenever description text
+    wrapped to extra lines (parent .dept-explorer has overflow:hidden
+    for rounded corners, which then sliced the overflowed panel). */
+ .dept-panels {
+   display: grid;
+   grid-template-areas: "stack";
+   padding: 28px 32px 28px;
+ }
+ .dept-panel {
+   grid-area: stack;          /* all 4 panels in the same grid cell */
+   opacity: 0;
+   /* Slide-fade entrance — 18px translateY + slight scale gives a
+      visible "snap into place" when tabs change.  expo-out easing
+      matches site-wide motion language. */
+   transform: translateY(18px) scale(0.985);
+   transition:
+     opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+     transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+   pointer-events: none;
+   /* Hidden panels still take their cell space (grid auto-sizes the
+      cell to the tallest panel) but don't capture clicks. */
+ }
+ .dept-panel.is-active {
+   opacity: 1;
+   transform: translateY(0) scale(1);
+   pointer-events: auto;
+ }
+
+ /* QUOTE BLOCK — now a clearly-distinct CALLOUT card so the human
+    voice is visually separate from the deliverable description.
+    Subtle brand-blue tinted background + 3px brand-blue left blade
+    + larger italic body. */
+ .dept-panel-quote-wrap {
+   position: relative;
+   padding: 18px 24px 18px 28px;
+   margin-bottom: 22px;
+   background: rgba(0, 89, 179, 0.045);
+   border-left: 3px solid var(--baiwu-blue-primary);
+   border-radius: 0 6px 6px 0;
+ }
+ .dept-panel-quote-mark {
+   position: absolute;
+   left: 8px;
+   top: 4px;
+   font-family: 'Inter', system-ui, sans-serif;
+   font-size: 44px;
+   font-weight: 800;
+   line-height: 1;
+   color: var(--baiwu-blue-primary);
+   opacity: 0.32;
+   user-select: none;
+ }
+ .dept-panel-quote {
+   margin: 0 0 8px;
+   padding-left: 22px;       /* clear the corner quote-mark glyph */
+   font-style: italic;
+   /* Bumped up from clamp(15-17px) to clamp(16-19px) — quote should
+      read as the prominent "human voice" line, not body copy. */
+   font-size: clamp(16px, 1.15vw, 19px);
+   font-weight: 500;
+   line-height: 1.55;
+   /* Pure deep-navy (no opacity reduction) — high contrast vs
+      the lighter desc paragraph below. */
+   color: var(--baiwu-blue-deep);
+   max-width: 760px;
+ }
+ .dept-panel-attr {
+   display: inline-block;
+   padding-left: 22px;
+   font-style: normal;
+   /* Bumped 10.5 → 11.5 to match the new eyebrow size + parallel
+      register; clearly readable role + industry attribution. */
+   font-size: 11.5px;
+   font-weight: 800;
+   letter-spacing: 1.4px;
+   text-transform: uppercase;
+   color: var(--baiwu-blue-primary);
+ }
+
+ /* Hairline separator now lives outside the callout — visually
+    parallel to the callout's bottom edge.  Kept for breathing room
+    but the callout box itself does most of the visual separation. */
+ .dept-panel-divider {
+   display: none;
+ }
+
+ .dept-panel-desc {
+   margin: 0;
+   font-size: 0.92rem;
+   font-weight: 400;
+   /* Dark text-main (not text-sub) — the description was nearly
+      invisible at gray 64-slate.  Now full body-text contrast. */
+   color: var(--text-main);
+   line-height: 1.7;
+   max-width: 820px;
+   /* Subtle eyebrow above description, marking it as the
+      "deliverable / capability" line, distinct register from the
+      quote's "voice" register. */
+ }
+ .dept-panel-desc::before {
+   content: 'WHAT WE DELIVER';
+   display: block;
+   margin-bottom: 10px;
+   /* Bumped from 9px / opacity 0.72 to 11px / opacity 1.0 — was the
+      single most-faded label on the panel.  Now reads as a proper
+      eyebrow heading parallel to the role attribution above. */
+   font-size: 11px;
+   font-weight: 800;
+   letter-spacing: 1.6px;
+   color: var(--baiwu-blue-primary);
  }
 
  /* (Map section removed — moved into the footer as a 2-column layout
@@ -2101,10 +2273,24 @@
    /* 4 departments → 2×2 on tablet */
    .departments-strip { grid-template-columns: repeat(2, 1fr); }
  }
- @media (max-width: 960px) {
-   .industries-grid { grid-template-columns: repeat(2, 1fr); }
+ @media (max-width: 1024px) {
+   /* 3×3 → 2×N at tablet width — gives each card more room rather
+      than squishing 3 across when total width drops below ~1024px. */
+   .industries-grid {
+     grid-template-columns: repeat(2, 1fr);
+   }
    .footer-info-col {
      grid-template-columns: repeat(2, 1fr);
+   }
+ }
+ @media (max-width: 640px) {
+   /* Single column on phones — cards take full width, easier to read. */
+   .industries-grid {
+     grid-template-columns: 1fr;
+   }
+   .industry-card {
+     min-height: auto;
+     padding: 20px 20px 18px;
    }
  }
  @media (max-width: 600px) {
@@ -2112,15 +2298,14 @@
  }
  @media (max-width: 600px) {
    .industries-section,
-   .departments-section { padding: 36px 4%; }
-   .industries-grid { grid-template-columns: 1fr; gap: 14px; }
-   .industry-card,
-   .department-card { padding: 22px 20px 20px; }
-   .footer { padding: 36px 4% 0; }
+   .departments-section { padding: 40px 4%; }
+   .industry-card { padding: 16px 18px; }
+   .department-card { padding: 16px 18px; }
+   .footer { padding: 40px 4% 0; }
    .footer-info-col {
      grid-template-columns: 1fr;
    }
-   .footer-map-card { min-height: 360px; padding: 14px 12px; }
+   .footer-map-card { min-height: 360px; padding: 16px 12px; }
    .footer-map-card .chart-container { min-height: 340px; }
    .f-bottom-bar { justify-content: flex-start; }
  }
@@ -2168,9 +2353,9 @@
  .footer-grid {
    display: grid;
    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-   gap: 36px;
+   gap: 32px;
    align-items: stretch;
-   padding-bottom: 28px;
+   padding-bottom: 32px;
  }
  /* CRITICAL: this @media query MUST come AFTER the base `.footer-grid`
     rule above. Earlier the media query lived above the base rule and
@@ -2180,7 +2365,7 @@
  @media (max-width: 960px) {
    .footer-grid {
      grid-template-columns: 1fr;
-     gap: 28px;
+     gap: 32px;
    }
    .footer-info-col { min-height: 0; }
    /* Taller map in stacked mode — when the column gets the full
@@ -2228,7 +2413,7 @@
    flex: 1;
    min-height: 480px;
    background: linear-gradient(180deg, #002D5C 0%, #001A38 100%);
-   border: 1px solid rgba(56, 189, 248, 0.28);
+   border: 1px solid rgba(56, 189, 248, 0.14);
    border-radius: 8px;
    padding: 4px;
    overflow: hidden;
@@ -2255,7 +2440,7 @@
    pointer-events: none;
    padding: 5px 11px;
    background: rgba(15, 23, 42, 0.78);
-   border: 1px solid rgba(245, 158, 11, 0.42);
+   border: 1px solid rgba(245, 158, 11, 0.21);
    border-radius: 999px;
    color: #FBBF24;
    font-size: 10px;
@@ -2292,7 +2477,7 @@
  .footer-info-top {
    flex: 0 0 auto;
    display: flex; flex-direction: column;
-   gap: 36px;
+   gap: 32px;
    min-width: 0;
    max-width: 100%;
  }
@@ -2301,7 +2486,7 @@
  .footer-info-mini-grid {
    display: grid;
    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-   gap: 18px 0;
+   gap: 16px 0;
    position: relative;
  }
  .footer-info-mini-grid > .f-col {
@@ -2312,7 +2497,7 @@
  .footer-info-mini-grid > .f-col:first-child { padding-left: 0; }
  .footer-info-mini-grid > .f-col:last-child  { padding-right: 0; }
  .footer-info-mini-grid > .f-col + .f-col {
-   border-left: 1px solid rgba(245, 158, 11, 0.32);
+   border-left: 1px solid rgba(245, 158, 11, 0.16);
  }
  /* Below 480px the two side-by-side info columns each collapse to
     ~150-160px wide — narrower than a single line of the address or
@@ -2321,7 +2506,7 @@
  @media (max-width: 480px) {
    .footer-info-mini-grid {
      grid-template-columns: 1fr;
-     gap: 22px;
+     gap: 24px;
    }
    .footer-info-mini-grid > .f-col {
      padding-left: 0 !important;
@@ -2329,8 +2514,8 @@
    }
    .footer-info-mini-grid > .f-col + .f-col {
      border-left: none;
-     border-top: 1px solid rgba(245, 158, 11, 0.22);
-     padding-top: 22px;
+     border-top: 1px solid rgba(245, 158, 11, 0.11);
+     padding-top: 24px;
    }
  }
 
@@ -2375,7 +2560,7 @@
    letter-spacing: 1.8px;
    margin: 0 0 10px;
    padding-left: 10px;
-   border-left: 3px solid #FCD34D;
+   border-left: 2px solid #FCD34D;
    line-height: 1;
  }
  .footer .f-col p,
@@ -2493,7 +2678,7 @@
    background: var(--baiwu-white);
    color: var(--text-main);
    border-radius: 10px;
-   border: 1px solid rgba(245, 158, 11, 0.42);
+   border: 1px solid rgba(245, 158, 11, 0.21);
    box-shadow:
      0 0 0 1px rgba(245, 158, 11, 0.15),
      0 16px 36px rgba(0, 0, 0, 0.32);
@@ -2536,12 +2721,12 @@
    margin: 6px 0 12px;
  }
  .vcard-eyebrow {
-   font-size: 10px;
+   font-size: 11px;
    font-weight: 800;
    letter-spacing: 1.6px;
    text-transform: uppercase;
    color: #F59E0B;
-   margin-bottom: 3px;
+   margin-bottom: 4px;
  }
  .vcard-heading {
    font-family: 'Inter', system-ui, sans-serif;
@@ -2563,7 +2748,7 @@
  }
  .vcard-line--muted {
    color: var(--text-sub);
-   font-size: 11.5px;
+   font-size: 11px;
  }
  /* Social icon row inside the Book-a-Briefing card — sits below the
     description copy, separated by a thin gold rule. Compact 28px circles
@@ -2572,14 +2757,14 @@
  .vcard-connect {
    margin-top: 10px;
    padding-top: 10px;
-   border-top: 1px solid rgba(245, 158, 11, 0.32);
+   border-top: 1px solid rgba(245, 158, 11, 0.16);
    display: flex;
    align-items: center;
    gap: 10px;
    flex-wrap: wrap;
  }
  .vcard-connect-label {
-   font-size: 9.5px;
+   font-size: 10px;
    font-weight: 800;
    letter-spacing: 1.4px;
    text-transform: uppercase;
@@ -2599,7 +2784,7 @@
    justify-content: center;
    border-radius: 50%;
    background: rgba(0, 89, 179, 0.06);
-   border: 1px solid rgba(0, 89, 179, 0.4);
+   border: 1px solid rgba(0, 89, 179, 0.20);
    color: var(--baiwu-blue-primary);
    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
    box-sizing: border-box;
@@ -2624,7 +2809,7 @@
    width: 130px; height: 130px;
    display: flex; align-items: center; justify-content: center;
    background: var(--baiwu-white);
-   border: 1px solid rgba(245, 158, 11, 0.55);
+   border: 1px solid rgba(245, 158, 11, 0.28);
    border-radius: 8px;
    padding: 5px;
  }
@@ -2644,7 +2829,7 @@
  @media (max-width: 600px) {
    .vcard-frame {
      grid-template-columns: 1fr;
-     padding: 20px 18px 18px;
+     padding: 20px;
      gap: 16px;
    }
    .vcard-right { align-items: flex-start; }
@@ -2674,7 +2859,7 @@
    justify-content: center;
    border-radius: 50%;
    background: rgba(0, 89, 179, 0.06);
-   border: 1px solid rgba(0, 89, 179, 0.4);
+   border: 1px solid rgba(0, 89, 179, 0.20);
    color: var(--baiwu-blue-primary);
    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
    box-sizing: border-box;
@@ -2736,12 +2921,12 @@
    margin-top: 0;
    margin-left: -4%;
    margin-right: -4%;
-   padding: 16px 4% 14px;
+   padding: 16px 4%;
    background: var(--baiwu-white);
    display: grid;
    grid-template-columns: 1fr auto;
    align-items: center;
-   gap: 18px;
+   gap: 16px;
    font-size: 11px;
    font-weight: 600;
    letter-spacing: 0.6px;
@@ -2762,8 +2947,8 @@
  @media (max-width: 1180px) {
    .f-bottom-bar {
      grid-template-columns: auto 1fr;
-     padding: 16px 18px 14px;
-     gap: 14px;
+     padding: 16px 20px;
+     gap: 16px;
    }
    .f-bottom-bar > .f-legal-links { display: none; }
    .f-bottom-bar > .f-social-row  { justify-self: start; }
@@ -2776,14 +2961,14 @@
  @media (max-width: 600px) {
    .f-bottom-bar {
      grid-template-columns: 1fr;
-     row-gap: 10px;
-     padding: 12px 4% 10px;
+     row-gap: 12px;
+     padding: 12px 4%;
    }
    .f-bottom-bar > .f-copyright {
      justify-self: center;
      text-align: center;
      line-height: 1.5;
-     font-size: 9px;
+     font-size: 11px;
      letter-spacing: 1px;
    }
  }
@@ -2821,7 +3006,7 @@
    display: flex; flex-wrap: wrap; gap: 0;
  }
  .f-legal-links li { position: relative; }
- .f-legal-links li + li { margin-left: 18px; }
+ .f-legal-links li + li { margin-left: 16px; }
  .f-legal-links li + li::before {
    content: '·';
    position: absolute;
@@ -2841,7 +3026,7 @@
  }
  .f-legal-links a:hover { color: #F59E0B !important; }
  .f-copyright {
-   font-size: 10px;
+   font-size: 11px;
    letter-spacing: 1.4px;
    color: var(--text-sub);
  }
@@ -2855,7 +3040,7 @@
       base. Reduce icon/padding slightly for narrower viewports. */
    .stat-icon-wrap { width: 68px; height: 68px; }
    .stat-icon { width: 56px; height: 56px; }
-   .stat-card { padding: 18px 8px 24px; }
+   .stat-card { padding: 20px 8px 24px; }
  }
  @media (max-width: 1024px) {
    :root { --nav-height: 76px; }
@@ -2864,11 +3049,11 @@
    .brand-name { font-size: 1.4rem; }
    .menu-item { padding: 0 8px; height: 36px; font-size: var(--fs-xs); letter-spacing: 0.4px; }
    .nav-cta { padding: 0 14px; height: 40px; }
-   .section-row { padding: 24px 4%; }
-   .hero { padding: 64px 4% 80px; min-height: 540px; }
+   .section-row { padding: 40px 4%; }
+   .hero { padding: 64px 4%; min-height: 540px; }
    .hero-content { max-width: 100%; }
    .hero-content h1 { font-size: var(--fs-2xl); }
-   .reliability-section { padding: 28px 4%; }
+   .reliability-section { padding: 40px 4%; }
    .stat-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
    .stat-card {
      border-bottom: 1px solid rgba(0, 89, 179, 0.14);
@@ -2884,15 +3069,15 @@
    .stat-icon-wrap { width: 100px; height: 100px; }
    .stat-icon { width: 88px; height: 88px; }
    .audit-grid { grid-template-columns: 1fr 1fr; }
-   .infra-section { padding: 28px 4%; }
+   .infra-section { padding: 40px 4%; }
    /* Portfolio: pillars stack but each pillar's grid stays 3-up at this
       breakpoint. Pillar header padding tightens. */
-   .portfolio-pillar-head { padding: 18px 20px 4px; gap: 10px; }
+   .portfolio-pillar-head { padding: 20px 20px 8px; gap: 12px; }
    .portfolio-pillar-desc { padding: 0 20px 12px; }
-   .btn-portfolio { padding: 22px 10px 36px; min-height: 44px; }
+   .btn-portfolio { padding: 24px 12px 32px; min-height: 44px; }
    .portfolio-icon-wrap { width: 100px; height: 100px; }
    .portfolio-icon { width: 88px; height: 88px; }
-   .audit-section { padding: 28px 4%; }
+   .audit-section { padding: 40px 4%; }
    /* .sec-title font-size now handled by clamp() at the base rule —
       no override needed at this breakpoint. */
  }
@@ -2934,7 +3119,7 @@
        #1F75D9 0%,
        var(--baiwu-blue-primary) 55%,
        var(--baiwu-blue-deep, #003E80) 100%);
-     border: 1px solid rgba(255, 255, 255, 0.55);
+     border: 1px solid rgba(255, 255, 255, 0.28);
      box-shadow:
        0 1px 0 rgba(255, 255, 255, 0.20) inset,
        0 2px 6px rgba(0, 30, 60, 0.28),
@@ -2965,7 +3150,7 @@
      background: rgba(255, 255, 255, 0.45);
      -webkit-backdrop-filter: blur(10px) saturate(140%);
      backdrop-filter: blur(10px) saturate(140%);
-     border: 1px solid rgba(255, 255, 255, 0.55);
+     border: 1px solid rgba(255, 255, 255, 0.28);
      border-radius: 6px;
      box-shadow: 0 1px 3px rgba(0, 30, 60, 0.08);
      pointer-events: none;
@@ -2993,7 +3178,7 @@
    .stat-strip { grid-template-columns: 1fr; }
    .stat-card {
      border-right: none !important;
-     padding: 18px 16px;
+     padding: 20px 16px;
      gap: 16px;
      justify-content: flex-start;     /* Left-align */
      min-height: 96px;
@@ -3012,7 +3197,7 @@
      padding-left: 0 !important;
      border-left: none !important;
    }
-   .btn-portfolio { padding: 24px 14px 36px; min-height: 44px; }
+   .btn-portfolio { padding: 24px 16px 32px; min-height: 44px; }
    /* Mobile: tagline becomes an in-flow subtitle below the label (not a top
       pill), so it doesn't dominate the card or collide with the NEW badge. */
    .portfolio-tagline {
@@ -3061,7 +3246,7 @@
    /* In-card variant: card already provides padding/border, kill the
       blade-paragraph rules so we don't double-pad on mobile. Keep a
       hair more left padding to clear the 4px gold blade. */
-   .hero-content .hero-tagline-card { padding: 16px 16px 14px 22px; }
+   .hero-content .hero-tagline-card { padding: 16px 16px 16px 24px; }
    .hero-content .hero-tagline-card .hero-tagline {
      padding-left: 0;
      line-height: 1.7;
@@ -3086,7 +3271,7 @@
      gap: 10px;
    }
    .hero-cta { flex-direction: column; align-items: stretch; }
-   .btn { padding: 13px 20px; min-height: 44px; }
+   .btn { padding: 12px 20px; min-height: 44px; }
    /* (Old video card mobile overrides removed — video is full-bleed now.) */
    /* Thinner section divider on narrow screens */
    .reliability-section::before,
@@ -3096,7 +3281,7 @@
    .footer::before { box-shadow: 0 0 4px rgba(56, 189, 248, 0.55); }
    /* Audit heading + body — font-size handled by clamp() at base rule */
    .sec-title { padding-left: 14px; border-left-width: 5px; margin-bottom: 16px; }
-   .audit-box { padding: 16px; }
+   .audit-box { padding: 16px 18px; }
    .audit-box h3 { font-size: var(--fs-sm); }
    .audit-box p { font-size: var(--fs-sm); }
    /* Compact strip header */
@@ -3114,8 +3299,8 @@
    .eyebrow-icon { width: 11px; height: 11px; }
  }
  @media (max-width: 480px) {
-   .section-row, .reliability-section, .infra-section, .audit-section { padding: 24px 4%; }
-   .hero { padding: 56px 5% 64px 5.5%; min-height: 480px; }
+   .section-row, .reliability-section, .infra-section, .audit-section { padding: 40px 4%; }
+   .hero { padding: 64px 5%; min-height: 480px; }
    /* Reset desktop 620px child max-width on phones — at this width the
       cap is wider than the viewport anyway, but defending against any
       flex / grid parent that might compute width from max-width. */
@@ -3176,7 +3361,7 @@
    text-transform: uppercase;
    color: var(--baiwu-white);
    text-decoration: none;
-   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+   border-bottom: 1px solid rgba(255, 255, 255, 0.20);
    transition: 0.2s ease;
  }
  .btn-link span { transition: transform 0.2s ease; }
@@ -3265,7 +3450,7 @@
     (a white floating card matching .stat-strip-wrap above). */
  .loop-section {
    background: var(--baiwu-bg-light, #F8FAFC);
-   padding: 40px 4%;
+   padding: 64px 4%;
    position: relative;
  }
  /* Floating white card — same elevation language and SAME WIDTH as the
@@ -3298,8 +3483,8 @@
  .loop-card-top {
    display: grid;
    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-   gap: 28px;
-   padding: 28px 32px 24px;
+   gap: 32px;
+   padding: 32px 32px 24px;
    border-bottom: 1px solid rgba(0, 89, 179, 0.14);
    background: linear-gradient(180deg, rgba(0, 89, 179, 0.06), transparent);
    align-items: stretch;
@@ -3359,7 +3544,7 @@
  .loop-subnote-points {
    list-style: none;
    padding: 0;
-   margin: 0 0 14px;
+   margin: 0 0 16px;
    display: flex;
    flex-direction: column;
    gap: 10px;
@@ -3369,9 +3554,9 @@
    flex-direction: column;
    align-items: flex-start;
    gap: 8px;
-   padding: 12px 14px;
+   padding: 12px 16px;
    background: rgba(15, 23, 42, 0.025);
-   border-left: 3px solid var(--baiwu-blue-primary, #1E3A8A);
+   border-left: 2px solid var(--baiwu-blue-primary, #1E3A8A);
    border-radius: 4px;
  }
  .loop-subnote-pt:nth-child(2) {
@@ -3399,7 +3584,7 @@
    box-shadow: 0 1px 2px rgba(120, 80, 0, 0.14);
  }
  .loop-subnote-pt-text {
-   font-size: 0.85rem;
+   font-size: 0.82rem;
    font-weight: 500;
    color: var(--text-main, #0F172A);
    line-height: 1.55;
@@ -3418,7 +3603,7 @@
    color: #F59E0B;
  }
  .loop-subnote-foot {
-   font-size: 0.84rem;
+   font-size: 0.82rem;
    font-weight: 500;
    color: var(--text-soft, #475569);
    line-height: 1.6;
@@ -3439,19 +3624,19 @@
  .loop-rows {
    display: flex;
    flex-direction: column;
-   gap: 22px;
-   padding: 14px 32px 24px;
+   gap: 24px;
+   padding: 16px 32px 24px;
  }
  .loop-row { margin: 0; }
  .loop-row + .loop-row {
-   padding-top: 22px;
+   padding-top: 24px;
    border-top: 1px solid var(--border-line, #E2E8F0);
  }
  .loop-row-head {
    display: flex;
    align-items: baseline;
    gap: 12px;
-   margin-bottom: 14px;
+   margin-bottom: 16px;
    flex-wrap: wrap;
  }
  .loop-row-tag {
@@ -3467,12 +3652,12 @@
  }
  .loop-row--full .loop-row-tag {
    background: rgba(0, 89, 179, 0.08);
-   border-color: rgba(0, 89, 179, 0.40);
+   border-color: rgba(0, 89, 179, 0.20);
    color: var(--baiwu-blue-primary, #0059B3);
  }
  .loop-row--plug .loop-row-tag {
    background: rgba(191, 148, 48, 0.10);
-   border-color: rgba(191, 148, 48, 0.45);
+   border-color: rgba(191, 148, 48, 0.22);
    color: #8B6920;
  }
  .loop-row-name {
@@ -3505,14 +3690,144 @@
    .loop-row-grid { grid-template-columns: 1fr; }
  }
 
- /* Compact rich stage card — title, short desc, benefit pill.
-    (Numbers + icons removed from HTML per Roy spec.) Hairline border
-    + subtle bg so each stage reads as its own unit. */
+ /* ============================================================
+    LOOP FLOW — process-flow / schema layout (replaces flat cards).
+    Each stage = a node on a continuous brand-blue (Model A) or gold
+    (Model B) horizontal line, no card chrome. Reads as a connected
+    pipeline rather than a 4-up grid of boxes.
+    ============================================================ */
+ .loop-flow {
+   list-style: none;
+   padding: 0;
+   margin: 16px 0 0;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 0;
+   position: relative;
+ }
+ .loop-flow--three { grid-template-columns: repeat(3, 1fr); }
+ /* Continuous connector line — sits behind the dot markers, fading at
+    both ends. Brand blue for Model A, gold for Model B. */
+ .loop-flow::before {
+   content: '';
+   position: absolute;
+   top: 8px;
+   left: 8%;
+   right: 8%;
+   height: 2px;
+   background: linear-gradient(90deg,
+     transparent 0%,
+     rgba(0, 89, 179, 0.45) 6%,
+     rgba(0, 89, 179, 0.45) 94%,
+     transparent 100%);
+   z-index: 0;
+   pointer-events: none;
+ }
+ .loop-flow--plug::before {
+   background: linear-gradient(90deg,
+     transparent 0%,
+     rgba(191, 148, 48, 0.50) 6%,
+     rgba(191, 148, 48, 0.50) 94%,
+     transparent 100%);
+ }
+ .loop-flow-step {
+   position: relative;
+   z-index: 1;
+   padding: 0 18px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+ }
+ .loop-flow-dot {
+   width: 14px;
+   height: 14px;
+   border-radius: 50%;
+   background: var(--baiwu-blue-primary, #0059B3);
+   /* white halo so the dot punches through the connector line cleanly */
+   box-shadow: 0 0 0 4px var(--baiwu-white, #FFFFFF),
+               0 1px 6px rgba(0, 89, 179, 0.35);
+   margin-bottom: 16px;
+   flex-shrink: 0;
+ }
+ .loop-flow--plug .loop-flow-dot {
+   background: #BF9430;
+   box-shadow: 0 0 0 4px var(--baiwu-white, #FFFFFF),
+               0 1px 6px rgba(191, 148, 48, 0.35);
+ }
+ .loop-flow-title {
+   font-size: 0.95rem;
+   font-weight: 800;
+   color: var(--text-main, #0F172A);
+   line-height: 1.25;
+   margin: 0 0 6px;
+ }
+ .loop-flow-desc {
+   font-size: 0.82rem;
+   font-weight: 400;
+   color: var(--text-soft, #475569);
+   line-height: 1.55;
+   margin: 0 0 10px;
+   flex: 1;
+ }
+ .loop-flow-metric {
+   display: inline-block;
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 0.3px;
+   padding: 3px 8px;
+   border-radius: 999px;
+   background: rgba(0, 89, 179, 0.08);
+   color: var(--baiwu-blue-primary, #0059B3);
+   align-self: flex-start;
+ }
+ .loop-flow--plug .loop-flow-metric {
+   background: rgba(191, 148, 48, 0.14);
+   color: #8B6920;
+ }
+ /* Mobile — stack into a vertical timeline. Connector becomes a
+    vertical line, dots sit on the left, text flows to the right. */
+ @media (max-width: 880px) {
+   .loop-flow,
+   .loop-flow--three {
+     grid-template-columns: 1fr;
+     gap: 22px;
+   }
+   .loop-flow::before {
+     top: 8px; bottom: 8px;
+     left: 7px; right: auto;
+     width: 2px;
+     height: auto;
+     background: linear-gradient(180deg,
+       transparent 0%,
+       rgba(0, 89, 179, 0.45) 6%,
+       rgba(0, 89, 179, 0.45) 94%,
+       transparent 100%);
+   }
+   .loop-flow--plug::before {
+     background: linear-gradient(180deg,
+       transparent 0%,
+       rgba(191, 148, 48, 0.50) 6%,
+       rgba(191, 148, 48, 0.50) 94%,
+       transparent 100%);
+   }
+   .loop-flow-step {
+     padding: 0 0 0 32px;
+   }
+   .loop-flow-dot {
+     position: absolute;
+     left: 0;
+     top: 2px;
+     margin-bottom: 0;
+   }
+ }
+
+ /* (Legacy .loop-stage-card kept below for the hidden display:none
+    backup section only — visible loop section now uses .loop-flow.) */
  .loop-stage-card {
    position: relative;
    background: #FAFCFE;
    border: 1px solid var(--border-line, #E2E8F0);
-   border-top: 3px solid var(--baiwu-blue-primary, #0059B3);
+   border-top: 2px solid var(--baiwu-blue-primary, #0059B3);
    border-radius: 8px;
    padding: 14px 14px 12px;
    display: flex;
@@ -3572,14 +3887,14 @@
    color: #8B6920;
  }
  .loop-flow-track + .loop-flow-track {
-   padding-top: 22px;
+   padding-top: 24px;
    border-top: 1px solid var(--border-line, #E2E8F0);
  }
  .loop-flow-head {
    display: flex;
    align-items: baseline;
    gap: 12px;
-   margin-bottom: 14px;
+   margin-bottom: 16px;
    flex-wrap: wrap;
  }
  .loop-flow-tag {
@@ -3596,12 +3911,12 @@
  }
  .loop-flow-track--full .loop-flow-tag {
    background: rgba(0, 89, 179, 0.08);
-   border-color: rgba(0, 89, 179, 0.40);
+   border-color: rgba(0, 89, 179, 0.20);
    color: var(--baiwu-blue-primary, #0059B3);
  }
  .loop-flow-track--plug .loop-flow-tag {
    background: rgba(191, 148, 48, 0.10);
-   border-color: rgba(191, 148, 48, 0.45);
+   border-color: rgba(191, 148, 48, 0.22);
    color: #8B6920;
  }
  .loop-flow-name {
@@ -3633,20 +3948,20 @@
    display: flex;
    align-items: center;
    justify-content: center;
-   border: 1.5px solid;
+   border: 1px solid;
  }
  .loop-flow-track--full .loop-flow-icon {
    background: rgba(0, 89, 179, 0.08);
-   border-color: rgba(0, 89, 179, 0.35);
+   border-color: rgba(0, 89, 179, 0.18);
    color: var(--baiwu-blue-primary, #0059B3);
  }
  .loop-flow-track--plug .loop-flow-icon {
    background: rgba(191, 148, 48, 0.10);
-   border-color: rgba(191, 148, 48, 0.40);
+   border-color: rgba(191, 148, 48, 0.20);
    color: #8B6920;
  }
  .loop-flow-label {
-   font-size: 11.5px;
+   font-size: 11px;
    font-weight: 700;
    color: var(--text-main, #0F172A);
    letter-spacing: 0.2px;
@@ -3686,16 +4001,16 @@
  }
  .loop-mini--full .loop-mini-tag {
    background: rgba(0, 89, 179, 0.08);
-   border-color: rgba(0, 89, 179, 0.40);
+   border-color: rgba(0, 89, 179, 0.20);
    color: var(--baiwu-blue-primary, #0059B3);
  }
  .loop-mini--plug .loop-mini-tag {
    background: rgba(191, 148, 48, 0.10);
-   border-color: rgba(191, 148, 48, 0.45);
+   border-color: rgba(191, 148, 48, 0.22);
    color: #8B6920;
  }
  .loop-mini-name {
-   font-size: 1.05rem;
+   font-size: 0.95rem;
    font-weight: 800;
    color: var(--text-main, #0F172A);
    margin: 6px 0 10px;
@@ -3703,9 +4018,9 @@
  }
  .loop-mini-steps {
    margin: 0;
-   padding-left: 22px;
+   padding-left: 24px;
    color: var(--text-soft, #475569);
-   font-size: 0.86rem;
+   font-size: 0.82rem;
    line-height: 1.6;
  }
  .loop-mini-steps li { margin-bottom: 6px; }
@@ -3813,7 +4128,7 @@
     cards in a track represent PARALLEL workstreams, not sequential phases —
     every sprint touches all of them. No directional arrows between cards. */
  .loop-track {
-   margin-bottom: 36px;
+   margin-bottom: 32px;
  }
  .loop-track:last-child {
    margin-bottom: 0;
@@ -3831,13 +4146,13 @@
  .loop-cadence {
    display: flex;
    align-items: center;
-   gap: 10px;
-   margin: 0 0 14px;
-   padding: 6px 10px;
+   gap: 12px;
+   margin: 0 0 16px;
+   padding: 8px 12px;
    border-left: 2px solid #BF9430;
    background: rgba(191, 148, 48, 0.06);
    border-radius: 0 6px 6px 0;
-   font-size: 11.5px;
+   font-size: 11px;
    color: var(--text-soft, #475569);
  }
  .loop-cadence-pulse {
@@ -3856,7 +4171,7 @@
  }
  .loop-cadence-label {
    font-family: 'JetBrains Mono', ui-monospace, monospace;
-   font-size: 9.5px;
+   font-size: 10px;
    font-weight: 800;
    letter-spacing: 1.4px;
    text-transform: uppercase;
@@ -3868,7 +4183,7 @@
  }
  .loop-track-tag {
    font-family: 'JetBrains Mono', ui-monospace, monospace;
-   font-size: 10.5px;
+   font-size: 10px;
    font-weight: 800;
    letter-spacing: 1.6px;
    text-transform: uppercase;
@@ -3888,11 +4203,11 @@
  }
  .loop-track--plug .loop-track-tag {
    background: rgba(0, 89, 179, 0.10);
-   border-color: rgba(0, 89, 179, 0.50);
+   border-color: rgba(0, 89, 179, 0.25);
    color: var(--baiwu-blue-primary);
  }
  .loop-track-name {
-   font-size: 1.05rem;
+   font-size: 0.95rem;
    font-weight: 800;
    color: var(--text-main, #0F172A);
    line-height: 1.3;
@@ -3912,7 +4227,7 @@
    display: grid;
    grid-template-columns: repeat(4, 1fr);
    align-items: stretch;
-   gap: 14px;
+   gap: 16px;
  }
  .loop-stages--three {
    grid-template-columns: repeat(3, 1fr);
@@ -3920,9 +4235,9 @@
  .loop-stage {
    background: #FFFFFF;
    border: 1px solid var(--border-line, #E2E8F0);
-   border-top: 3px solid var(--baiwu-blue-primary);
+   border-top: 2px solid var(--baiwu-blue-primary);
    border-radius: 10px;
-   padding: 22px 18px 20px;
+   padding: 20px 24px;
    display: flex;
    flex-direction: column;
    gap: 8px;
@@ -3964,7 +4279,7 @@
    color: #BF9430;
  }
  .loop-stage-title {
-   font-size: 1rem;
+   font-size: 0.95rem;
    font-weight: 800;
    color: var(--text-main, #0F172A);
    margin: 0;
@@ -3998,7 +4313,7 @@
    opacity: 0.65;
  }
  .loop-stage-products-list {
-   font-size: 11.5px;
+   font-size: 11px;
    font-weight: 700;
    color: #0F172A;
    line-height: 1.4;
@@ -4030,14 +4345,14 @@
  .loop-stage-role {
    display: block;
    margin-top: 8px;
-   font-size: 0.78rem;
+   font-size: 0.82rem;
    line-height: 1.5;
    color: var(--text-soft, #475569);
  }
  .loop-stage-role-label {
    display: inline-block;
    font-family: 'JetBrains Mono', ui-monospace, monospace;
-   font-size: 9.5px;
+   font-size: 10px;
    font-weight: 800;
    letter-spacing: 1.3px;
    text-transform: uppercase;
@@ -4050,12 +4365,12 @@
  }
  .loop-stage-role--human .loop-stage-role-label {
    background: rgba(191, 148, 48, 0.10);
-   border-color: rgba(191, 148, 48, 0.45);
+   border-color: rgba(191, 148, 48, 0.22);
    color: #8B6920;
  }
  .loop-stage-role--ai .loop-stage-role-label {
    background: rgba(0, 89, 179, 0.07);
-   border-color: rgba(0, 89, 179, 0.40);
+   border-color: rgba(0, 89, 179, 0.20);
    color: var(--baiwu-blue-primary);
  }
 
@@ -4074,7 +4389,7 @@
     the continuous-runtime services that wrap around every stage above. */
  .loop-fabric {
    margin-top: 32px;
-   padding: 18px 18px 16px;
+   padding: 20px;
    background: linear-gradient(180deg, rgba(0,89,179,0.04), rgba(191,148,48,0.04));
    border: 1px solid rgba(15, 23, 42, 0.10);
    border-radius: 12px;
@@ -4094,7 +4409,7 @@
    text-transform: uppercase;
    padding: 3px 8px;
    border-radius: 4px;
-   border: 1px solid rgba(0, 89, 179, 0.40);
+   border: 1px solid rgba(0, 89, 179, 0.20);
    background: rgba(0, 89, 179, 0.08);
    color: var(--baiwu-blue-primary);
    line-height: 1.2;
@@ -4113,20 +4428,20 @@
    display: flex;
    flex-direction: column;
    gap: 4px;
-   padding: 12px 14px;
+   padding: 12px 16px;
    background: #FFFFFF;
    border: 1px solid rgba(15, 23, 42, 0.08);
-   border-left: 3px solid #BF9430;
+   border-left: 2px solid #BF9430;
    border-radius: 8px;
  }
  .loop-fabric-card-title {
-   font-size: 0.92rem;
+   font-size: 0.95rem;
    font-weight: 800;
    color: var(--text-main, #0F172A);
    line-height: 1.2;
  }
  .loop-fabric-card-desc {
-   font-size: 0.78rem;
+   font-size: 0.82rem;
    color: var(--text-soft, #475569);
    line-height: 1.5;
  }
@@ -4165,14 +4480,14 @@
 
  /* MOBILE — single column stack with vertical connector hint between cards. */
  @media (max-width: 600px) {
-   .loop-section { padding: 36px 4% 44px; }
+   .loop-section { padding: 40px 4%; }
    .loop-stages {
      grid-template-columns: 1fr;
      gap: 10px;
    }
-   .loop-stage { padding: 18px 16px 16px; }
+   .loop-stage { padding: 16px 18px; }
    .loop-stage-title { font-size: 0.95rem; }
-   .loop-stage-desc { font-size: 0.8rem; }
+   .loop-stage-desc { font-size: 0.82rem; }
    .loop-feedback-label { font-size: 10px; padding: 4px 10px; }
    .loop-feedback-svg { height: 40px; }
  }
@@ -4186,7 +4501,7 @@
  .sme-bridge-section {
    background: linear-gradient(180deg, rgba(245, 158, 11, 0.04), transparent);
    border-top: 1px solid rgba(245, 158, 11, 0.18);
-   padding: 44px 4% 48px;
+   padding: 64px 4%;
  }
  .sme-bridge-wrap {
    max-width: 1200px;
@@ -4202,13 +4517,13 @@
    margin-bottom: 8px;
  }
  .sme-bridge-section .sec-title {
-   margin-bottom: 14px;
+   margin-bottom: 16px;
  }
  .sme-bridge-intro {
-   font-size: 0.92rem;
+   font-size: 0.82rem;
    color: var(--text-soft, #475569);
    max-width: 760px;
-   margin: 0 0 28px;
+   margin: 0 0 32px;
    line-height: 1.6;
    font-weight: 400;
  }
@@ -4229,7 +4544,7 @@
    display: flex;
    flex-direction: column;
    gap: 10px;
-   padding: 24px 22px 22px;
+   padding: 20px 24px;
    text-decoration: none;
    color: inherit;
    transition: background 0.2s ease, border-left-color 0.2s ease;
@@ -4285,5 +4600,374 @@
      border-bottom: 1px solid var(--border-line);
    }
    .sme-bridge-grid > li:last-child { border-bottom: 0; }
-   .sme-bridge-item { padding: 20px 16px; }
+   .sme-bridge-item { padding: 16px 18px; }
  }
+
+/* ============================================================
+   PERFORMANCE DASHBOARD — outcome-oriented hierarchy
+   ============================================================
+   The 5 stat cards are interleaved with .stat-connector spans (›)
+   so the row reads as a left-to-right cause-effect chain:
+
+     [99.999%] › [200+] › [<10s] › [AI×H]  ⟹  [ 98% OUTCOME ]
+       small     small    small    small      LARGE — 2.2x wider
+
+   Visual weight is OUTCOME-oriented: the 4 supporting metrics on
+   the left are uniform, smaller; they CHAIN INTO the much larger
+   green OUTCOME card on the right that owns the eye.  Underneath,
+   .perf-narrative restates the chain as one sentence so the
+   relationship is explicit, not just inferred from the visuals.
+   ============================================================ */
+
+/* 9-column grid: 5 cards + 4 connector slots.  Column 9 (the OUTCOME
+   card) is 2.2x the width of the supporting cards.  The 4th connector
+   slot (between AI×H and Open Rate) is also wider and styled stronger
+   to signal "this is what produces the result." */
+.stat-strip {
+  grid-template-columns:
+    minmax(0, 1fr) clamp(20px, 1.4vw, 28px)
+    minmax(0, 1fr) clamp(20px, 1.4vw, 28px)
+    minmax(0, 1fr) clamp(20px, 1.4vw, 28px)
+    minmax(0, 1fr) clamp(34px, 2.6vw, 52px)
+    minmax(0, 2.2fr);
+  gap: 0;
+  align-items: stretch;
+}
+
+.stat-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(22px, 1.8vw, 30px);
+  font-weight: 200;
+  color: var(--baiwu-blue-primary);
+  opacity: 0.45;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  /* No background hairline — earlier versions painted a 2px horizontal
+     gradient line through the cell center, which rendered as a literal
+     strike-through across the › glyph.  The chevron alone communicates
+     "next / leads to" — cleaner, no visual conflict. */
+}
+
+/* All 4 connectors are now uniform — same size, same colour, same
+   opacity.  Earlier rounds gave the 4th one (Auto → Open Rate) extra
+   visual weight to "accelerate" into the outcome, but that compounded
+   with the OUTCOME card's other 5 emphasis signals (wider column,
+   larger font, heavier shadow, top accent, ✓ stamp) — too many cues
+   for one card.  Trimmed back to a single source of emphasis hierarchy
+   per element so the row reads cleaner. */
+
+/* OUTCOME card — only 3 emphasis signals now (down from 6):
+     1. WIDER column (2.2fr in the grid template) — physical dominance.
+     2. 2px GREEN top accent line (set in the earlier rule) — semantic
+        "this is the result" marker.
+     3. Green ✓ corner stamp (::before from the earlier rule).
+   Removed: oversized font, heavier shadow, larger padding, larger
+   label.  The OUTCOME card now uses the SAME typography + shadow as
+   the other 4 cards, which makes it feel confident rather than shouty
+   and lets the wider column + green accents do the work. */
+.stat-strip > .stat-card[data-stat="open"] {
+  justify-content: center;
+}
+/* stat-value font-size on the outcome card now inherits from the base
+   .stat-value rule (--fs-lg). Green colour + ✓ stamp do the work. */
+
+/* Tablet: switch to 2-row stack — 4 supporting cards on row 1, the
+   big outcome card on row 2 spanning full width.  Arrows rotate to
+   vertical for the 4→5 transition. */
+@media (max-width: 1080px) {
+  .stat-strip {
+    grid-template-columns:
+      minmax(0, 1fr) clamp(16px, 2vw, 24px)
+      minmax(0, 1fr) clamp(16px, 2vw, 24px)
+      minmax(0, 1fr) clamp(16px, 2vw, 24px)
+      minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    row-gap: 12px;
+  }
+  /* Auto-Orchestration → OUTCOME connector becomes the row-2 down-arrow.
+     Just the chevron rotated to point downward; no background hairline
+     so the glyph stays clean. */
+  .stat-strip > .stat-card[data-stat="ain"] + .stat-connector {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 32px;
+    transform: rotate(90deg);
+  }
+  .stat-strip > .stat-card[data-stat="open"] {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}
+
+/* Mobile: full vertical stack, all arrows rotate down (no hairline) */
+@media (max-width: 768px) {
+  .stat-strip {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    row-gap: 0;
+  }
+  .stat-connector {
+    height: 32px;
+    transform: rotate(90deg);
+  }
+  .stat-strip > .stat-card[data-stat="ain"] + .stat-connector {
+    grid-column: auto;
+    grid-row: auto;
+    height: 38px;
+  }
+  .stat-strip > .stat-card[data-stat="open"] {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+/* Causal-chain narrative line directly below the cards.
+   Reads as one sentence with chevron separators between clauses,
+   final clause coloured green to mirror the OUTCOME card. */
+.perf-narrative {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px 14px;
+  margin: 0;
+  padding: 16px 28px 22px;
+  border-top: 1px dashed rgba(0, 89, 179, 0.18);
+  font-size: clamp(11px, 0.9vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: rgba(0, 45, 92, 0.62);
+  line-height: 1.55;
+  text-align: center;
+}
+.perf-narrative-step strong {
+  font-weight: 800;
+  color: var(--baiwu-blue-primary);
+  font-feature-settings: 'tnum';
+  letter-spacing: 0.1px;
+}
+/* OUTCOME clause inherits brand blue too — all 5 highlighted numbers
+   (99.999% / 200+ / under 10s / Auto-Orchestration / 98%) read in the
+   same enterprise palette. */
+
+/* ============================================================
+   SYSTEM ARCHITECTURE — 3-layer hierarchy with SITE-NATIVE chrome
+   ============================================================
+   Three layers each get a distinct accent colour for their CHROME
+   (top border, background tint, card shadow, card border) so the
+   layers read as visually separate.  ALL TYPOGRAPHY STAYS IN BRAND
+   BLUE — text is unified, only the surfaces shift.
+
+   Earlier draft used Indigo + Teal — colours that DON'T appear
+   anywhere else in the site.  Replaced with the existing palette:
+
+     Layer 1: AI GOVERNANCE   → GOLD       #F59E0B  (premium / sovereign;
+                                                     same gold as trust wall)
+     Layer 2: ORCHESTRATION   → BRAND BLUE #0059B3  (execution / current)
+     Layer 3: CONNECTIVITY    → SLATE      #64748B  (infra / supportive;
+                                                     same slate as borders)
+
+   No new colours introduced.  Visual weight also descends top → bottom
+   (border 3→2→1 px, bg tint strongest at top, font weight 900→800→700,
+   card shadow heavy → baseline → light).
+   ============================================================ */
+
+/* ---- Layer 1 — AI GOVERNANCE — DARK-GOLD glowing top line ---- */
+.portfolio-pillar[data-pillar="governance"] {
+  position: relative;
+  /* Background tint removed — used to be a 5.5%→1.8% gold wash but
+     the band felt abrupt against the white orchestration row below.
+     Layer now unifies with the rest of the section visually; the
+     dark-gold glowing line above + gold-tinted card shadows are the
+     sole identity markers. */
+  border-top: 0;
+}
+.portfolio-pillar[data-pillar="governance"]::before {
+  /* Glowing top line — uses the EXACT Trust Layer gold tokens
+     (#F59E0B + #FBBF24 + rgba 251,191,36 halo) so the governance
+     layer's gold and the audit-box / star gold are the same family
+     site-wide.  1px thin, edge-to-centre fade for the "lit from
+     the middle" feel. */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(245, 158, 11, 0.40) 6%,
+    #F59E0B 28%,
+    #FBBF24 50%,
+    #F59E0B 72%,
+    rgba(245, 158, 11, 0.40) 94%,
+    transparent 100%
+  );
+  /* Halo identical to the audit-stars text-shadow recipe — same two
+     attenuated stops in rgba(251, 191, 36, ...). */
+  box-shadow:
+    0 0 4px rgba(251, 191, 36, 0.55),
+    0 0 12px rgba(251, 191, 36, 0.32),
+    0 0 22px rgba(251, 191, 36, 0.14);
+  pointer-events: none;
+}
+.portfolio-pillar[data-pillar="governance"] .portfolio-pillar-name {
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  font-weight: 900;
+  color: var(--baiwu-blue-deep);  /* TEXT STAYS BRAND BLUE */
+  letter-spacing: -0.3px;
+}
+.portfolio-pillar[data-pillar="governance"] .portfolio-pillar-tagline {
+  color: var(--baiwu-blue-primary);
+}
+.portfolio-pillar[data-pillar="governance"] .portfolio-pillar-desc {
+  color: var(--baiwu-blue-deep);
+  font-weight: 500;
+}
+/* Cards in this layer carry the SAME Trust-Layer gold tokens for their
+   border + shadow — site-wide gold palette is now strictly:
+       #F59E0B  (amber-500)  — solid border / hairline
+       #FBBF24  (amber-400)  — bright centre / halo source
+       #FCD34D  (amber-300)  — keyword highlight
+   No more #D4AF37 / #B45309 / #92400E inventions. */
+.portfolio-pillar[data-pillar="governance"] .btn-portfolio {
+  box-shadow:
+    0 2px 10px rgba(245, 158, 11, 0.12),
+    0 14px 32px rgba(251, 191, 36, 0.14);
+  border-color: rgba(245, 158, 11, 0.28);
+}
+
+/* ---- Layer 2 — ORCHESTRATION — BRAND BLUE chrome (baseline) ---- */
+.portfolio-pillar[data-pillar="orchestration"] {
+  border-top: 2px solid var(--baiwu-blue-primary);
+}
+.portfolio-pillar[data-pillar="orchestration"] .portfolio-pillar-name {
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  font-weight: 800;
+  color: var(--baiwu-blue-primary);  /* TEXT STAYS BRAND BLUE */
+  letter-spacing: -0.1px;
+}
+/* Cards inherit brand-blue defaults — this row IS the baseline. */
+
+/* ---- Layer 3 — CONNECTIVITY INFRASTRUCTURE — SLATE chrome ---- */
+.portfolio-pillar[data-pillar="connectivity"] {
+  border-top: 1px solid rgba(100, 116, 139, 0.55);
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(100, 116, 139, 0.035) 0%,
+      rgba(100, 116, 139, 0.010) 100%
+    );
+}
+.portfolio-pillar[data-pillar="connectivity"] .portfolio-pillar-name {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  font-weight: 700;
+  color: var(--baiwu-blue-primary);  /* TEXT STAYS BRAND BLUE */
+  letter-spacing: 0.2px;
+}
+.portfolio-pillar[data-pillar="connectivity"] .portfolio-pillar-tagline {
+  opacity: 0.78;
+}
+.portfolio-pillar[data-pillar="connectivity"] .portfolio-pillar-desc {
+  opacity: 0.82;
+}
+.portfolio-pillar[data-pillar="connectivity"] .btn-portfolio {
+  box-shadow:
+    0 1px 3px rgba(100, 116, 139, 0.06),
+    0 2px 8px rgba(100, 116, 139, 0.08);
+  border-color: rgba(100, 116, 139, 0.20);
+}
+
+/* (Removed dead .persona-banner / .persona-list / .persona-quote /
+   .persona-icon / .persona-text / .persona-attribution / .persona-dots
+   block — the standalone persona quote banner above the Departments
+   strip was retired and merged into the new .dept-explorer (tabs +
+   active panel).  All persona styling now lives on .dept-panel-*
+   classes inside the explorer.) */
+
+/* Mobile breakpoints for the dept-explorer.  No more min-height
+   on .dept-panels — the grid-stack auto-sizes to the tallest panel,
+   so longer wrap on phones extends the container naturally instead
+   of getting clipped by the parent's overflow:hidden. */
+@media (max-width: 720px) {
+  .dept-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dept-tab:nth-child(2) { border-right: 0; }
+  .dept-tab:nth-child(odd):not(:last-child),
+  .dept-tab:nth-child(2) {
+    border-bottom: 1px solid rgba(0, 89, 179, 0.06);
+  }
+  .dept-tab.is-active {
+    border-bottom-color: var(--baiwu-blue-primary);
+  }
+  .dept-panels {
+    padding: 22px 20px;
+  }
+}
+@media (max-width: 480px) {
+  .dept-tabs {
+    grid-template-columns: 1fr;
+  }
+  .dept-tab {
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(0, 89, 179, 0.06);
+    justify-content: flex-start;
+    padding-left: 22px;
+    /* On vertical-stack mobile each tab is full width, font can
+       go a touch larger again (no horizontal squeeze) */
+    font-size: 14px;
+  }
+  .dept-tab.is-active {
+    border-bottom-color: var(--baiwu-blue-primary);
+  }
+  .dept-panels { padding: 20px 18px; }
+  /* Mobile quote callout — tighten internal padding so chat-bubble
+     style fits narrower viewport without feeling overstuffed. */
+  .dept-panel-quote-wrap {
+    padding: 14px 18px 14px 22px;
+    margin-bottom: 18px;
+  }
+  .dept-panel-quote {
+    padding-left: 18px;
+    font-size: 15px;
+  }
+  .dept-panel-attr {
+    padding-left: 18px;
+  }
+}
+
+/* Inline DOLPHLINK wordmark inside body copy (e.g. the Departments
+   section intro).  Inherits the surrounding paragraph's font-size so
+   it doesn't disrupt the line; just shifts colour to brand blue and
+   bumps weight slightly so the brand registers without shouting. */
+.sec-intro .brand-mark--dolphlink {
+  color: var(--baiwu-blue-primary);
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+.perf-narrative-arrow {
+  font-weight: 300;
+  font-size: 1.3em;
+  color: var(--baiwu-blue-primary);
+  opacity: 0.5;
+  margin: 0 1px;
+  line-height: 1;
+}
+@media (max-width: 768px) {
+  .perf-narrative {
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px 18px;
+  }
+  .perf-narrative-arrow {
+    display: inline-block;
+    transform: rotate(90deg);
+    margin: 2px 0;
+    opacity: 0.4;
+  }
+}

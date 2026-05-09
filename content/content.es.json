@@ -21,8 +21,8 @@
     "taglineSegB": ", entregando infraestructura misión-crítica para las comunicaciones globales a gran escala.","taglineSegC": "Con licencia en Singapur y presencia en más de 200 países, la plataforma habilita orquestación de IA segura, enrutamiento global y soberanía de datos para gobiernos y empresas reguladas. Cada acción queda respaldada por cifrado de extremo a extremo, control de acceso basado en identidad y auditabilidad a prueba de manipulación.",
     "ctaPrimary": "Solicitar reunión informativa",
     "ctaPrimaryMailto": "Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&cc=Joycetsam@dolphlink.com",
-    "ctaSecondary": "Ver auto-orquestación",
-    "ctaSecondaryScrollTo": "n-sec",
+    "ctaSecondary": "Ver cómo funciona",
+    "ctaSecondaryScrollTo": "hiw",
     "stats": [
       { "value": "99,999%", "label": "Disponibilidad" },
       { "value": "1.000+",  "label": "Rutas Tier-1" },
@@ -31,7 +31,18 @@
     "triggerLine": "Detecta interrupciones de servicio y activa la recuperación automáticamente."
   },
   "reliability": {
-    "headerTag": "Matriz de fiabilidad",
+    "headerTag": "Panel de rendimiento",
+    "narrative": {
+      "s1Tail": " de tiempo activo",
+      "s2Lead": "cubre ",
+      "s2Tail": " países",
+      "s3Lead": "entrega en ",
+      "s3Value": "menos de 10s",
+      "s4Lead": "a lo largo del ",
+      "s4Value": "Ciclo de Vida",
+      "s5Lead": "produce una tasa de apertura verificada del ",
+      "s5Tail": ""
+    },
     "stats": [
       { "key": "sla",  "icon": "icon_6",  "value": "99,999%", "label": "Disponibilidad",
         "desc": "Disponibilidad de cinco nueves sobre PoP geo-redundantes. Diseñada para comunicaciones de misión crítica, con SLA verificado de forma independiente por terceros y certificaciones trimestrales." },
@@ -39,8 +50,8 @@
         "desc": "Cobertura mundial a través de más de 1.000 rutas Tier-1 con operadores móviles, garantizando calidad de mensajería de grado carrier y conectividad de última milla, tanto en mercados regulados como emergentes." },
       { "key": "lat",  "icon": "icon_10", "value": "<10 s",   "label": "Entrega",
         "desc": "Los SMS llegan en menos de 10 segundos por rutas Tier-1 de operadores. Las cifras se verifican contra benchmarks globales, se auditan trimestralmente y se optimizan de forma continua mediante análisis de rutas en tiempo real." },
-      { "key": "ain",  "icon": "icon_7",  "value": "AI×H",    "label": "Orquestación",
-        "desc": "Orquestación de agentes de extremo a extremo con gobernanza de IA con intervención humana. Los bots gestionan tareas rutinarias y los agentes los casos que requieren criterio; cuando se activa una política o un umbral de riesgo, se hace un traspaso transparente a un operador humano. Las herramientas de migración integradas permiten llevar los flujos legados al operativo de nueva generación al ritmo de cada cliente, con trazabilidad de auditoría a prueba de manipulación en cada traspaso." },
+      { "key": "ain",  "icon": "icon_7",  "value": "360°",               "label": "Ciclo de Vida",
+        "desc": "Cobertura completa del ciclo de vida operativo. Desde el diseño de políticas y la migración hasta la ejecución diaria, la auditoría y la renovación, todo se gestiona dentro de la misma plataforma. El tráfico rutinario lo manejan nuestros agentes por sí solos, las 24 horas: elegir por qué ruta sale el mensaje, cambiar de operador cuando uno falla, pasar el control de cumplimiento antes de enviar, marcar cualquier cosa que parezca rara. Cuando algo de verdad requiere criterio humano, el caso pasa a un revisor designado de su equipo con todo el contexto. También incluimos herramientas de migración para que pueda mover los flujos antiguos a la plataforma nueva al ritmo que mejor le convenga, y cada acción en cada etapa queda registrada en un historial de auditoría que se puede entregar directamente al regulador." },
       { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "Tasa de apertura",
         "desc": "Tasa de apertura verificada del 98% en SMS transaccionales enviados por operadores Tier-1 a nivel global. Los OTP urgentes, las alertas de fraude y las notificaciones prioritarias llegan a sus clientes en segundos y se leen de verdad. El enrutamiento prioriza el tráfico transaccional sobre los envíos de marketing, con auditorías de medición trimestrales por parte de terceros." }
     ]
@@ -59,28 +70,28 @@
     "subnoteFoot": "En cualquier vía, datos donde están, gobernanza en sus manos, lo aprendido pasa directo al siguiente ciclo.",
     "stages": {
       "intake": {
-        "owner": "Humano",
-        "title": "Las personas definen y autorizan el proyecto",
-        "desc": "Un arquitecto de soluciones se reúne con los responsables de cumplimiento, legal y operaciones del cliente. Juntos definen el alcance del programa, fijan la residencia de datos, mapean el marco regulatorio aplicable, nombran a los responsables de escalación de ambas partes y acuerdan los SLA, KPI y obligaciones de auditoría. La IA no participa en esta etapa. El SOW lo firman personas nombradas — antes de esa firma no circula ni un mensaje.",
-        "metric": "Arquitecto de soluciones · Alcance · Residencia · SOW firmado"
+        "title": "Planificar y autorizar",
+        "humanRole": "Su equipo revisa el paquete de diseño contra sus políticas internas, nombra a los responsables de escalación de su lado y firma el SOW. Es el único punto donde se requiere obligatoriamente una firma humana antes de que fluya el tráfico.",
+        "aiRole": "Entregamos el paquete de diseño completo en 72 horas: arquitectura de la solución y topología de red, modelo de capacidad con redundancia de carga máxima, mapa de residencia de datos por región, matriz de cumplimiento regulatorio frente a cada marco aplicable, plan de portabilidad numérica, diseño de integración para su CRM y sistemas core, objetivos de SLA, registro de riesgos con mitigaciones y un plan de rollback ante cualquier imprevisto.",
+        "metric": "Paquete de diseño · Residencia en región · SLA firmado"
       },
       "orchestrate": {
-        "owner": "IA",
-        "title": "La IA ejecuta a escala",
-        "desc": "Con el SOW activo, la IA toma la ejecución: aprovisiona rutas y capacidad, distribuye tráfico entre rutas primarias y de respaldo, monitorea telemetría de entrega en tiempo real, hace fallback automático cuando una ruta se degrada, y reconcilia cada lote contra el sistema fuente de verdad del cliente. Antes de salir, cada mensaje pasa por las puertas de cumplimiento (límites de tasa, reglas regionales, políticas de contenido). Ejecuta sin supervisión humana, las 24 horas.",
-        "metric": "Aprovisionar · Distribuir · Monitorear · Reconciliar"
+        "title": "Construir, probar, migrar o desplegar",
+        "humanRole": "Su product owner participa en cada demo de sprint, aprueba los resultados de las pruebas y da luz verde a la fecha de cutover de migración o de go-live.",
+        "aiRole": "Trabajamos en sprints de dos semanas. Cada uno termina con una demo y un suite de pruebas en verde. Si está migrando desde una pasarela legada, corremos en paralelo y desviamos el tráfico de forma gradual sin que nada se caiga. Para nuevos despliegues, lanzamos con cero downtime y un rollback de un solo comando si algo se ve mal.",
+        "metric": "Sprints de 2 semanas · Pruebas en verde · Cutover gradual"
       },
       "resolve": {
-        "owner": "Humano",
-        "title": "Las personas resuelven cada excepción",
-        "desc": "Cuando un evento sale de la política acordada — umbrales de riesgo, disparadores regulatorios, contenido sensible, tráfico anómalo — la IA no actúa. Empaqueta el caso (contexto completo, historial, acción sugerida) y lo enruta al responsable humano nombrado. El responsable aprueba, anula o pausa el programa con un clic. Cada decisión queda registrada con nombre, marca de tiempo y motivo declarado. La IA propone; la persona dispone.",
-        "metric": "Marcar · Enrutar · Decidir · Registrar"
+        "title": "Operar a escala",
+        "humanRole": "Cuando algo se marca, su equipo decide en un clic. Aprobar, anular o pausar el programa. Cada elección queda registrada con la persona, la hora y el motivo.",
+        "aiRole": "Llevamos el tráfico por rutas Tier-1, hacemos fallback entre canales cuando algo falla y mantenemos coherente el estado entre canales. Cuando un evento queda fuera de la política acordada, lo marcamos con contexto completo y mantenemos la conversación estable hasta que su operador la retome.",
+        "metric": "Sub-10s · Redundancia Tier-1 · Cumplimiento pre-envío"
       },
       "audit": {
-        "owner": "IA + Humano",
-        "title": "IA compila · Humano firma · Auditor cierra",
-        "desc": "Al cierre del programa, la IA arma un paquete inalterable: cada acción, cada decisión, cada reintento y cada aprobación humana, exportado en los formatos que sus auditores requieren. El responsable humano de cumplimiento revisa y aplica firma digital con sello horario. El auditor revisa y acepta. Ambas firmas — máquina y humana — quedan selladas en el registro. El guion se actualiza para el próximo programa.",
-        "metric": "Compilar · Exportar · Firmar · Sellar"
+        "title": "Auditar y sellar",
+        "humanRole": "Su responsable de cumplimiento revisa lo que hemos compilado y firma digitalmente el paquete. El auditor lo lee y lo acepta.",
+        "aiRole": "Compilamos un paquete inalterable con cada acción, decisión y aprobación, en el formato que su auditor requiera — ya sea CSV, JSON o un esquema específico del regulador — y sellamos el grafo de decisiones listo para el handoff.",
+        "metric": "Inalterable · Listo para regulador · Sello de doble firma"
       }
     },
     "tracks": {
@@ -103,15 +114,15 @@
     }
   },
   "portfolios": {
-    "headerTag": "Portafolio",
-    "intro": "Tres pilares, nueve productos, una plataforma soberana. Elija el punto de entrada que se adapte a su pila tecnológica actual y expándase a pilares adyacentes a medida que sus operaciones crezcan.",
+    "headerTag": "Arquitectura del sistema",
+    "intro": "Tres capas, nueve productos, una plataforma soberana. La capa de Gobernanza de IA aporta el peso estratégico; la capa de Orquestación ejecuta; la Infraestructura de Conectividad transporta el tráfico por debajo.",
     "pillars": [
-      { "key": "connectivity",  "name": "INFRAESTRUCTURA DE CONECTIVIDAD", "tagline": "Alcance Operador Tier-1",
-        "desc": "Columna vertebral de comunicaciones globales sobre redes de grado operador" },
+      { "key": "governance",    "name": "CAPA DE GOBERNANZA DE IA",   "tagline": "Comando Alineado a Reguladores + Migración",
+        "desc": "Plano de control en-región para operaciones empresariales impulsadas por IA y cumplimiento" },
       { "key": "orchestration", "name": "CAPA DE ORQUESTACIÓN", "tagline": "Multicanal + Desarrolladores",
         "desc": "Capa de ejecución para comunicaciones empresariales programables y flujos de trabajo con IA" },
-      { "key": "governance",    "name": "CAPA DE GOBERNANZA DE IA",   "tagline": "Comando Soberano + Migración",
-        "desc": "Plano de control soberano para operaciones empresariales impulsadas por IA y cumplimiento" }
+      { "key": "connectivity",  "name": "INFRAESTRUCTURA DE CONECTIVIDAD", "tagline": "Alcance Operador Tier-1",
+        "desc": "Columna vertebral de comunicaciones globales sobre redes de grado operador" }
     ],
     "items": [
       { "key": "sms", "pillar": "connectivity", "icon": "icon_4", "label": "SMS Platform",
@@ -176,31 +187,34 @@
   },
   "industries": {
     "headerTag": "Industrias a las que damos servicio",
+    "colSector": "Sector",
+    "colCapability": "Qué ofrecemos",
+    "colCompliance": "Cumplimiento",
     "intro": "Diseñado para comunicaciones reguladas y de misión crítica. Cuatro verticales principales donde la arquitectura soberana de DOLPHLINK y la orquestación de agentes de IA aportan una ventaja medible, y cinco sectores adicionales atendidos sobre la misma plataforma.",
     "primaryLabel": "Verticales principales",
     "secondaryLabel": "También atendemos",
     "items": [
-      { "key": "banking", "tier": "primary", "name": "Banca y FinTech", "color": "#0059B3",
-        "desc": "2FA/OTP seguro, alertas de fraude en tiempo real, entrega de estados de cuenta, recordatorios automatizados de pago vía campañas de voz masivas.",
-        "chips": ["MAS TRM", "PDPA", "PCI-DSS"] },
       { "key": "government", "tier": "primary", "name": "Gobierno y Sector Público", "color": "#1F2937",
         "desc": "Alertas ciudadanas, notificaciones de servicio público y transmisiones de emergencia sobre infraestructura soberana. Alineado con IM8, listo para auditoría, desplegable en múltiples jurisdicciones reguladas en ASEAN/EMEA/Américas.",
         "chips": ["IM8", "Nube Soberana", "Multi-Jurisdicción"] },
-      { "key": "healthcare", "tier": "primary", "name": "Salud", "color": "#10B981",
-        "desc": "Reduzca ausencias con recordatorios automatizados de citas y triaje vía chatbot IA. Privacidad del paciente protegida con residencia soberana de datos.",
-        "chips": ["PDPA", "HIPAA-Ready", "ISO 27001"] },
+      { "key": "banking", "tier": "primary", "name": "Banca y FinTech", "color": "#0059B3",
+        "desc": "2FA/OTP seguro, alertas de fraude en tiempo real, entrega de estados de cuenta, recordatorios automatizados de pago vía campañas de voz masivas.",
+        "chips": ["MAS TRM", "PDPA", "PCI-DSS"] },
       { "key": "insurance", "tier": "primary", "name": "Seguros", "color": "#7C3AED",
         "desc": "Recordatorios de renovación de póliza, notificaciones de estado de reclamos y flujos de verificación KYC. Trazabilidad de auditoría a prueba de manipulación en cada punto de contacto regulado.",
         "chips": ["PDPA", "GDPR", "ISO 27001"] },
+      { "key": "healthcare", "tier": "primary", "name": "Salud", "color": "#10B981",
+        "desc": "Reduzca ausencias con recordatorios automatizados de citas y triaje vía chatbot IA. Privacidad del paciente protegida con residencia soberana de datos.",
+        "chips": ["PDPA", "HIPAA-Ready", "ISO 27001"] },
+      { "key": "logistics", "tier": "secondary", "name": "Logística", "color": "#0059B3",
+        "desc": "Bandeja de entrada unificada a través de WhatsApp, Email y Chat más notificaciones automatizadas de seguimiento. Despacho de conductores con IVR de voz y confirmaciones SMS.",
+        "chips": ["Omnicanal", "GDPR"] },
       { "key": "retail", "tier": "secondary", "name": "Retail y E-Commerce", "color": "#0059B3",
         "desc": "Engagement personalizado desde datos de primera parte, actualizaciones de pedidos en tiempo real, recuperación de carritos abandonados, páginas de aterrizaje incrustadas en SMS vía Pages.",
         "chips": ["GDPR", "PDPA"] },
       { "key": "education", "tier": "secondary", "name": "Educación", "color": "#0059B3",
         "desc": "Confirmaciones de inscripción, recordatorios de cursos y chats padres-escuela en una bandeja de entrada. Soporte multilingüe en pares de idiomas regionales.",
         "chips": ["PDPA", "Multilingüe"] },
-      { "key": "logistics", "tier": "secondary", "name": "Logística", "color": "#0059B3",
-        "desc": "Bandeja de entrada unificada a través de WhatsApp, Email y Chat más notificaciones automatizadas de seguimiento. Despacho de conductores con IVR de voz y confirmaciones SMS.",
-        "chips": ["Omnicanal", "GDPR"] },
       { "key": "entertainment", "tier": "secondary", "name": "Entretenimiento y Gaming", "color": "#0059B3",
         "desc": "Verificación SMS y de voz internacional para editores de juegos en el extranjero y aplicaciones sociales. Enrutamiento por país maneja la última milla en mercados emergentes.",
         "chips": ["200+ Países", "GDPR"] },
@@ -212,6 +226,14 @@
   "departments": {
     "headerTag": "Departamentos a los que damos soporte",
     "intro": "Dentro de cada organización cliente, DOLPHLINK presta servicio a cuatro equipos distintos sobre la misma infraestructura compartida — desde operaciones de primera línea hasta proyectos a medida de IA y digitalización.",
+    "introLead": "Dentro de cada organización cliente, ",
+    "introTail": " presta servicio a cuatro equipos distintos sobre la misma infraestructura compartida — desde operaciones de primera línea hasta proyectos a medida de IA y digitalización.",
+    "personas": {
+      "support":    { "quote": "Necesito saber qué tickets requieren un humano en 5 segundos, no en 5 minutos.",       "attr": "Líder de Atención al Cliente · Banca" },
+      "growth":     { "quote": "Quiero hacer A/B testing hoy, no el próximo sprint.",                                  "attr": "Directora de Marketing · Retail" },
+      "ops":        { "quote": "No debería despertarme por un cambio de ruta de operador.",                            "attr": "Líder SRE · Seguros" },
+      "innovation": { "quote": "No podemos arrancar y reemplazar. Tiene que convivir con lo que ya confiamos.",         "attr": "CTO · Gobierno" }
+    },
     "items": [
       { "key": "support", "name": "Servicio al Cliente",
         "desc": "Soporte multicanal a través de cada punto de contacto digital con traspaso IA-humano. Trazabilidad de auditoría completa, puntuación de sentimiento y aplicación SLA en cada ticket. Flujos de escalamiento Tier-1 a Tier-3 configurables por región." },

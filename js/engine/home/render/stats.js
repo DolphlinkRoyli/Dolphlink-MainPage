@@ -1,12 +1,24 @@
 /**
- * Reliability Matrix — 5 stat cards. Click → opens detail modal.
+ * Performance Dashboard — 5 stat cards chained by causal arrows.
  * HOMEPAGE ONLY.
+ *
+ * Renders the 5 cards interleaved with .stat-connector spans (›) so the
+ * grid reads left-to-right as a causal chain:
+ *
+ *   [99.999%] › [200+] › [<10s] › [AI×H] › [98%]
+ *    bedrock    scale    speed    edge    outcome
+ *
+ * Cards are addressed in CSS by `data-stat` (sla / loc / lat / ain / open),
+ * NOT by :nth-child — the interleaved connectors would otherwise shift the
+ * indices and break the FOUNDATION / DIFFERENTIATOR / OUTCOME styling.
  */
 import { escapeHtml } from '../utils.js';
 import { iconHTML }    from './icon-html.js';
 
+const CONNECTOR = '<span class="stat-connector" aria-hidden="true">›</span>';
+
 export function renderStats(container, stats) {
-  container.innerHTML = stats.map(s => `
+  const cards = stats.map(s => `
     <button type="button" class="stat-card" data-stat="${escapeHtml(s.key)}"
             data-modal-icon="${escapeHtml(s.icon)}"
             data-modal-eyebrow="${escapeHtml(s.value)}"
@@ -19,7 +31,8 @@ export function renderStats(container, stats) {
         <span class="stat-label">${escapeHtml(s.label)}</span>
         <span class="stat-stars" aria-label="Gold standard rating">★★★★★</span>
       </span>
-      <span class="click-hint" aria-hidden="true">Click to view more <span class="hint-arrow">&rarr;</span></span>
+      <span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span>
     </button>
-  `).join('');
+  `);
+  container.innerHTML = cards.join(CONNECTOR);
 }

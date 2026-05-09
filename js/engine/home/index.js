@@ -33,6 +33,7 @@ import { renderLegalLinks }  from './render/legal.js';
 import { bindCardDetail }    from './modules/card-detail.js';
 import { renderFooterCard }  from './modules/footer-card.js';
 import { bindMap, setMapLocations } from './modules/map.js';
+import { bindDeptExplorer } from './modules/dept-explorer.js';
 
 
 /* -------- Renderer registry — drives the [data-render] dispatcher ------ */
@@ -132,6 +133,11 @@ async function bootstrap() {
        by data-render may have been overwritten back to content.json
        text — re-applying ensures the data-i18n swaps stick. */
     await setupI18n();
+    /* Re-bind controllers whose inner DOM was replaced by the renderer.
+       bindDeptExplorer is idempotent (uses event delegation + WeakMap
+       state) so a second call just resyncs the new tabs/panels with
+       the stored active index. */
+    bindDeptExplorer(document.querySelector('.dept-explorer'));
   });
 }
 
@@ -182,6 +188,10 @@ function wireUpInteractions() {
   // World map (lazy via IntersectionObserver inside bindMap)
   const mapEl = document.getElementById('global-map');
   if (mapEl) bindMap(mapEl);
+
+  // Department explorer — 4 tabs + active panel showing persona quote
+  // + description.  Replaces the old separated persona-banner + strip.
+  bindDeptExplorer(document.querySelector('.dept-explorer'));
 }
 
 

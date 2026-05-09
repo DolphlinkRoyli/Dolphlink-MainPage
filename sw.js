@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v373';
+const CACHE_VERSION = 'dolphlink-v418';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -94,6 +94,7 @@ const PRECACHE = [
   SCOPE + 'js/engine/home/modules/card-detail.js',
   SCOPE + 'js/engine/home/modules/footer-card.js',
   SCOPE + 'js/engine/home/modules/map.js',
+  SCOPE + 'js/engine/home/modules/dept-explorer.js',
   SCOPE + 'js/engine/home/register.js',          // Request-Briefing modal
   SCOPE + 'js/engine/home/register-scanner.js',  // QR scanner (lazy)
 

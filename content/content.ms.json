@@ -21,8 +21,8 @@
     "taglineSegB": ", menyampaikan infrastruktur kritikal misi untuk komunikasi global pada skala besar.","taglineSegC": "Berlesen di Singapura dan beroperasi di lebih 200 negara, platform ini menggerakkan orkestrasi AI yang selamat, penghalaan global serta kawalan kedaulatan data untuk kerajaan dan perusahaan terkawal. Setiap tindakan disokong oleh penyulitan hujung ke hujung, kawalan capaian utama identiti dan kebolehauditan kalis tampering.",
     "ctaPrimary": "Mohon Sesi Taklimat",
     "ctaPrimaryMailto": "Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&cc=Joycetsam@dolphlink.com",
-    "ctaSecondary": "Lihat Auto-Orkestrasi",
-    "ctaSecondaryScrollTo": "n-sec",
+    "ctaSecondary": "Lihat cara ia berfungsi",
+    "ctaSecondaryScrollTo": "hiw",
     "stats": [
       { "value": "99.999%", "label": "Masa Operasi" },
       { "value": "1,000+",  "label": "Laluan Tier-1" },
@@ -31,7 +31,18 @@
     "triggerLine": "Mengesan gangguan perkhidmatan dan secara automatik mencetuskan pemulihan."
   },
   "reliability": {
-    "headerTag": "Matriks Kebolehpercayaan",
+    "headerTag": "Papan Pemuka Prestasi",
+    "narrative": {
+      "s1Tail": " masa operasi",
+      "s2Lead": "meliputi ",
+      "s2Tail": " negara",
+      "s3Lead": "penghantaran ",
+      "s3Value": "kurang 10 saat",
+      "s4Lead": "merangkumi ",
+      "s4Value": "Kitar Hayat Penuh",
+      "s5Lead": "menghasilkan ",
+      "s5Tail": " kadar buka tersahkan"
+    },
     "stats": [
       { "key": "sla",  "icon": "icon_6",  "value": "99.999%", "label": "Masa Operasi",
         "desc": "Masa operasi lima sembilan (99.999%) di seluruh PoP berlebihan secara geografi. Dibina untuk komunikasi misi-kritikal dengan SLA yang disahkan secara bebas oleh pihak ketiga dan diaudit setiap suku tahun." },
@@ -39,8 +50,8 @@
         "desc": "Liputan global menerusi lebih 1,000 laluan rangkaian Tier-1 dengan pengendali mudah alih, memberikan kualiti pemesejan gred kerier dan ketersambungan batu terakhir di pasaran terkawal mahupun pasaran baru muncul." },
       { "key": "lat",  "icon": "icon_10", "value": "<10s",    "label": "Penghantaran",
         "desc": "SMS sampai kepada penerima dalam masa kurang dari 10 saat menerusi laluan kerier Tier-1. Disahkan berdasarkan penanda aras global, diaudit setiap suku tahun, dan dioptimumkan secara berterusan menggunakan analitik laluan masa nyata." },
-      { "key": "ain",  "icon": "icon_7",  "value": "AI×H",    "label": "Orkestrasi",
-        "desc": "Orkestrasi ejen AI hujung ke hujung dengan pemerhatian manusia. Bot mengendalikan tugas rutin, ejen AI mengendalikan kes yang memerlukan pertimbangan; sebaik sahaja polisi atau ambang risiko tercetus, kes itu diserahkan dengan lancar kepada pegawai manusia. Alat migrasi terbina dalam memindahkan aliran kerja sedia ada ke platform generasi baharu mengikut jadual pelanggan, dengan jejak audit kalis pindaan pada setiap penyerahan." },
+      { "key": "ain",  "icon": "icon_7",  "value": "360°",                  "label": "Kitar Hayat Penuh",
+        "desc": "Liputan penuh sepanjang kitar hayat operasi. Dari reka bentuk polisi dan migrasi sehinggalah pelaksanaan harian, audit dan pembaharuan, semuanya berjalan di atas platform yang sama. Trafik rutin diuruskan sendiri oleh ejen AI kami, sepanjang masa: memilih laluan penghantaran, beralih ke operator lain apabila satu jatuh, melakukan semakan pematuhan sebelum hantar, dan menandakan apa-apa yang kelihatan tidak kena. Apabila benar-benar memerlukan pertimbangan manusia, kes itu diserahkan kepada pengulas bernama di pihak anda berserta konteks penuh. Alat migrasi juga sedia ada di dalam platform supaya anda boleh memindahkan aliran kerja warisan ke platform baharu mengikut kelajuan anda sendiri, dan setiap tindakan di setiap peringkat meninggalkan jejak audit yang boleh terus diberikan kepada pihak pengawal selia." },
       { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "Kadar Bacaan",
         "desc": "Kadar bacaan 98% yang disahkan untuk SMS transaksi yang dihantar menerusi pengendali Tier-1 di seluruh dunia. OTP segera, amaran penipuan dan notifikasi keutamaan tinggi sampai kepada pelanggan dalam beberapa saat dan benar-benar dibaca. Trafik transaksi diberi keutamaan berbanding kempen pemasaran, dengan audit pengukuran pihak ketiga setiap suku tahun." }
     ]
@@ -59,28 +70,28 @@
     "subnoteFoot": "Sama ada jalan, data terletak di sini, tadbir urus tangan anda, pembelajaran kitaran ini ke kitaran seterusnya.",
     "stages": {
       "intake": {
-        "owner": "Manusia",
-        "title": "Manusia menetapkan dan meluluskan projek",
-        "desc": "Arkitek penyelesaian berunding dengan pasukan pematuhan, perundangan dan operasi pelanggan. Bersama mereka mentakrifkan skop program, mengunci residensi data, memetakan rangka kerja kawal selia yang berkenaan, menamakan pemilik eskalasi di kedua-dua belah, dan mempersetujui SLA, KPI dan kewajipan audit. AI tidak terlibat pada peringkat ini. SOW ditandatangani oleh individu dinamakan — sebelum tandatangan itu, tiada trafik mengalir.",
-        "metric": "Arkitek penyelesaian · Skop · Residensi · SOW ditandatangani"
+        "title": "Rancang dan luluskan",
+        "humanRole": "Pasukan anda menyemak pakej reka bentuk berbanding polisi dalaman anda, menamakan pemilik eskalasi di pihak anda, dan menandatangani SOW. Itu satu-satunya tempat tandatangan manusia diwajibkan sebelum trafik mengalir.",
+        "aiRole": "Kami menyerahkan pakej reka bentuk lengkap dalam 72 jam — seni bina penyelesaian dan topologi rangkaian, model kapasiti dengan redundansi muatan puncak, peta residensi data mengikut rantau, matriks pematuhan kawal selia berbanding setiap rangka kerja yang berkenaan, pelan pemindahan nombor, reka bentuk integrasi untuk CRM dan sistem teras anda, sasaran SLA, daftar risiko dengan mitigasi, dan pelan rollback jika sesuatu tersimpang.",
+        "metric": "Pakej reka bentuk · Residensi serantau · SLA ditandatangani"
       },
       "orchestrate": {
-        "owner": "AI",
-        "title": "AI melaksana pada skala",
-        "desc": "Setelah SOW aktif, AI mengambil alih pelaksanaan: memperuntukkan laluan dan kapasiti, mengagihkan trafik antara laluan utama dan sandaran, memantau telemetri penghantaran masa nyata, gagal-pindah secara automatik apabila laluan merosot, dan menyelaraskan setiap kelompok dengan sistem sumber kebenaran pelanggan. Setiap mesej melalui pintu pematuhan (had kadar, peraturan serantau, polisi kandungan) sebelum dihantar. Berjalan tanpa penyeliaan, sepanjang masa.",
-        "metric": "Memperuntuk · Mengagih · Memantau · Menyelaras"
+        "title": "Bina, uji, kemudian migrasi atau lancar",
+        "humanRole": "Pemilik produk anda menyertai setiap demo sprint, menandatangani keputusan ujian, dan memberi lampu hijau untuk tarikh cutover migrasi atau go-live.",
+        "aiRole": "Kami berjalan dalam sprint dua minggu. Setiap satu berakhir dengan demo dan suite ujian hijau. Apabila anda migrasi dari gerbang lama, kami berjalan selari dan menukar trafik secara beransur-ansur supaya tiada yang gugur. Untuk binaan baharu, kami melancarkan dengan zero-downtime dan rollback satu arahan jika ada yang tersilap.",
+        "metric": "Sprint 2 minggu · Ujian hijau · Cutover beransur"
       },
       "resolve": {
-        "owner": "Manusia",
-        "title": "Manusia memutuskan setiap pengecualian",
-        "desc": "Apabila peristiwa terkeluar dari polisi yang dipersetujui — ambang risiko, pencetus kawal selia, kandungan sensitif, trafik anomali — AI tidak bertindak. Ia membungkus kes (konteks penuh, sejarah, tindakan dicadangkan) dan merutekan kepada pemilik manusia dinamakan. Pemilik meluluskan, mengatasi atau menjeda program dengan satu tindakan. Setiap keputusan direkodkan dengan nama, cap masa dan rasional. AI mencadang; manusia memutuskan.",
-        "metric": "Tanda · Rute · Putus · Rekod"
+        "title": "Beroperasi pada skala",
+        "humanRole": "Apabila sesuatu ditandakan, pasukan anda buat keputusan dengan satu klik. Luluskan, atasi, atau jeda program. Setiap pilihan direkodkan dengan nama, masa, dan rasional.",
+        "aiRole": "Kami membawa trafik di laluan Tier-1, gagal-pindah merentasi saluran apabila sesuatu gagal, dan kekalkan keadaan rentas-saluran konsisten. Apabila peristiwa terkeluar dari polisi yang dipersetujui, kami tandakan dengan konteks penuh dan kekalkan perbualan stabil sehingga operator anda mengambilnya.",
+        "metric": "Bawah 10s · Redundansi Tier-1 · Pematuhan pra-hantar"
       },
       "audit": {
-        "owner": "AI + Manusia",
-        "title": "AI menyusun · Manusia menandatangani · Juruaudit menutup",
-        "desc": "Pada penutupan program, AI menghimpunkan bungkusan kalis pindaan: setiap tindakan, setiap keputusan, setiap cubaan semula, setiap kelulusan manusia, dieksport dalam format yang juruaudit anda perlukan. Ketua pematuhan manusia dinamakan menyemak dan menerapkan tandatangan digital dengan cap masa. Juruaudit menyemak dan menerima. Kedua-dua tandatangan — mesin dan manusia — dimeterai dalam rekod. Buku panduan dikemas kini untuk program seterusnya.",
-        "metric": "Susun · Eksport · Tandatangan · Meterai"
+        "title": "Audit dan meterai",
+        "humanRole": "Ketua pematuhan anda menyemak apa yang kami susun dan menandatangani bungkusan secara digital. Juruaudit membaca dan menerima.",
+        "aiRole": "Kami menyusun bungkusan kalis pindaan setiap tindakan, keputusan dan kelulusan dalam format yang juruaudit anda perlukan — sama ada CSV, JSON atau skema khusus pengawal selia — dan memeterai graf keputusan untuk handoff.",
+        "metric": "Kalis pindaan · Sedia pengawal selia · Meterai dua tandatangan"
       }
     },
     "tracks": {
@@ -103,15 +114,15 @@
     }
   },
   "portfolios": {
-    "headerTag": "Portfolio",
-    "intro": "Tiga tunjang, sembilan produk, satu platform berdaulat. Pilih titik masuk yang sesuai dengan tindanan teknologi anda hari ini, dan kembangkan ke tunjang bersebelahan apabila operasi anda berkembang.",
+    "headerTag": "Senibina Sistem",
+    "intro": "Tiga lapisan, sembilan produk, satu platform berlesen pengawal selia. Lapisan Tadbir Urus AI memikul beban strategik; Lapisan Orkestrasi menjalankan operasi; Infrastruktur Konektiviti membawa trafik di lapisan bawah.",
     "pillars": [
-      { "key": "connectivity",  "name": "INFRASTRUKTUR KONEKTIVITI", "tagline": "Capaian Operator Tier-1",
-        "desc": "Tulang belakang komunikasi global merentasi rangkaian gred-pembawa" },
+      { "key": "governance",    "name": "LAPISAN TADBIR URUS AI",   "tagline": "Arahan Selaras Pengawal Selia + Migrasi",
+        "desc": "Satah kawalan dalam-rantau untuk operasi perusahaan dipacu AI dan pematuhan" },
       { "key": "orchestration", "name": "LAPISAN ORKESTRASI", "tagline": "Pelbagai Saluran + Pembangun",
         "desc": "Lapisan pelaksanaan untuk komunikasi perusahaan boleh-program dan aliran kerja AI" },
-      { "key": "governance",    "name": "LAPISAN TADBIR URUS AI",   "tagline": "Arahan Berdaulat + Migrasi",
-        "desc": "Satah kawalan berdaulat untuk operasi perusahaan dipacu AI dan pematuhan" }
+      { "key": "connectivity",  "name": "INFRASTRUKTUR KONEKTIVITI", "tagline": "Capaian Operator Tier-1",
+        "desc": "Tulang belakang komunikasi global merentasi rangkaian gred-pembawa" }
     ],
     "items": [
       { "key": "sms", "pillar": "connectivity", "icon": "icon_4", "label": "SMS Platform",
@@ -150,7 +161,7 @@
     "cta": "Terokai",
     "cloud": {
       "tag": "Perkhidmatan Awan",
-      "desc": "Hosting awan berdaulat peringkat SME, residensi data ikut wilayah, kapasiti bayar mengikut keperluan. Tiada kontrak panjang, tiada gantian sistem."
+      "desc": "Hosting awan selaras pengawal selia peringkat SME, residensi data ikut wilayah, kapasiti bayar mengikut keperluan. Tiada kontrak panjang, tiada gantian sistem."
     },
     "platform": {
       "tag": "Perkhidmatan Platform",
@@ -176,31 +187,34 @@
   },
   "industries": {
     "headerTag": "Industri yang Kami Layani",
-    "intro": "Dibina untuk komunikasi terkawal dan misi-kritikal. Empat sektor utama di mana seni bina berdaulat DOLPHLINK dan orkestrasi ejen AI memberi kelebihan yang boleh diukur, serta lima sektor tambahan yang dilayani menerusi infrastruktur yang sama.",
+    "colSector": "Sektor",
+    "colCapability": "Apa yang kami sediakan",
+    "colCompliance": "Pematuhan",
+    "intro": "Dibina untuk komunikasi terkawal dan misi-kritikal. Empat sektor utama di mana seni bina dalam-rantau DOLPHLINK dan orkestrasi ejen AI memberi kelebihan yang boleh diukur, serta lima sektor tambahan yang dilayani menerusi infrastruktur yang sama.",
     "primaryLabel": "Sektor Utama",
     "secondaryLabel": "Sektor Tambahan",
     "items": [
+      { "key": "government", "tier": "primary", "name": "Kerajaan & Sektor Awam", "color": "#1F2937",
+        "desc": "Amaran rakyat, notifikasi perkhidmatan awam dan siaran kecemasan pada infrastruktur berlesen pengawal selia. Selaras IM8, sedia audit, boleh dikerahkan merentasi pelbagai bidang kuasa di ASEAN/EMEA/Amerika.",
+        "chips": ["IM8", "Awan Berdaulat", "Pelbagai Bidang Kuasa"] },
       { "key": "banking", "tier": "primary", "name": "Perbankan & FinTech", "color": "#0059B3",
         "desc": "2FA/OTP selamat, amaran penipuan masa nyata, penyampaian penyata, peringatan bayaran balik automatik melalui kempen suara pukal.",
         "chips": ["MAS TRM", "PDPA", "PCI-DSS"] },
-      { "key": "government", "tier": "primary", "name": "Kerajaan & Sektor Awam", "color": "#1F2937",
-        "desc": "Amaran rakyat, notifikasi perkhidmatan awam dan siaran kecemasan pada infrastruktur berdaulat. Selaras IM8, sedia audit, boleh dikerahkan merentasi pelbagai bidang kuasa berlesen pengawal selia di ASEAN/EMEA/Amerika.",
-        "chips": ["IM8", "Awan Berdaulat", "Pelbagai Bidang Kuasa"] },
-      { "key": "healthcare", "tier": "primary", "name": "Penjagaan Kesihatan", "color": "#10B981",
-        "desc": "Kurangkan ketidakhadiran dengan peringatan janji temu automatik dan triaj melalui chatbot AI. Privasi pesakit dilindungi dengan kediaman data berdaulat.",
-        "chips": ["PDPA", "HIPAA-Ready", "ISO 27001"] },
       { "key": "insurance", "tier": "primary", "name": "Insurans", "color": "#7C3AED",
         "desc": "Peringatan pembaharuan polisi, notifikasi status tuntutan, aliran pengesahan KYC. Jejak audit tahan gangguan untuk setiap titik sentuh terkawal.",
         "chips": ["PDPA", "GDPR", "ISO 27001"] },
+      { "key": "healthcare", "tier": "primary", "name": "Penjagaan Kesihatan", "color": "#10B981",
+        "desc": "Kurangkan ketidakhadiran dengan peringatan janji temu automatik dan triaj melalui chatbot AI. Privasi pesakit dilindungi dengan kediaman data dalam-rantau.",
+        "chips": ["PDPA", "HIPAA-Ready", "ISO 27001"] },
+      { "key": "logistics", "tier": "secondary", "name": "Logistik", "color": "#0059B3",
+        "desc": "Peti masuk bersepadu merentasi WhatsApp, E-mel dan Sembang ditambah notifikasi penjejakan automatik. Penghantaran pemandu melalui IVR suara dan pengesahan SMS.",
+        "chips": ["Omnichannel", "GDPR"] },
       { "key": "retail", "tier": "secondary", "name": "Runcit & E-Dagang", "color": "#0059B3",
         "desc": "Penglibatan diperibadikan dari data pihak pertama, kemas kini pesanan masa nyata, pemulihan troli ditinggalkan, halaman pendaratan tertanam SMS melalui Pages.",
         "chips": ["GDPR", "PDPA"] },
       { "key": "education", "tier": "secondary", "name": "Pendidikan", "color": "#0059B3",
         "desc": "Pengesahan pendaftaran, peringatan kursus, sembang ibu bapa-sekolah dalam satu peti masuk. Sokongan pelbagai bahasa dalam pasangan bahasa serantau.",
         "chips": ["PDPA", "Pelbagai Bahasa"] },
-      { "key": "logistics", "tier": "secondary", "name": "Logistik", "color": "#0059B3",
-        "desc": "Peti masuk bersepadu merentasi WhatsApp, E-mel dan Sembang ditambah notifikasi penjejakan automatik. Penghantaran pemandu melalui IVR suara dan pengesahan SMS.",
-        "chips": ["Omnichannel", "GDPR"] },
       { "key": "entertainment", "tier": "secondary", "name": "Hiburan & Permainan", "color": "#0059B3",
         "desc": "Pengesahan SMS dan suara antarabangsa untuk penerbit permainan luar negara dan aplikasi sosial. Penghalaan sedar negara mengendalikan batu terakhir pasaran baru muncul.",
         "chips": ["200+ Negara", "GDPR"] },
@@ -212,6 +226,14 @@
   "departments": {
     "headerTag": "Jabatan yang Kami Sokong",
     "intro": "Dalam setiap organisasi pelanggan, DOLPHLINK menyokong empat pasukan berbeza dengan infrastruktur kongsi yang sama — daripada operasi barisan hadapan hinggalah projek AI-Digital tersuai.",
+    "introLead": "Dalam setiap organisasi pelanggan, ",
+    "introTail": " menyokong empat pasukan berbeza pada infrastruktur kongsi yang sama — daripada operasi barisan hadapan hinggalah projek AI-Digital tersuai.",
+    "personas": {
+      "support":    { "quote": "Saya perlu tahu tiket mana memerlukan manusia dalam 5 saat, bukan 5 minit.",       "attr": "Ketua Khidmat Pelanggan · Bank" },
+      "growth":     { "quote": "Saya nak buat ujian A/B hari ini, bukan sprint depan.",                            "attr": "Pengarah Pemasaran · Runcit" },
+      "ops":        { "quote": "Saya tak patut dikejutkan tengah malam untuk failover laluan.",                    "attr": "Ketua SRE · Insurans" },
+      "innovation": { "quote": "Kami tak boleh buang dan ganti. Ia perlu hidup bersama sistem yang kami sudah percaya.", "attr": "CTO · Kerajaan" }
+    },
     "items": [
       { "key": "support", "name": "Khidmat Pelanggan",
         "desc": "Sokongan pelbagai saluran merentasi setiap titik sentuh digital dengan serahan AI-Manusia. Setiap tiket membawa jejak audit penuh, pemarkahan sentimen dan penguatkuasaan SLA. Aliran peningkatan Tier-1 hingga Tier-3 boleh dikonfigurasi mengikut rantau." },

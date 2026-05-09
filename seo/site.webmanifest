@@ -21,9 +21,9 @@
   ],
   "shortcuts": [
     {
-      "name": "The Portfolio",
-      "short_name": "Portfolio",
-      "description": "Jump to the 9-product portfolio section",
+      "name": "System Architecture",
+      "short_name": "Architecture",
+      "description": "Jump to the 3-layer system architecture section",
       "url": "/Dolphlink-MainPage/#n-sec"
     },
     {
