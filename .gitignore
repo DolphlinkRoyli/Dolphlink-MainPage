@@ -8,9 +8,14 @@
 _local/
 
 # ---- Build pipeline kept at root (relative paths) but not deployed ---------
-build/
-cms/
-templates/
+# IMPORTANT: leading slash anchors the rule to the project ROOT — without
+# it, git would also ignore js/engine/build/ (the build-page page module)
+# and any future folder anywhere in the tree that happens to be called
+# `build`, `cms`, or `templates`. The slash is what scopes these rules to
+# the top-level dirs that actually hold the build pipeline.
+/build/
+/cms/
+/templates/
 
 # ---- Personal deploy / utility scripts at root (Windows convenience) -------
 push-to-github.bat
