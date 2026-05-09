@@ -72,7 +72,7 @@
       "intake": {
         "title": "Rancang dan luluskan",
         "humanRole": "Pasukan anda menyemak pakej reka bentuk berbanding polisi dalaman anda, menamakan pemilik eskalasi di pihak anda, dan menandatangani SOW. Itu satu-satunya tempat tandatangan manusia diwajibkan sebelum trafik mengalir.",
-        "aiRole": "Kami menyerahkan pakej reka bentuk lengkap dalam 72 jam — seni bina penyelesaian dan topologi rangkaian, model kapasiti dengan redundansi muatan puncak, peta residensi data mengikut rantau, matriks pematuhan kawal selia berbanding setiap rangka kerja yang berkenaan, pelan pemindahan nombor, reka bentuk integrasi untuk CRM dan sistem teras anda, sasaran SLA, daftar risiko dengan mitigasi, dan pelan rollback jika sesuatu tersimpang.",
+        "aiRole": "Kami menyerahkan pakej reka bentuk lengkap dalam 72 jam. Di dalamnya ada seni bina penyelesaian dan topologi rangkaian, model kapasiti dengan redundansi muatan puncak, peta residensi data mengikut rantau, matriks pematuhan kawal selia berbanding setiap rangka kerja yang berkenaan, pelan pemindahan nombor, reka bentuk integrasi untuk CRM dan sistem teras anda, sasaran SLA, daftar risiko dengan mitigasi, dan pelan rollback jika sesuatu tersimpang.",
         "metric": "Pakej reka bentuk · Residensi serantau · SLA ditandatangani"
       },
       "orchestrate": {
@@ -90,7 +90,7 @@
       "audit": {
         "title": "Audit dan meterai",
         "humanRole": "Ketua pematuhan anda menyemak apa yang kami susun dan menandatangani bungkusan secara digital. Juruaudit membaca dan menerima.",
-        "aiRole": "Kami menyusun bungkusan kalis pindaan setiap tindakan, keputusan dan kelulusan dalam format yang juruaudit anda perlukan — sama ada CSV, JSON atau skema khusus pengawal selia — dan memeterai graf keputusan untuk handoff.",
+        "aiRole": "Kami menyusun bungkusan kalis pindaan setiap tindakan, keputusan dan kelulusan dalam format yang juruaudit anda perlukan, sama ada CSV, JSON atau skema khusus pengawal selia, dan memeterai graf keputusan untuk handoff.",
         "metric": "Kalis pindaan · Sedia pengawal selia · Meterai dua tandatangan"
       }
     },
@@ -157,7 +157,7 @@
   "smeBridge": {
     "eyebrow": "SME · Pelan Padanan Terbaik",
     "title": "Direka untuk pasukan yang lebih kecil.",
-    "intro": "Tindanan perusahaan yang sama, disesuaikan dengan bajet dan kelajuan SME. Tiga laluan perkhidmatan sedia digunakan — pilih satu dan kami mengaktifkannya dalam beberapa hari, bukan beberapa suku tahun.",
+    "intro": "Tindanan perusahaan yang sama, disesuaikan dengan bajet dan kelajuan SME. Tiga laluan perkhidmatan sedia digunakan. Pilih satu dan kami mengaktifkannya dalam beberapa hari, bukan beberapa suku tahun.",
     "cta": "Terokai",
     "cloud": {
       "tag": "Perkhidmatan Awan",
@@ -225,9 +225,9 @@
   },
   "departments": {
     "headerTag": "Jabatan yang Kami Sokong",
-    "intro": "Dalam setiap organisasi pelanggan, DOLPHLINK menyokong empat pasukan berbeza dengan infrastruktur kongsi yang sama — daripada operasi barisan hadapan hinggalah projek AI-Digital tersuai.",
+    "intro": "Dalam setiap organisasi pelanggan, DOLPHLINK menyokong empat pasukan berbeza dengan infrastruktur kongsi yang sama, daripada operasi barisan hadapan hinggalah projek AI-Digital tersuai.",
     "introLead": "Dalam setiap organisasi pelanggan, ",
-    "introTail": " menyokong empat pasukan berbeza pada infrastruktur kongsi yang sama — daripada operasi barisan hadapan hinggalah projek AI-Digital tersuai.",
+    "introTail": " menyokong empat pasukan berbeza pada infrastruktur kongsi yang sama, daripada operasi barisan hadapan hinggalah projek AI-Digital tersuai.",
     "personas": {
       "support":    { "quote": "Saya perlu tahu tiket mana memerlukan manusia dalam 5 saat, bukan 5 minit.",       "attr": "Ketua Khidmat Pelanggan · Bank" },
       "growth":     { "quote": "Saya nak buat ujian A/B hari ini, bukan sprint depan.",                            "attr": "Pengarah Pemasaran · Runcit" },

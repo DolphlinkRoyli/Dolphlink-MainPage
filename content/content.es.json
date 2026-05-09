@@ -90,7 +90,7 @@
       "audit": {
         "title": "Auditar y sellar",
         "humanRole": "Su responsable de cumplimiento revisa lo que hemos compilado y firma digitalmente el paquete. El auditor lo lee y lo acepta.",
-        "aiRole": "Compilamos un paquete inalterable con cada acción, decisión y aprobación, en el formato que su auditor requiera — ya sea CSV, JSON o un esquema específico del regulador — y sellamos el grafo de decisiones listo para el handoff.",
+        "aiRole": "Compilamos un paquete inalterable con cada acción, decisión y aprobación en el formato que su auditor requiera, ya sea CSV, JSON o un esquema específico del regulador, y sellamos el grafo de decisiones listo para el handoff.",
         "metric": "Inalterable · Listo para regulador · Sello de doble firma"
       }
     },
@@ -157,7 +157,7 @@
   "smeBridge": {
     "eyebrow": "SME · Planes a la medida",
     "title": "Diseñado para equipos más pequeños.",
-    "intro": "La misma plataforma empresarial, ajustada al presupuesto y la velocidad de la SME. Tres vías listas para activar — elija una y la ponemos en marcha en días, no en trimestres.",
+    "intro": "La misma plataforma empresarial, ajustada al presupuesto y la velocidad de la SME. Tres vías listas para activar. Elija una y la ponemos en marcha en días, no en trimestres.",
     "cta": "Explorar",
     "cloud": {
       "tag": "Servicios en la Nube",
@@ -225,9 +225,9 @@
   },
   "departments": {
     "headerTag": "Departamentos a los que damos soporte",
-    "intro": "Dentro de cada organización cliente, DOLPHLINK presta servicio a cuatro equipos distintos sobre la misma infraestructura compartida — desde operaciones de primera línea hasta proyectos a medida de IA y digitalización.",
+    "intro": "Dentro de cada organización cliente, DOLPHLINK presta servicio a cuatro equipos distintos sobre la misma infraestructura compartida, desde operaciones de primera línea hasta proyectos a medida de IA y digitalización.",
     "introLead": "Dentro de cada organización cliente, ",
-    "introTail": " presta servicio a cuatro equipos distintos sobre la misma infraestructura compartida — desde operaciones de primera línea hasta proyectos a medida de IA y digitalización.",
+    "introTail": " presta servicio a cuatro equipos distintos sobre la misma infraestructura compartida, desde operaciones de primera línea hasta proyectos a medida de IA y digitalización.",
     "personas": {
       "support":    { "quote": "Necesito saber qué tickets requieren un humano en 5 segundos, no en 5 minutos.",       "attr": "Líder de Atención al Cliente · Banca" },
       "growth":     { "quote": "Quiero hacer A/B testing hoy, no el próximo sprint.",                                  "attr": "Directora de Marketing · Retail" },

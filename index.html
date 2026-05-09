@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-page="home">
-<head><meta charset="UTF-8"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Qvs/MYH5NgMInq3lPLn9u0l9OUeNrax9M+NJfICovvE=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests; require-trusted-types-for 'script'; trusted-types default">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Qvs/MYH5NgMInq3lPLn9u0l9OUeNrax9M+NJfICovvE=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests">
  <title>Singapore Sovereign CPaaS & AI Orchestration Platform | DOLPHLINK</title>
  <meta name="description" content="Singapore's sovereign communications spine. CPaaS, AI orchestration, and human-in-the-loop AI governance for governments, FinTech, healthcare, and regulated enterprises. 1,000+ Tier-1 operators across 200+ countries at 99.999% uptime. ISO 27001 certified, MAS TRM and IM8-aligned. Operated under Singapore's Cybersecurity Act.">
  <meta name="keywords" content="CPaaS, Communications Platform as a Service, AI governance, AI gov, sovereign AI, AI-Human Lifecycle, agent orchestration, AI orchestration, digital solution, AI digital solution, enterprise communications platform, government communications platform, SMS API, voice API, SIP trunking, RCS messaging, conversational AI, no-code chatbot, government AI solutions, regulated industries CPaaS, ISO 27001 CPaaS, MAS TRM compliant, IM8-aligned, PDPA Singapore, GDPR compliant CPaaS, tier-1 carrier connectivity, mission-critical messaging, RFP-ready communications, RFP CPaaS, government tender CPaaS, B2B integration platform, REST API enterprise, SDK integration, webhook integration, Singapore CPaaS, ASEAN CPaaS, sovereign cloud Singapore, digital migration partner, AI migration services, FinTech communications, healthcare communications, retail communications, logistics communications, customer engagement platform, omnichannel messaging, two-factor authentication API, OTP delivery, transactional SMS, programmable voice, contact center API, SIP trunk Singapore, telco platform, carrier-grade communications, sovereign infrastructure">
@@ -224,7 +224,7 @@
       retired page-loader. The new inline #dlpk-loader uses Inter,
       same as the rest of the site, so no second font request needed.) -->
  <link rel="stylesheet" href="css/tokens.css?v=1">
- <link rel="stylesheet" href="css/style.css?v=253">
+ <link rel="stylesheet" href="css/style.css?v=260">
  <!-- Was a `rel=preload` + JS-promoted-to-stylesheet trick, but the
       preload fired ~1.5s before the deferred pwa.js could run the
       promotion and Chrome flagged "preloaded but not used". Direct
@@ -505,22 +505,36 @@
       main.js doesn't reach the hide() call (e.g. JS error).
       ================================================================ -->
  <style>
-  #dlpk-loader{position:fixed;inset:0;z-index:9999;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;font-family:'Inter',system-ui,-apple-system,sans-serif;animation:dlpk-loader-autohide 0s linear 4s forwards}
+  /* Loader v2 — brand 3-dot signature pattern (gold + blue + blue) with
+     sequential pulse, paired with the DOLPHLINK wordmark and a thin
+     sliding progress bar. Replaces the bare blue spinner ring; same
+     animation budget, far more intentional first impression. */
+  #dlpk-loader{position:fixed;inset:0;z-index:9999;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;font-family:'Inter',system-ui,-apple-system,sans-serif;animation:dlpk-loader-autohide 0s linear 4s forwards}
   #dlpk-loader.hidden,#dlpk-loader{transition:opacity .4s ease,visibility .4s ease}
   #dlpk-loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
-  #dlpk-loader-ring{width:54px;height:54px;border:3px solid rgba(0,89,179,.12);border-top-color:#0059B3;border-radius:50%;animation:dlpk-spin .9s linear infinite}
-  #dlpk-loader-text{font-size:11px;font-weight:800;letter-spacing:4.5px;color:#0059B3;line-height:1}
-  @keyframes dlpk-spin{to{transform:rotate(360deg)}}
+  #dlpk-loader-mark{display:flex;align-items:center;gap:11px;height:18px}
+  #dlpk-loader-mark .dlpk-dot{width:9px;height:9px;border-radius:50%;animation:dlpk-pulse 1.4s ease-in-out infinite}
+  #dlpk-loader-mark .dlpk-dot:nth-child(1){background:#F59E0B}
+  #dlpk-loader-mark .dlpk-dot:nth-child(2){background:#0059B3;animation-delay:.18s}
+  #dlpk-loader-mark .dlpk-dot:nth-child(3){background:#0059B3;animation-delay:.36s}
+  #dlpk-loader-text{font-size:13px;font-weight:800;letter-spacing:4.5px;color:#0059B3;line-height:1;margin-left:6px}
+  #dlpk-loader-bar{width:140px;height:2px;background:rgba(0,89,179,.08);border-radius:2px;overflow:hidden;position:relative}
+  #dlpk-loader-bar::after{content:'';position:absolute;left:-35%;top:0;width:35%;height:100%;background:#0059B3;border-radius:2px;animation:dlpk-slide 1.4s cubic-bezier(.4,0,.6,1) infinite}
+  @keyframes dlpk-pulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.3);opacity:1}}
+  @keyframes dlpk-slide{0%{left:-35%}100%{left:100%}}
   @keyframes dlpk-loader-autohide{to{opacity:0;visibility:hidden;pointer-events:none}}
-  @media (prefers-reduced-motion:reduce){#dlpk-loader-ring{animation:none}}
+  @media (prefers-reduced-motion:reduce){#dlpk-loader-mark .dlpk-dot,#dlpk-loader-bar::after{animation:none}#dlpk-loader-mark .dlpk-dot{opacity:1}}
  </style>
  <!-- Loader overlay — static HTML so we can drop `'unsafe-inline'` from
       script-src. No-JS visitors see the pre-rendered content directly;
       this overlay is hidden via JS (hideLoader()) the moment hydrate
       finishes. The `noscript` style below covers the no-JS case. -->
  <div id="dlpk-loader" role="status" aria-label="Loading">
-   <div id="dlpk-loader-ring" aria-hidden="true"></div>
-   <span id="dlpk-loader-text">DOLPHLINK</span>
+   <div id="dlpk-loader-mark" aria-hidden="true">
+     <span class="dlpk-dot"></span><span class="dlpk-dot"></span><span class="dlpk-dot"></span>
+     <span id="dlpk-loader-text">DOLPHLINK</span>
+   </div>
+   <div id="dlpk-loader-bar" aria-hidden="true"></div>
  </div>
  <noscript><style>#dlpk-loader{display:none !important}</style></noscript>
 
@@ -671,22 +685,6 @@
    </div>
  </div>
  <div class="stat-strip" data-render="reliability.stats"><button type="button" class="stat-card" data-stat="sla" data-modal-icon="icon_6" data-modal-eyebrow="99.999%" data-modal-title="Uptime" data-modal-text="Five-nines reliability across geo-redundant points of presence. Engineered for mission-critical communications with independently verified SLA and quarterly third-party attestation." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">99.999%</span><span class="stat-label">Uptime</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span></button><button type="button" class="stat-card" data-stat="loc" data-modal-icon="icon_5" data-modal-eyebrow="200+" data-modal-title="Countries" data-modal-text="Routes across 1,000+ tier-1 mobile operators worldwide for unmatched reach and carrier-grade message quality across every region, including last-mile coverage in regulated and emerging markets." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">200+</span><span class="stat-label">Countries</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span></button><button type="button" class="stat-card" data-stat="lat" data-modal-icon="icon_10" data-modal-eyebrow="&lt;10s" data-modal-title="Delivery" data-modal-text="SMS reaches recipients in under 10 seconds via tier-1 carrier routes, verified across global benchmarks, audited quarterly, and continuously optimized through real-time route intelligence." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">&lt;10s</span><span class="stat-label">Delivery</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span></button><button type="button" class="stat-card" data-stat="ain" data-modal-icon="icon_7" data-modal-eyebrow="360°" data-modal-title="Full Life Cycle" data-modal-text="Coverage spans the full operations life cycle, from policy design and migration through day-to-day execution, audit, and renewal, all on the same platform. Routine traffic runs on its own around the clock: choosing the route, switching carriers when one drops, running compliance checks before send, flagging anything that looks off. When a call actually needs human judgement, it goes to a named reviewer on your side with the full context attached. Built-in migration tooling lets you move legacy workflows onto the new platform at your own pace, and every action at every stage leaves an audit trail you can hand straight to a regulator." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">360°</span><span class="stat-label">Full Life Cycle</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span></button><button type="button" class="stat-card" data-stat="open" data-modal-icon="icon_3" data-modal-eyebrow="98%" data-modal-title="Open Rate" data-modal-text="98% verified open rate on transactional SMS across global tier-1 operators. Time-sensitive OTPs, fraud alerts, and high-priority notifications reach customers within seconds, and they actually read them. Engineered routing prioritises transactional traffic ahead of marketing batches, with quarterly third-party measurement audits." aria-haspopup="dialog"><span class="stat-icon-wrap"></span><span class="stat-meta"><span class="stat-value">98%</span><span class="stat-label">Open Rate</span><span class="stat-stars" aria-label="Gold standard rating">★★★★★</span></span><span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span></button></div>
- <!-- Causal-chain narrative — explains how the 5 metrics compound into outcome.
-      Reads as ONE sentence: "uptime spans countries delivers in <10s, augmented
-      by AI × human, producing a verified 98% open rate." Visual chevrons (›)
-      mark the causal flow between clauses; the final clause is colored green
-      to mirror the OUTCOME card. Wraps to vertical stack on mobile. -->
- <p class="perf-narrative" aria-label="How the metrics compound into outcome">
-   <span class="perf-narrative-step"><strong>99.999%</strong><span data-key="reliability.narrative.s1Tail"> uptime</span></span>
-   <span class="perf-narrative-arrow" aria-hidden="true">›</span>
-   <span class="perf-narrative-step"><span data-key="reliability.narrative.s2Lead">spans </span><strong>200+</strong><span data-key="reliability.narrative.s2Tail"> countries</span></span>
-   <span class="perf-narrative-arrow" aria-hidden="true">›</span>
-   <span class="perf-narrative-step"><span data-key="reliability.narrative.s3Lead">delivers in </span><strong data-key="reliability.narrative.s3Value">under 10s</strong></span>
-   <span class="perf-narrative-arrow" aria-hidden="true">›</span>
-   <span class="perf-narrative-step"><span data-key="reliability.narrative.s4Lead">across the </span><strong data-key="reliability.narrative.s4Value">Full Life Cycle</strong></span>
-   <span class="perf-narrative-arrow" aria-hidden="true">›</span>
-   <span class="perf-narrative-step perf-narrative-step--outcome"><span data-key="reliability.narrative.s5Lead">producing a verified </span><strong>98%</strong><span data-key="reliability.narrative.s5Tail"> open rate</span></span>
- </p>
  </div>
  </section>
 

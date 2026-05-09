@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v418';
+const CACHE_VERSION = 'dolphlink-v421';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -117,6 +117,7 @@ const PRECACHE = [
   SCOPE + 'media/img/video-poster.webp',
   SCOPE + 'media/video/current.mp4',
   SCOPE + 'media/icon/3D/logo.webp',
+  SCOPE + 'media/icon/icon.svg',          // PWA install icon (any + maskable)
   SCOPE + 'seo/site.webmanifest',
   // Local copies of external libs (populated by lib/download.ps1).
   // Pre-cache on install so offline mode + repeat visits skip the CDN.

@@ -4724,34 +4724,11 @@
   }
 }
 
-/* Causal-chain narrative line directly below the cards.
-   Reads as one sentence with chevron separators between clauses,
-   final clause coloured green to mirror the OUTCOME card. */
-.perf-narrative {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px 14px;
-  margin: 0;
-  padding: 16px 28px 22px;
-  border-top: 1px dashed rgba(0, 89, 179, 0.18);
-  font-size: clamp(11px, 0.9vw, 13px);
-  font-weight: 500;
-  letter-spacing: 0.2px;
-  color: rgba(0, 45, 92, 0.62);
-  line-height: 1.55;
-  text-align: center;
-}
-.perf-narrative-step strong {
-  font-weight: 800;
-  color: var(--baiwu-blue-primary);
-  font-feature-settings: 'tnum';
-  letter-spacing: 0.1px;
-}
-/* OUTCOME clause inherits brand blue too — all 5 highlighted numbers
-   (99.999% / 200+ / under 10s / Auto-Orchestration / 98%) read in the
-   same enterprise palette. */
+/* Causal-chain narrative was here — deleted entirely. The 5 cards above
+   already carry the labels (Uptime / Countries / Delivery / Full Life
+   Cycle / Open Rate) with chevron connectors between them, so the
+   sentence-restatement was pure repetition. Card row alone now closes
+   the section. */
 
 /* ============================================================
    SYSTEM ARCHITECTURE — 3-layer hierarchy with SITE-NATIVE chrome
@@ -4949,25 +4926,4 @@
   color: var(--baiwu-blue-primary);
   font-weight: 800;
   letter-spacing: 0.4px;
-}
-.perf-narrative-arrow {
-  font-weight: 300;
-  font-size: 1.3em;
-  color: var(--baiwu-blue-primary);
-  opacity: 0.5;
-  margin: 0 1px;
-  line-height: 1;
-}
-@media (max-width: 768px) {
-  .perf-narrative {
-    flex-direction: column;
-    gap: 6px;
-    padding: 14px 16px 18px;
-  }
-  .perf-narrative-arrow {
-    display: inline-block;
-    transform: rotate(90deg);
-    margin: 2px 0;
-    opacity: 0.4;
-  }
 }

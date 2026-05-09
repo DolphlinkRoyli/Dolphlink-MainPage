@@ -17,7 +17,7 @@
  */
 import { yieldToMain } from './utils.js';
 
-export const CONTENT_VERSION = '20260509flc';
+export const CONTENT_VERSION = '20260509app';
 
 const _cache = new Map();        /* lang code â†’ resolved content object */
 const _inflight = new Map();     /* lang code â†’ in-flight fetch promise */
