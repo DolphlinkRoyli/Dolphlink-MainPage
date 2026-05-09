@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en" data-page="build">
+<head>
+ <meta charset="UTF-8">
+ <!-- Content Security Policy — same shape as sme/index.html, plus
+      fonts.googleapis.com / gstatic.com for Inter, and formsubmit.co
+      for the AJAX form endpoint.
+
+      script-src: 'self' for our modules, plus 2 sha256 pinning the
+      dev-server (VS Code Live Server) hot-reload inline script so
+      dev doesn't break under strict CSP. In production neither hash
+      matches anything injected, so they cost nothing. The AJAX form
+      handler used to live as an inline <script> at the bottom of this
+      file; it now lives in js/engine/build/index.js, externalised
+      precisely so we can drop 'unsafe-inline'. script-src-attr 'none'
+      additionally blocks all inline DOM event handlers (onclick=,
+      onerror=, etc.).
+
+      Note: frame-ancestors and X-Frame-Options can ONLY be delivered as
+      HTTP response headers per the CSP spec — browsers ignore them in
+      <meta> tags. If clickjacking protection is required, add the header
+      at the GitHub Pages / CDN layer (e.g. _headers file or CloudFront). -->
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Qvs/MYH5NgMInq3lPLn9u0l9OUeNrax9M+NJfICovvE=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://dolphlink-api.roygto2013.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self' https://dolphlink-api.roygto2013.workers.dev; upgrade-insecure-requests">
+ <meta name="referrer" content="strict-origin-when-cross-origin">
+ <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+ <meta name="theme-color" content="#0059B3">
+ <title>Build your own all-in-one — DOLPHLINK</title>
+ <meta name="description" content="Three steps to your custom DOLPHLINK setup. Tell us what you need, choose what fits, we deploy.">
+ <link rel="icon" href="../../media/icon/icon.svg" type="image/svg+xml">
+ <!-- Preconnect to Google Fonts so the CSS + woff2 handshakes start
+      early. We deliberately do NOT preload the woff2 directly — Google
+      rotates the file's hash periodically (Inter v19 → v20 etc.) and
+      a hard-coded preload URL goes 404 the moment they bump it. The
+      CSS file Google serves below points to the current woff2, so the
+      browser picks up whatever's live at request time. -->
+ <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="preload" href="../../css/tokens.css?v=1" as="style">
+ <link rel="preload" href="../../css/style.css?v=269" as="style">
+ <link rel="preload" href="../../css/sme.css?v=63" as="style">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="../../css/tokens.css?v=1">
+ <link rel="stylesheet" href="../../css/style.css?v=269">
+ <link rel="stylesheet" href="../../css/sme.css?v=63">
+ <link rel="stylesheet" href="../../css/register.css?v=1">
+
+ <!-- Single-entry dispatcher — reads <html data-page="build"> and lazy-loads engine/build/index.js -->
+ <script type="module" src="../../js/app.js?v=2"></script>
+ <!-- Register modal — wires every .nav-cta on the page to the same
+      "Tell us about you" / Scan QR modal flow used on the homepage and
+      SME page. Roy spec May 2026: Partner-with-us button on every
+      page goes through the same modal. -->
+ <script type="module" src="../../js/engine/home/register.js?v=3"></script>
+</head>
+<body class="sme-body sme-build-body">
+
+ <nav>
+   <a href="../../" class="brand" aria-label="DOLPHLINK home">
+     <img src="../../media/icon/3D/logo.webp" alt="DOLPHLINK logo" class="brand-logo" width="72" height="72" decoding="async" fetchpriority="high" />
+     <span class="brand-name">DOLPHLINK</span>
+   </a>
+   <!-- Breadcrumb sits IN the top nav (between brand and nav-right)
+        rather than below the hero, so it acts as wayfinding from the
+        moment the page paints. "Home" links back to the marketing
+        homepage; "SME" links back to /sme/; the current page is
+        unstyled-as-link. -->
+   <ol class="build-breadcrumb" aria-label="Breadcrumb">
+     <li><a href="../../" data-i18n="build.crumb.home">Home</a></li>
+     <li aria-hidden="true">›</li>
+     <li><a href="../" data-i18n="build.crumb.sme">SME</a></li>
+     <li aria-hidden="true">›</li>
+     <li aria-current="page" data-i18n="build.crumb.current">Build your own all-in-one</li>
+   </ol>
+   <div class="nav-right">
+     <!-- No menu items on the build page nav — the visitor is already
+          deep inside a focused conversion flow (intake → consult →
+          deploy). The breadcrumb to the left handles wayfinding back. -->
+     <a href="mailto:Salesmarketing@dolphlink.com?subject=DOLPHLINK%20-%20Partner%20with%20us" class="nav-cta" aria-label="Partner with us">
+       <svg class="nav-cta-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+         <path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/>
+         <rect x="9" y="2" width="6" height="4" rx="1"/>
+         <path d="M9 14l2 2 4-4"/>
+       </svg>
+       <span class="nav-cta-label" data-i18n="nav.cta.partner">Partner with us</span>
+       <svg class="nav-cta-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+       <span class="nav-cta-tip" data-i18n="nav.cta.partner.tip">Tap to partner</span>
+     </a>
+     <div class="nav-lang" data-lang-picker></div>
+   </div>
+ </nav>
+
+<main class="sme-main">
+
+ <!-- ============================================================
+      BUILD HERO — clear, plain framing of what this page does.
+ ============================================================ -->
+ <section class="build-hero" id="build-top">
+   <div class="build-hero-inner">
+     <!-- (Breadcrumb moved up into the top <nav> — wayfinding sits
+          alongside the brand mark, so the hero stays focused on the
+          headline + value prop.) -->
+     <h1 class="build-hero-title">
+       <span data-i18n="build.hero.title.l1">Three steps.</span>
+       <span data-i18n="build.hero.title.l2">Pick what you need.</span>
+       <span data-i18n="build.hero.title.l3">We assemble it around your business.</span>
+     </h1>
+     <p class="build-hero-desc" data-i18n="build.hero.desc">No long form, no sales call to start — just tell us what you need, we come back with a plan, then we deploy. Most SMEs are live within days of finishing this page.</p>
+   </div>
+
+   <!-- Top-of-page 3-step flowchart — preview of the whole journey,
+        with timing on each step so the visitor knows what's online vs
+        what's a follow-up call. -->
+   <ol class="build-flowchart" aria-label="Three-step build process">
+     <li class="build-flowchart-step">
+       <span class="build-flowchart-num">01</span>
+       <h3 class="build-flowchart-title" data-i18n="build.flow.step1.title">Tell us what you need</h3>
+       <p class="build-flowchart-desc" data-i18n="build.flow.step1.desc">Five quick questions. What's hurting, what's working, what's missing.</p>
+       <p class="build-flowchart-time" data-i18n="build.flow.step1.time">5 minutes online</p>
+     </li>
+     <li class="build-flowchart-arrow" aria-hidden="true">
+       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+     </li>
+     <li class="build-flowchart-step">
+       <span class="build-flowchart-num">02</span>
+       <h3 class="build-flowchart-title" data-i18n="build.flow.step2.title">We chat, we map</h3>
+       <p class="build-flowchart-desc" data-i18n="build.flow.step2.desc">A real DOLPHLINK person calls back. We walk through the options together.</p>
+       <p class="build-flowchart-time" data-i18n="build.flow.step2.time">Within 24 hours</p>
+     </li>
+     <li class="build-flowchart-arrow" aria-hidden="true">
+       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+     </li>
+     <li class="build-flowchart-step">
+       <span class="build-flowchart-num">03</span>
+       <h3 class="build-flowchart-title" data-i18n="build.flow.step3.title">We deploy</h3>
+       <p class="build-flowchart-desc" data-i18n="build.flow.step3.desc">Two more conversations. Numbers and channels go live in your region.</p>
+       <p class="build-flowchart-time" data-i18n="build.flow.step3.time">Within days</p>
+     </li>
+   </ol>
+ </section>
+
+ <!-- ============================================================
+      STEP 01 — TELL US WHAT YOU NEED. Plain checklist intake form.
+ ============================================================ -->
+ <section class="build-step" id="step-1">
+   <div class="build-step-head">
+     <span class="build-step-tag" data-i18n="build.step1.tag">Step 01</span>
+     <h2 class="build-step-title" data-i18n="build.step1.title">Tell us what you need.</h2>
+     <p class="build-step-intro" data-i18n="build.step1.intro">Tick the boxes that fit your business. We'll come back with a concrete plan in 24 hours.</p>
+   </div>
+
+   <!-- Form posts as signed JSON to our Cloudflare Worker, which
+        validates the HMAC + ±5min timestamp window, then forwards to
+        Resend → inbox. The action attribute is a no-JS fallback only:
+        with JS enabled (99% of visitors), the build/index.js handler
+        intercepts `submit`, signs the payload, and POSTs JSON instead.
+        Without JS, the classic POST still hits the Worker but fails
+        signature verification and gets a 401 — graceful degradation
+        is "form errors, doesn't silently lose user data". -->
+   <form class="build-form" id="build-form" action="https://dolphlink-api.roygto2013.workers.dev/contact" method="POST">
+     <!-- Honeypot — invisible to humans, irresistible to bots. Real
+          users never see / fill this; bots auto-fill every text input
+          they find. The Worker silently drops any submit where
+          `honeypot` is non-empty. CSS keeps it off-screen for screen
+          readers too (aria-hidden + tabindex=-1). -->
+     <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden">
+       <label>Don't fill this in: <input type="text" name="honeypot" tabindex="-1" autocomplete="off"></label>
+     </div>
+     <fieldset class="build-fieldset">
+       <legend class="build-legend" data-i18n="build.f.industry.legend">Your business is...</legend>
+       <div class="build-checkboxes">
+         <label class="build-check"><input type="checkbox" name="industry" value="retail"><span data-i18n="build.f.industry.retail">Retail / shops</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="fnb"><span data-i18n="build.f.industry.fnb">Restaurants / F&amp;B</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="clinic"><span data-i18n="build.f.industry.clinic">Clinics / healthcare</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="ecomm"><span data-i18n="build.f.industry.ecomm">E-commerce / online</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="schools"><span data-i18n="build.f.industry.schools">Schools / education</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="logistics"><span data-i18n="build.f.industry.logistics">Logistics / delivery</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="salon"><span data-i18n="build.f.industry.salon">Salons / beauty</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="hotel"><span data-i18n="build.f.industry.hotel">Hotels / B&amp;Bs</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="realestate"><span data-i18n="build.f.industry.realestate">Real estate</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="auto"><span data-i18n="build.f.industry.auto">Auto / garages</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="travel"><span data-i18n="build.f.industry.travel">Travel / tour</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="property"><span data-i18n="build.f.industry.property">Property / facilities</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="insurance"><span data-i18n="build.f.industry.insurance">Insurance</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="manufacturing"><span data-i18n="build.f.industry.manufacturing">Manufacturing</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="professional"><span data-i18n="build.f.industry.professional">Professional services</span></label>
+         <label class="build-check"><input type="checkbox" name="industry" value="other"><span data-i18n="build.f.industry.other">Something else</span></label>
+       </div>
+     </fieldset>
+
+     <fieldset class="build-fieldset">
+       <legend class="build-legend" data-i18n="build.f.need.legend">You need help with...</legend>
+       <div class="build-checkboxes">
+         <label class="build-check"><input type="checkbox" name="need" value="messaging"><span data-i18n="build.f.need.messaging">Sending lots of messages at once</span></label>
+         <label class="build-check"><input type="checkbox" name="need" value="ai"><span data-i18n="build.f.need.ai">AI auto-reply, around the clock</span></label>
+         <label class="build-check"><input type="checkbox" name="need" value="omnichannel"><span data-i18n="build.f.need.omnichannel">WhatsApp / SMS / email all in one inbox</span></label>
+         <label class="build-check"><input type="checkbox" name="need" value="otp"><span data-i18n="build.f.need.otp">Login codes &amp; verification</span></label>
+         <label class="build-check"><input type="checkbox" name="need" value="compliance"><span data-i18n="build.f.need.compliance">PDPA / GDPR / regulator paperwork</span></label>
+         <label class="build-check"><input type="checkbox" name="need" value="cost"><span data-i18n="build.f.need.cost">Cutting our messaging bill</span></label>
+         <label class="build-check"><input type="checkbox" name="need" value="setup"><span data-i18n="build.f.need.setup">Easier setup, no engineer needed</span></label>
+         <label class="build-check"><input type="checkbox" name="need" value="migration"><span data-i18n="build.f.need.migration">Moving off our current vendor</span></label>
+       </div>
+     </fieldset>
+
+     <fieldset class="build-fieldset">
+       <legend class="build-legend" data-i18n="build.f.size.legend">Your team size</legend>
+       <div class="build-radio">
+         <label class="build-check"><input type="radio" name="size" value="1-10"><span data-i18n="build.f.size.s1">1–10 people</span></label>
+         <label class="build-check"><input type="radio" name="size" value="11-50"><span data-i18n="build.f.size.s2">11–50 people</span></label>
+         <label class="build-check"><input type="radio" name="size" value="51-200"><span data-i18n="build.f.size.s3">51–200 people</span></label>
+         <label class="build-check"><input type="radio" name="size" value="200+"><span data-i18n="build.f.size.s4">200+ people</span></label>
+       </div>
+     </fieldset>
+
+     <fieldset class="build-fieldset">
+       <legend class="build-legend" data-i18n="build.f.contact.legend">How can we reach you</legend>
+       <div class="build-input-row">
+         <input type="text" name="name" id="build-field-name" placeholder="Your name" class="build-input" required data-i18n-attr="placeholder:build.f.contact.name">
+         <input type="email" name="email" id="build-field-email" placeholder="Email" class="build-input" required data-i18n-attr="placeholder:build.f.contact.email">
+         <input type="tel" name="phone" id="build-field-phone" placeholder="Phone (optional)" class="build-input" data-i18n-attr="placeholder:build.f.contact.phone">
+       </div>
+       <textarea name="note" placeholder="Anything else we should know? (optional)" class="build-textarea" rows="3" data-i18n-attr="placeholder:build.f.contact.note"></textarea>
+     </fieldset>
+
+     <div class="build-form-actions">
+       <p class="build-form-note" data-i18n="build.f.formnote">Submitting sends this straight to our sales inbox. We'll come back within 24 hours.</p>
+       <button type="submit" class="sme-btn sme-btn--primary build-form-submit">
+         <span data-i18n="build.f.submit">Send to DOLPHLINK</span>
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 5 16 12 9 19"/></svg>
+       </button>
+     </div>
+   </form>
+ </section>
+
+ <!-- ============================================================
+      STEP 02 — CHOOSE YOUR STACK. Two paths + the 3 workflow shapes.
+ ============================================================ -->
+ <section class="build-step build-step--alt" id="step-2">
+   <div class="build-step-head">
+     <span class="build-step-tag" data-i18n="build.step2.tag">Step 02</span>
+     <h2 class="build-step-title" data-i18n="build.step2.title">We choose the stack together.</h2>
+     <p class="build-step-intro" data-i18n="build.step2.intro">This step is a conversation, not a checkout. After Step 01, a real DOLPHLINK person calls you back within 24 hours. We walk through the two angles below, ask the questions only you know the answers to, and decide the right shape together.</p>
+   </div>
+
+   <!-- Important "this is a consult, not a self-serve" callout — Roy spec
+        May 2026: "step 02 棋是需要我们销售联系他之后, 详谈之后决定的". -->
+   <div class="build-consult-note" role="note">
+     <span class="build-consult-icon" aria-hidden="true">
+       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+       </svg>
+     </span>
+     <div class="build-consult-body">
+       <strong class="build-consult-title" data-i18n="build.consult.title">No self-serve here. No checkout button.</strong>
+       <p class="build-consult-text" data-i18n="build.consult.text">Every SME's stack is different — your industry, your existing tools, your regulators, your team's habits. We'd rather spend 30 minutes with you on a call than guess on your behalf. The two paths below are the conversation we'll have, not options you click. Once we've talked, we lock the right mix together.</p>
+     </div>
+   </div>
+
+   <div class="build-paths">
+
+     <!-- Angle 01 — keep your existing tools, plug us in -->
+     <article class="build-path build-path--keep">
+       <span class="build-path-tag" data-i18n="build.path.a1.tag">Angle 01</span>
+       <h3 class="build-path-title" data-i18n="build.path.a1.title">Use the tools you already have.</h3>
+       <p class="build-path-desc" data-i18n="build.path.a1.desc">If you've already invested in an ERP, accounting tool, or workspace, we plug into it. No rip-and-replace. Same data, same login, same team habits.</p>
+       <div class="build-stack-grouped">
+         <div class="build-stack-group">
+           <span class="build-stack-group-label" data-i18n="build.path.a1.erp">ERP</span>
+           <div class="build-stack-pills">
+             <span class="build-stack-pill">SAP</span>
+             <span class="build-stack-pill">用友</span>
+             <span class="build-stack-pill">金蝶</span>
+             <span class="build-stack-pill">Odoo</span>
+           </div>
+         </div>
+         <div class="build-stack-group">
+           <span class="build-stack-group-label" data-i18n="build.path.a1.accounting">Accounting</span>
+           <div class="build-stack-pills">
+             <span class="build-stack-pill">QuickBooks</span>
+             <span class="build-stack-pill">Xero</span>
+           </div>
+         </div>
+         <div class="build-stack-group">
+           <span class="build-stack-group-label" data-i18n="build.path.a1.workspace">Workspace</span>
+           <div class="build-stack-pills">
+             <span class="build-stack-pill">Lark</span>
+             <span class="build-stack-pill">Slack</span>
+             <span class="build-stack-pill">Microsoft Teams</span>
+           </div>
+         </div>
+       </div>
+       <p class="build-stack-foot" data-i18n="build.path.a1.foot">+ any system that can fire a webhook</p>
+     </article>
+
+     <!-- Angle 02 — build with us, pure DOLPHLINK -->
+     <article class="build-path build-path--build">
+       <span class="build-path-tag" data-i18n="build.path.a2.tag">Angle 02</span>
+       <h3 class="build-path-title" data-i18n="build.path.a2.title">Or build it with us, fresh.</h3>
+       <p class="build-path-desc" data-i18n="build.path.a2.desc">If you're starting clean, or the mainstream can't give you what you need, we put the DOLPHLINK pieces together. Three blocks. Same backbone we run for governments.</p>
+       <ul class="build-services">
+         <li data-i18n="build.path.a2.cloud"><strong>Cloud</strong> · secure cloud, ours, yours, or any major public cloud</li>
+         <li data-i18n="build.path.a2.platform"><strong>Platform</strong> · one panel for SMS, WhatsApp, voice, email, AI, audit log</li>
+         <li data-i18n="build.path.a2.connectivity"><strong>Connectivity</strong> · bank-grade carrier routes at SME prices</li>
+       </ul>
+       <p class="build-stack-foot" data-i18n="build.path.a2.foot">In our call we usually mix both angles — keep what works, swap what doesn't.</p>
+     </article>
+
+   </div>
+
+   <!-- The 3 flow shapes — moved here from old #integrations on SME page. -->
+   <div class="build-flows-block">
+     <h3 class="build-flows-heading" data-i18n="build.flows.heading">How the pieces fit together — three workflow shapes that cover most SMEs.</h3>
+     <p class="build-flows-intro" data-i18n="build.flows.intro">Whichever path you picked above, your real-world workflows usually fall into one of these three shapes. Mix and match.</p>
+
+     <div class="sme-flows">
+
+       <article class="sme-flow">
+         <header class="sme-flow-head">
+           <span class="sme-flow-tag" data-i18n="build.flow1.tag">Flow 01 · most common</span>
+           <h3 class="sme-flow-title" data-i18n="build.flow1.title">ERP signal &rarr; team workspace alert</h3>
+         </header>
+         <ol class="sme-flow-pipe" aria-label="Workflow pipeline">
+           <li class="sme-flow-node sme-flow-node--ext"><span class="sme-flow-node-label" data-i18n="build.flow1.n1.label">Your ERP</span><span class="sme-flow-node-sub">SAP / 用友 / 金蝶 / Odoo</span></li>
+           <li class="sme-flow-node sme-flow-node--us"><span class="sme-flow-node-label">DOLPHLINK</span><span class="sme-flow-node-sub" data-i18n="build.flow1.n2.sub">Webhook + routing</span></li>
+           <li class="sme-flow-node sme-flow-node--lark"><span class="sme-flow-node-label" data-i18n="build.flow1.n3.label">Workspace</span><span class="sme-flow-node-sub">Lark / Slack / Teams</span></li>
+           <li class="sme-flow-node sme-flow-node--team"><span class="sme-flow-node-label" data-i18n="build.flow1.n4.label">Your team</span><span class="sme-flow-node-sub" data-i18n="build.flow1.n4.sub">Sales / CS / warehouse</span></li>
+         </ol>
+         <p class="sme-flow-desc" data-i18n="build.flow1.desc">New order, low-stock alert, refund request — your ERP fires a webhook to us, we route it through the right template and post to the right team channel. Each message carries an "open in ERP" deep link.</p>
+       </article>
+
+       <article class="sme-flow">
+         <header class="sme-flow-head">
+           <span class="sme-flow-tag" data-i18n="build.flow2.tag">Flow 02 · approval-driven</span>
+           <h3 class="sme-flow-title" data-i18n="build.flow2.title">Approval flow &rarr; customer notification</h3>
+         </header>
+         <ol class="sme-flow-pipe" aria-label="Workflow pipeline">
+           <li class="sme-flow-node sme-flow-node--ext"><span class="sme-flow-node-label" data-i18n="build.flow2.n1.label">Customer ask</span><span class="sme-flow-node-sub">WhatsApp / form / SMS</span></li>
+           <li class="sme-flow-node sme-flow-node--lark"><span class="sme-flow-node-label" data-i18n="build.flow2.n2.label">Approval flow</span><span class="sme-flow-node-sub" data-i18n="build.flow2.n2.sub">Multi-level sign-off</span></li>
+           <li class="sme-flow-node sme-flow-node--us"><span class="sme-flow-node-label">DOLPHLINK</span><span class="sme-flow-node-sub" data-i18n="build.flow2.n3.sub">Multi-channel send</span></li>
+           <li class="sme-flow-node sme-flow-node--ext"><span class="sme-flow-node-label" data-i18n="build.flow2.n4.label">Customer</span><span class="sme-flow-node-sub">SMS / WhatsApp / Email</span></li>
+         </ol>
+         <p class="sme-flow-desc" data-i18n="build.flow2.desc">Customer submits a quote, refund or address-change request. Your existing approval flow handles internal sign-off (with the audit trail your auditor wants). On approval, we reach the customer on their preferred channel.</p>
+       </article>
+
+       <article class="sme-flow">
+         <header class="sme-flow-head">
+           <span class="sme-flow-tag" data-i18n="build.flow3.tag">Flow 03 · time-driven</span>
+           <h3 class="sme-flow-title" data-i18n="build.flow3.title">Calendar event &rarr; automatic customer reminder</h3>
+         </header>
+         <ol class="sme-flow-pipe" aria-label="Workflow pipeline">
+           <li class="sme-flow-node sme-flow-node--lark"><span class="sme-flow-node-label" data-i18n="build.flow3.n1.label">Calendar</span><span class="sme-flow-node-sub" data-i18n="build.flow3.n1.sub">Event + customer phone</span></li>
+           <li class="sme-flow-node sme-flow-node--us"><span class="sme-flow-node-label">DOLPHLINK</span><span class="sme-flow-node-sub" data-i18n="build.flow3.n2.sub">Cron + template render</span></li>
+           <li class="sme-flow-node sme-flow-node--ext"><span class="sme-flow-node-label" data-i18n="build.flow3.n3.label">Customer</span><span class="sme-flow-node-sub">SMS / WhatsApp</span></li>
+           <li class="sme-flow-node sme-flow-node--lark"><span class="sme-flow-node-label" data-i18n="build.flow3.n4.label">Workspace thread</span><span class="sme-flow-node-sub" data-i18n="build.flow3.n4.sub">Reply + status</span></li>
+         </ol>
+         <p class="sme-flow-desc" data-i18n="build.flow3.desc">Bookings, renewal calls, on-site service, contract expiry — a calendar event fires reminders 24h / 2h / 30min before. Multi-language, channel-routed, and customer replies land in the same workspace thread.</p>
+       </article>
+
+     </div>
+
+     <!-- After-flows reminder: this is decided in conversation, not online. -->
+     <p class="build-flows-fineprint" data-i18n="build.flows.fineprint">
+       Your real stack is some mix of these. We'll figure out which mix in the call — usually 30 minutes is enough.
+     </p>
+   </div>
+ </section>
+
+ <!-- ============================================================
+      STEP 03 — WE DEPLOY. The 3-conversation onboarding.
+ ============================================================ -->
+ <section class="build-step" id="step-3">
+   <div class="build-step-head">
+     <span class="build-step-tag" data-i18n="build.step3.tag">Step 03</span>
+     <h2 class="build-step-title" data-i18n="build.step3.title">We deploy.</h2>
+     <p class="build-step-intro" data-i18n="build.step3.intro">Three conversations carry you from Step 02 to live. The first one is the call we make in Step 02 — then two more as we go live.</p>
+   </div>
+
+   <ol class="build-deploy-steps">
+     <li class="build-deploy-step">
+       <span class="build-deploy-num">01</span>
+       <h3 class="build-deploy-title" data-i18n="build.deploy.s1.title">Sit down with us.</h3>
+       <p class="build-deploy-desc" data-i18n="build.deploy.s1.desc">A 30-minute briefing. No slide deck, no NDA on the first call. Tell us your industry, your regulators, the workspace your team already lives in. We map the path together.</p>
+       <p class="build-deploy-time" data-i18n="build.deploy.s1.time">First conversation</p>
+     </li>
+     <li class="build-deploy-step">
+       <span class="build-deploy-num">02</span>
+       <h3 class="build-deploy-title" data-i18n="build.deploy.s2.title">We provision quietly.</h3>
+       <p class="build-deploy-desc" data-i18n="build.deploy.s2.desc">Numbers, sender IDs, channels and compliance gates set up in your region. Plugged into the workspace and the ERP your team already uses. No rip-and-replace, no second migration.</p>
+       <p class="build-deploy-time" data-i18n="build.deploy.s2.time">Within days</p>
+     </li>
+     <li class="build-deploy-step">
+       <span class="build-deploy-num">03</span>
+       <h3 class="build-deploy-title" data-i18n="build.deploy.s3.title">Send and sleep.</h3>
+       <p class="build-deploy-desc" data-i18n="build.deploy.s3.desc">Your team sends from the tools they already know. The audit trail follows automatically. Your dedicated engineer's number sits next to your other emergency contacts. Not behind a ticket queue.</p>
+       <p class="build-deploy-time" data-i18n="build.deploy.s3.time">Live</p>
+     </li>
+   </ol>
+
+ </section>
+
+</main>
+
+ <!-- ============================================================
+      Success / error dialog — shown after AJAX form submission.
+      Hidden by default; .is-open class on the wrapper reveals it.
+ ============================================================ -->
+ <div class="build-dialog" id="build-dialog" role="dialog" aria-modal="true" aria-labelledby="build-dialog-title" hidden>
+   <div class="build-dialog-backdrop"></div>
+   <div class="build-dialog-card">
+     <div class="build-dialog-icon" aria-hidden="true">
+       <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+         <polyline points="20 6 9 17 4 12"/>
+       </svg>
+     </div>
+     <h2 class="build-dialog-title" id="build-dialog-title" data-i18n="build.dialog.success.title">Thanks — we've got it.</h2>
+     <p class="build-dialog-text" data-i18n="build.dialog.success.text">
+       Your details landed in our sales inbox. A real DOLPHLINK person will come
+       back to you within 24 hours with a concrete plan tailored to your business.
+     </p>
+     <div class="build-dialog-actions">
+       <a href="../" class="sme-btn sme-btn--primary" data-i18n="build.dialog.back">Back to SME page</a>
+       <button type="button" class="sme-btn sme-btn--ghost" id="build-dialog-close" data-i18n="build.dialog.stay">Stay on this page</button>
+     </div>
+     <!-- Hidden i18n slots used by the AJAX submit handler when the
+          fetch fails, so the error message is shown in the visitor's
+          current language without duplicating strings in JS. -->
+     <span hidden id="build-dialog-err-title" data-i18n="build.dialog.error.title">Something went wrong.</span>
+     <span hidden id="build-dialog-err-text" data-i18n="build.dialog.error.text">We couldn't reach the inbox. Please try again, or email us at Salesmarketing@dolphlink.com.</span>
+     <!-- Inline-flight button label, swapped in by the AJAX handler. -->
+     <span hidden id="build-form-sending" data-i18n="build.f.sending">Sending…</span>
+   </div>
+ </div>
+
+ <!-- (AJAX form handler + dialog UX live in
+      js/engine/build/index.js so the page CSP can drop 'unsafe-inline'.) -->
+
+ <footer class="sme-footer" role="contentinfo">
+   <div class="sme-footer-bar">
+     <span data-i18n="footer.copyright">© 2026 DOLPHLINK by Baiwu Technology Group · Singapore</span>
+   </div>
+ </footer>
+
+</body>
+</html>
