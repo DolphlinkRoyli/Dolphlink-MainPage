@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v421';
+const CACHE_VERSION = 'dolphlink-v425';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -113,6 +113,13 @@ const PRECACHE = [
   SCOPE + 'c/index.html',
   SCOPE + 'sme/',                     // SME Ã— Lark landing page (built artifact)
   SCOPE + 'sme/index.html',
+  // ---- Legal pages (Privacy + Terms) ----
+  SCOPE + 'legal/privacy/',
+  SCOPE + 'legal/privacy/index.html',
+  SCOPE + 'legal/terms/',
+  SCOPE + 'legal/terms/index.html',
+  SCOPE + 'css/legal.css',
+  SCOPE + 'js/legal.js',
   SCOPE + 'css/card.css',
   SCOPE + 'media/img/video-poster.webp',
   SCOPE + 'media/video/current.mp4',

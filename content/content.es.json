@@ -52,6 +52,8 @@
         "desc": "Los SMS llegan en menos de 10 segundos por rutas Tier-1 de operadores. Las cifras se verifican contra benchmarks globales, se auditan trimestralmente y se optimizan de forma continua mediante análisis de rutas en tiempo real." },
       { "key": "ain",  "icon": "icon_7",  "value": "360°",               "label": "Ciclo de Vida",
         "desc": "Cobertura completa del ciclo de vida operativo. Desde el diseño de políticas y la migración hasta la ejecución diaria, la auditoría y la renovación, todo se gestiona dentro de la misma plataforma. El tráfico rutinario lo manejan nuestros agentes por sí solos, las 24 horas: elegir por qué ruta sale el mensaje, cambiar de operador cuando uno falla, pasar el control de cumplimiento antes de enviar, marcar cualquier cosa que parezca rara. Cuando algo de verdad requiere criterio humano, el caso pasa a un revisor designado de su equipo con todo el contexto. También incluimos herramientas de migración para que pueda mover los flujos antiguos a la plataforma nueva al ritmo que mejor le convenga, y cada acción en cada etapa queda registrada en un historial de auditoría que se puede entregar directamente al regulador." },
+      { "key": "zer",  "icon": "icon_15", "value": "0-Trust",            "label": "Trust (TaaS)",
+        "desc": "Trust-as-a-Service (TaaS): cada llamada a la API, cada mensaje, cada clic en el panel se autentica, autoriza y audita en el momento en que ocurre. Cero confianza implícita por defecto. Cada acción se verifica independientemente de su origen. Acceso basado en identidad (RBAC + MFA), TLS mutuo en tránsito, privilegios de corta duración, autenticación reforzada para operaciones sensibles. No compra herramientas de seguridad. Compra acciones verificadas y un registro de auditoría a prueba de manipulaciones que se entrega directamente al regulador." },
       { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "Tasa de apertura",
         "desc": "Tasa de apertura verificada del 98% en SMS transaccionales enviados por operadores Tier-1 a nivel global. Los OTP urgentes, las alertas de fraude y las notificaciones prioritarias llegan a sus clientes en segundos y se leen de verdad. El enrutamiento prioriza el tráfico transaccional sobre los envíos de marketing, con auditorías de medición trimestrales por parte de terceros." }
     ]
@@ -295,8 +297,8 @@
       { "name": "Agendar Llamada",  "href": "mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call", "icon": "calendar" }
     ],
     "legalLinks": [
-      { "label": "Política de Privacidad", "href": "#" },
-      { "label": "Términos de Servicio", "href": "#" }
+      { "label": "Política de Privacidad", "href": "legal/privacy/" },
+      { "label": "Términos de Servicio", "href": "legal/terms/" }
     ],
     "copyright": "© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED."
   }

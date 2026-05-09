@@ -1060,10 +1060,25 @@
    font-weight: 900;
    color: var(--baiwu-blue-primary);
  }
- /* OUTCOME — open rate.  Only signal is the 2px GREEN top accent line.
-    The stat-value uses brand blue (same as the two anchor cards) so all
-    three big numbers are unified — feels enterprise-grade and professional
-    rather than over-coloured. */
+ /* TaaS — credential anchor card.  GOLD top accent line carries the
+    "sovereign credential" semantic (same gold as the trust-layer
+    callouts and SME / industry buttons elsewhere on the page).  No
+    corner stamp — the card icon is already a shield with check, so a
+    second ✓ stamp would be visual redundancy AND semantically off
+    (TaaS is the verifier, not a verified outcome).  Stat value stays
+    in brand blue so all big numbers stay unified. */
+ .stat-strip > .stat-card[data-stat="zer"] {
+   border-top: 2px solid #BF9430;
+ }
+ .stat-strip > .stat-card[data-stat="zer"] .stat-value {
+   color: var(--baiwu-blue-primary);
+   font-weight: 900;
+   letter-spacing: -0.5px;
+ }
+
+ /* OUTCOME — open rate.  Soft green top accent + small green ✓ corner
+    stamp marks "this is the verified result downstream".  Now smaller
+    column (1.4fr) since TaaS owns the dominant credential slot above. */
  .stat-strip > .stat-card[data-stat="open"] {
    border-top: 2px solid #10B981;
  }
@@ -1076,14 +1091,14 @@
    position: absolute;
    top: 12px;
    right: 12px;
-   width: 20px;
-   height: 20px;
+   width: 18px;
+   height: 18px;
    border-radius: 50%;
    background: rgba(16, 185, 129, 0.16);
    color: #059669;
-   font-size: 11px;
+   font-size: 10px;
    font-weight: 900;
-   line-height: 20px;
+   line-height: 18px;
    text-align: center;
    pointer-events: none;
  }
@@ -4619,19 +4634,30 @@
    relationship is explicit, not just inferred from the visuals.
    ============================================================ */
 
-/* 9-column grid: 5 cards + 4 connector slots.  Column 9 (the OUTCOME
-   card) is 2.2x the width of the supporting cards.  The 4th connector
-   slot (between AI×H and Open Rate) is also wider and styled stronger
-   to signal "this is what produces the result." */
+/* 11-column grid: 6 cards + 5 connector slots.  TaaS (data-stat="zer")
+   is the visual CENTREPIECE at 2.2fr — sovereign credential anchor.
+   OUTCOME (Open Rate, data-stat="open") at 1.4fr is the downstream
+   result: emphasized but subordinate to TaaS.  All 5 connectors are
+   the SAME width — the TaaS→Open chevron is differentiated by COLOUR
+   (green tint, set further down) instead of width, so card spacing
+   stays visually uniform across the row. */
 .stat-strip {
   grid-template-columns:
-    minmax(0, 1fr) clamp(20px, 1.4vw, 28px)
-    minmax(0, 1fr) clamp(20px, 1.4vw, 28px)
-    minmax(0, 1fr) clamp(20px, 1.4vw, 28px)
-    minmax(0, 1fr) clamp(34px, 2.6vw, 52px)
-    minmax(0, 2.2fr);
+    minmax(0, 1fr) clamp(16px, 1.1vw, 22px)
+    minmax(0, 1fr) clamp(16px, 1.1vw, 22px)
+    minmax(0, 1fr) clamp(16px, 1.1vw, 22px)
+    minmax(0, 1fr) clamp(16px, 1.1vw, 22px)
+    minmax(0, 2.2fr) clamp(16px, 1.1vw, 22px)
+    minmax(0, 1.4fr);
   gap: 0;
   align-items: stretch;
+}
+
+/* Green chevron between TaaS and Open Rate — visually links to the green
+   top-accent on the OUTCOME card so the "verified result" beat lands. */
+.stat-strip > .stat-card[data-stat="zer"] + .stat-connector {
+  color: #10B981;
+  opacity: 0.7;
 }
 
 .stat-connector {
@@ -4674,35 +4700,52 @@
 /* stat-value font-size on the outcome card now inherits from the base
    .stat-value rule (--fs-lg). Green colour + ✓ stamp do the work. */
 
-/* Tablet: switch to 2-row stack — 4 supporting cards on row 1, the
-   big outcome card on row 2 spanning full width.  Arrows rotate to
-   vertical for the 4→5 transition. */
+/* Tablet: 4 supporting cards row 1 / TaaS dominant row 2 (full width) /
+   Open Rate row 3 (constrained ~60% width, centered, visibly smaller).
+   This preserves the new hierarchy: TaaS centerpiece, OPEN downstream
+   echo. */
 @media (max-width: 1080px) {
   .stat-strip {
     grid-template-columns:
-      minmax(0, 1fr) clamp(16px, 2vw, 24px)
-      minmax(0, 1fr) clamp(16px, 2vw, 24px)
-      minmax(0, 1fr) clamp(16px, 2vw, 24px)
+      minmax(0, 1fr) clamp(12px, 1.6vw, 18px)
+      minmax(0, 1fr) clamp(12px, 1.6vw, 18px)
+      minmax(0, 1fr) clamp(12px, 1.6vw, 18px)
       minmax(0, 1fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     row-gap: 12px;
   }
-  /* Auto-Orchestration → OUTCOME connector becomes the row-2 down-arrow.
-     Just the chevron rotated to point downward; no background hairline
-     so the glyph stays clean. */
+  /* AIN → TaaS connector becomes the row-2 down-arrow (signals
+     entering the TaaS gate from the metrics row). */
   .stat-strip > .stat-card[data-stat="ain"] + .stat-connector {
     grid-column: 1 / -1;
     grid-row: 2;
     height: 32px;
     transform: rotate(90deg);
   }
-  .stat-strip > .stat-card[data-stat="open"] {
+  .stat-strip > .stat-card[data-stat="zer"] {
     grid-column: 1 / -1;
     grid-row: 3;
   }
+  /* TaaS → OUTCOME connector is the row-4 down-arrow. */
+  .stat-strip > .stat-card[data-stat="zer"] + .stat-connector {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    height: 28px;
+    transform: rotate(90deg);
+  }
+  .stat-strip > .stat-card[data-stat="open"] {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    max-width: 62%;
+    margin: 0 auto;
+  }
 }
 
-/* Mobile: full vertical stack, all arrows rotate down (no hairline) */
+/* Mobile: full vertical stack.  Tablet's "outcome row constrained 62%"
+   doesn't apply on phones (already narrow enough), so reset open-rate
+   max-width back to 100% by clearing the override.  The strong connector
+   is now BEFORE TaaS (between AIN and TaaS) — that's the visual
+   "entering the gate" beat in the chain. */
 @media (max-width: 768px) {
   .stat-strip {
     grid-template-columns: minmax(0, 1fr);
@@ -4718,9 +4761,20 @@
     grid-row: auto;
     height: 38px;
   }
+  .stat-strip > .stat-card[data-stat="zer"] + .stat-connector {
+    grid-column: auto;
+    grid-row: auto;
+    height: 32px;
+  }
+  .stat-strip > .stat-card[data-stat="zer"] {
+    grid-column: auto;
+    grid-row: auto;
+  }
   .stat-strip > .stat-card[data-stat="open"] {
     grid-column: auto;
     grid-row: auto;
+    max-width: none;
+    margin: 0;
   }
 }
 

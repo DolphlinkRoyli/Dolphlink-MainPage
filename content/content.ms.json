@@ -52,6 +52,8 @@
         "desc": "SMS sampai kepada penerima dalam masa kurang dari 10 saat menerusi laluan kerier Tier-1. Disahkan berdasarkan penanda aras global, diaudit setiap suku tahun, dan dioptimumkan secara berterusan menggunakan analitik laluan masa nyata." },
       { "key": "ain",  "icon": "icon_7",  "value": "360°",                  "label": "Kitar Hayat Penuh",
         "desc": "Liputan penuh sepanjang kitar hayat operasi. Dari reka bentuk polisi dan migrasi sehinggalah pelaksanaan harian, audit dan pembaharuan, semuanya berjalan di atas platform yang sama. Trafik rutin diuruskan sendiri oleh ejen AI kami, sepanjang masa: memilih laluan penghantaran, beralih ke operator lain apabila satu jatuh, melakukan semakan pematuhan sebelum hantar, dan menandakan apa-apa yang kelihatan tidak kena. Apabila benar-benar memerlukan pertimbangan manusia, kes itu diserahkan kepada pengulas bernama di pihak anda berserta konteks penuh. Alat migrasi juga sedia ada di dalam platform supaya anda boleh memindahkan aliran kerja warisan ke platform baharu mengikut kelajuan anda sendiri, dan setiap tindakan di setiap peringkat meninggalkan jejak audit yang boleh terus diberikan kepada pihak pengawal selia." },
+      { "key": "zer",  "icon": "icon_15", "value": "0-Trust",               "label": "Trust (TaaS)",
+        "desc": "Trust-as-a-Service (TaaS): setiap panggilan API, setiap mesej, setiap klik papan pemuka disahkan, dibenarkan dan diaudit pada saat ia berlaku. Sifar kepercayaan tersirat secara lalai. Setiap tindakan disahkan tanpa mengira asalnya. Akses pertama-identiti (RBAC + MFA), TLS dua hala dalam transit, keistimewaan tamat tempoh dengan cepat, pengesahan tambahan untuk operasi sensitif. Anda tidak membeli alat keselamatan. Anda membeli tindakan yang disahkan dan jejak audit kalis usik yang boleh diberikan terus kepada pengawal selia." },
       { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "Kadar Bacaan",
         "desc": "Kadar bacaan 98% yang disahkan untuk SMS transaksi yang dihantar menerusi pengendali Tier-1 di seluruh dunia. OTP segera, amaran penipuan dan notifikasi keutamaan tinggi sampai kepada pelanggan dalam beberapa saat dan benar-benar dibaca. Trafik transaksi diberi keutamaan berbanding kempen pemasaran, dengan audit pengukuran pihak ketiga setiap suku tahun." }
     ]
@@ -295,8 +297,8 @@
       { "name": "Tempah Panggilan",  "href": "mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call", "icon": "calendar" }
     ],
     "legalLinks": [
-      { "label": "Dasar Privasi", "href": "#" },
-      { "label": "Terma Perkhidmatan", "href": "#" }
+      { "label": "Dasar Privasi", "href": "legal/privacy/" },
+      { "label": "Terma Perkhidmatan", "href": "legal/terms/" }
     ],
     "copyright": "© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED."
   }

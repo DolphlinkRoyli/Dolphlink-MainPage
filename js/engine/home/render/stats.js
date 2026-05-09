@@ -1,12 +1,20 @@
 /**
- * Performance Dashboard — 5 stat cards chained by causal arrows.
+ * Performance Dashboard — 6 stat cards chained by causal arrows.
  * HOMEPAGE ONLY.
  *
- * Renders the 5 cards interleaved with .stat-connector spans (›) so the
+ * Renders the 6 cards interleaved with .stat-connector spans (›) so the
  * grid reads left-to-right as a causal chain:
  *
- *   [99.999%] › [200+] › [<10s] › [AI×H] › [98%]
- *    bedrock    scale    speed    edge    outcome
+ *   [99.999%] › [200+] › [<10s] › [360°] › [0-Trust] › [98%]
+ *    bedrock    scale    speed    cycle    credential  outcome
+ *
+ * Card 5 (key="zer") shows value "0-Trust" and label "Trust (TaaS)" —
+ * Zero Implicit Trust framed as Trust-as-a-Service. Sits at 2.2fr column
+ * with GOLD top accent (sovereign credential color) — distinct from
+ * card 6 (Open Rate) which has GREEN top + green ✓ stamp (verified
+ * outcome). Two emphasis cards, two roles: TaaS = credential anchor,
+ * Open Rate = downstream verified result. Connector between them is
+ * green-tinted to bridge into the outcome zone.
  *
  * Cards are addressed in CSS by `data-stat` (sla / loc / lat / ain / open),
  * NOT by :nth-child — the interleaved connectors would otherwise shift the

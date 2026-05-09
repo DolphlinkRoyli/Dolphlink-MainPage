@@ -152,6 +152,23 @@ function buildAiHSvg(size, extraClass) {
     `<text x="32" y="37" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="900" fill="#FFFFFF">AI</text>`);
 }
 
+// Trust-as-a-Service (TaaS) — shield with checkmark + verification pulse dot.
+// Visual language: brand-blue gradient shield, white inner outline + bold check,
+// pulse dot at upper-right echoing the uptime icon's verification motif.
+function buildTaasSvg(size, extraClass) {
+  const g = svgGradDef(size, 'taas');
+  return svgWrap(size, extraClass, g.defs +
+    // Outer shield body (gradient fill)
+    `<path d="M32 6 L52 13 V30 C52 42 42 51 32 57 C22 51 12 42 12 30 V13 Z" fill="url(#${g.gid})"/>` +
+    // Inner shield outline (white, low-opacity highlight)
+    `<path d="M32 12 L46 17.5 V30 C46 39 39 47 32 51 C25 47 18 39 18 30 V17.5 Z" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.32"/>` +
+    // Bold checkmark (white)
+    `<path d="M22 32 L29 39 L43 25" stroke="#FFFFFF" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
+    // Verification pulse dot at top-right (mirrors uptime icon style)
+    `<circle cx="50" cy="14" r="2.4" fill="#FFFFFF"/>` +
+    `<circle cx="50" cy="14" r="4.2" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.55"/>`);
+}
+
 // Portfolio icons —————————————————————————————————————————————
 
 function buildNexusSvg(size, extraClass) {
@@ -210,6 +227,7 @@ export const SVG_ICON_BUILDERS = {
   icon_6:  buildUptimeSvg,
   icon_7:  buildAiHSvg,
   icon_10: buildVelocitySvg,
+  icon_15: buildTaasSvg,        // Trust-as-a-Service (TaaS) — Zero-Trust shield
   // Industrial Portfolios
   icon_1:  buildNexusSvg,
   icon_2:  buildHubSvg,
