@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0059B3">
+<meta name="robots" content="noindex">
+
+<title>Redirecting · DOLPHLINK · Digital Card</title>
+
+<!-- This page used to be the digital-card landing. URL was renamed
+     /c/ → /card/ for clarity. Old printed QR codes and email-signature
+     links pointing at /c/?u=<localpart> hit this stub and bounce to the
+     new URL with the query string preserved.
+     - JS path:    one-line replace() carries ?u=… and any #hash
+     - noscript:   meta-refresh fallback (loses the query, but at least
+                   reaches /card/ where the user can re-enter the link)
+     - canonical:  points at /card/ so search engines roll equity over -->
+<link rel="canonical" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/card/">
+
+<script>
+  /* Forward the visitor immediately, preserving ?u=<localpart> + any #hash.
+     `replace` instead of `assign` means /c/ doesn't appear in the back-button
+     history — the browser back button takes them where they came from. */
+  location.replace('../card/' + location.search + location.hash);
+</script>
+<meta http-equiv="refresh" content="0; url=../card/">
+
+<style>
+ body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background: #FFFFFF; color: #0F172A; min-height: 100vh;
+        display: flex; align-items: center; justify-content: center;
+        padding: 32px; text-align: center; }
+ a { color: #0059B3; font-weight: 700; }
+</style>
+</head>
+<body>
+ <p>Redirecting to <a href="../card/">DOLPHLINK · Digital Card</a>…</p>
+</body>
+</html>

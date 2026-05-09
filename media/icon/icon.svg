@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DOLPHLINK PWA icon — brand-blue rounded square with white "D" mark
+  and gold signature dot. Single SVG serves both `purpose: any` and
+  `purpose: maskable` because the D sits well inside the 80% safe zone.
+  Vector source so it scales pixel-perfect at every install size
+  (192 / 512 / 1024) without separate raster files.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="DOLPHLINK">
+  <rect width="512" height="512" rx="112" fill="#0059B3"/>
+  <path d="M 144 128 H 264 A 128 128 0 0 1 264 384 H 144 Z" fill="#FFFFFF"/>
+  <path d="M 200 184 H 264 A 72 72 0 0 1 264 328 H 200 Z" fill="#0059B3"/>
+  <circle cx="384" cy="136" r="22" fill="#F59E0B"/>
+</svg>

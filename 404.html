@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0059B3">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; upgrade-insecure-requests">
+<title>404 · Page Not Found · DOLPHLINK</title>
+<style>
+ :root { --c-brand:#0059B3; --c-gold:#BF9430; --c-ink:#0F172A; --c-ink-soft:#475569; --c-ink-faint:#94A3B8; --c-paper:#F8FAFC; --c-line:#E2E8F0; }
+ *{box-sizing:border-box}
+ html,body{margin:0;padding:0}
+ body{
+  min-height:100vh;
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--c-paper);
+  color:var(--c-ink);
+  display:flex;align-items:center;justify-content:center;
+  padding:32px;
+ }
+ .shell{max-width:420px;text-align:center}
+ .mark{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:32px;
+ }
+ .mark span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--c-gold)}
+ .mark span:nth-child(2){background:var(--c-brand)}
+ .mark span:nth-child(3){background:var(--c-brand)}
+ .mark .name{font-size:13px;font-weight:800;letter-spacing:2.4px;color:var(--c-brand);margin-left:4px}
+ .code{
+  font-size:80px;font-weight:800;letter-spacing:-2px;
+  color:var(--c-brand);line-height:1;margin:0 0 8px;
+  font-feature-settings:'tnum';
+ }
+ h1{
+  font-size:22px;font-weight:800;letter-spacing:.2px;
+  color:var(--c-ink);margin:0 0 12px;line-height:1.3;
+ }
+ p{
+  font-size:14px;line-height:1.65;color:var(--c-ink-soft);
+  margin:0 0 28px;
+ }
+ .actions{display:flex;flex-direction:column;gap:10px}
+ .btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 22px;border-radius:8px;
+  font-family:inherit;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  cursor:pointer;border:2px solid var(--c-gold);
+  text-decoration:none;
+  transition:background .2s ease,color .2s ease;
+ }
+ .btn-primary{background:var(--c-brand);color:#FFFFFF;border-color:var(--c-brand)}
+ .btn-primary:hover{background:#003D80;border-color:#003D80}
+ .btn-outline{background:#FFFFFF;color:var(--c-brand)}
+ .btn-outline:hover{background:rgba(0,89,179,.06)}
+ .footer{
+  margin-top:36px;padding-top:24px;border-top:1px solid var(--c-line);
+  font-size:11px;font-weight:600;letter-spacing:.6px;color:var(--c-ink-faint);
+ }
+</style>
+</head>
+<body>
+ <div class="shell">
+  <div class="mark">
+   <span></span><span></span><span></span>
+   <span class="name">DOLPHLINK</span>
+  </div>
+
+  <div class="code" aria-hidden="true">404</div>
+  <h1>Page Not Found</h1>
+  <p>The page you are looking for has moved, been removed, or never existed. Head back to the homepage or reach out to us directly.</p>
+
+  <div class="actions">
+   <a class="btn btn-primary" href="/Dolphlink-MainPage/">Go to Homepage</a>
+   <a class="btn btn-outline" href="mailto:Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com">Email Sales</a>
+  </div>
+
+  <p class="footer">© 2026 Baiwu Technology Group · Singapore</p>
+ </div>
+</body>
+</html>

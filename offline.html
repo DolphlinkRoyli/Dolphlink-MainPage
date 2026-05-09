@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0059B3">
+<title>DOLPHLINK · Offline</title>
+<style>
+ :root { --c-brand:#0059B3; --c-gold:#BF9430; --c-ink:#0F172A; --c-ink-soft:#475569; --c-ink-faint:#94A3B8; --c-paper:#F8FAFC; --c-line:#E2E8F0; }
+ *{box-sizing:border-box}
+ html,body{margin:0;padding:0}
+ body{
+  min-height:100vh;
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--c-paper);
+  color:var(--c-ink);
+  display:flex;align-items:center;justify-content:center;
+  padding:32px;
+ }
+ .shell{max-width:420px;text-align:center}
+ .mark{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:32px;
+ }
+ .mark span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--c-gold)}
+ .mark span:nth-child(2){background:var(--c-brand)}
+ .mark .name{font-size:13px;font-weight:800;letter-spacing:2.4px;color:var(--c-brand);margin-left:4px}
+ .icon{
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(0,89,179,.08);
+  color:var(--c-brand);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;
+ }
+ .icon svg{width:30px;height:30px}
+ h1{
+  font-size:22px;font-weight:800;letter-spacing:.2px;
+  color:var(--c-ink);margin:0 0 12px;line-height:1.3;
+ }
+ p{
+  font-size:14px;line-height:1.65;color:var(--c-ink-soft);
+  margin:0 0 28px;
+ }
+ .actions{display:flex;flex-direction:column;gap:10px}
+ .btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 22px;border-radius:8px;
+  font-family:inherit;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  cursor:pointer;border:2px solid var(--c-gold);
+  text-decoration:none;
+  transition:background .2s ease,color .2s ease;
+ }
+ .btn-primary{background:var(--c-brand);color:#FFFFFF;border-color:var(--c-brand)}
+ .btn-primary:hover{background:#003D80;border-color:#003D80}
+ .btn-outline{background:#FFFFFF;color:var(--c-brand)}
+ .btn-outline:hover{background:rgba(0,89,179,.06)}
+ .footer{
+  margin-top:36px;padding-top:24px;border-top:1px solid var(--c-line);
+  font-size:11px;font-weight:600;letter-spacing:.6px;color:var(--c-ink-faint);
+ }
+</style>
+</head>
+<body>
+ <div class="shell">
+  <div class="mark">
+   <span></span><span></span><span></span>
+   <span class="name">DOLPHLINK</span>
+  </div>
+
+  <div class="icon" aria-hidden="true">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="1" y1="1" x2="23" y2="23"/>
+    <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/>
+    <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/>
+    <path d="M10.71 5.05A16 16 0 0 1 22.58 9"/>
+    <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/>
+    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+    <line x1="12" y1="20" x2="12.01" y2="20"/>
+   </svg>
+  </div>
+
+  <h1>You&rsquo;re offline</h1>
+  <p>This page needs an internet connection. Reconnect and try again, or reach out to us directly &mdash; we&rsquo;re here when you&rsquo;re back.</p>
+
+  <div class="actions">
+   <button type="button" class="btn btn-primary" onclick="location.reload()">Try Again</button>
+   <a class="btn btn-outline" href="mailto:Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com">Email Sales</a>
+  </div>
+
+  <p class="footer">© 2026 Baiwu Technology Group · Singapore</p>
+ </div>
+</body>
+</html>

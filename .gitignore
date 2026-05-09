@@ -1,0 +1,100 @@
+# ============================================================================
+# DOLPHLINK · .gitignore
+# ----------------------------------------------------------------------------
+# Anything listed here stays LOCAL ONLY — never pushed to GitHub Pages.
+# ============================================================================
+
+# ---- All internal stuff lives here, one rule blocks it all -----------------
+_local/
+
+# ---- Build pipeline kept at root (relative paths) but not deployed ---------
+build/
+cms/
+templates/
+
+# ---- Personal deploy / utility scripts at root (Windows convenience) -------
+push-to-github.bat
+push-to-github.ps1
+push.bat
+git-push.bat
+bump-version.bat
+compress-video.bat
+compress-poster.bat
+
+# ---- Portable ffmpeg auto-downloaded by compress-video.bat (~80MB) --------
+lib/ffmpeg/
+lib/_ffmpeg.zip
+lib/_ffmpeg_tmp/
+
+# ---- Original source assets — kept locally for re-processing ---------------
+media/_orig/
+
+# ---- Local backups (timestamped folders from past refactors) --------------
+.backup-pre-*/
+backup-*/
+*.bak
+*.orig
+
+# ---- Cloudflare Wrangler (Worker dev / deploy) ----------------------------
+# Wrangler caches state and bundles here when developing the Worker
+# locally; only the source (api/src/index.js) and api/wrangler.toml
+# should be committed. Secrets NEVER go in .toml — they're in CF dashboard.
+.wrangler/
+.dev.vars
+.dev.vars.local
+wrangler.toml.bak
+api/dist/
+api/.wrangler/
+
+# ---- Environment files (NEVER commit secrets) -----------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# ---- OS / editor cruft -----------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.iml
+*.sublime-*
+
+# ---- Node / Python ---------------------------------------------------------
+node_modules/
+npm-debug.log
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# ---- Logs ------------------------------------------------------------------
+*.log
+logs/
+
+# ---- Build artifacts -------------------------------------------------------
+*.min.css.map
+*.min.js.map
+dist/
+.cache/
+
+# ---- Test / coverage output ------------------------------------------------
+coverage/
+.nyc_output/
+
+# ---- Reorganization scripts (one-time use) --------------------------------
+reorganize-local.ps1
+reorganize-local.bat

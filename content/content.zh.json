@@ -1,0 +1,307 @@
+{
+  "_comment": "DOLPHLINK 简体中文内容。结构与 content.json 完全一致 — 此文件存在时,loader.js 在 lang=zh 模式下读取它替代英文版。技术术语 (API/SMS/RCS/ISO 27001/MAS TRM 等) 保留英文。专有名词 (新加坡地名/产品名 Dolphlink Touch 等) 保留原样。",
+  "nav": {
+    "brandName": "DOLPHLINK",
+    "ctaLabel": "预约简报",
+    "ctaTip": "点击预约",
+    "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
+    "menuItems": [
+      { "label": "首页",     "scrollTo": "h-sec", "href": "", "target": "" },
+      { "label": "可靠性",   "scrollTo": "r-sec", "href": "", "target": "" },
+      { "label": "信任层",   "scrollTo": "a-sec", "href": "", "target": "" }
+    ]
+  },
+  "hero": {
+    "h1": "成就每一次卓越客户体验",
+    "eyebrow": "依据新加坡《网络安全法》运营 · 符合 IM8 标准",
+    "h1Line1": "新加坡政府认可的",
+    "h1Line2": "通信基础设施。",
+    "tagline": "为政府机构与受监管行业打造的运营商级通信与 AI 编排平台。新加坡持牌运营、对标 MAS TRM 合规框架，业务覆盖 200 多个国家与地区。每一条短信、每一通呼叫、每一次 AI Agent 操作，都附带政府级审计轨迹、端到端加密与防篡改日志，全程可追溯。",
+    "taglineSegA": "是全球",
+    "taglineSegB": " 的国际总部，为全球通信交付任务级关键基础设施。","taglineSegC": "平台在新加坡持牌运营，覆盖 200+ 国家，为政府机构和受监管企业提供安全的 AI 编排、全球路由与在地数据管控。每一个动作都由端到端加密、身份优先访问控制与防篡改可审计性所支撑。",
+    "ctaPrimary": "预约简报",
+    "ctaPrimaryMailto": "Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&cc=Joycetsam@dolphlink.com",
+    "ctaSecondary": "了解运作机制",
+    "ctaSecondaryScrollTo": "hiw",
+    "stats": [
+      { "value": "99.999%", "label": "可用性" },
+      { "value": "1,000+",  "label": "Tier-1 路由" },
+      { "value": "200+",    "label": "覆盖国家与地区" }
+    ],
+    "triggerLine": "自动检测服务异常，秒级触发恢复编排。"
+  },
+  "reliability": {
+    "headerTag": "性能仪表盘",
+    "narrative": {
+      "s1Tail": " 正常运行时间",
+      "s2Lead": "覆盖 ",
+      "s2Tail": " 国家",
+      "s3Lead": "送达 ",
+      "s3Value": "10 秒以内",
+      "s4Lead": "覆盖 ",
+      "s4Value": "全生命周期",
+      "s5Lead": "实现可验证的 ",
+      "s5Tail": " 打开率"
+    },
+    "stats": [
+      { "key": "sla",  "icon": "icon_6",  "value": "99.999%", "label": "可用性",
+        "desc": "跨地理冗余 PoP 节点实现 99.999%（五个九）可用性，为业务连续性零容忍的关键场景而设计。SLA 由第三方独立验证，每季度出具鉴证报告。" },
+      { "key": "loc",  "icon": "icon_5",  "value": "200+",    "label": "覆盖国家与地区",
+        "desc": "通过 1,000 多条 Tier-1 移动运营商路由覆盖全球，覆盖范围与运营商级消息质量行业领先；新兴市场与受监管市场的最后一公里同样可达。" },
+      { "key": "lat",  "icon": "icon_10", "value": "<10 秒",   "label": "送达时延",
+        "desc": "经 Tier-1 运营商路由的短信 10 秒内送达，对标全球基准；每季度审计，并基于实时路由分析持续优化。" },
+      { "key": "ain",  "icon": "icon_7",  "value": "360°",            "label": "全生命周期",
+        "desc": "覆盖整套运营生命周期，从政策设计与迁移，到日常执行、审计与续约，全程一个平台跑下来。常规流量我们的 AI Agent 自己就能搞定，全天候不停：选哪条路由发出去、运营商掉线了切到哪条备份、发送之前过一道合规校验、看着不对劲的及时标出来。真正需要人来拿主意的时候，会带着完整上下文交到您指定的审核人手上。配套的迁移工具也已经内置好，您可以按自己的节奏把老系统的流程逐步搬到新平台上，每个阶段的每一步操作都会留下一份可以直接拿给监管看的审计记录。" },
+      { "key": "zer",  "icon": "icon_15", "value": "0-Trust",         "label": "Trust (TaaS)",
+        "desc": "信任即服务（Trust-as-a-Service, TaaS）：每一个 API 调用、每一条消息、每一次后台点击，发生瞬间就完成认证、授权、留痕。默认零隐式信任，无论从哪里发起的动作都要验证。身份优先访问（RBAC + 多因素认证）、传输双向 TLS、权限快速过期、敏感操作二次认证。您买的不是安全工具，您买的是已经被验证过的动作和可以直接交给监管的防篡改审计轨迹。" },
+      { "key": "open", "icon": "icon_3",  "value": "98%",     "label": "打开率",
+        "desc": "全球 Tier-1 运营商发送的交易类短信，经验证打开率高达 98%。OTP、欺诈预警、高优先级通知在数秒内触达客户，且被真正阅读。路由层面优先处理交易类流量，由第三方机构每季度测量审计。" }
+    ]
+  },
+  "loop": {
+    "headerTag": "实际流程",
+    "title": "每个客户周期形成一个完整的闭环：从策略定义、交付、控制到审计，然后重新开始。",
+    "intro": "每个客户周期形成一个完整的闭环：从策略定义、交付、控制到审计，然后重新开始。",
+    "subnoteLead": "两条合作路径，同一个结果：完全由您掌控的一个闭环。",
+    "subnoteA": "深度合作。我们与您的团队一起运行整个生命周期，从策略导入到审计员签字。",
+    "subnoteAHead": "深度合作",
+    "subnoteABody": "我们与您的团队一起运行整个生命周期，从策略导入到审计员签字。",
+    "subnoteB": "插件模式。您保持现有系统不变，我们只添加 AI 和控制需要的部分。",
+    "subnoteBHead": "插件模式",
+    "subnoteBBody": "您保持现有系统不变，我们只添加 AI 和控制需要的部分。",
+    "subnoteFoot": "无论哪种方式，数据保留原地，治理掌握在你手中，本轮的经验直接用到下轮。",
+    "roleHumanLabel": "人工",
+    "roleAiLabel": "AI",
+    "stages": {
+      "intake": {
+        "title": "立项与授权",
+        "humanRole": "锁定范围、数据驻留、监管映射、具名上报链路、SLA 与审计义务。签字 SOW。",
+        "aiRole": "AI-Digital Solutions 起草上线方案与号码迁移图谱；Operations Hub 预占 Tier-1 容量、把 SLA 写进合同。",
+        "metric": "主权驻留 · 签字 SLA · 可审计"
+      },
+      "orchestrate": {
+        "title": "迁移与部署",
+        "humanRole": "复核切换方案，签字确认试点 KPI、并行运行验证、正式上线时间。",
+        "aiRole": "AI-Digital Solutions 端口号码、迁移模板、通过 API 对接客户 CRM / 核心系统；Operations Hub 与旧网关并行试运行，按批次对账 DLR（送达回执）。",
+        "metric": "零停机切换 · 并行验证 · CRM 对账"
+      },
+      "resolve": {
+        "title": "规模化运营",
+        "humanRole": "一键裁定标记案件，可以批准、覆盖或暂停。每个决定带姓名、时间、理由。",
+        "aiRole": "SMS / Voice / Numbers 经 Tier-1 线路送达；One-API 跨通道自动回落；Touch 保持跨通道状态。Nexus 标记策略外事件；Smart 在交接时保持对话连贯。",
+        "metric": "10 秒级送达 · Tier-1 双活 · 出库即合规"
+      },
+      "audit": {
+        "title": "审计封存",
+        "humanRole": "合规负责人复核归档包并加数字签字；审计读完即放行。",
+        "aiRole": "Operations Hub 汇出按监管格式（CSV / JSON / 监管专用 schema）输出的不可篡改归档包；Nexus 封存决策图谱以备交接。",
+        "metric": "不可篡改 · 监管即取即用 · 双签封存"
+      }
+    },
+    "tracks": {
+      "full": {
+        "tag": "路径A：完整周期合作"
+      },
+      "plug": {
+        "tag": "路径B：运营优化"
+      }
+    },
+    "feedback": "立项、迁移、运营、审计，一个平台跑完端到端",
+    "cards": {
+      "a1": {"title": "设计与授权", "desc": "流量开始流动前，与您的团队确认一切：您的监管机构是谁，哪些地区需要数据驻留，您的内部审批流程。任何生产部署都需要您的签字。", "metric": "签字后才有流量"},
+      "a2": {"title": "构建·测试·迁移", "desc": "两周冲刺，每次演示都有绿色测试通过。从现有网关到新平台时，我们并行运行，逐步转换流量。切换期间零消息丢失。", "metric": "切换中零消息损失"},
+      "a3": {"title": "规模运营", "desc": "上线后，消息通过 Tier-1 路由在 10 秒内送达，通道故障时自动切换。任何超出策略的事件都标注上下文；您的团队做出判决。我们保持会话稳定直到您接手。", "metric": "决策权始终在您的团队"},
+      "a4": {"title": "审计与更新", "desc": "周期结束时，您的合规负责人收到一份防篡改的包：所有行动、所有批准、所有签字，按审计师所需的格式。审计师签字后，本周期的学习直接融入下周期。", "metric": "审计师签字一次，学习延续"},
+      "b1": {"title": "插接，别拆卸", "desc": "您花费多年建立的技术堆栈就该保持完整。我们的插件运行在您现有的系统上，您的 CRM、您的支持系统、您的网关都不用动。通常签署合同当天就能上线，无需迁移、无需重新培训、无需中断您的团队。", "metric": "同日上线，使用您信任的系统"},
+      "b2": {"title": "控制 AI，而不是被 AI 控制", "desc": "我们知道什么阻止了 AI 项目：安全评审。我们不要求您盲目相信。每个插件都在您编写的策略范围内运行，确定性护栏在 AI 与客户对话前就定好了它能做什么。您的 CISO 拿到审计日志，运营团队获得速度，没人在半夜被故障惊醒。", "metric": "运营要的速度，CISO 能防守的控制"},
+      "b3": {"title": "拥有循环，永不失控", "desc": "每个采购方都想知道：供应商出事了，我的数据怎么办？所以我们反向设计。您的对话、您的日志、您的审计日志都留在您的环境。您实时看到每个效率提升，一键导出所有数据，紧急断开开关在您手上。万一我们某天不再适合您，您带走的是一个完整的、可继续运行的循环。", "metric": "您的数据、您的日志、您的紧急开关。永远是您的。"}
+    }
+  },
+  "portfolios": {
+    "headerTag": "系统架构",
+    "intro": "三层架构、九款产品、一个持牌级平台。AI 治理层承载战略权重；编排调度层负责执行；通信连接基础设施在底层承载流量。",
+    "pillars": [
+      { "key": "governance",    "name": "AI 治理层",  "tagline": "监管对齐管控 + 迁移",
+        "desc": "驱动 AI 企业运营与合规的在地控制平面" },
+      { "key": "orchestration", "name": "编排调度层",     "tagline": "多通道 + 开发者",
+        "desc": "面向企业可编程通信与 AI 工作流的执行层" },
+      { "key": "connectivity",  "name": "通信连接基础设施",     "tagline": "Tier-1 运营商触达",
+        "desc": "承载全球关键通信的运营商级网络骨干" }
+    ],
+    "items": [
+      { "key": "sms", "pillar": "connectivity", "icon": "icon_4", "label": "SMS Platform",
+        "tagline": "全球短信 API", "recommend": "FLAGSHIP", "recommendTier": "gold",
+        "desc": "一个平台，服务三类用户。开发人员通过简洁的 REST API 接入，提供 Node、Python、Go、Java、PHP 多语言 SDK；市场营销团队使用 Pages（短信内嵌移动落地页）和 Campaigns（分群批量发送）触达受众；客服团队通过统一收件箱处理双向客户对话。\n\n1,000 多条 Tier-1 移动运营商路由，10 秒内将短信送达 200 多个国家与地区。交易类流量经验证打开率 98%；Short Codes、Long Numbers 与关键词订阅支持大规模双向互动营销。\n\n端到端 TLS 1.3 加密，OTP 与紧急警报享优先路由；24×7 NOC 监控配合自动运营商故障切换，始终走最快路径。" },
+      { "key": "voice", "pillar": "connectivity", "icon": "icon_13", "label": "Voice & SIP",
+        "tagline": "企业级语音", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "地理冗余 SIP 中继支持 TTS、语音通知、来电转接、DTMF 按键输入，是任何语音业务的运营商级承载底座。\n\n通话级精细分析数据助力欺诈监控与防控，专为对可用性与可问责性有严格要求的呼叫中心、中小企业、IP PBX 渠道商设计。\n\nWebRTC 网关支持浏览器端坐席控制台，完整支持 G.711、G.729、Opus 编解码。提供防篡改通话录音、实时抖动与丢包监测，DID 号码一键携入。" },
+      { "key": "numbers", "pillar": "connectivity", "icon": "icon_14", "label": "Phone Numbers",
+        "tagline": "全球 DID 号码", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "即时获取 100 多个国家的本地、全国、移动、免费号码，可在同一控制台会话中跨地区开通。\n\n支持英数字 Sender ID、Short Codes、Hosted Numbers（在现有座机上叠加短信与语音，无需更换运营商）。内置合规引擎自动判定各地监管要求。\n\n支持地区可在 48 小时内完成号码携入，并支持靓号预留与即时开通；集中化库存看板一屏掌握各地区用量、计费与合规状态。" },
+      { "key": "touch", "pillar": "orchestration", "icon": "icon_11", "label": "Dolphlink Touch",
+        "tagline": "多通道统一中心", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "面向企业的统一消息中心。SMS、WhatsApp、RCS、邮件与新兴通道在同一平台收敛，无论会话从哪里发起，都汇聚到同一处。\n\n面向市场人员友好的模板与拖拽式活动构建器，以及智能自动降级，投递失败时自动切换通道。专为追求迭代速度的营收、营销与客户运营团队而打造。\n\n原生集成 WhatsApp Business Platform 与模板审核流，支持基于行为信号的动态分群、跨通道 A/B 测试，端到端转化分析量化 ROI。" },
+      { "key": "api", "pillar": "orchestration", "icon": "icon_8", "label": "Dolphlink One-API",
+        "tagline": "开发者平台", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "一个 API 打通 SMS、语音、WhatsApp、邮件与新兴通道。一次调用即可跨通道发送消息或发起呼叫。\n\n即插即用 SDK 内置智能降级：主通道投递失败时自动切换。专为消息必达的关键业务流程设计。\n\n提供 Node、Python、Go、Java、PHP 五大语言 SDK；交互式沙箱配套真实测试号码；签名 Webhook 投递并自动重试；完整日志与请求重放，将数天的排障缩短到数分钟。" },
+      { "key": "smart", "pillar": "orchestration", "icon": "icon_12", "label": "Dolphlink Smart",
+        "tagline": "AI 聊天机器人构建器", "recommend": "NEW", "recommendTier": "gold",
+        "desc": "面向人机协同 AI 工作流的零代码对话构建器。拖、配、发布，全程无需触碰部署流水线。\n\n机器人处理常规对话，人工坐席接管复杂判断；无缝交接确保每段会话连贯不中断。基于客户自有数据的上下文理解，内置 ISO 27001、GDPR、RBAC，开箱即用于受监管行业。\n\n支持从 PDF、网页与数据库构建知识库，行业术语可定向微调；40 多种语言的多语对话；情感识别在数秒内将敏感问题自动升级给人工坐席。" },
+      { "key": "nexus", "pillar": "governance", "icon": "icon_1", "label": "Dolphlink Nexus",
+        "tagline": "AI Agent 编排", "recommend": "NEW", "recommendTier": "gold",
+        "desc": "AI Agent 运营的主权级中枢。将各类机器人、RPA 流程、自有模型与人工审核员，统一到一个可审计的控制平面。\n\n面向政府机构与受监管企业设计，内置迁移支持、完整数据驻留、RBAC 与操作日志。每个动作均可追溯，每份数据集都驻留在监管指定的辖区内。\n\n可视化工作流设计器，可任意串联 LLM、RPA 工具与人工审核员，并配套条件分支与审批节点。防篡改审计轨迹完整记录每一次决策与数据访问，可直接对接监管审查。" },
+      { "key": "console", "pillar": "governance", "icon": "icon_2", "label": "Operations Hub",
+        "tagline": "运营分析", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "Messaging Gateway 集中管理 API 凭证与密钥。一块仪表盘管控每个凭证、每条通道、每支团队。\n\nMessage Log 提供逐条消息的完整可见性：状态、内容、实时成本一目了然。聚合分析与实时趋势随数据流入持续优化通信策略。\n\n阈值告警自动提示投递率下滑或成本异常波动；成本预测按通道与地区预估月度支出；CSV 与 Webhook 导出可直接对接 BI、财务、合规系统。" },
+      { "key": "custom", "pillar": "governance", "icon": "icon_9", "label": "AI-Digital Solutions",
+        "tagline": "迁移服务", "recommend": "PROVEN", "recommendTier": "blue",
+        "desc": "面向存量基础设施项目的 AI 数字化迁移服务。我们因地制宜，匹配客户现有部署形态，无论本地、混合云还是主权云都能落地。\n\n在客户原有系统与 DOLPHLINK 的通信、AI 编排、合规层之间设计定制集成，按客户既定的时间表、数据驻留与治理要求交付。\n\n项目以四周的需求与架构工作坊为起点，依次推进并行试点与分阶段切换。专属解决方案架构师、24×7 优先支持以及定制 SLA 条款，全程护航关键业务流程。" }
+    ]
+  },
+  "smeBridge": {
+    "eyebrow": "SME · 中小企业方案",
+    "title": "为更小的团队而生。",
+    "intro": "同一套企业级平台，按 SME 预算与节奏精准裁剪。三条即开即用的服务路线，选一条，几天就能上线，不用拖到下个季度。",
+    "cta": "了解详情",
+    "cloud": {
+      "tag": "云服务",
+      "desc": "SME 级监管对齐云托管，按地区数据驻留，按需扩容。无长期合约，无需替换现有系统。"
+    },
+    "platform": {
+      "tag": "平台服务",
+      "desc": "即插即用的消息中枢、可编程 API、无代码聊天机器人构建器。按条计费，按用量扩展，10 分钟内即可上线。"
+    },
+    "connectivity": {
+      "tag": "互联服务",
+      "desc": "SMS、语音、WhatsApp 走 Tier-1 运营商路由，SME 级价格，无最低用量门槛、无隐藏开通费、无企业版冗余。"
+    }
+  },
+  "audit": {
+    "title": "信任层",
+    "items": [
+      { "title": "合规认证",
+        "desc": "已通过 ISO 27001 与 GDPR 认证；同时支持新加坡 PDPA、MAS TRM 以及亚太、欧洲、中东、非洲与美洲多地区监管框架。每年由第三方独立机构审计，鉴证报告凭 NDA 索取。" },
+      { "title": "数据主权",
+        "desc": "以新加坡为根基的持牌运营基础设施，数据驻留覆盖亚太、欧洲、中东、非洲与美洲。每一条客户数据都留存在监管要求的辖区内；每季度由第三方机构出具鉴证报告，附完整保管链。" },
+      { "title": "可靠性验证",
+        "desc": "跨地理冗余 PoP 节点的 99.999% 可用性，已经第三方独立验证。传输层启用 TLS 1.3、静态数据采用 AES-256 加密，每季度由第三方机构开展渗透测试。" },
+      { "title": "访问治理",
+        "desc": "全平台基于角色的访问控制 (RBAC)，可对各团队、租户与业务流程实施细粒度权限管理；操作日志详尽，原生支持 SSO 单点登录。" }
+    ]
+  },
+  "industries": {
+    "headerTag": "服务行业",
+    "colSector": "行业",
+    "colCapability": "我们提供",
+    "colCompliance": "合规认证",
+    "intro": "专为受监管行业的关键业务通信而生。在四大主攻垂直领域，DOLPHLINK 的在地架构与 AI Agent 编排带来可量化的优势；同一底座同样支撑另外五个行业。",
+    "primaryLabel": "主攻垂直领域",
+    "secondaryLabel": "同步服务行业",
+    "items": [
+      { "key": "government", "tier": "primary", "name": "政府与公共部门", "color": "#1F2937",
+        "desc": "在持牌运营基础设施上推送公民通知、公共服务消息与紧急广播。符合 IM8 标准、可审计；可在亚太、欧非中东、美洲等多个持牌监管辖区部署。",
+        "chips": ["IM8", "主权云", "多辖区合规"] },
+      { "key": "banking", "tier": "primary", "name": "银行与金融科技", "color": "#0059B3",
+        "desc": "安全的 2FA/OTP、实时欺诈预警、电子对账单投递，以及通过批量语音外呼实现自动化还款提醒。",
+        "chips": ["MAS TRM", "PDPA", "PCI-DSS"] },
+      { "key": "insurance", "tier": "primary", "name": "保险", "color": "#7C3AED",
+        "desc": "保单续保提醒、理赔状态通知、KYC 身份核验流程；每一个受监管的客户触点都配备防篡改审计轨迹。",
+        "chips": ["PDPA", "GDPR", "ISO 27001"] },
+      { "key": "healthcare", "tier": "primary", "name": "医疗健康", "color": "#10B981",
+        "desc": "通过自动化预约提醒与 AI 聊天机器人分诊，降低爽约率；在地数据驻留保护患者隐私。",
+        "chips": ["PDPA", "符合 HIPAA", "ISO 27001"] },
+      { "key": "logistics", "tier": "secondary", "name": "物流", "color": "#0059B3",
+        "desc": "WhatsApp、邮件、即时通讯统一收件箱，配套自动化轨迹通知；司机调度通过语音 IVR 与短信回执完成。",
+        "chips": ["全渠道", "GDPR"] },
+      { "key": "retail", "tier": "secondary", "name": "零售与电商", "color": "#0059B3",
+        "desc": "基于第一方数据的个性化互动、实时订单状态更新、弃单挽回，以及短信内嵌的 Pages 落地页。",
+        "chips": ["GDPR", "PDPA"] },
+      { "key": "education", "tier": "secondary", "name": "教育", "color": "#0059B3",
+        "desc": "招生录取确认、课程提醒、家校沟通统一汇入一个收件箱；支持多种区域语言互译。",
+        "chips": ["PDPA", "多语言"] },
+      { "key": "entertainment", "tier": "secondary", "name": "娱乐与游戏", "color": "#0059B3",
+        "desc": "为出海游戏发行商与社交应用提供国际短信与语音验证；按国别智能路由打通新兴市场最后一公里。",
+        "chips": ["200+ 国家与地区", "GDPR"] },
+      { "key": "hospitality", "tier": "secondary", "name": "酒店与酒旅", "color": "#0059B3",
+        "desc": "在客人惯用的任意通道开展互动，并配套零代码自助机器人；抵店前、入住中、退房后全流程端到端自动化。",
+        "chips": ["零代码机器人", "多语言"] }
+    ]
+  },
+  "departments": {
+    "headerTag": "赋能部门",
+    "intro": "在每一家客户组织内部，DOLPHLINK 通过同一套共享基础设施服务于四类不同的团队，从一线运营到定制化 AI 数字化项目。",
+    "introLead": "在每一家客户组织内部，",
+    "introTail": " 在同一套共享基础设施上服务四类不同的团队，从一线运营到定制化 AI 数字化项目。",
+    "personas": {
+      "support":    { "quote": "我要在 5 秒内知道哪些工单需要人工介入，不是 5 分钟之后。",            "attr": "客服主管 · 银行" },
+      "growth":     { "quote": "A/B 测试我今天就要跑，不是下个 Sprint。",                              "attr": "营销总监 · 零售" },
+      "ops":        { "quote": "我不该为了一次路由切换在凌晨被叫醒。",                                "attr": "SRE 负责人 · 保险" },
+      "innovation": { "quote": "我们不能推倒重来。它必须能和现有系统并存，不破坏既有信任链。",        "attr": "CTO · 政府" }
+    },
+    "items": [
+      { "key": "support", "name": "客户服务",
+        "desc": "跨所有数字触点的多通道客服支持，支持 AI 与人工坐席无缝交接。每个工单均带完整审计轨迹、情感评分与 SLA 执行；一级至三级工单升级流程可按地区灵活配置。" },
+      { "key": "growth", "name": "市场与销售",
+        "desc": "把对话转化为业绩。在同一控制台中对短信、WhatsApp、邮件营销活动开展 A/B 测试，按用户行为分群，端到端衡量 ROI；内置销售漏斗归因与生命周期自动化。" },
+      { "key": "ops", "name": "IT 与运营",
+        "desc": "在企业级基础设施上实现精益化的对话商务。一个可编程 API 端点替代数十个老旧网关集成；具备优先路由、自动运营商故障切换与 24×7 NOC 监控。" },
+      { "key": "innovation", "name": "数字化转型",
+        "desc": "从全新架构到老系统迁移的定制化 AI 数字项目。解决方案架构师将根据客户的技术栈、时间表与治理要求落地集成。" }
+    ]
+  },
+  "charts": {
+    "mapLabel": "全球连接网络",
+    "locations": [
+      { "name": "新加坡 (全球总部)", "value": [103.8513, 1.283],   "isHQ": true  },
+      { "name": "北京",          "value": [116.4074, 39.9042], "isHQ": false },
+      { "name": "上海",          "value": [121.4737, 31.2304], "isHQ": false },
+      { "name": "东京",          "value": [139.6917, 35.6895], "isHQ": false },
+      { "name": "孟买",          "value": [72.8777,  19.076],  "isHQ": false },
+      { "name": "悉尼",          "value": [151.2093, -33.8688],"isHQ": false },
+      { "name": "奥克兰",        "value": [174.7633, -36.8485],"isHQ": false },
+      { "name": "法兰克福",      "value": [8.6821,   50.1109], "isHQ": false },
+      { "name": "伦敦",          "value": [-0.1278,  51.5074], "isHQ": false },
+      { "name": "硅谷",          "value": [-122.0575,37.3875], "isHQ": false },
+      { "name": "圣保罗",        "value": [-46.6333, -23.5505],"isHQ": false }
+    ]
+  },
+  "footer": {
+    "brandTitle": "DOLPHLINK",
+    "brandTagline": "新加坡总部的通信底座与迁移合作伙伴，由百悟科技集团出品。以关键业务级可靠性连接政府与全球企业，业务覆盖 200 多个国家与地区。",
+    "missionLabel": "我们的准则",
+    "missionText": "标准化、安全、可持续。为不容失败的机构客户打造通信与编排底座。每一次版本发布都经过审计，每一个数据字节都受管控，每一次客户对话都可追溯问责。",
+    "locationLabel": "总部",
+    "locationLine1": "9 Raffles Place #29-04",
+    "locationLine2": "Republic Plaza, Singapore 048619",
+    "locationHours": "工作日 09:00 – 18:00 SGT",
+    "locationMapHref": "https://maps.google.com/?q=9+Raffles+Place+%2329-04+Republic+Plaza+Singapore+048619",
+    "locationMapLabel": "在 Google Maps 查看 ↗",
+    "connectivityLabel": "联系我们",
+    "salesEmail": "Salesmarketing@dolphlink.com",
+    "salesMailto": "Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com",
+    "directorEmail": "Joycetsam@dolphlink.com",
+    "directorMailto": "Joycetsam@dolphlink.com",
+    "directorLabel": "业务总监",
+    "officialSiteLabel": "百悟集团",
+    "officialSiteHref": "https://www.baiwutong.com",
+    "installLabel": "安装应用",
+    "mapHeading": "全球连接网络",
+    "mapIntro": "横跨亚太、欧洲、美洲与大洋洲的战略运营枢纽，支撑 DOLPHLINK 的全球服务能力。",
+    "vcardEyebrow": "联系销售",
+    "vcardHeading": "预约简报",
+    "vcardLine1": "销售 · 合作 · 采购",
+    "vcardLine2": "扫码保存联系名片，预约 30 分钟团队简报会。",
+    "vcardScanLabel": "扫码保存",
+    "socialLabel": "联系方式",
+    "social": [
+      { "name": "LinkedIn",     "href": "https://www.linkedin.com/", "icon": "linkedin" },
+      { "name": "邮件咨询",     "href": "mailto:Salesmarketing@dolphlink.com", "icon": "mail" },
+      { "name": "预约通话",     "href": "mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call", "icon": "calendar" }
+    ],
+    "legalLinks": [
+      { "label": "隐私政策", "href": "legal/privacy/" },
+      { "label": "条款与条件", "href": "legal/terms/" }
+    ],
+    "copyright": "© 2026 DOLPHLINK BY 百悟科技集团。保留所有权利。"
+  }
+}

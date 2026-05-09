@@ -1,0 +1,53 @@
+name: Auto Build (templates → HTML)
+
+# Auto-runs build.py whenever any template, manifest, or build script
+# changes on push to main/master. Rebuilt index.html and card/index.html
+# are committed back automatically.
+#
+# (sme/index.html and sme/build/index.html are HAND-WRITTEN, not built —
+#  see content/i18n/<code>.json for their translations.)
+#
+# Roy never has to run `python3 build/build.py` locally — edit templates,
+# push, the Action handles the rest.
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'templates/**'
+      - 'build/**'
+      - 'content/seo.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# This Action commits index.html / card/index.html.
+# The minify Action listens to css/**.css + js/**.js — different paths,
+# no fight. The "[skip ci]" tag on each commit prevents infinite loops
+# in case both Actions ever land in the same path window.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run build
+        run: |
+          python3 build/build.py
+          echo "--- Build complete ---"
+          ls -la index.html card/index.html
+
+      - name: Commit rebuilt HTML
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-rebuild HTML from templates [skip ci]"
+          file_pattern: "index.html card/index.html"
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com

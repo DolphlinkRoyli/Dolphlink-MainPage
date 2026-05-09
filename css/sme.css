@@ -1,0 +1,3548 @@
+/* ============================================================================
+ * DOLPHLINK SME × Lark — landing page stylesheet
+ *
+ * Source location: css/sme.css
+ * Loaded from sme/index.html as `../css/sme.css` AFTER `../css/tokens.css`
+ * (tokens.css supplies brand --baiwu-* variables; this file builds on top
+ * with --sme-* page-local tokens.)
+ *
+ * Design intent — different from the enterprise homepage:
+ *   - WARMER tone (friendlier copy, more body weight, less corporate gold)
+ *   - Lark-flavoured accent (mint green) introduced alongside brand blue
+ *   - Generous whitespace, clear pricing tiers, plainspoken sections
+ *   - Static SSR — no runtime JS, instant interactive
+ * ========================================================================== */
+
+:root {
+  /* --- SME palette: brand blue + mint (Lark cue) + warm yellow (CTA) --- */
+  --sme-bg:           #FFFFFF;
+  --sme-bg-soft:      #F8FAFC;
+  --sme-bg-tint:      #F1F5F9;
+  --sme-ink:          #0F172A;
+  --sme-ink-soft:     #475569;
+  --sme-ink-mid:      #64748B;
+  --sme-ink-faint:    #94A3B8;
+  --sme-line:         #E2E8F0;
+  --sme-line-soft:    #EEF2F7;
+
+  --sme-blue:         #0059B3;            /* === --baiwu-blue-primary === */
+  --sme-blue-deep:    #002D5C;
+  --sme-blue-soft:    rgba(0, 89, 179, 0.08);
+  --sme-blue-mid:     rgba(0, 89, 179, 0.18);
+
+  --sme-mint:         #10B981;            /* Lark-cue green for "free / live" badges */
+  --sme-mint-deep:    #047857;
+  --sme-mint-soft:    rgba(16, 185, 129, 0.10);
+  --sme-mint-edge:    rgba(16, 185, 129, 0.40);
+
+  --sme-gold:         #BF9430;            /* preserved brand link to enterprise site */
+  --sme-gold-soft:    rgba(191, 148, 48, 0.14);
+
+  --sme-radius-sm:    8px;
+  --sme-radius:       14px;
+  --sme-radius-lg:    20px;
+  --sme-radius-pill:  999px;
+
+  --sme-shadow-sm:    0 2px 8px rgba(15, 23, 42, 0.04);
+  --sme-shadow:       0 12px 32px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.03);
+  --sme-shadow-lg:    0 24px 56px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(15, 23, 42, 0.04);
+
+  --sme-font:         'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --sme-nav-h:        64px;
+  --sme-section-pad:  clamp(56px, 8vw, 96px);
+  --sme-content-w:    1120px;
+}
+
+/* ============================================================================
+ * Reset + base
+ * ========================================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html, body { overflow-x: clip; max-width: 100%; }
+body.sme-body {
+  font-family: var(--sme-font);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--sme-ink);
+  background: var(--sme-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--sme-blue); outline-offset: 3px; border-radius: 4px; }
+
+/* ============================================================================
+ * Buttons (shared)
+ * ========================================================================== */
+.sme-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 24px;
+  border-radius: var(--sme-radius-sm);
+  border: 1.5px solid transparent;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+.sme-btn--small { padding: 9px 16px; font-size: 12px; letter-spacing: 0.6px; }
+.sme-btn--primary {
+  background: var(--sme-blue);
+  color: #FFF;
+  box-shadow: 0 6px 18px var(--sme-blue-mid);
+}
+.sme-btn--primary:hover {
+  background: var(--sme-blue-deep);
+  box-shadow: 0 10px 24px rgba(0, 45, 92, 0.35);
+}
+.sme-btn--primary svg { transition: transform 0.2s ease; }
+.sme-btn--primary:hover svg { transform: translateX(3px); }
+.sme-btn--ghost {
+  background: var(--sme-bg);
+  color: var(--sme-blue);
+  border-color: var(--sme-blue);
+}
+.sme-btn--ghost:hover {
+  background: var(--sme-blue-soft);
+}
+.sme-btn--ghost-light {
+  background: transparent;
+  color: #FFF;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+.sme-btn--ghost-light:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: #FFF;
+}
+.sme-btn:active { transform: scale(0.98); }
+
+/* ============================================================================
+ * Top nav
+ * ========================================================================== */
+.sme-nav {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--sme-nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(16px, 4vw, 32px);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid var(--sme-line-soft);
+}
+.sme-nav-brand { display: inline-flex; align-items: center; gap: 10px; }
+.sme-nav-logo { width: 36px; height: 36px; border-radius: 8px; }
+.sme-nav-name {
+  font-size: 18px; font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--sme-blue);
+}
+.sme-nav-badge {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 1.6px;
+  color: var(--sme-mint-deep);
+  background: var(--sme-mint-soft);
+  padding: 4px 9px;
+  border-radius: var(--sme-radius-pill);
+  border: 1px solid var(--sme-mint-edge);
+}
+.sme-nav-links {
+  display: flex; align-items: center; gap: 6px;
+}
+.sme-nav-link {
+  padding: 8px 14px;
+  font-size: 13px; font-weight: 600;
+  color: var(--sme-ink-soft);
+  border-radius: 6px;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.sme-nav-link:hover {
+  color: var(--sme-blue);
+  background: var(--sme-blue-soft);
+}
+.sme-nav-link--ghost {
+  font-size: 12px; font-weight: 700;
+  color: var(--sme-ink-mid);
+  letter-spacing: 0.4px;
+}
+.sme-nav-cta { display: flex; align-items: center; gap: 12px; }
+@media (max-width: 720px) {
+  .sme-nav-links { display: none; }
+}
+@media (max-width: 480px) {
+  .sme-nav-cta .sme-nav-link--ghost { display: none; }
+  .sme-nav-name { display: none; }
+}
+
+/* ============================================================================
+ * Generic section scaffolding
+ * ========================================================================== */
+.sme-main { display: block; }
+.sme-section {
+  padding: var(--sme-section-pad) clamp(20px, 5vw, 40px);
+  max-width: var(--sme-content-w);
+  margin: 0 auto;
+  /* Skip layout/paint for off-screen sections until they intersect the
+     viewport — major paint-cost reduction on initial load. The hero
+     uses .sme-hero (not .sme-section), so it's never deferred. */
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* ============================================================================
+ * Language picker — populated by core/i18n.js attachLanguagePicker().
+ * Sits in the top nav between Enterprise link and Connect-Lark CTA on
+ * desktop; falls in line on mobile.
+ * ========================================================================== */
+.sme-nav-lang { display: inline-flex; align-items: center; }
+.dlpk-lang-picker {
+  position: relative; font-size: 12px; line-height: 1;
+}
+.dlpk-lang-picker > summary {
+  list-style: none;                              /* hide default ▶ marker */
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 10px; border-radius: 999px;
+  color: var(--sme-text); border: 1px solid rgba(15,23,42,.14);
+  background: #FFFFFF; transition: background .12s, border-color .12s;
+  -webkit-user-select: none; user-select: none;
+}
+.dlpk-lang-picker > summary::-webkit-details-marker { display: none; }
+.dlpk-lang-picker > summary:hover { background: #F8FAFC; border-color: rgba(15,23,42,.24); }
+.dlpk-lang-picker .dlpk-lang-current { font-weight: 700; letter-spacing: .2px; }
+.dlpk-lang-menu {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  list-style: none; margin: 0; padding: 6px;
+  min-width: 200px;
+  background: #FFFFFF;
+  border: 1px solid rgba(15,23,42,.12);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15,23,42,.18);
+  z-index: 200;
+}
+.dlpk-lang-menu li { margin: 0; padding: 0; }
+.dlpk-lang-menu button {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  width: 100%; padding: 9px 12px; text-align: left;
+  background: transparent; border: none; border-radius: 7px;
+  color: var(--sme-text); cursor: pointer; font: inherit;
+}
+.dlpk-lang-menu button:hover { background: rgba(0,89,179,.08); }
+.dlpk-lang-menu button[aria-current="true"] { background: rgba(0,89,179,.12); color: var(--sme-blue); }
+.dlpk-lang-native { font-weight: 700; font-size: 13px; }
+.dlpk-lang-en { font-size: 11px; color: rgba(15,23,42,.55); letter-spacing: .3px; }
+.dlpk-lang-menu button[aria-current="true"] .dlpk-lang-en { color: rgba(0,89,179,.7); }
+@media (max-width: 720px) {
+  .sme-nav-lang { order: -1; flex-basis: auto; }
+  .dlpk-lang-menu { left: 0; right: auto; }
+}
+.sme-cta-section,
+.sme-footer {
+  /* Below-fold blocks that aren't .sme-section also benefit. Footer is
+     now just a copyright line, so reserve a much smaller intrinsic
+     size — was 600px when footer had logo + 3 cols + tagline. */
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 60px;
+}
+.sme-section-head { max-width: 720px; margin: 0 auto 56px; text-align: center; }
+.sme-section-eyebrow {
+  display: inline-block;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+  background: var(--sme-blue-soft);
+  padding: 6px 14px;
+  border-radius: var(--sme-radius-pill);
+  margin-bottom: 18px;
+}
+.sme-section-eyebrow--light {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.14);
+}
+.sme-section-title {
+  font-size: clamp(28px, 4.4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+  color: var(--sme-ink);
+  margin: 0 0 18px;
+}
+.sme-section-intro {
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: var(--sme-ink-soft);
+  margin: 0;
+}
+
+/* ============================================================================
+ * Hero
+ * ========================================================================== */
+.sme-hero {
+  max-width: var(--sme-content-w);
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 80px) clamp(20px, 5vw, 40px) clamp(64px, 10vw, 112px);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+  background:
+    radial-gradient(circle at 6% 0%, var(--sme-blue-soft), transparent 42%),
+    radial-gradient(circle at 96% 100%, var(--sme-mint-soft), transparent 42%);
+}
+@media (max-width: 880px) {
+  .sme-hero { grid-template-columns: 1fr; }
+}
+.sme-hero-inner { max-width: 600px; }
+.sme-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--sme-mint-deep);
+  background: var(--sme-mint-soft);
+  border: 1px solid var(--sme-mint-edge);
+  padding: 7px 14px;
+  border-radius: var(--sme-radius-pill);
+  margin-bottom: 22px;
+}
+.sme-eyebrow-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--sme-mint);
+  box-shadow: 0 0 0 4px var(--sme-mint-soft);
+}
+.sme-hero-h1 {
+  font-size: clamp(34px, 5.4vw, 56px);
+  font-weight: 900;
+  letter-spacing: -1.4px;
+  line-height: 1.06;
+  color: var(--sme-ink);
+  margin: 0 0 20px;
+}
+.sme-hero-h1-accent {
+  color: var(--sme-blue);
+  display: block;
+}
+.sme-hero-tagline {
+  font-size: clamp(15px, 1.7vw, 18px);
+  line-height: 1.7;
+  color: var(--sme-ink-soft);
+  margin: 0 0 32px;
+}
+.sme-hero-cta {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-bottom: 28px;
+}
+.sme-hero-meta {
+  display: flex; flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 6px;
+}
+.sme-hero-meta-item {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 600;
+  color: var(--sme-ink-mid);
+}
+.sme-hero-meta-item svg {
+  color: var(--sme-mint);
+  flex-shrink: 0;
+}
+
+/* Hero visual: a faux-Lark window showing channel inbox */
+.sme-hero-visual { display: flex; justify-content: center; }
+.sme-lark-card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius-lg);
+  box-shadow: var(--sme-shadow-lg);
+  overflow: hidden;
+}
+.sme-lark-card-head {
+  display: flex; align-items: center; gap: 7px;
+  padding: 12px 16px;
+  background: var(--sme-bg-soft);
+  border-bottom: 1px solid var(--sme-line);
+  position: relative;
+}
+.sme-lark-dot { width: 11px; height: 11px; border-radius: 50%; }
+.sme-lark-dot--green  { background: #34D399; }
+.sme-lark-dot--yellow { background: #FBBF24; }
+.sme-lark-dot--red    { background: #F87171; }
+.sme-lark-card-title {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  font-size: 11px; font-weight: 700;
+  color: var(--sme-ink-mid);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.sme-lark-msg { padding: 14px 18px; border-bottom: 1px solid var(--sme-line-soft); }
+.sme-lark-msg:last-of-type { border-bottom: none; }
+.sme-lark-msg p {
+  font-size: 14px; line-height: 1.5;
+  color: var(--sme-ink);
+  margin: 4px 0 0;
+}
+.sme-lark-channel {
+  display: inline-block;
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+  background: var(--sme-blue-soft);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.sme-lark-msg--out { background: var(--sme-mint-soft); }
+.sme-lark-msg--out .sme-lark-channel {
+  color: var(--sme-mint-deep);
+  background: rgba(255, 255, 255, 0.7);
+}
+.sme-lark-card-foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  padding: 14px 18px;
+  background: var(--sme-bg-soft);
+  border-top: 1px solid var(--sme-line);
+}
+.sme-lark-foot-pill {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 1.2px;
+  color: var(--sme-ink-mid);
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.sme-lark-foot-pill--lark {
+  color: var(--sme-mint-deep);
+  background: var(--sme-mint-soft);
+  border-color: var(--sme-mint-edge);
+}
+.sme-lark-foot-arrow {
+  color: var(--sme-ink-faint);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ============================================================================
+ * Benefits — 3-card grid
+ * ========================================================================== */
+.sme-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.sme-benefit {
+  padding: 32px 28px;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.sme-benefit:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sme-shadow);
+  border-color: var(--sme-blue-mid);
+}
+.sme-benefit-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px;
+}
+.sme-benefit-icon--lark  { background: var(--sme-mint-soft); color: var(--sme-mint-deep); }
+.sme-benefit-icon--green { background: var(--sme-blue-soft); color: var(--sme-blue); }
+.sme-benefit-icon--gold  { background: var(--sme-gold-soft); color: var(--sme-gold); }
+.sme-benefit-title {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  margin: 0 0 12px;
+  color: var(--sme-ink);
+}
+.sme-benefit-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--sme-ink-soft);
+  margin: 0 0 18px;
+}
+.sme-benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--sme-line-soft);
+  padding-top: 14px;
+}
+.sme-benefit-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--sme-ink-mid);
+  margin-bottom: 8px;
+}
+.sme-benefit-list li::before {
+  content: '';
+  position: absolute;
+  left: 4px; top: 8px;
+  width: 6px; height: 6px;
+  background: var(--sme-mint);
+  border-radius: 50%;
+}
+.sme-benefit-list li:last-child { margin-bottom: 0; }
+
+/* ============================================================================
+ * BUILD page — /sme/build/. The "Build your own all-in-one" deployment
+ * wizard. Hero with 3-step flowchart, then 3 sections: intake form,
+ * stack picker, deploy steps. Reuses .sme-flow* from the old #integrations
+ * section so the workflow shapes render identically.
+ * Roy spec May 2026: warm, plain-language, 3-step flow on top.
+ * ========================================================================== */
+.sme-build-body { background: var(--sme-bg-soft); }
+
+/* Breadcrumb — slots IN the top nav (between brand and nav-right CTA).
+   Switched from <nav> to <ol> as the host element so it doesn't get
+   styled by the global `nav { position: fixed; top: 0; ... }` rule. */
+.build-breadcrumb {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--sme-ink-soft);
+  /* Sit between brand and nav-right; allow the row to shrink the
+     breadcrumb's available space before crowding the brand or CTA. */
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.build-breadcrumb li {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  min-width: 0;
+}
+.build-breadcrumb a {
+  color: var(--sme-ink-soft);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+.build-breadcrumb a:hover { color: var(--sme-blue); }
+.build-breadcrumb [aria-current="page"] {
+  color: var(--sme-blue);
+  font-weight: 800;
+  /* Long Chinese / Japanese strings can stretch the current-page label
+     wider than the rest of the row — let it truncate gracefully on
+     narrow viewports rather than push the CTA off-screen. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.build-breadcrumb [aria-hidden="true"] {
+  color: var(--sme-line);
+  font-weight: 400;
+}
+/* On narrow viewports drop the "Home › SME ›" prefix and just show the
+   current page — saves horizontal room for the brand + CTA. The brand
+   logo at left already lets users get back to home. */
+@media (max-width: 720px) {
+  .build-breadcrumb li:not([aria-current]):not(:nth-last-child(2)) { display: none; }
+  .build-breadcrumb li[aria-hidden="true"]:nth-last-child(2) { display: none; }
+}
+@media (max-width: 480px) {
+  .build-breadcrumb { display: none; }
+}
+
+/* Hero — warm cream backdrop, big title, clear flowchart preview. */
+.build-hero {
+  padding: clamp(48px, 6vw, 80px) clamp(20px, 5vw, 56px) clamp(28px, 4vw, 56px);
+  background: linear-gradient(180deg, #FFF8E8 0%, #FFFCEF 60%, var(--sme-bg-soft) 100%);
+  border-bottom: 1px solid rgba(217, 178, 87, 0.22);
+}
+.build-hero-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+}
+.build-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  background: rgba(0, 89, 179, 0.08);
+  border: 1px solid rgba(0, 89, 179, 0.22);
+  border-radius: var(--sme-radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+  margin-bottom: 16px;
+}
+.build-hero-title {
+  font-size: clamp(28px, 2.6vw + 14px, 44px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.6px;
+  color: var(--sme-ink);
+  margin: 0 0 14px;
+  /* Each sentence-fragment span sits on its own line — clearer rhythm
+     for "Three steps. / Pick what you need. / We assemble it around
+     your business." Roy spec: 一个句号一行. */
+}
+.build-hero-title span {
+  display: block;
+}
+.build-hero-desc {
+  font-size: clamp(15px, 0.5vw + 13px, 17px);
+  line-height: 1.6;
+  color: var(--sme-ink-soft);
+  max-width: 60ch;
+  margin: 0 auto;
+}
+
+/* Three-step flowchart at top of hero — clear preview of the page. */
+.build-flowchart {
+  list-style: none;
+  margin: clamp(36px, 5vw, 56px) auto 0;
+  padding: clamp(24px, 3vw, 36px) clamp(20px, 3vw, 32px);
+  max-width: 1100px;
+  display: flex;
+  align-items: stretch;
+  gap: clamp(8px, 1.5vw, 16px);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(217, 178, 87, 0.32);
+  border-radius: var(--sme-radius);
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+}
+.build-flowchart-step {
+  flex: 1;
+  padding: 18px 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--sme-line);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+.build-flowchart-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  /* Solid enterprise blue (no gradient → no navy fade-out) so the badge
+     reads as the brand colour at a glance, not as a generic dark-blue
+     chip. Roy spec: 01/02/03 must use 企业颜色. */
+  background: var(--sme-blue);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(0, 89, 179, 0.25);
+}
+.build-flowchart-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: var(--sme-ink);
+}
+.build-flowchart-desc {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--sme-ink-soft);
+}
+/* Timing badge under each step — tells visitor what's online vs follow-up. */
+.build-flowchart-time {
+  margin: 6px auto 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  background: rgba(217, 178, 87, 0.16);
+  border: 1px solid rgba(217, 178, 87, 0.45);
+  border-radius: var(--sme-radius-pill);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #8C6A1F;
+}
+.build-flowchart-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sme-gold);
+  flex: 0 0 auto;
+}
+@media (max-width: 720px) {
+  .build-flowchart { flex-direction: column; }
+  .build-flowchart-arrow { transform: rotate(90deg); }
+}
+
+/* Each step section. Alternates background to read as 3 distinct stages. */
+.build-step {
+  padding: clamp(48px, 5vw, 72px) clamp(20px, 5vw, 56px);
+  background: var(--sme-bg);
+}
+.build-step--alt {
+  background: var(--sme-bg-soft);
+}
+.build-step-head {
+  /* Tag pill + big title share the same horizontal row (pill first,
+     then the title flows after it). The intro paragraph wraps to its
+     own line via flex-basis:100%. Roy spec: STEP 01/02/03 放到大标题前面. */
+  max-width: var(--sme-content-w);
+  margin: 0 auto 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 16px;
+  row-gap: 10px;
+  text-align: center;
+}
+.build-step-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  background: rgba(217, 178, 87, 0.16);
+  border: 1px solid rgba(217, 178, 87, 0.45);
+  border-radius: var(--sme-radius-pill);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #8C6A1F;
+  /* margin-bottom removed — vertical spacing now comes from row-gap on
+     the parent flex container. */
+  flex: 0 0 auto;
+}
+.build-step-title {
+  font-size: clamp(24px, 2.2vw + 12px, 36px);
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.5px;
+  color: var(--sme-ink);
+  margin: 0;
+  /* Sit on the same row as the pill but allow wrapping when the row
+     overflows — a long Chinese title shouldn't push the pill off-screen. */
+  flex: 0 1 auto;
+}
+.build-step-intro {
+  font-size: clamp(15px, 0.5vw + 13px, 17px);
+  line-height: 1.6;
+  color: var(--sme-ink-soft);
+  max-width: 60ch;
+  margin: 0 auto;
+  /* Force-break to its own line beneath the tag+title row. */
+  flex: 0 0 100%;
+}
+/* Welcome greeting after Google sign-in — only renders when the
+   build form was reached via the Google login handoff. */
+.build-step-greet {
+  margin: 14px auto 0;
+  max-width: 56ch;
+  padding: 10px 16px;
+  background: rgba(217, 178, 87, 0.12);
+  border: 1px solid rgba(217, 178, 87, 0.40);
+  border-radius: var(--sme-radius-pill);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--sme-ink);
+  font-style: italic;
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+}
+.build-step-greet strong {
+  color: var(--sme-blue-deep);
+  font-style: normal;
+  font-family: inherit;
+  font-weight: 800;
+}
+
+/* ----- Step 01: Intake form ----- */
+.build-form {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background: var(--sme-bg);
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+}
+.build-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.build-legend {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+  margin: 0 0 12px;
+  padding: 0;
+}
+.build-checkboxes,
+.build-radio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+}
+.build-radio { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.build-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--sme-bg-soft);
+  border: 1px solid var(--sme-line);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13.5px;
+  color: var(--sme-ink);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.build-check:hover { background: rgba(0, 89, 179, 0.05); border-color: var(--sme-blue-mid); }
+.build-check input { accent-color: var(--sme-blue); margin: 0; flex-shrink: 0; }
+.build-check input:checked + span { color: var(--sme-blue-deep); font-weight: 600; }
+.build-input-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+.build-input,
+.build-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  background: var(--sme-bg-soft);
+  border: 1px solid var(--sme-line);
+  border-radius: 8px;
+  color: var(--sme-ink);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.build-textarea {
+  margin-top: 10px;
+  resize: vertical;
+  min-height: 72px;
+  font-family: inherit;
+}
+.build-input:focus,
+.build-textarea:focus {
+  outline: none;
+  border-color: var(--sme-blue);
+  background: var(--sme-bg);
+}
+.build-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--sme-line-soft);
+}
+.build-form-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+/* Honest "what happens when you click submit" note next to the button. */
+.build-form-note {
+  margin: 0;
+  flex: 1;
+  min-width: 220px;
+  font-size: 12.5px;
+  font-style: italic;
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  line-height: 1.5;
+  color: var(--sme-ink-mid);
+}
+
+/* ----- Step 02: Choose your stack — two paths + 3 flows ----- */
+.build-paths {
+  max-width: var(--sme-content-w);
+  margin: 0 auto 48px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+.build-path {
+  position: relative;
+  padding: 32px 28px;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-left-width: 4px;
+}
+.build-path--keep    { border-left-color: var(--sme-blue); }
+.build-path--build   { border-left-color: var(--sme-gold); }
+.build-path-tag {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  border-radius: var(--sme-radius-pill);
+}
+.build-path--keep .build-path-tag {
+  background: rgba(0, 89, 179, 0.10);
+  color: var(--sme-blue);
+}
+.build-path--build .build-path-tag {
+  background: rgba(217, 178, 87, 0.16);
+  color: #8C6A1F;
+}
+.build-path-title {
+  margin: 0;
+  font-size: clamp(20px, 1.6vw + 12px, 24px);
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--sme-ink);
+  line-height: 1.25;
+}
+.build-path-desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sme-ink-soft);
+}
+.build-stack-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.build-stack-strip-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--sme-ink-soft);
+}
+.build-stack-strip-label--muted { color: var(--sme-ink-mid); font-style: italic; letter-spacing: 0.5px; text-transform: none; font-weight: 500; }
+.build-stack-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  background: var(--sme-bg-soft);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sme-ink);
+}
+/* Grouped pills — ERP / Accounting / Workspace categories. Cleaner
+   than 9 pills in a single row of mixed kinds. */
+.build-stack-grouped {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+.build-stack-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.build-stack-group-label {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+  min-width: 96px;
+}
+.build-stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.build-stack-foot {
+  margin: 8px 0 0;
+  font-size: 12px;
+  font-style: italic;
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  color: var(--sme-ink-mid);
+  line-height: 1.4;
+}
+@media (max-width: 480px) {
+  .build-stack-group { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .build-stack-group-label { min-width: 0; }
+}
+.build-services {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+.build-services li {
+  position: relative;
+  padding: 10px 0 10px 22px;
+  font-size: 14px;
+  color: var(--sme-ink-soft);
+  line-height: 1.5;
+  border-top: 1px dashed var(--sme-line-soft);
+}
+.build-services li:first-child { border-top: 0; }
+.build-services li::before {
+  content: '';
+  position: absolute;
+  left: 4px; top: 17px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--sme-gold);
+}
+.build-services strong { color: var(--sme-blue-deep); margin-right: 4px; }
+@media (max-width: 720px) {
+  .build-paths { grid-template-columns: 1fr; }
+}
+
+/* The flows-block heading + intro inside Step 02. */
+.build-flows-block {
+  max-width: var(--sme-content-w);
+  margin: 0 auto;
+}
+.build-flows-heading {
+  font-size: clamp(18px, 1.2vw + 12px, 22px);
+  font-weight: 800;
+  color: var(--sme-ink);
+  margin: 0 0 8px;
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+.build-flows-intro {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--sme-ink-soft);
+  margin: 0 auto 26px;
+  max-width: 60ch;
+}
+.build-flows-fineprint {
+  margin: 28px auto 0;
+  max-width: 56ch;
+  padding: 14px 18px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  font-style: italic;
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  color: var(--sme-ink-soft);
+  background: rgba(0, 89, 179, 0.05);
+  border-left: 3px solid var(--sme-blue);
+  border-radius: 4px;
+}
+
+/* Consult-only callout in Step 02 — gold-accented panel making it
+   crystal clear this is a sales conversation, not a self-serve flow.
+   Roy spec May 2026: 详谈之后决定的, 要写清楚. */
+.build-consult-note {
+  max-width: var(--sme-content-w);
+  margin: 0 auto 28px;
+  padding: 18px 22px 18px 20px;
+  background: linear-gradient(135deg, rgba(217, 178, 87, 0.10) 0%, rgba(0, 89, 179, 0.06) 100%);
+  border: 1px solid rgba(217, 178, 87, 0.45);
+  border-left: 4px solid var(--sme-gold);
+  border-radius: var(--sme-radius);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.build-consult-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--sme-gold);
+  color: #FFFFFF;
+  margin-top: 2px;
+}
+.build-consult-body { min-width: 0; }
+.build-consult-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--sme-ink);
+  letter-spacing: -0.2px;
+  margin-bottom: 4px;
+}
+.build-consult-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sme-ink-soft);
+}
+
+/* ----- Step 03: Deploy — 3 conversations ----- */
+.build-deploy-steps {
+  list-style: none;
+  margin: 0 auto 36px;
+  padding: 0;
+  max-width: var(--sme-content-w);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.build-deploy-step {
+  position: relative;
+  padding: 28px 24px 24px;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.build-deploy-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  /* Enterprise blue — matches the flowchart at top of page so the
+     numbered-step vocabulary stays consistent across the build journey. */
+  background: var(--sme-blue);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  margin-bottom: 4px;
+  box-shadow: 0 4px 10px rgba(0, 89, 179, 0.25);
+}
+.build-deploy-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: var(--sme-ink);
+}
+.build-deploy-desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sme-ink-soft);
+}
+.build-deploy-time {
+  margin: 6px 0 0;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+}
+@media (max-width: 720px) {
+  .build-deploy-steps { grid-template-columns: 1fr; }
+}
+
+.build-final-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto;
+}
+
+/* Success / error dialog after AJAX form submit. Centered card over a
+   dimmed backdrop. Roy spec May 2026: 弹窗后回 SME 页, 不要单独页面. */
+.build-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 32px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+/* CRITICAL: when the dialog is hidden it MUST be display:none, otherwise
+   the position:fixed inset:0 layer sits invisibly on top of the whole
+   page and eats every click on the form below. The browser's built-in
+   `[hidden] { display: none }` is overridden by `.build-dialog { display:flex }`
+   above, so we have to restore it explicitly. */
+.build-dialog[hidden] { display: none !important; }
+.build-dialog.is-open { opacity: 1; }
+.build-dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 16, 38, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.build-dialog-card {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+  width: 100%;
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 40px);
+  background: linear-gradient(180deg, #FFFAEC 0%, #FFFFFF 100%);
+  border: 1px solid rgba(217, 178, 87, 0.40);
+  border-radius: var(--sme-radius);
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.30),
+    0 4px 14px rgba(15, 23, 42, 0.08);
+  text-align: center;
+  transform: translateY(16px) scale(0.96);
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.build-dialog.is-open .build-dialog-card {
+  transform: translateY(0) scale(1);
+}
+.build-dialog-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  background: var(--sme-mint-soft);
+  color: var(--sme-mint-deep);
+  border-radius: 50%;
+  border: 2px solid var(--sme-mint);
+}
+.build-dialog-icon--err {
+  background: rgba(220, 38, 38, 0.10);
+  color: #DC2626;
+  border-color: #DC2626;
+}
+.build-dialog-title {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 1.6vw + 12px, 28px);
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--sme-ink);
+  line-height: 1.25;
+}
+.build-dialog-text {
+  margin: 0 0 26px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--sme-ink-soft);
+  max-width: 44ch;
+  margin-inline: auto;
+}
+.build-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+/* Build-your-own CTA — sits below the 3 benefit cards. Centered,
+   primary blue button + a single warm one-liner explaining what the
+   click does. Roy spec May 2026: 定制自己的一体化平台. */
+.sme-benefit-cta {
+  margin: clamp(28px, 4vw, 44px) auto 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+/* Secondary CTA — gold-bordered ghost so it doesn't compete with the
+   primary blue "Partner with us" CTA on the One Partner card. */
+.sme-benefit-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  border-radius: var(--sme-radius-pill);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--sme-blue-deep);
+  border: 2px solid var(--sme-gold);
+  box-shadow: 0 6px 18px rgba(217, 178, 87, 0.20);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.sme-benefit-cta-btn:hover,
+.sme-benefit-cta-btn:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(217, 178, 87, 0.10);
+  box-shadow: 0 12px 28px rgba(217, 178, 87, 0.34);
+  color: var(--sme-blue-deep);
+}
+.sme-benefit-cta-btn svg {
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+.sme-benefit-cta-note {
+  margin: 0;
+  font-size: 13px;
+  font-style: italic;
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  color: var(--sme-ink-soft);
+  max-width: 56ch;
+  line-height: 1.5;
+}
+
+/* ============================================================================
+ * Survive + Grow — two big cards. Same DNA as the benefits cards but
+ * heavier visual weight: bigger headline, dedicated "hook" line, only
+ * 2 columns max so each card has room to breathe. Each card gets a
+ * coloured left edge — gold for grow, brand-blue for survive — so the
+ * pair reads as parallel + complementary at a glance.
+ * Roy spec May 2026: 中小企业搜索最多两点 (sell more / spend less).
+ * ========================================================================== */
+.sme-gains { padding: var(--sme-section-pad) clamp(20px, 5vw, 56px); background: var(--sme-bg); }
+.sme-gain-grid {
+  max-width: var(--sme-content-w);
+  margin: 32px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+.sme-gain {
+  position: relative;
+  padding: 36px 32px 32px;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  border-left-width: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.sme-gain:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sme-shadow);
+}
+.sme-gain--grow    { border-left-color: var(--sme-gold); }
+.sme-gain--survive { border-left-color: var(--sme-blue); }
+/* Tag pill — "Grow" in gold, "Survive" in brand-blue. */
+.sme-gain-tag {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  padding: 5px 11px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  border-radius: var(--sme-radius-pill);
+}
+.sme-gain--grow .sme-gain-tag {
+  background: var(--sme-gold-soft);
+  color: var(--sme-gold);
+}
+.sme-gain--survive .sme-gain-tag {
+  background: var(--sme-blue-soft);
+  color: var(--sme-blue);
+}
+.sme-gain-title {
+  margin: 4px 0 0;
+  font-size: clamp(22px, 1.6vw + 12px, 28px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--sme-ink);
+}
+/* "Hook" — a single punchy line in serif italic that anchors the card. */
+.sme-gain-hook {
+  margin: 0;
+  font-family: 'Georgia', 'Source Serif Pro', 'Noto Serif TC', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+}
+.sme-gain--grow .sme-gain-hook    { color: var(--sme-gold); }
+.sme-gain--survive .sme-gain-hook { color: var(--sme-blue); }
+.sme-gain-desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--sme-ink-soft);
+}
+.sme-gain-list {
+  list-style: none;
+  padding: 14px 0 0;
+  margin: 4px 0 0;
+  border-top: 1px solid var(--sme-line-soft);
+}
+.sme-gain-list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--sme-ink-mid);
+  margin-bottom: 8px;
+}
+.sme-gain-list li:last-child { margin-bottom: 0; }
+.sme-gain-list li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.sme-gain--grow .sme-gain-list li::before    { background: var(--sme-gold); }
+.sme-gain--survive .sme-gain-list li::before { background: var(--sme-blue); }
+@media (max-width: 720px) {
+  .sme-gain-grid { grid-template-columns: 1fr; gap: 18px; }
+  .sme-gain { padding: 28px 24px; }
+}
+
+/* ============================================================================
+ * One partner — narrative closer. Caps off the 4-3-2-1 countdown
+ * (4 pains → 3 things → 2 outcomes → 1 partner: DOLPHLINK).
+ *
+ * Holds a "happy everyone" hero photo, the partner promise + DOLPHLINK
+ * as the punchline, the 3-conversation onboarding journey (merged in
+ * from the old #how section), and the only primary CTA on the page.
+ *
+ * Background: WARM cream + gold accents (not cold blue). Roy spec
+ * May 2026: 这页面必须温暖，不要纯蓝背景太冷了.
+ * ========================================================================== */
+.sme-one { padding: var(--sme-section-pad) clamp(20px, 5vw, 56px); background: var(--sme-bg); }
+.sme-one-card {
+  position: relative;
+  max-width: var(--sme-content-w);
+  margin: 0 auto;
+  border-radius: var(--sme-radius);
+  background:
+    linear-gradient(180deg, #FFF8E8 0%, #FFFCEF 60%, #FFFAEC 100%);
+  border: 1px solid rgba(217, 178, 87, 0.32);
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 22px 60px rgba(217, 178, 87, 0.18),
+    0 4px 14px rgba(15, 23, 42, 0.06);
+}
+/* Gold accent stripe along the top — the brand "saver" thread. */
+.sme-one-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--sme-gold) 0%, #E8C870 50%, var(--sme-gold) 100%);
+  z-index: 2;
+}
+/* Hero photo at the top — wide, warm, the emotional anchor.
+   Holds the 4-3-2-1 title overlaid magazine-cover style. */
+.sme-one-photo {
+  margin: 0;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  background: linear-gradient(135deg, #FFF1D6 0%, #FFE9B8 100%);
+}
+.sme-one-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Soft dark gradient at the bottom of the photo so the title sits
+   readable on top — light at the top to keep the smiling faces clear,
+   dark at the bottom where the headline lives. */
+.sme-one-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(0, 16, 38, 0.42) 70%,
+    rgba(0, 16, 38, 0.78) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+/* Overlay container — anchors title to the bottom of the photo. */
+.sme-one-photo-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(28px, 4vw, 56px) clamp(28px, 5vw, 64px);
+}
+/* Body content sits below the photo. */
+.sme-one-content {
+  padding: clamp(36px, 5vw, 60px) clamp(28px, 5vw, 64px);
+}
+.sme-one-tag {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  padding: 6px 14px;
+  background: rgba(217, 178, 87, 0.32);
+  border: 1px solid rgba(255, 235, 180, 0.85);
+  border-radius: var(--sme-radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #FFEBB4;
+  margin-bottom: 16px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+.sme-one-title {
+  font-size: clamp(22px, 2vw + 12px, 38px);
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.5px;
+  color: #FFFFFF;
+  margin: 0;
+  text-shadow:
+    0 2px 28px rgba(0, 0, 0, 0.65),
+    0 1px 6px rgba(0, 0, 0, 0.55);
+}
+/* Two-line title — countdown on top ("Four pains. Three things. Two
+   outcomes.") and the answer below ("One partner: DOLPHLINK."). Each
+   line forced to its own row + never breaks mid-phrase on desktop. */
+.sme-one-countdown,
+.sme-one-answer {
+  display: block;
+}
+.sme-one-answer { margin-top: 4px; }
+@media (min-width: 720px) {
+  .sme-one-countdown,
+  .sme-one-answer { white-space: nowrap; }
+}
+/* DOLPHLINK as the punchline — enterprise brand-blue, with a soft
+   white halo so it pops on a warm photo. Roy spec May 2026: 企业名字必须用企业颜色. */
+.sme-one-brand {
+  display: inline-block;
+  color: var(--sme-blue);
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  font-size: 1.08em;
+  text-shadow:
+    0 0 18px rgba(255, 255, 255, 0.95),
+    0 0 8px rgba(255, 255, 255, 0.85),
+    0 2px 6px rgba(0, 0, 0, 0.30);
+}
+.sme-one-desc {
+  font-size: clamp(15px, 0.5vw + 13px, 17px);
+  line-height: 1.65;
+  color: var(--sme-ink-soft);
+  /* No max-width — match the journey block + CTA row below so all
+     three rows align to the same left/right edges. Roy spec May 2026:
+     上下要对齐. */
+  margin: 0 0 30px;
+}
+
+/* Three conversations onboarding — merged from old #how section.
+   Numbered cards in a horizontal grid on desktop, stacked on mobile.
+   Light tint background panel inside the warm card so they read as
+   a coherent block. */
+.sme-one-journey {
+  margin: 0 0 30px;
+  padding: 24px clamp(20px, 3vw, 32px) 26px;
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 12px;
+  border: 1px solid rgba(217, 178, 87, 0.18);
+}
+.sme-one-journey-eyebrow {
+  margin: 0 0 18px;
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--sme-blue);
+  letter-spacing: 0.005em;
+}
+.sme-one-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.sme-one-step {
+  position: relative;
+  padding-top: 36px;
+}
+.sme-one-step-num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sme-gold);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+.sme-one-step-title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: var(--sme-ink);
+}
+.sme-one-step-desc {
+  margin: 0 0 8px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--sme-ink-soft);
+}
+.sme-one-step-time {
+  margin: 0;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+}
+
+.sme-one-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.sme-one-cta .sme-btn--primary {
+  background: var(--sme-blue);
+  color: #FFFFFF;
+  border-color: var(--sme-blue);
+  font-weight: 800;
+}
+.sme-one-cta .sme-btn--primary:hover,
+.sme-one-cta .sme-btn--primary:focus-visible {
+  background: var(--sme-blue-deep);
+  border-color: var(--sme-blue-deep);
+  color: #FFFFFF;
+}
+.sme-one-cta .sme-btn--ghost {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--sme-blue-deep);
+  border-color: var(--sme-gold);
+}
+.sme-one-cta .sme-btn--ghost:hover,
+.sme-one-cta .sme-btn--ghost:focus-visible {
+  background: rgba(217, 178, 87, 0.18);
+  border-color: var(--sme-gold);
+  color: var(--sme-blue-deep);
+}
+@media (max-width: 720px) {
+  .sme-one-photo { aspect-ratio: 16 / 9; }
+  .sme-one-steps { grid-template-columns: 1fr; gap: 18px; }
+}
+
+/* ============================================================================
+ * Pricing — 3 plan cards
+ * ========================================================================== */
+.sme-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+.sme-plan {
+  position: relative;
+  padding: 32px 28px;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  display: flex; flex-direction: column;
+}
+.sme-plan--featured {
+  background: linear-gradient(180deg, var(--sme-blue) 0%, var(--sme-blue-deep) 100%);
+  border-color: var(--sme-blue);
+  color: #FFF;
+  box-shadow: 0 16px 40px rgba(0, 89, 179, 0.32);
+  transform: translateY(-8px);
+}
+.sme-plan-flag {
+  position: absolute;
+  top: -14px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--sme-mint);
+  color: #FFF;
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: var(--sme-radius-pill);
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+}
+.sme-plan-head { margin-bottom: 22px; }
+.sme-plan-name {
+  display: block;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+  margin-bottom: 8px;
+}
+.sme-plan--featured .sme-plan-name { color: rgba(255, 255, 255, 0.85); }
+.sme-plan-tagline {
+  display: block;
+  font-size: 13px;
+  color: var(--sme-ink-mid);
+  line-height: 1.5;
+}
+.sme-plan--featured .sme-plan-tagline { color: rgba(255, 255, 255, 0.78); }
+.sme-plan-price {
+  margin-bottom: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--sme-line);
+}
+.sme-plan--featured .sme-plan-price { border-bottom-color: rgba(255, 255, 255, 0.18); }
+.sme-plan-price-num {
+  display: block;
+  font-size: 38px; font-weight: 900;
+  letter-spacing: -1.2px;
+  color: var(--sme-ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.sme-plan--featured .sme-plan-price-num { color: #FFF; }
+.sme-plan-price-unit {
+  font-size: 13px;
+  color: var(--sme-ink-mid);
+}
+.sme-plan--featured .sme-plan-price-unit { color: rgba(255, 255, 255, 0.78); }
+.sme-plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  flex: 1;
+}
+.sme-plan-features li {
+  position: relative;
+  padding: 8px 0 8px 24px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--sme-ink-soft);
+  border-bottom: 1px dashed var(--sme-line-soft);
+}
+.sme-plan-features li:last-child { border-bottom: none; }
+.sme-plan-features li::before {
+  content: '';
+  position: absolute;
+  left: 4px; top: 13px;
+  width: 6px; height: 6px;
+  border: 2px solid var(--sme-mint);
+  border-top: none;
+  border-right: none;
+  transform: rotate(-45deg);
+}
+.sme-plan--featured .sme-plan-features li {
+  color: rgba(255, 255, 255, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+.sme-plan--featured .sme-plan-features li::before { border-color: #FFF; border-top: none; border-right: none; }
+.sme-plan-cta { width: 100%; }
+.sme-plan--featured .sme-plan-cta {
+  background: #FFF;
+  color: var(--sme-blue);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+.sme-plan--featured .sme-plan-cta:hover {
+  background: var(--sme-mint);
+  color: #FFF;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.32);
+}
+.sme-pricing-fineprint {
+  margin-top: 36px;
+  font-size: 12.5px;
+  color: var(--sme-ink-mid);
+  text-align: center;
+  line-height: 1.6;
+}
+.sme-pricing-fineprint a { color: var(--sme-blue); border-bottom: 1px dotted currentColor; }
+
+/* ============================================================================
+ * Use cases — 6-card grid
+ * ========================================================================== */
+.sme-case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+.sme-case {
+  padding: 26px 24px;
+  background: var(--sme-bg-soft);
+  border: 1px solid var(--sme-line-soft);
+  border-radius: var(--sme-radius);
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+.sme-case:hover {
+  background: var(--sme-bg);
+  border-color: var(--sme-blue-mid);
+  transform: translateY(-3px);
+  box-shadow: var(--sme-shadow-sm);
+}
+.sme-case-tag {
+  display: inline-block;
+  font-size: 10.5px; font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+  margin-bottom: 14px;
+}
+.sme-case-title {
+  font-size: 17px; font-weight: 800;
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+  color: var(--sme-ink);
+  margin: 0 0 10px;
+}
+.sme-case-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--sme-ink-soft);
+  margin: 0;
+}
+
+/* ============================================================================
+ * How it works — 3 numbered steps
+ * ========================================================================== */
+.sme-how-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: how;
+}
+.sme-how-step {
+  position: relative;
+  padding: 32px 28px 28px;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+}
+.sme-how-num {
+  font-family: var(--sme-font);
+  font-size: 12px; font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--sme-mint-deep);
+  background: var(--sme-mint-soft);
+  border: 1px solid var(--sme-mint-edge);
+  padding: 4px 10px;
+  border-radius: var(--sme-radius-pill);
+  display: inline-block;
+  margin-bottom: 18px;
+}
+.sme-how-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin: 0 0 10px;
+  color: var(--sme-ink);
+}
+.sme-how-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--sme-ink-soft);
+  margin: 0 0 18px;
+}
+.sme-how-time {
+  font-size: 12px; font-weight: 700;
+  color: var(--sme-mint-deep);
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* ============================================================================
+ * Integrations section — ERP × Lark workflow cards with simple pipeline
+ * diagrams. Pure SSR (no Mermaid runtime), 4-node horizontal pipelines
+ * with arrows between nodes. Color-coded by node "kind":
+ *   ext  → external system (ERP, customer)        amber
+ *   us   → DOLPHLINK (us)                         brand blue
+ *   lark → Lark workspace                          mint
+ *   team → user's team / Lark group                soft blue
+ * ========================================================================== */
+.sme-integrations { padding-top: clamp(40px, 6vw, 72px); }
+
+.sme-erp-strip {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  margin: 12px 0 36px;
+  background: var(--sme-bg-soft);
+  border: 1px solid var(--sme-line-soft);
+  border-radius: var(--sme-radius);
+  font-size: 12.5px;
+  color: var(--sme-ink-mid);
+}
+.sme-erp-strip-label {
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sme-ink-faint);
+}
+.sme-erp-strip-label--muted { font-weight: 500; letter-spacing: 0.3px; text-transform: none; color: var(--sme-ink-mid); }
+.sme-erp-pill {
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--sme-blue);
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-blue-mid);
+  padding: 4px 10px;
+  border-radius: var(--sme-radius-pill);
+}
+
+.sme-flows {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.sme-flow {
+  padding: 24px 24px 22px;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+}
+.sme-flow-head { margin-bottom: 18px; }
+.sme-flow-tag {
+  display: inline-block;
+  font-size: 10.5px; font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--sme-mint-deep);
+  background: var(--sme-mint-soft);
+  padding: 4px 10px;
+  border-radius: var(--sme-radius-pill);
+  margin-bottom: 10px;
+}
+.sme-flow-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--sme-ink);
+}
+
+/* Pipeline = ordered list of nodes. Arrow between each via ::after */
+.sme-flow-pipe {
+  list-style: none;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 0 0 18px;
+  padding: 0;
+}
+.sme-flow-node {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  padding: 14px 12px;
+  border-radius: var(--sme-radius-sm);
+  border: 1.5px solid var(--sme-line);
+  background: var(--sme-bg-soft);
+  text-align: center;
+}
+.sme-flow-node + .sme-flow-node { margin-left: 28px; }
+.sme-flow-node + .sme-flow-node::before {
+  content: '';
+  position: absolute;
+  left: -22px; top: 50%;
+  width: 16px; height: 1.5px;
+  background: var(--sme-ink-faint);
+  transform: translateY(-50%);
+}
+.sme-flow-node + .sme-flow-node::after {
+  content: '';
+  position: absolute;
+  left: -10px; top: 50%;
+  width: 0; height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid var(--sme-ink-faint);
+  transform: translateY(-50%);
+}
+.sme-flow-node-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: -0.1px;
+  color: var(--sme-ink);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.sme-flow-node-sub {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--sme-ink-mid);
+  line-height: 1.4;
+}
+
+/* Node kinds — colored borders + tinted backgrounds, matching the
+   strategy brief's flowchart legend. */
+.sme-flow-node--ext  { border-color: #FBBF24; background: rgba(251, 191, 36, 0.08); }
+.sme-flow-node--ext  .sme-flow-node-label { color: #92400E; }
+.sme-flow-node--us   { border-color: var(--sme-blue); background: var(--sme-blue-soft); }
+.sme-flow-node--us   .sme-flow-node-label { color: var(--sme-blue); }
+.sme-flow-node--lark { border-color: var(--sme-mint); background: var(--sme-mint-soft); }
+.sme-flow-node--lark .sme-flow-node-label { color: var(--sme-mint-deep); }
+.sme-flow-node--team { border-color: var(--sme-blue-mid); background: var(--sme-bg); }
+
+.sme-flow-desc {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--sme-ink-soft);
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px dashed var(--sme-line-soft);
+}
+
+/* Mobile: pipelines stack vertically, arrows turn 90° */
+@media (max-width: 720px) {
+  .sme-flow-pipe { flex-direction: column; }
+  .sme-flow-node + .sme-flow-node { margin-left: 0; margin-top: 22px; }
+  .sme-flow-node + .sme-flow-node::before {
+    left: 50%; top: -18px;
+    width: 1.5px; height: 12px;
+    transform: translateX(-50%);
+  }
+  .sme-flow-node + .sme-flow-node::after {
+    left: 50%; top: -8px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid var(--sme-ink-faint);
+    border-bottom: none;
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================================
+ * CTA card (dark navy, full-width)
+ * ========================================================================== */
+.sme-cta-section { padding: 0 clamp(20px, 5vw, 40px) var(--sme-section-pad); max-width: var(--sme-content-w); margin: 0 auto; }
+.sme-cta-card {
+  background: linear-gradient(135deg, var(--sme-blue-deep) 0%, #00264F 100%);
+  color: #FFF;
+  padding: clamp(40px, 6vw, 64px) clamp(28px, 5vw, 56px);
+  border-radius: var(--sme-radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  position: relative;
+  overflow: hidden;
+}
+.sme-cta-card::before {
+  content: '';
+  position: absolute;
+  top: -40%; right: -10%;
+  width: 60%; height: 180%;
+  background: radial-gradient(circle, var(--sme-mint-soft), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+.sme-cta-content { position: relative; z-index: 1; max-width: 720px; }
+.sme-cta-title {
+  font-size: clamp(26px, 3.6vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+  margin: 18px 0 16px;
+  color: #FFF;
+}
+.sme-cta-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 28px;
+}
+.sme-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ============================================================================
+ * Footer
+ * ========================================================================== */
+.sme-footer {
+  background: var(--sme-bg-soft);
+  border-top: 1px solid var(--sme-line);
+  padding: 18px clamp(20px, 5vw, 40px);
+}
+.sme-footer-inner {
+  max-width: var(--sme-content-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 2fr;
+  gap: 48px;
+}
+@media (max-width: 720px) {
+  .sme-footer-inner { grid-template-columns: 1fr; gap: 32px; }
+}
+.sme-footer-logo {
+  font-size: 17px; font-weight: 900;
+  letter-spacing: -0.3px;
+  color: var(--sme-blue);
+}
+.sme-footer-logo-x {
+  font-weight: 500;
+  color: var(--sme-ink-mid);
+  margin: 0 4px;
+}
+.sme-footer-tag {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--sme-ink-mid);
+  margin: 12px 0 0;
+  max-width: 360px;
+}
+.sme-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 540px) {
+  .sme-footer-cols { grid-template-columns: repeat(2, 1fr); }
+}
+.sme-footer-col { display: flex; flex-direction: column; gap: 10px; }
+.sme-footer-col-title {
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sme-ink);
+  margin-bottom: 6px;
+}
+.sme-footer-col a {
+  font-size: 13px;
+  color: var(--sme-ink-mid);
+  transition: color 0.18s ease;
+}
+.sme-footer-col a:hover { color: var(--sme-blue); }
+.sme-footer-bar {
+  max-width: var(--sme-content-w);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--sme-ink-mid);
+}
+.sme-footer-bar > span { width: 100%; text-align: center; }
+.sme-footer-bar-links { display: flex; align-items: center; gap: 8px; }
+.sme-footer-bar-links a { color: inherit; }
+.sme-footer-bar-links a:hover { color: var(--sme-blue); }
+
+/* ============================================================================
+ * Photo slots — img wrappers for the 11 generated images
+ *   hero.jpg / gap-{vendor,compliance,language,reach}.jpg
+ *   industry-{retail,fnb,clinic,ecomm,schools,logistics}.jpg
+ *
+ * Slot is the wrapper (sets aspect ratio + rounded clip); .sme-photo-img is
+ * the img itself (object-fit: cover so the photo crops nicely whatever the
+ * source aspect). Designed mobile-first — the same slot scales gracefully
+ * from a narrow phone column (full-bleed) to a desktop grid cell.
+ * ========================================================================== */
+.sme-photo-slot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--sme-radius);
+  overflow: hidden;
+  background: var(--sme-bg-tint);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+.sme-photo-slot--hero { aspect-ratio: 16 / 9; }
+.sme-photo-slot--wide { aspect-ratio: 16 / 10; }
+.sme-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(.2,.7,.2,1);
+}
+.sme-photo-slot:hover .sme-photo-img { transform: scale(1.04); }
+
+/* ============================================================================
+ * The Gap — 4 pain-point cards with red badges. Sits between hero and the
+ * Five-Lanes summary. Each card pairs a photo, a red "PAIN" pill, a
+ * one-liner, and a concrete cost the SME pays today.
+ * ========================================================================== */
+.sme-gap-section { padding: var(--sme-section-pad) clamp(20px, 5vw, 56px); background: var(--sme-bg-soft); }
+.sme-gap-grid {
+  max-width: var(--sme-content-w);
+  margin: 32px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+.sme-gap-card {
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--sme-shadow-sm);
+  /* Card itself is the focus + hover target; tabindex=0 in HTML lets
+     keyboard users land on it. Cursor goes pointer to signal "this
+     animates when you interact". */
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.sme-gap-card:hover,
+.sme-gap-card.is-saved {
+  transform: translateY(-3px);
+  box-shadow: var(--sme-shadow);
+}
+.sme-gap-card:focus-visible {
+  box-shadow: var(--sme-shadow), 0 0 0 3px rgba(217, 178, 87, 0.55);
+}
+
+/* Twin-photo stack — pain photo + saved twin live in the same box
+   and cross-fade on hover/focus/tap. Plain opacity fade — nothing
+   fancy, no blur, no scale, no flash. Roy spec May 2026: simple. */
+.sme-gap-photos {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--sme-blue-deep);
+}
+.sme-gap-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.sme-gap-photo--saved { opacity: 0; }
+.sme-gap-card:hover .sme-gap-photo--pain,
+.sme-gap-card:focus-within .sme-gap-photo--pain,
+.sme-gap-card.is-saved .sme-gap-photo--pain { opacity: 0; }
+.sme-gap-card:hover .sme-gap-photo--saved,
+.sme-gap-card:focus-within .sme-gap-photo--saved,
+.sme-gap-card.is-saved .sme-gap-photo--saved { opacity: 1; }
+
+/* "Click to see →" CTA pill — sits at the bottom-left of the pain
+   photo as the obvious discovery cue. The body's icon pulse alone is
+   too quiet for first-time visitors, so this pill says it plainly.
+   Slides out and fades when the user engages.
+   Roy spec May 2026: 用户极难知道tap 那个图片. */
+.sme-gap-cta {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 13px 7px 14px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--sme-blue-deep);
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: sme-gap-cta-nudge 2.4s ease-in-out infinite;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+/* "DOLPHLINK" reads as a brand mark, not just a word — heavier weight,
+   letter-spaced caps, deeper navy. Pairs with the saver tag inside
+   the body for a single brand thread across the card. */
+.sme-gap-cta-brand {
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  color: var(--sme-blue);
+  margin-right: 4px;
+}
+.sme-gap-cta-arrow {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--sme-blue);
+  transition: transform 0.4s ease;
+  margin-left: 2px;
+}
+/* Pulse-and-nudge: the arrow drifts right and back, the pill shadow
+   deepens slightly. Reads as "click here", not as a static label. */
+@keyframes sme-gap-cta-nudge {
+  0%, 100% {
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.28);
+  }
+  50% {
+    box-shadow: 0 10px 24px rgba(0, 89, 179, 0.36);
+  }
+}
+.sme-gap-cta { animation-timing-function: ease-in-out; }
+.sme-gap-cta-arrow { animation: sme-gap-cta-arrow-slide 2.4s ease-in-out infinite; }
+@keyframes sme-gap-cta-arrow-slide {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(4px); }
+}
+/* Stagger the 4 CTAs so they don't pulse in lockstep. */
+.sme-gap-card:nth-child(1) .sme-gap-cta,
+.sme-gap-card:nth-child(1) .sme-gap-cta-arrow { animation-delay: 0s;    }
+.sme-gap-card:nth-child(2) .sme-gap-cta,
+.sme-gap-card:nth-child(2) .sme-gap-cta-arrow { animation-delay: -0.6s; }
+.sme-gap-card:nth-child(3) .sme-gap-cta,
+.sme-gap-card:nth-child(3) .sme-gap-cta-arrow { animation-delay: -1.2s; }
+.sme-gap-card:nth-child(4) .sme-gap-cta,
+.sme-gap-card:nth-child(4) .sme-gap-cta-arrow { animation-delay: -1.8s; }
+/* Hide once user engages — the pill has done its job. */
+.sme-gap-card:hover .sme-gap-cta,
+.sme-gap-card:focus-within .sme-gap-cta,
+.sme-gap-card.is-saved .sme-gap-cta {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: none;
+}
+
+/* Body sits below the photo stack and holds the copy. The body is
+   `position: relative` so the mascot below can anchor to it. The
+   first child (pain eyebrow) gets reserved space to the right so the
+   dolphin floating in the top-right corner doesn't overlap text. */
+.sme-gap-body {
+  position: relative;
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* DOLPHLINK Saver icon — small inline SVG in the top-right of the
+   body. Visible by default to prompt the tap. On tap, the brand-blue
+   stroke flips to gold, the disc background brightens, and the
+   pulse animation stops (action confirmed). True transparent SVG —
+   no white plate to clean up, no overlap with text.
+   Roy spec May 2026: 4张小海豚换成icon 不要挡住字. */
+.sme-gap-icon {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 4;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 89, 179, 0.06);
+  border: 1px solid rgba(0, 89, 179, 0.18);
+  color: var(--sme-blue);
+  pointer-events: none;
+  animation: sme-gap-icon-pulse 2.4s ease-in-out infinite;
+  transition: background 0.45s ease, border-color 0.45s ease,
+              color 0.45s ease, transform 0.45s ease;
+}
+.sme-gap-icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+/* Stagger the 4 icon pulses — out-of-sync makes the page feel alive,
+   not metronomic. */
+.sme-gap-card:nth-child(1) .sme-gap-icon { animation-delay: 0s;    }
+.sme-gap-card:nth-child(2) .sme-gap-icon { animation-delay: -0.6s; }
+.sme-gap-card:nth-child(3) .sme-gap-icon { animation-delay: -1.2s; }
+.sme-gap-card:nth-child(4) .sme-gap-icon { animation-delay: -1.8s; }
+/* On hover/tap: icon flips to gold and locks in (no more pulse). */
+.sme-gap-card:hover .sme-gap-icon,
+.sme-gap-card:focus-within .sme-gap-icon,
+.sme-gap-card.is-saved .sme-gap-icon {
+  background: rgba(217, 178, 87, 0.16);
+  border-color: var(--sme-gold);
+  color: var(--sme-gold);
+  animation: none;
+  transform: scale(1.05);
+}
+@keyframes sme-gap-icon-pulse {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0   rgba(0, 89, 179, 0.30); }
+  50%      { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(0, 89, 179, 0);    }
+}
+
+/* Reserve space on the right of the eyebrow + headline so the
+   icon (top-right, 44px circle) never sits on top of the text. */
+.sme-gap-pain,
+.sme-gap-title { padding-right: 76px; }
+
+/* Reduced motion — kill the icon pulse, keep static visibility. */
+@media (prefers-reduced-motion: reduce) {
+  .sme-gap-icon { animation: none; }
+}
+/* "When this happens to you" eyebrow — neutral grey, not alarming red.
+   The pain is already shown in the photo; the eyebrow just frames it. */
+.sme-gap-pain {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--sme-ink-soft);
+}
+.sme-gap-pain::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sme-ink-soft);
+}
+/* Plain-language pain headline — short, in quotes, the SME's voice. */
+.sme-gap-title {
+  font-size: clamp(20px, 1.6vw + 12px, 26px);
+  font-weight: 800;
+  color: var(--sme-ink);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+}
+.sme-gap-desc {
+  font-size: 14px;
+  color: var(--sme-ink-soft);
+  line-height: 1.6;
+}
+
+/* Saver block — the dolphin's "answer", sits at the bottom of the body.
+   Default state is a calm muted slab; on interaction it brightens with
+   a gold-tinged gradient so the eye is drawn here AFTER the dolphin
+   shows up. The left gold rule pairs with the dolphin's gold body. */
+.sme-gap-saver {
+  margin-top: 8px;
+  padding: 12px 14px 14px 16px;
+  border-left: 3px solid rgba(217, 178, 87, 0.50);
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(0, 89, 179, 0.04), rgba(217, 178, 87, 0.06));
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0.55;
+  transform: translateY(4px);
+  transition: opacity 0.45s ease, transform 0.45s ease,
+              border-color 0.45s ease, background 0.45s ease;
+}
+.sme-gap-card:hover .sme-gap-saver,
+.sme-gap-card:focus-within .sme-gap-saver,
+.sme-gap-card.is-saved .sme-gap-saver {
+  opacity: 1;
+  transform: translateY(0);
+  border-left-color: var(--sme-gold);
+  background: linear-gradient(135deg, rgba(0, 89, 179, 0.08), rgba(217, 178, 87, 0.14));
+}
+.sme-gap-saver-tag {
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--sme-gold);
+}
+.sme-gap-saver-line {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--sme-blue-deep);
+}
+
+/* Tablet + mobile — single column, mascot scales down. */
+@media (max-width: 720px) {
+  .sme-gap-grid { grid-template-columns: 1fr; }
+  .sme-gap-mascot {
+    bottom: -28px;
+    width: clamp(72px, 18vw, 96px);
+  }
+}
+/* Reduced motion — kill the bob animation, keep the cross-fade. */
+@media (prefers-reduced-motion: reduce) {
+  .sme-gap-card:hover .sme-gap-mascot,
+  .sme-gap-card:focus-within .sme-gap-mascot,
+  .sme-gap-card.is-saved .sme-gap-mascot { animation: none; }
+}
+
+/* ============================================================================
+ * Versus table — side-by-side comparison vs Twilio / Vonage / MessageBird
+ * 10 rows, sticky-first-column on mobile so the row label stays visible
+ * while the user scrolls horizontally through competitor columns.
+ * ========================================================================== */
+.sme-versus-section { padding: var(--sme-section-pad) clamp(20px, 5vw, 56px); }
+.sme-versus-table-wrap {
+  max-width: var(--sme-content-w);
+  margin: 32px auto 0;
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  overflow: hidden;
+  background: var(--sme-bg);
+}
+.sme-versus-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: var(--sme-ink);
+}
+.sme-versus-table thead th {
+  background: var(--sme-bg-soft);
+  text-align: left;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--sme-ink-mid);
+  padding: 14px 18px;
+  border-bottom: 2px solid var(--sme-line);
+  white-space: nowrap;
+}
+.sme-versus-table thead th.sme-versus-us {
+  color: var(--sme-blue);
+  background: var(--sme-blue-soft);
+}
+.sme-versus-table tbody th {
+  font-weight: 700;
+  text-align: left;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--sme-line-soft);
+  background: var(--sme-bg);
+  font-size: 13px;
+  color: var(--sme-ink);
+  white-space: nowrap;
+}
+.sme-versus-table tbody td {
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--sme-line-soft);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.sme-versus-table tbody td.sme-versus-us {
+  background: var(--sme-blue-soft);
+  font-weight: 600;
+  color: var(--sme-blue-deep);
+}
+.sme-versus-table tbody tr:last-child th,
+.sme-versus-table tbody tr:last-child td { border-bottom: 0; }
+.sme-versus-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--sme-mint-deep);
+}
+.sme-versus-x {
+  color: #94A3B8;
+  font-style: italic;
+}
+@media (max-width: 720px) {
+  .sme-versus-table-wrap { overflow-x: auto; }
+  .sme-versus-table { min-width: 640px; }
+  .sme-versus-table tbody th { position: sticky; left: 0; box-shadow: 1px 0 0 var(--sme-line-soft); }
+}
+
+/* ============================================================================
+ * Support Band — gold-on-blue gradient band reading "Support is the work,
+ * not an upsell." Sits between Industry Plays and the final CTA.
+ * ========================================================================== */
+.sme-support-band {
+  margin: var(--sme-section-pad) clamp(20px, 5vw, 56px) 0;
+  padding: clamp(36px, 4vw, 56px) clamp(28px, 4vw, 56px);
+  background: linear-gradient(135deg, var(--sme-blue-deep) 0%, var(--sme-blue) 100%);
+  border-radius: var(--sme-radius-lg);
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+.sme-support-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 88% 18%, rgba(245, 158, 11, 0.40), transparent 55%);
+  pointer-events: none;
+}
+.sme-support-band-inner {
+  position: relative;
+  max-width: var(--sme-content-w);
+  margin: 0 auto;
+}
+.sme-support-band-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--sme-gold);
+  margin-bottom: 12px;
+}
+.sme-support-band-title {
+  font-size: clamp(24px, 2.4vw + 14px, 36px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  max-width: 760px;
+}
+.sme-support-band-desc {
+  font-size: clamp(15px, 0.4vw + 13px, 17px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 760px;
+}
+.sme-support-promises {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px 22px;
+}
+.sme-support-promises li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.45;
+}
+.sme-support-promises li::before {
+  content: '';
+  flex: 0 0 6px;
+  width: 6px;
+  height: 6px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: var(--sme-gold);
+}
+
+/* ============================================================================
+ * Section transitions — small "Next: <thing> ↓" links between major sections
+ * so mobile users get a hint of what is below the fold. Light golden hover.
+ * ========================================================================== */
+.sme-section-next {
+  display: flex;
+  justify-content: center;
+  margin: clamp(24px, 4vw, 40px) auto 0;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+.sme-section-next a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border: 1px dashed var(--sme-blue-mid);
+  border-radius: var(--sme-radius-pill);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sme-blue);
+  background: var(--sme-bg);
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+.sme-section-next a:hover,
+.sme-section-next a:focus-visible {
+  background: var(--sme-gold-soft);
+  border-color: var(--sme-gold);
+  color: var(--sme-blue-deep);
+  transform: translateY(2px);
+  outline: none;
+}
+.sme-section-next-arrow {
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+/* ============================================================================
+ * SME page floating dock — same idea as the homepage .dlpk-dock but linked
+ * to SME-page anchors (Gap / Versus / Pricing / Use cases / Top). Hidden
+ * under 540px to free the mobile viewport.
+ * ========================================================================== */
+.sme-dock {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08), 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+.sme-dock-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--sme-blue);
+  background: transparent;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.sme-dock-item:hover,
+.sme-dock-item:focus-visible {
+  background: var(--sme-blue-soft);
+  transform: translateY(-1px);
+  outline: none;
+}
+.sme-dock-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+.sme-dock-icon svg { width: 100%; height: 100%; }
+.sme-dock-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+/* TALK CTA — enterprise brand blue, matches homepage dock + the rest
+   of the SME page's primary-action chroma. Roy spec May 2026:
+   主页和SME页改成企业颜色. */
+.sme-dock-item--cta {
+  background: linear-gradient(135deg, var(--sme-blue), var(--sme-blue-deep));
+  color: #FFFFFF;
+}
+.sme-dock-item--cta:hover,
+.sme-dock-item--cta:focus-visible {
+  background: linear-gradient(135deg, var(--sme-blue-deep), var(--sme-blue));
+  color: #FFFFFF;
+}
+@media (max-width: 540px) {
+  .sme-dock { display: none; }
+}
+@media (max-width: 900px) and (min-width: 541px) {
+  .sme-dock {
+    right: 8px;
+    padding: 6px;
+    gap: 6px;
+  }
+  .sme-dock-item {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* ============================================================================
+ * Industry Plays — 6 cards each pairing a photo, a vertical name, and a one-liner.
+ * Replaces the existing text-only .sme-case-grid for the visual upgrade.
+ * Both grids can coexist if the page wants both flavours.
+ * ========================================================================== */
+.sme-industry-section { padding: var(--sme-section-pad) clamp(20px, 5vw, 56px); background: var(--sme-bg-soft); }
+.sme-industry-grid {
+  max-width: var(--sme-content-w);
+  margin: 32px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.sme-industry-card {
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--sme-shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.sme-industry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sme-shadow);
+}
+.sme-industry-card .sme-photo-slot { border-radius: 0; aspect-ratio: 4 / 3; }
+.sme-industry-body { padding: 18px 22px 22px; display: flex; flex-direction: column; gap: 8px; }
+.sme-industry-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+}
+.sme-industry-title {
+  font-size: clamp(15px, 0.4vw + 13px, 17px);
+  font-weight: 800;
+  color: var(--sme-ink);
+  line-height: 1.3;
+}
+.sme-industry-desc {
+  font-size: 13px;
+  color: var(--sme-ink-soft);
+  line-height: 1.55;
+}
+@media (max-width: 960px) {
+  .sme-industry-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .sme-industry-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================================
+ * Cinema hero — Roy spec May 2026: "HD, no small text, no buttons, exquisite
+ * + warm". Magazine-cover treatment: three full-bleed photos cross-fade on a
+ * 24-second loop, with one large rotating headline. No eyebrow, no sub, no
+ * CTA. The photo carries the brand promise; the headline names the feeling.
+ * Pure CSS animation, no JS. Honours prefers-reduced-motion (slide #1 stays).
+ * ========================================================================== */
+.sme-hero--cinema,
+.sme-hero--rotating {
+  position: relative;
+  /* Hard-override the legacy .sme-hero grid layout (2-col 1.1fr/1fr,
+     max-width 1120px) which was squashing the cinema frame into a
+     narrow column. Cinema variant takes the full content width. */
+  display: block !important;
+  grid-template-columns: none !important;
+  max-width: none !important;
+  margin: 0;
+  padding: clamp(96px, 11vh, 140px) clamp(20px, 4vw, 56px) clamp(48px, 6vh, 80px);
+  background: var(--sme-bg);
+  color: var(--sme-ink);
+  gap: 0;
+}
+/* The card-style frame the photo lives in — sits on the page with breathing
+   room around it, gold inner stroke, soft drop-shadow, slight rounded
+   corners. Roy spec May 2026: "exquisite + warm + framed". */
+.sme-hero-frame {
+  position: relative;
+  max-width: 1320px;
+  margin: 0 auto;
+  height: clamp(520px, 76vh, 760px);
+  border-radius: 18px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--sme-blue-deep);
+  color: #FFFFFF;
+  box-shadow:
+    0 30px 70px rgba(15, 23, 42, 0.18),
+    0 8px 18px rgba(15, 23, 42, 0.10),
+    inset 0 0 0 1px rgba(191, 148, 48, 0.40);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(40px, 6vh, 72px) clamp(28px, 5vw, 64px);
+  /* Hover interaction (Roy spec May 2026: 鼠标浮上去要有互动). Frame
+     subtly lifts and the gold inner stroke deepens — magazine-card
+     "alive on hover" cue without breaking the auto-cycle. */
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.sme-hero:hover .sme-hero-frame {
+  transform: translateY(-4px);
+  box-shadow:
+    0 42px 90px rgba(15, 23, 42, 0.30),
+    0 12px 28px rgba(15, 23, 42, 0.18),
+    inset 0 0 0 1px rgba(217, 178, 87, 0.78);
+}
+/* Photo gets a tiny saturation lift on hover — feels like the picture
+   "wakes up" when the visitor pays attention. */
+.sme-hero-bg {
+  transition: filter 0.55s ease;
+}
+.sme-hero:hover .sme-hero-bg {
+  filter: saturate(1.08) brightness(1.04);
+}
+/* Subtle Ken-Burns zoom on each background — adds warmth + cinematic feel
+   without any JS. The photo slowly pans 1 -> 1.06 across each visible window. */
+.sme-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.04);
+  animation: sme-hero-bg-cycle 49s infinite ease-in-out,
+             sme-hero-bg-zoom 49s infinite ease-in-out;
+  will-change: opacity, transform;
+}
+/* 7 slides over 49s = 7s each. Negative delays stagger them so slide N
+   is visible during seconds (N-1)*7 .. N*7. Slide 1 starts at 0 so the
+   first paint is instantly visible (no fade-in flash). */
+.sme-hero-bg--1 { animation-delay: 0s,   0s;   opacity: 1; }
+.sme-hero-bg--2 { animation-delay: -42s, -42s; }
+.sme-hero-bg--3 { animation-delay: -35s, -35s; }
+.sme-hero-bg--4 { animation-delay: -28s, -28s; }
+.sme-hero-bg--5 { animation-delay: -21s, -21s; }
+.sme-hero-bg--6 { animation-delay: -14s, -14s; }
+.sme-hero-bg--7 { animation-delay: -7s,  -7s;  }
+/* Each slide gets ~12.2% (6s) of fully-visible time, ~2% (1s) cross-fade,
+   then sits at opacity 0 for the rest of the 49s loop. The 100% step
+   wraps cleanly back to opacity 1. */
+@keyframes sme-hero-bg-cycle {
+  0%, 12.2%    { opacity: 1; }
+  14.3%, 98%   { opacity: 0; }
+  100%         { opacity: 1; }
+}
+@keyframes sme-hero-bg-zoom {
+  0%           { transform: scale(1.00); }
+  14.3%        { transform: scale(1.06); }
+  14.31%, 100% { transform: scale(1.00); }
+}
+.sme-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Cinema overlay — diagonal left-bottom scrim protects the headline
+     area where text lives; right side stays clean so the photo subject
+     (the SME owner) breathes and the photograph still feels HD. Pairs
+     with a gentle full-width bottom vignette for the dot/caption row.
+     Roy spec May 2026: readable + HD + warm. */
+  background:
+    linear-gradient(98deg,
+      rgba(0, 16, 38, 0.86) 0%,
+      rgba(0, 16, 38, 0.66) 28%,
+      rgba(0, 16, 38, 0.22) 55%,
+      rgba(0, 16, 38, 0.05) 75%,
+      transparent 100%),
+    linear-gradient(180deg,
+      transparent 55%,
+      rgba(0, 16, 38, 0.32) 92%,
+      rgba(0, 16, 38, 0.46) 100%);
+}
+.sme-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 980px;
+  width: 100%;
+}
+
+/* Decorative gold L-brackets in opposite corners of the frame — top-left
+   and bottom-right. Reads as a magazine masthead cue. */
+.sme-hero-bracket {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  z-index: 3;
+  pointer-events: none;
+}
+.sme-hero-bracket::before,
+.sme-hero-bracket::after {
+  content: '';
+  position: absolute;
+  background: var(--sme-gold);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
+  transition: box-shadow 0.55s ease, background 0.55s ease;
+}
+/* Brackets pick up a soft gold halo on hover — pairs with the
+   frame-lift to read as "this card is alive". */
+.sme-hero:hover .sme-hero-bracket::before,
+.sme-hero:hover .sme-hero-bracket::after {
+  background: #E8C870;
+  box-shadow:
+    0 0 14px rgba(217, 178, 87, 0.55),
+    0 1px 4px rgba(0, 0, 0, 0.30);
+}
+.sme-hero-bracket--tl { top: 22px; left: 22px; }
+.sme-hero-bracket--tl::before { top: 0; left: 0; width: 100%; height: 2px; }
+.sme-hero-bracket--tl::after  { top: 0; left: 0; width: 2px; height: 100%; }
+.sme-hero-bracket--br { right: 22px; bottom: 22px; }
+.sme-hero-bracket--br::before { right: 0; bottom: 0; width: 100%; height: 2px; }
+.sme-hero-bracket--br::after  { right: 0; bottom: 0; width: 2px; height: 100%; }
+
+/* Slide counter — top-right of the frame, gold accent. The 3 numbers
+   fade in turn, mirroring the slide cycle. Visible proof of rotation. */
+.sme-hero-counter {
+  position: absolute;
+  top: 28px;
+  right: 64px;
+  z-index: 3;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: rgba(255, 255, 255, 0.72);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.40);
+}
+.sme-hero-counter-num {
+  display: inline-block;
+  min-width: 1.6em;
+  color: var(--sme-gold);
+  font-weight: 700;
+  opacity: 0;
+  animation: sme-hero-bg-cycle 49s infinite ease-in-out;
+}
+/* All three .sme-hero-counter-num share the same grid cell so they stack
+   and the deck auto-sizes to the widest. (Counter is hidden in markup
+   per Roy May 2026 spec — this rule is kept in case it's re-enabled.) */
+.sme-hero-counter {
+  position: absolute;
+}
+.sme-hero-counter-num {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.sme-hero-counter-num--1 { animation-delay: 0s; opacity: 1; }
+.sme-hero-counter-num--2 { animation-delay: -16s; }
+.sme-hero-counter-num--3 { animation-delay: -8s; }
+.sme-hero-counter-sep,
+.sme-hero-counter-total {
+  position: absolute;
+  top: 0;
+  left: 2.2em;
+}
+.sme-hero-counter-sep { left: 1.9em; }
+.sme-hero-counter-total { left: 2.4em; color: rgba(255, 255, 255, 0.72); }
+
+/* Magazine-deck — three rotating headlines stacked in the same grid cell.
+   Auto-sizes to the tallest line; no manual min-height fights. */
+.sme-hero-deck {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+/* Each card is an <article> container with a quote (SME's voice) on top
+   and a response (our reply) below. All three cards stack in the same grid
+   cell; only one is visible per cycle. Roy spec May 2026: pair their
+   inner voice with our genuine reply. */
+.sme-hero-card {
+  grid-row: 1;
+  grid-column: 1;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  /* No max-width on the card itself — the inner quote / response control
+     their own line width via their own ch / em ceilings. The old 26ch was
+     measured in the body font (~16px), which collapsed to ~260px and
+     forced the 62px headline to wrap one word per line. */
+  max-width: none;
+  opacity: 0;
+  animation: sme-hero-bg-cycle 49s infinite ease-in-out;
+  will-change: opacity;
+  pointer-events: none;
+}
+/* Same staggered delays as the bg layer, so the headline always pairs
+   with the photo behind it. */
+.sme-hero-card--1 { animation-delay: 0s;   opacity: 1; }
+.sme-hero-card--2 { animation-delay: -42s; }
+.sme-hero-card--3 { animation-delay: -35s; }
+.sme-hero-card--4 { animation-delay: -28s; }
+.sme-hero-card--5 { animation-delay: -21s; }
+.sme-hero-card--6 { animation-delay: -14s; }
+.sme-hero-card--7 { animation-delay: -7s;  }
+
+/* The SME's inner voice — italic serif gold, smaller, with framing
+   quote-marks supplied via the literal " in the copy. Reads as a real
+   thing a real owner says, not a marketing claim. */
+.sme-hero-quote {
+  margin: 0;
+  font-family: 'Georgia', 'Source Serif Pro', 'Noto Serif TC', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(15px, 0.8vw + 12px, 21px);
+  line-height: 1.45;
+  color: var(--sme-gold);
+  letter-spacing: 0.005em;
+  /* Layered shadow keeps the gold italic readable even on bright slides
+     like the Singapore golden-hour shot. */
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.65),
+    0 1px 4px rgba(0, 0, 0, 0.55);
+  max-width: 38ch;
+}
+
+/* Our response — big white headline. The promise. Strictly two lines:
+   one white phrase, one gold italic phrase. Both forced onto their own
+   single line via white-space: nowrap + display:block on the accent —
+   never wraps mid-phrase. Roy spec May 2026: 白色一行 / 金色一行. The
+   font clamps DOWN aggressively so the longest line ("Set it up
+   yourself.") still fits even on a 320px-wide phone. */
+.sme-hero-response {
+  margin: 0;
+  padding: 0;
+  font-size: clamp(26px, 3.6vw + 8px, 56px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+  white-space: nowrap;
+  /* Triple-stack shadow reads against any photo without needing a
+     blanket dark overlay — keeps the HD photograph showing through. */
+  text-shadow:
+    0 2px 32px rgba(0, 0, 0, 0.70),
+    0 1px 6px rgba(0, 0, 0, 0.55),
+    0 0 1px rgba(0, 0, 0, 0.40);
+}
+
+/* ============================================================================
+ * Country / topic masthead — top-right magazine credit line. Each <li> pairs
+ * the city the photo was shot in with the SME pain-point keyword the slide
+ * is about, so the "global span" of the campaign reads at a glance. Captions
+ * rotate in sync with the photo cycle (49s / 7 slides, same delay table).
+ * Roy spec May 2026: 把 country 想办法标记出来.
+ * ========================================================================== */
+.sme-hero-captions {
+  position: absolute;
+  top: clamp(20px, 3.5vh, 30px);
+  right: clamp(24px, 5vw, 60px);
+  z-index: 4;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  pointer-events: none;
+  /* Reserve space for the tallest caption — captions are absolutely
+     stacked, so the container needs explicit height to anchor them. */
+  min-width: 200px;
+  height: 50px;
+}
+.sme-hero-caption {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  animation: sme-hero-bg-cycle 49s infinite ease-in-out;
+  white-space: nowrap;
+  will-change: opacity;
+}
+.sme-hero-caption--1 { animation-delay: 0s;   opacity: 1; }
+.sme-hero-caption--2 { animation-delay: -42s; }
+.sme-hero-caption--3 { animation-delay: -35s; }
+.sme-hero-caption--4 { animation-delay: -28s; }
+.sme-hero-caption--5 { animation-delay: -21s; }
+.sme-hero-caption--6 { animation-delay: -14s; }
+.sme-hero-caption--7 { animation-delay: -7s;  }
+/* Tiny serial number — "№ 03 / 07". Magazine masthead vibe. */
+.sme-hero-caption-num {
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+}
+/* The city — gold italic serif, the visual anchor of the masthead. */
+.sme-hero-caption-place {
+  font-family: 'Georgia', 'Source Serif Pro', 'Noto Serif TC', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 1.4vw + 12px, 26px);
+  line-height: 1.0;
+  color: var(--sme-gold);
+  letter-spacing: 0.005em;
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.65),
+    0 1px 4px rgba(0, 0, 0, 0.55);
+}
+/* Topic / pain-point keyword — small uppercase tracked, white. */
+.sme-hero-caption-topic {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.84);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.60);
+  margin-top: 2px;
+}
+/* Mobile — captions sit slightly closer in, scale topic line down. */
+@media (max-width: 640px) {
+  .sme-hero-captions {
+    min-width: 0;
+    height: auto;
+    top: clamp(14px, 2.5vh, 20px);
+    right: clamp(16px, 4.5vw, 24px);
+  }
+  .sme-hero-caption-num,
+  .sme-hero-caption-topic { font-size: 9px; letter-spacing: 2px; }
+  .sme-hero-caption-place { font-size: 17px; }
+}
+
+/* Manual mode — when a dot is clicked, JS adds .is-paused + data-active.
+   Auto-animation stops; one slide is forced visible. Selector matches both
+   the cinema and rotating variants (Roy spec May 2026). */
+.sme-hero.is-paused .sme-hero-card,
+.sme-hero.is-paused .sme-hero-bg,
+.sme-hero.is-paused .sme-hero-caption,
+.sme-hero.is-paused .sme-hero-counter-num { animation: none; opacity: 0; transform: none; }
+.sme-hero.is-paused[data-active="1"] .sme-hero-card--1,
+.sme-hero.is-paused[data-active="1"] .sme-hero-bg--1,
+.sme-hero.is-paused[data-active="1"] .sme-hero-caption--1,
+.sme-hero.is-paused[data-active="1"] .sme-hero-counter-num--1,
+.sme-hero.is-paused[data-active="2"] .sme-hero-card--2,
+.sme-hero.is-paused[data-active="2"] .sme-hero-bg--2,
+.sme-hero.is-paused[data-active="2"] .sme-hero-caption--2,
+.sme-hero.is-paused[data-active="2"] .sme-hero-counter-num--2,
+.sme-hero.is-paused[data-active="3"] .sme-hero-card--3,
+.sme-hero.is-paused[data-active="3"] .sme-hero-bg--3,
+.sme-hero.is-paused[data-active="3"] .sme-hero-caption--3,
+.sme-hero.is-paused[data-active="3"] .sme-hero-counter-num--3,
+.sme-hero.is-paused[data-active="4"] .sme-hero-card--4,
+.sme-hero.is-paused[data-active="4"] .sme-hero-bg--4,
+.sme-hero.is-paused[data-active="4"] .sme-hero-caption--4,
+.sme-hero.is-paused[data-active="5"] .sme-hero-card--5,
+.sme-hero.is-paused[data-active="5"] .sme-hero-bg--5,
+.sme-hero.is-paused[data-active="5"] .sme-hero-caption--5,
+.sme-hero.is-paused[data-active="6"] .sme-hero-card--6,
+.sme-hero.is-paused[data-active="6"] .sme-hero-bg--6,
+.sme-hero.is-paused[data-active="6"] .sme-hero-caption--6,
+.sme-hero.is-paused[data-active="7"] .sme-hero-card--7,
+.sme-hero.is-paused[data-active="7"] .sme-hero-bg--7,
+.sme-hero.is-paused[data-active="7"] .sme-hero-caption--7 { opacity: 1; }
+/* Second line of each headline — italic serif accent in warm gold for the
+   "exquisite + warm" cue. Lets the line break read as a beat, not a wrap. */
+.sme-hero-accent {
+  /* Force the gold italic onto its OWN single line — magazine-cover
+     two-line layout. Inherits white-space: nowrap from .sme-hero-response,
+     so the gold phrase never wraps mid-string either. */
+  display: block;
+  font-family: 'Georgia', 'Source Serif Pro', 'Noto Serif TC', serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--sme-gold);
+  margin-top: 6px;
+}
+
+/* ============================================================================
+ * Hero slide indicator — 3 clickable dots below the CTA. Auto-cycle is
+ * paused on click, then restarts when the user clicks the active dot or
+ * lingers off-hover for ~30 seconds (handled by JS).
+ * ========================================================================== */
+/* Dots sit absolutely in the bottom-right of the hero frame, mirroring the
+   gold L-bracket. Clickable, auto-fill in sync with the cycle. */
+/* Scroll-down nudge — anchored to the bottom-RIGHT corner of the hero
+   frame, just inside the gold L-bracket. White pill with chevron, gently
+   bobs vertically to invite scroll to the next section. Roy spec May 2026:
+   hero needs a way down. Roy spec May 2026 (revised): off-center so the
+   dots and the headline both keep their breathing room. */
+.sme-hero-scrollcue {
+  position: absolute;
+  bottom: 38px;
+  right: 56px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 16px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--sme-gold);
+  border-radius: var(--sme-radius-pill);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue-deep);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.20);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: sme-hero-scrollcue-bob 2.4s ease-in-out infinite;
+  transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+}
+.sme-hero-scrollcue:hover,
+.sme-hero-scrollcue:focus-visible {
+  outline: none;
+  background: #FFFFFF;
+  box-shadow: 0 10px 22px rgba(0, 89, 179, 0.30);
+}
+.sme-hero-scrollcue-chevron {
+  display: inline-flex;
+  color: var(--sme-blue);
+}
+@keyframes sme-hero-scrollcue-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+/* On narrow viewports the bottom-right corner gets crowded by the BR
+   bracket + the dots row. Pull the cue tighter to the corner so it
+   doesn't overlap the dots. */
+@media (max-width: 640px) {
+  .sme-hero-scrollcue {
+    bottom: 64px;
+    right: 18px;
+    padding: 6px 12px 6px 14px;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+}
+/* Hide the scroll-cue once the user has clicked any dot (paused) so it
+   stops competing with the manual-mode dots. */
+.sme-hero.is-paused .sme-hero-scrollcue { opacity: 0.6; }
+
+.sme-hero-dots {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sme-hero-dot {
+  width: 36px;
+  height: 6px;
+  border-radius: 999px;
+  border: 0;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.30);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.sme-hero-dot:hover { background: rgba(255, 255, 255, 0.55); }
+.sme-hero-dot:focus-visible {
+  outline: 2px solid var(--sme-gold);
+  outline-offset: 4px;
+}
+/* The "fill" pseudo — animated full-width sweep that mirrors the cycle.
+   In auto mode the fills slide left-to-right in sync with the slide.
+   In paused mode the fill snaps to 100% on the active dot only. */
+.sme-hero-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #FFFFFF;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: sme-hero-dot-fill 49s infinite linear;
+}
+.sme-hero-dot--1::after { animation-delay: 0s;   }
+.sme-hero-dot--2::after { animation-delay: -42s; }
+.sme-hero-dot--3::after { animation-delay: -35s; }
+.sme-hero-dot--4::after { animation-delay: -28s; }
+.sme-hero-dot--5::after { animation-delay: -21s; }
+.sme-hero-dot--6::after { animation-delay: -14s; }
+.sme-hero-dot--7::after { animation-delay: -7s;  }
+/* 14.29% = 1/7 — each dot fills over its 7s slide window. After a brief
+   1% hold at full it snaps back to 0 and stays there until the loop
+   wraps around to that dot's turn again. */
+@keyframes sme-hero-dot-fill {
+  0%       { transform: scaleX(0); }
+  14.29%   { transform: scaleX(1); }
+  15.29%   { transform: scaleX(1); }
+  15.30%   { transform: scaleX(0); }
+  100%     { transform: scaleX(0); }
+}
+.sme-hero.is-paused .sme-hero-dot::after { animation: none; transform: scaleX(0); }
+.sme-hero.is-paused[data-active="1"] .sme-hero-dot--1::after,
+.sme-hero.is-paused[data-active="2"] .sme-hero-dot--2::after,
+.sme-hero.is-paused[data-active="3"] .sme-hero-dot--3::after,
+.sme-hero.is-paused[data-active="4"] .sme-hero-dot--4::after,
+.sme-hero.is-paused[data-active="5"] .sme-hero-dot--5::after,
+.sme-hero.is-paused[data-active="6"] .sme-hero-dot--6::after,
+.sme-hero.is-paused[data-active="7"] .sme-hero-dot--7::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sme-hero-dot::after { animation: none; transform: scaleX(0); }
+  .sme-hero-dot--1::after { transform: scaleX(1); }
+}
+.sme-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 12px;
+}
+/* Light-on-dark variant of the ghost button so it reads against the photo. */
+.sme-btn--ghost-light {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.40);
+  color: #FFFFFF;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.sme-btn--ghost-light:hover,
+.sme-btn--ghost-light:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.65);
+  color: #FFFFFF;
+}
+/* Hover-pause REMOVED — Roy May 2026: users were thinking the auto-loop
+   was broken because mousing over the hero stopped it. Auto-loop now
+   runs uninterrupted unless a dot is clicked (manual mode). */
+@media (prefers-reduced-motion: reduce) {
+  .sme-hero-bg, .sme-hero-card, .sme-hero-caption { animation: none; transform: none; }
+  .sme-hero-bg--1, .sme-hero-card--1, .sme-hero-caption--1 { opacity: 1; }
+  .sme-hero-bg--2, .sme-hero-card--2, .sme-hero-caption--2,
+  .sme-hero-bg--3, .sme-hero-card--3, .sme-hero-caption--3,
+  .sme-hero-bg--4, .sme-hero-card--4, .sme-hero-caption--4,
+  .sme-hero-bg--5, .sme-hero-card--5, .sme-hero-caption--5,
+  .sme-hero-bg--6, .sme-hero-card--6, .sme-hero-caption--6,
+  .sme-hero-bg--7, .sme-hero-card--7, .sme-hero-caption--7 { opacity: 0; }
+}
+@media (max-width: 600px) {
+  .sme-hero--cinema,
+  .sme-hero--rotating { min-height: clamp(560px, 86vh, 720px); padding: 110px 22px 72px; }
+  .sme-hero-card { font-size: clamp(36px, 8vw, 52px); }
+}
+
+/* ============================================================================
+ * Three Tracks — Cloud / Platform / Connectivity. Replaces the old Pricing
+ * section. NO prices anywhere — public site is positioning, not commerce.
+ * Featured (Platform) gets a soft gold flag and slightly stronger shadow,
+ * mirroring the "most SMEs start here" feel of the previous Cloud tier.
+ * ========================================================================== */
+.sme-tracks-section { padding: var(--sme-section-pad) clamp(20px, 5vw, 56px); background: var(--sme-bg); }
+.sme-tracks-grid {
+  max-width: var(--sme-content-w);
+  margin: 32px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+.sme-track-card {
+  position: relative;
+  background: var(--sme-bg);
+  border: 1px solid var(--sme-line);
+  border-radius: var(--sme-radius);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--sme-shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.sme-track-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sme-shadow);
+  border-color: var(--sme-blue-mid);
+}
+.sme-track-card--featured {
+  border-color: var(--sme-gold);
+  box-shadow: 0 16px 36px rgba(191, 148, 48, 0.16), 0 4px 8px rgba(15, 23, 42, 0.04);
+}
+.sme-track-flag {
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  background: linear-gradient(135deg, var(--sme-gold), #BF9430);
+  color: #FFFFFF;
+  padding: 5px 14px;
+  border-radius: var(--sme-radius-pill);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(191, 148, 48, 0.30);
+}
+.sme-track-tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--sme-blue);
+}
+.sme-track-title {
+  font-size: clamp(20px, 1.6vw + 12px, 24px);
+  font-weight: 800;
+  color: var(--sme-ink);
+  line-height: 1.3;
+}
+.sme-track-desc {
+  font-size: 14px;
+  color: var(--sme-ink-soft);
+  line-height: 1.6;
+}
+.sme-track-points {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px dashed var(--sme-line);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.sme-track-points li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--sme-ink);
+  line-height: 1.5;
+}
+.sme-track-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background: var(--sme-blue);
+  border-radius: 50%;
+}
+.sme-track-card--featured .sme-track-points li::before {
+  background: var(--sme-gold);
+}
+.sme-track-cta {
+  margin-top: 4px;
+  align-self: flex-start;
+}
+.sme-tracks-fineprint {
+  max-width: 760px;
+  margin: 32px auto 0;
+  font-size: 13px;
+  color: var(--sme-ink-mid);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.55;
+}
+@media (max-width: 960px) {
+  .sme-tracks-grid { grid-template-columns: 1fr; gap: 18px; }
+  .sme-track-card--featured { order: -1; }
+  .sme-track-flag { left: 20px; }
+}

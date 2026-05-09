@@ -1,0 +1,43 @@
+{
+  "name": "DOLPHLINK | Sovereign CPaaS & AI Governance",
+  "short_name": "DOLPHLINK",
+  "description": "Singapore-based sovereign CPaaS, AI governance, and digital solution platform for governments, FinTech, and regulated enterprises. SMS, voice, AI-Human Lifecycle across 220+ countries.",
+  "start_url": "/Dolphlink-MainPage/",
+  "scope": "/Dolphlink-MainPage/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0059B3",
+  "theme_color": "#0059B3",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "communications"],
+  "icons": [
+    {
+      "src": "../media/icon/icon.svg",
+      "sizes": "192x192 512x512 1024x1024",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../media/icon/3D/logo.webp",
+      "sizes": "any",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "System Architecture",
+      "short_name": "Architecture",
+      "description": "Jump to the 3-layer system architecture section",
+      "url": "/Dolphlink-MainPage/#n-sec"
+    },
+    {
+      "name": "The Trust Layer",
+      "short_name": "Trust",
+      "description": "Compliance, sovereignty, audit posture",
+      "url": "/Dolphlink-MainPage/#a-sec"
+    }
+  ],
+  "prefer_related_applications": false
+}

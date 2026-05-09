@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en" data-page="sme">
+<head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Qvs/MYH5NgMInq3lPLn9u0l9OUeNrax9M+NJfICovvE=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- script-src: 'self' for our modules, plus 2 sha256 pinning the dev-server (VS Code Live Server) hot-reload inline script so dev doesn't break. In production neither hash matches anything injected, so they cost nothing. script-src-attr 'none' blocks ALL inline event handlers (onclick=, onerror=, etc.) defense-in-depth. frame-ancestors / X-Frame-Options must be HTTP response headers (the browser ignores them inside <meta>); see /_headers for the real clickjacking lock. --><meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>DOLPHLINK for SME · Carrier-grade communications, no minimums, served warm</title>
+ <meta name="description" content="Carrier-grade communications and AI orchestration for SMEs. Complex workflows, straight to results. The same backbone we run for governments — no enterprise minimum, no long contract, same engineer at 2 a.m.">
+ <meta name="author" content="Baiwu Technology Group">
+ <meta name="robots" content="index, follow, max-image-preview:large">
+ <meta name="theme-color" content="#0059B3">
+ <meta name="application-name" content="DOLPHLINK">
+ <meta name="format-detection" content="telephone=no">
+ <!-- Referrer-Policy: send only origin (not path/query) cross-origin. -->
+ <meta name="referrer" content="strict-origin-when-cross-origin">
+ <link rel="canonical" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+
+ <!-- Regional intent — page targets ASEAN-wide English market with SG as
+      the default. x-default is the fallback for any other locale. -->
+ <link rel="alternate" hreflang="en-sg" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <link rel="alternate" hreflang="en-hk" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <link rel="alternate" hreflang="en-my" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <link rel="alternate" hreflang="en-ph" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <link rel="alternate" hreflang="x-default" href="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+
+ <link rel="icon" type="image/webp" href="../media/icon/3D/logo.webp">
+ <link rel="apple-touch-icon" href="../media/icon/3D/logo.webp">
+ <link rel="manifest" href="../seo/site.webmanifest">
+
+ <!-- Preload critical CSS for faster first paint (LCP improvement) -->
+ <link rel="preload" href="../css/tokens.css?v=1" as="style">
+ <link rel="preload" href="../css/sme.css?v=63" as="style">
+ <!-- Preload the 7 hero images — first paint lands HD, no blur-flash.
+      fetchpriority=high for the first slide (LCP target); the other 6
+      load with normal priority but enter the cache early.
+      Roy spec May 2026: 7 globally-spanning shots, one per top SME
+      keyword (messaging, AI, omnichannel, verification, compliance,
+      cost, simplicity). Cities: SG → Mumbai → Lagos → São Paulo →
+      Tokyo → Mexico City → Berlin. -->
+ <link rel="preload" as="image" type="image/webp" href="../media/sme/hero-1-messaging.webp" fetchpriority="high">
+ <link rel="preload" as="image" type="image/webp" href="../media/sme/hero-2-ai.webp">
+ <link rel="preload" as="image" type="image/webp" href="../media/sme/hero-3-omnichannel.webp">
+ <link rel="preload" as="image" type="image/webp" href="../media/sme/hero-4-verification.webp">
+ <link rel="preload" as="image" type="image/webp" href="../media/sme/hero-5-compliance.webp">
+ <link rel="preload" as="image" type="image/webp" href="../media/sme/hero-6-cost.webp">
+ <link rel="preload" as="image" type="image/webp" href="../media/sme/hero-7-simple.webp">
+
+ <!-- Open Graph — locale forced to en_SG (Singapore-anchored ASEAN page) -->
+ <meta property="og:type" content="website">
+ <meta property="og:locale" content="en_SG">
+ <meta property="og:locale:alternate" content="en_HK">
+ <meta property="og:locale:alternate" content="en_MY">
+ <meta property="og:locale:alternate" content="en_PH">
+ <meta property="og:title" content="DOLPHLINK for SME">
+ <meta property="og:description" content="Carrier-grade communications and AI orchestration for SMEs. Complex workflows, straight to results — no enterprise minimum, no long contract, same engineer at 2 a.m.">
+ <meta property="og:url" content="https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/">
+ <meta property="og:image" content="https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp">
+ <meta property="og:image:width" content="1200">
+ <meta property="og:image:height" content="630">
+ <meta property="og:image:alt" content="DOLPHLINK for SME — carrier-grade communications served warm">
+ <meta property="og:site_name" content="DOLPHLINK">
+
+ <!-- Twitter -->
+ <meta name="twitter:card" content="summary_large_image">
+ <meta name="twitter:title" content="DOLPHLINK for SME">
+ <meta name="twitter:description" content="Carrier-grade communications and AI orchestration for SMEs — no enterprise minimum, served warm.">
+ <meta name="twitter:image" content="https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp">
+ <meta name="twitter:image:alt" content="DOLPHLINK for SME — carrier-grade communications served warm">
+
+ <!-- (Self-hosted by policy — Google Fonts removed. Body falls back
+      to the system font stack defined in css/sme.css → --sme-font.) -->
+
+ <link rel="stylesheet" href="../css/tokens.css?v=1">
+ <!-- Home stylesheet — loaded so the SME nav, brand mark, and nav CTA
+      pick up the SAME styling as the homepage (Roy spec: visual unity). -->
+ <link rel="stylesheet" href="../css/style.css?v=269">
+ <link rel="stylesheet" href="../css/sme.css?v=63">
+
+ <!-- ======================================================================
+      Structured data — Schema.org JSON-LD. Inlined here (rather than going
+      through seo.json's global {{ jsonld }} token) because the SME page
+      needs page-specific schema that shouldn't pollute the homepage's graph.
+      ====================================================================== -->
+
+ <!-- Organization (linked to homepage's @id so search engines understand
+      this is the same entity, not a duplicate) -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "Organization",
+   "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization",
+   "name": "DOLPHLINK",
+   "alternateName": "DOLPHLINK by Baiwu Technology Group",
+   "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/",
+   "logo": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/icon/3D/logo.webp",
+   "address": {
+     "@type": "PostalAddress",
+     "streetAddress": "9 Raffles Place #29-04, Republic Plaza",
+     "addressLocality": "Singapore",
+     "postalCode": "048619",
+     "addressCountry": "SG"
+   },
+   "contactPoint": {
+     "@type": "ContactPoint",
+     "contactType": "sales",
+     "email": "Salesmarketing@dolphlink.com",
+     "availableLanguage": ["English", "Mandarin"],
+     "areaServed": ["SG", "HK", "MY", "VN", "TH", "ID", "PH"]
+   }
+ }
+ </script>
+
+ <!-- Service schema with three service tracks (no Offers — pricing is
+      deliberately off the public site, Roy spec). Powers Google's
+      Service-card rich snippet without exposing commercial-sensitive prices. -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "Service",
+   "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#service",
+   "name": "DOLPHLINK for SME",
+   "description": "Carrier-grade communications and AI orchestration for small and medium-sized enterprises. The same backbone we run for governments and regulated enterprises, sized warmly for SMEs — no enterprise minimum, no long contract.",
+   "serviceType": "Communications Platform as a Service",
+   "category": "Enterprise Communications",
+   "provider": { "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/#organization" },
+   "areaServed": ["SG", "HK", "MY", "VN", "TH", "ID", "PH"],
+   "url": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/",
+   "image": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/media/img/video-poster.webp",
+   "audience": {
+     "@type": "BusinessAudience",
+     "audienceType": "Small and medium-sized enterprises"
+   },
+   "hasOfferCatalog": {
+     "@type": "OfferCatalog",
+     "name": "Three core services",
+     "itemListElement": [
+       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sovereign cloud, runs anywhere", "description": "Same secure cloud we run for governments and central banks. Runs on our cloud, your private cloud, or any major public cloud (AWS, Azure, Google, Alibaba, Tencent, Huawei). One-click migration brings data and history with you." } },
+       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "One panel runs everything", "description": "SMS, WhatsApp, voice, email, AI chatbot, audit log — all on one screen. One login, one bill. 200+ ready-made bridges to your CRM, accounting, online store. Click to install, click to deploy, click to pause." } },
+       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bank-grade routes, SME prices", "description": "Same tier-1 carrier routes the regulated banks use, 99.999% uptime. No volume floor, no enterprise minimum. Sender IDs, short codes, and hosted numbers in 100+ countries." } }
+     ]
+   }
+ }
+ </script>
+
+ <!-- FAQPage — derived from "use cases" + "how it works" sections. Powers
+      Google's FAQ rich snippet (the expandable Q&A in search results). -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "@id": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/#faq",
+   "mainEntity": [
+     {
+       "@type": "Question",
+       "name": "How long does onboarding take for an SME?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Most SMEs are sending real traffic in days, not quarters. We start with a 30-minute briefing — no slide deck, no NDA on the first call — to map your industry, regulators, and the workspace your team already uses. From there we provision numbers, sender IDs, and channels into your existing tooling. No rip-and-replace, no second migration."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "Which languages are supported?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "SMS in 繁體中文 / 简体中文 / Tiếng Việt / ไทย / Bahasa Indonesia / Bahasa Melayu / Tagalog deliver as native scripts, not transliterated. Templates are pre-localised for common SME flows. Support team operates in Singapore, Kuala Lumpur, Hong Kong, Bangkok, and Ho Chi Minh City."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "Does it integrate with my existing ERP and team workspace?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Native webhooks for SAP, 用友, 金蝶, Odoo, QuickBooks, Xero — plus any system that can fire a webhook. Three common workflow shapes: ERP signal to your team workspace, approval flow to customer SMS / WhatsApp, calendar event to automatic customer reminder. End-to-end latency under 3 seconds."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "Is the platform compliant for regulated SMEs?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Yes. PDPA Singapore / Malaysia / Thailand, PIPL, PDPL Vietnam, PDPO Hong Kong, GDPR — every regulation gets checked at the routing layer before the message leaves. Tamper-evident message logs in the same format banks file. ISO 27001 + SOC 2 inherited from our enterprise stack. Quarterly audit reports auto-generated."
+       }
+     },
+     {
+       "@type": "Question",
+       "name": "Can DOLPHLINK run on my own cloud?",
+       "acceptedAnswer": {
+         "@type": "Answer",
+         "text": "Yes. Run it on our cloud, your private cloud, or any major public cloud — AWS, Azure, Google Cloud, Alibaba, Tencent, or Huawei. On-prem deployment is available for regulated environments. Your message history, sender IDs, and workspace integrations move with you between clouds. One-click migration from your current vendor brings data, templates, and workflows along."
+       }
+     }
+   ]
+ }
+ </script>
+
+ <!-- BreadcrumbList — Home → SME -->
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "DOLPHLINK",
+       "item": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/"
+     },
+     {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "SME",
+       "item": "https://dolphlinkroyli.github.io/Dolphlink-MainPage/sme/"
+     }
+   ]
+ }
+ </script>
+
+ <!-- Single-entry dispatcher — reads <html data-page="sme"> and lazy-loads engine/sme/index.js -->
+ <script type="module" src="../js/app.js?v=2"></script>
+ <!-- Register modal — wires every .nav-cta on the page to the
+      "Tell us about you" / Scan QR / Email modal. Same flow as the
+      homepage Request-Briefing button. Roy spec May 2026. -->
+ <script type="module" src="../js/engine/home/register.js?v=3"></script>
+ <link rel="stylesheet" href="../css/register.css?v=1">
+</head>
+<body class="sme-body">
+ <!-- SME nav — uses the SAME structural classes as the homepage nav
+      (.brand / .brand-logo / .brand-name / .nav-right / .fixed-menu /
+      .menu-item / .nav-cta / .nav-lang) so it picks up the homepage
+      visual styling from css/style.css. Roy spec May 2026: SME page
+      should not visually feel like a different site. -->
+ <nav>
+ <a href="../" class="brand" aria-label="DOLPHLINK home">
+ <img src="../media/icon/3D/logo.webp" alt="DOLPHLINK logo" class="brand-logo" width="72" height="72" decoding="async" fetchpriority="high" />
+ <span class="brand-name">DOLPHLINK</span>
+ </a>
+ <div class="nav-right">
+ <div class="fixed-menu">
+   <a href="../" class="menu-item" data-i18n="nav.home">HOME</a>
+   <a href="#gap" class="menu-item" data-i18n="nav.pains">THE PAINS</a>
+   <a href="#benefits" class="menu-item" data-i18n="nav.whatwedo">WHAT WE DO</a>
+   <a href="#gains" class="menu-item" data-i18n="nav.wins">THE WINS</a>
+   <a href="#one-partner" class="menu-item" data-i18n="nav.answer">THE ANSWER</a>
+   <a href="#industries" class="menu-item" data-i18n="nav.industries">INDUSTRIES</a>
+ </div>
+ <a href="mailto:Salesmarketing@dolphlink.com?subject=DOLPHLINK%20-%20Partner%20with%20us" class="nav-cta" aria-label="Partner with us">
+ <svg class="nav-cta-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+   <path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/>
+   <rect x="9" y="2" width="6" height="4" rx="1"/>
+   <path d="M9 14l2 2 4-4"/>
+ </svg>
+ <span class="nav-cta-label" data-i18n="nav.cta.partner">Partner with us</span>
+ <svg class="nav-cta-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+ <span class="nav-cta-tip" data-i18n="nav.cta.partner.tip">Tap to partner</span>
+ </a>
+ <div class="nav-lang" data-lang-picker></div>
+ </div>
+ </nav>
+
+<main class="sme-main">
+ <!-- ============================================================
+      HERO — magazine-cover treatment. Roy spec May 2026:
+      "must be HD; remove all small text and buttons; warm + exquisite".
+      Three full-bleed photos cross-fade on a 24s loop, paired with one
+      large rotating headline. No eyebrow, no subtitle, no CTA, no dots
+      — pure brand statement. Real conversation lives in the nav CTA.
+ ============================================================ -->
+ <!-- ============================================================
+      HERO — magazine-cover card. Photo + headline live INSIDE a
+      rounded gold-edged frame that sits on the page with breathing
+      room around it (not full-bleed). Seven globally-spanning photos
+      cross-fade on a 49s loop (7s each) with a subtle Ken-Burns push.
+      Each slide is themed on a top SME pain-point keyword and pairs
+      the owner's inner voice (gold italic quote) with our genuine reply
+      (white headline). Roy spec May 2026.
+ ============================================================ -->
+ <section class="sme-hero sme-hero--cinema" id="hero" aria-label="DOLPHLINK for SME">
+   <div class="sme-hero-frame">
+     <!-- Seven full-bleed background slides. Pre-loaded in <head>.
+          Cities: SG → Mumbai → Lagos → São Paulo → Tokyo → Mexico City → Berlin.
+          Keywords: messaging → AI → omnichannel → verification → compliance → cost → simplicity. -->
+     <div class="sme-hero-bg sme-hero-bg--1" style="background-image:url('../media/sme/hero-1-messaging.webp')" aria-hidden="true"></div>
+     <div class="sme-hero-bg sme-hero-bg--2" style="background-image:url('../media/sme/hero-2-ai.webp')" aria-hidden="true"></div>
+     <div class="sme-hero-bg sme-hero-bg--3" style="background-image:url('../media/sme/hero-3-omnichannel.webp')" aria-hidden="true"></div>
+     <div class="sme-hero-bg sme-hero-bg--4" style="background-image:url('../media/sme/hero-4-verification.webp')" aria-hidden="true"></div>
+     <div class="sme-hero-bg sme-hero-bg--5" style="background-image:url('../media/sme/hero-5-compliance.webp')" aria-hidden="true"></div>
+     <div class="sme-hero-bg sme-hero-bg--6" style="background-image:url('../media/sme/hero-6-cost.webp')" aria-hidden="true"></div>
+     <div class="sme-hero-bg sme-hero-bg--7" style="background-image:url('../media/sme/hero-7-simple.webp')" aria-hidden="true"></div>
+
+     <!-- Bottom-up vignette — minimal, photo stays HD. -->
+     <div class="sme-hero-overlay" aria-hidden="true"></div>
+
+     <!-- Decorative corner brackets — top-left + bottom-right gold L-marks
+          give the "exquisite" cue without a heavy frame. -->
+     <span class="sme-hero-bracket sme-hero-bracket--tl" aria-hidden="true"></span>
+     <span class="sme-hero-bracket sme-hero-bracket--br" aria-hidden="true"></span>
+
+     <!-- Country / topic masthead — top-right, magazine-cover credit line.
+          Each caption pairs the city the photo was shot in with the SME
+          pain-point keyword the slide is about. Rotates in sync with the
+          photo so the global story is legible at a glance.
+          Roy spec May 2026: 把 country 标记出来 (no № serial — too busy). -->
+     <ol class="sme-hero-captions" aria-hidden="true">
+       <li class="sme-hero-caption sme-hero-caption--1">
+         <span class="sme-hero-caption-place" data-i18n="sme.hero.cap1.place">Singapore</span>
+         <span class="sme-hero-caption-topic" data-i18n="sme.hero.cap1.topic">Messaging at scale</span>
+       </li>
+       <li class="sme-hero-caption sme-hero-caption--2">
+         <span class="sme-hero-caption-place" data-i18n="sme.hero.cap2.place">Mumbai</span>
+         <span class="sme-hero-caption-topic" data-i18n="sme.hero.cap2.topic">AI auto-reply</span>
+       </li>
+       <li class="sme-hero-caption sme-hero-caption--3">
+         <span class="sme-hero-caption-place" data-i18n="sme.hero.cap3.place">Lagos</span>
+         <span class="sme-hero-caption-topic" data-i18n="sme.hero.cap3.topic">Omnichannel inbox</span>
+       </li>
+       <li class="sme-hero-caption sme-hero-caption--4">
+         <span class="sme-hero-caption-place" data-i18n="sme.hero.cap4.place">São Paulo</span>
+         <span class="sme-hero-caption-topic" data-i18n="sme.hero.cap4.topic">Verification &amp; OTP</span>
+       </li>
+       <li class="sme-hero-caption sme-hero-caption--5">
+         <span class="sme-hero-caption-place" data-i18n="sme.hero.cap5.place">Tokyo</span>
+         <span class="sme-hero-caption-topic" data-i18n="sme.hero.cap5.topic">Compliance, handled</span>
+       </li>
+       <li class="sme-hero-caption sme-hero-caption--6">
+         <span class="sme-hero-caption-place" data-i18n="sme.hero.cap6.place">Mexico City</span>
+         <span class="sme-hero-caption-topic" data-i18n="sme.hero.cap6.topic">Honest pricing</span>
+       </li>
+       <li class="sme-hero-caption sme-hero-caption--7">
+         <span class="sme-hero-caption-place" data-i18n="sme.hero.cap7.place">Berlin</span>
+         <span class="sme-hero-caption-topic" data-i18n="sme.hero.cap7.topic">Set up in an afternoon</span>
+       </li>
+     </ol>
+
+     <div class="sme-hero-content">
+       <!-- Seven rotating cards. Each pairs the SME's inner voice (gold
+            italic quote) tied to that photo's pain-point with our genuine
+            reply (white headline). Roy spec May 2026: "speak SMEs' real
+            heart; reply from ours". -->
+       <div class="sme-hero-deck">
+         <article class="sme-hero-card sme-hero-card--1">
+           <p class="sme-hero-quote" data-i18n="sme.hero.q1">"Same update. Forty customers. Every Tuesday."</p>
+           <h1 class="sme-hero-response"><span data-i18n="sme.hero.r1.lead">One send.</span> <span class="sme-hero-accent" data-i18n="sme.hero.r1.tail">Everyone gets it.</span></h1>
+         </article>
+         <article class="sme-hero-card sme-hero-card--2">
+           <p class="sme-hero-quote" data-i18n="sme.hero.q2">"We can't be answering customers at midnight."</p>
+           <h1 class="sme-hero-response"><span data-i18n="sme.hero.r2.lead">It answers first.</span> <span class="sme-hero-accent" data-i18n="sme.hero.r2.tail">You finish work.</span></h1>
+         </article>
+         <article class="sme-hero-card sme-hero-card--3">
+           <p class="sme-hero-quote" data-i18n="sme.hero.q3">"WhatsApp, SMS, email — three apps, one me."</p>
+           <h1 class="sme-hero-response"><span data-i18n="sme.hero.r3.lead">One inbox.</span> <span class="sme-hero-accent" data-i18n="sme.hero.r3.tail">Every channel.</span></h1>
+         </article>
+         <article class="sme-hero-card sme-hero-card--4">
+           <p class="sme-hero-quote" data-i18n="sme.hero.q4">"Login should feel safe. Not expensive."</p>
+           <h1 class="sme-hero-response"><span data-i18n="sme.hero.r4.lead">Real verification.</span> <span class="sme-hero-accent" data-i18n="sme.hero.r4.tail">Honest price.</span></h1>
+         </article>
+         <article class="sme-hero-card sme-hero-card--5">
+           <p class="sme-hero-quote" data-i18n="sme.hero.q5">"PDPA, GDPR — we just want to do our work."</p>
+           <h1 class="sme-hero-response"><span data-i18n="sme.hero.r5.lead">We hold the line.</span> <span class="sme-hero-accent" data-i18n="sme.hero.r5.tail">You stay free.</span></h1>
+         </article>
+         <article class="sme-hero-card sme-hero-card--6">
+           <p class="sme-hero-quote" data-i18n="sme.hero.q6">"The big tools price us out by Wednesday."</p>
+           <h1 class="sme-hero-response"><span data-i18n="sme.hero.r6.lead">Pay what you send.</span> <span class="sme-hero-accent" data-i18n="sme.hero.r6.tail">Nothing more.</span></h1>
+         </article>
+         <article class="sme-hero-card sme-hero-card--7">
+           <p class="sme-hero-quote" data-i18n="sme.hero.q7">"We're three people. Not three engineers."</p>
+           <h1 class="sme-hero-response"><span data-i18n="sme.hero.r7.lead">Set it up yourself.</span> <span class="sme-hero-accent" data-i18n="sme.hero.r7.tail">In an afternoon.</span></h1>
+         </article>
+       </div>
+     </div>
+
+     <!-- Slide indicator dots — bottom-center of the frame. Click any dot
+          to pause auto-cycle and jump to that slide. Click the active dot
+          again to resume auto. The fill of each dot animates in sync with
+          the cycle in auto mode, and snaps to 100% on the active slide
+          when paused. -->
+     <ol class="sme-hero-dots" role="tablist" aria-label="Hero slide controls">
+       <li><button type="button" class="sme-hero-dot sme-hero-dot--1" data-slide="1" role="tab" aria-label="Slide 1: One send. Everyone gets it."></button></li>
+       <li><button type="button" class="sme-hero-dot sme-hero-dot--2" data-slide="2" role="tab" aria-label="Slide 2: It answers first. You finish work."></button></li>
+       <li><button type="button" class="sme-hero-dot sme-hero-dot--3" data-slide="3" role="tab" aria-label="Slide 3: One inbox. Every channel."></button></li>
+       <li><button type="button" class="sme-hero-dot sme-hero-dot--4" data-slide="4" role="tab" aria-label="Slide 4: Real verification. Honest price."></button></li>
+       <li><button type="button" class="sme-hero-dot sme-hero-dot--5" data-slide="5" role="tab" aria-label="Slide 5: We hold the line. You stay free."></button></li>
+       <li><button type="button" class="sme-hero-dot sme-hero-dot--6" data-slide="6" role="tab" aria-label="Slide 6: Pay what you send. Nothing more."></button></li>
+       <li><button type="button" class="sme-hero-dot sme-hero-dot--7" data-slide="7" role="tab" aria-label="Slide 7: Set it up yourself. In an afternoon."></button></li>
+     </ol>
+   </div>
+
+   <!-- Scroll-down nudge — tells the visitor there's content below. Bobs
+        gently. Roy spec May 2026: hero needs a way down. -->
+   <a class="sme-hero-scrollcue" href="#gap" aria-label="See the pains we fix">
+     <span class="sme-hero-scrollcue-label" data-i18n="sme.hero.scrollcue">The pains we fix</span>
+     <span class="sme-hero-scrollcue-chevron" aria-hidden="true">
+       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+     </span>
+   </a>
+
+   <!-- (Hero slide-dot pause/resume handler lives in
+        js/engine/sme/index.js so the page CSP can drop 'unsafe-inline'.) -->
+ </section>
+
+ <!-- ============================================================
+      THE GAP — 4 plain-language pain points every SME owner has lived,
+      paired with a small "DOLPHLINK Saver" dolphin who shows up as the
+      solution. Each card holds two photos (pain + saved twin) plus a
+      mascot PNG. On hover/tap, the photo cross-fades from pain to
+      saved, the dolphin swims in from the bottom, and the saver line
+      brightens — visual story: "the moment we step in for you".
+
+      Roy spec May 2026:
+        - 大白话 copy, no jargon
+        - 4 pains rooted in the actual SME-search-keyword research
+        - DOLPHLINK Saver dolphin = the moment of solution
+        - "出现就是解决方案" — when the dolphin appears, the answer arrives
+      Images: media/sme/gap-{1..4}-{ignored,overpriced,complex,compliance,
+                                   saved}.jpg + media/sme/mascot/dolphin-*.png
+ ============================================================ -->
+ <section class="sme-section sme-gap-section" id="gap" aria-labelledby="sme-gap-heading">
+   <div class="sme-section-head">
+     <h2 class="sme-section-title" id="sme-gap-heading" data-i18n="sme.gap.title">Four pains every SME owner knows.</h2>
+     <p class="sme-section-intro" data-i18n="sme.gap.intro">
+       We've heard these the same four ways for years. Tap any card to see what we'd
+       do for you.
+     </p>
+   </div>
+
+   <div class="sme-gap-grid">
+
+     <article class="sme-gap-card" tabindex="0" data-saver="call">
+       <div class="sme-gap-photos">
+         <img class="sme-gap-photo sme-gap-photo--pain" src="../media/sme/gap-1-ignored.webp" alt="Small business owner staring at a silent phone" loading="lazy" decoding="async">
+         <img class="sme-gap-photo sme-gap-photo--saved" src="../media/sme/gap-1-saved.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+         <span class="sme-gap-cta" aria-hidden="true"><span class="sme-gap-cta-brand">DOLPHLINK</span> <span data-i18n="sme.gap.cta">at your service</span> <span class="sme-gap-cta-arrow">→</span></span>
+       </div>
+       <div class="sme-gap-body">
+         <span class="sme-gap-icon" aria-hidden="true">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+           </svg>
+         </span>
+         <span class="sme-gap-pain" data-i18n="sme.gap.pain.label">When this happens to you</span>
+         <h3 class="sme-gap-title" data-i18n="sme.gap.c1.title">"Hello? Anyone there?"</h3>
+         <p class="sme-gap-desc" data-i18n="sme.gap.c1.desc">The big vendors only call back when you're spending six figures. Small accounts get a polite "we'll get back to you", then silence.</p>
+         <div class="sme-gap-saver">
+           <span class="sme-gap-saver-tag" data-i18n="sme.gap.saver.tag">What we do</span>
+           <p class="sme-gap-saver-line" data-i18n="sme.gap.c1.saver">We pick up. At 2 a.m. or 2 p.m. Whether you've got 12 seats or 12,000.</p>
+         </div>
+       </div>
+     </article>
+
+     <article class="sme-gap-card" tabindex="0" data-saver="coin">
+       <div class="sme-gap-photos">
+         <img class="sme-gap-photo sme-gap-photo--pain" src="../media/sme/gap-2-overpriced.webp" alt="Small business owner shocked at a quote on his laptop" loading="lazy" decoding="async">
+         <img class="sme-gap-photo sme-gap-photo--saved" src="../media/sme/gap-2-saved.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+         <span class="sme-gap-cta" aria-hidden="true"><span class="sme-gap-cta-brand">DOLPHLINK</span> <span data-i18n="sme.gap.cta">at your service</span> <span class="sme-gap-cta-arrow">→</span></span>
+       </div>
+       <div class="sme-gap-body">
+         <span class="sme-gap-icon" aria-hidden="true">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+             <circle cx="12" cy="12" r="10"/>
+             <path d="M16 8h-6.5a2 2 0 0 0 0 4h5a2 2 0 0 1 0 4H8"/>
+             <path d="M12 5v3m0 8v3"/>
+           </svg>
+         </span>
+         <span class="sme-gap-pain" data-i18n="sme.gap.pain.label">When this happens to you</span>
+         <h3 class="sme-gap-title" data-i18n="sme.gap.c2.title">"How much?!"</h3>
+         <p class="sme-gap-desc" data-i18n="sme.gap.c2.desc">Their pricing was built for a Series-B startup that just raised thirty million. You have twenty staff. They quote you like you have two hundred.</p>
+         <div class="sme-gap-saver">
+           <span class="sme-gap-saver-tag" data-i18n="sme.gap.saver.tag">What we do</span>
+           <p class="sme-gap-saver-line" data-i18n="sme.gap.c2.saver">Pay only what you actually send. No floor. No annual lock. The number you see is the number you pay.</p>
+         </div>
+       </div>
+     </article>
+
+     <article class="sme-gap-card" tabindex="0" data-saver="plug">
+       <div class="sme-gap-photos">
+         <img class="sme-gap-photo sme-gap-photo--pain" src="../media/sme/gap-3-complex.webp" alt="Small business owner overwhelmed by a complex dashboard at night" loading="lazy" decoding="async">
+         <img class="sme-gap-photo sme-gap-photo--saved" src="../media/sme/gap-3-saved.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+         <span class="sme-gap-cta" aria-hidden="true"><span class="sme-gap-cta-brand">DOLPHLINK</span> <span data-i18n="sme.gap.cta">at your service</span> <span class="sme-gap-cta-arrow">→</span></span>
+       </div>
+       <div class="sme-gap-body">
+         <span class="sme-gap-icon" aria-hidden="true">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M9 2v6"/>
+             <path d="M15 2v6"/>
+             <path d="M5 8h14v3a7 7 0 0 1-14 0V8z"/>
+             <path d="M12 18v4"/>
+           </svg>
+         </span>
+         <span class="sme-gap-pain" data-i18n="sme.gap.pain.label">When this happens to you</span>
+         <h3 class="sme-gap-title" data-i18n="sme.gap.c3.title">"What's a webhook?"</h3>
+         <p class="sme-gap-desc" data-i18n="sme.gap.c3.desc">API docs, OAuth scopes, callback URLs, retry policies. You just want to send a message to a customer, not become an engineer overnight.</p>
+         <div class="sme-gap-saver">
+           <span class="sme-gap-saver-tag" data-i18n="sme.gap.saver.tag">What we do</span>
+           <p class="sme-gap-saver-line" data-i18n="sme.gap.c3.saver">Plug in. Send. Done. No engineer needed. Set the whole thing up over a coffee.</p>
+         </div>
+       </div>
+     </article>
+
+     <article class="sme-gap-card" tabindex="0" data-saver="shield">
+       <div class="sme-gap-photos">
+         <img class="sme-gap-photo sme-gap-photo--pain" src="../media/sme/gap-4-compliance.webp" alt="Small business owner buried in stacks of regulatory documents" loading="lazy" decoding="async">
+         <img class="sme-gap-photo sme-gap-photo--saved" src="../media/sme/gap-4-saved.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+         <span class="sme-gap-cta" aria-hidden="true"><span class="sme-gap-cta-brand">DOLPHLINK</span> <span data-i18n="sme.gap.cta">at your service</span> <span class="sme-gap-cta-arrow">→</span></span>
+       </div>
+       <div class="sme-gap-body">
+         <span class="sme-gap-icon" aria-hidden="true">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+             <path d="M9 12l2 2 4-4"/>
+           </svg>
+         </span>
+         <span class="sme-gap-pain" data-i18n="sme.gap.pain.label">When this happens to you</span>
+         <h3 class="sme-gap-title" data-i18n="sme.gap.c4.title">"100 pages. Who reads this?"</h3>
+         <p class="sme-gap-desc" data-i18n="sme.gap.c4.desc">PDPA, GDPR, MAS guidelines. One wrong template and you're fined. Small businesses don't have a compliance officer with a hundred pages of free reading time.</p>
+         <div class="sme-gap-saver">
+           <span class="sme-gap-saver-tag" data-i18n="sme.gap.saver.tag">What we do</span>
+           <p class="sme-gap-saver-line" data-i18n="sme.gap.c4.saver">We carry the paperwork. Our compliance team reads the hundred pages. You sleep at night.</p>
+         </div>
+       </div>
+     </article>
+
+   </div>
+
+   <!-- (Gap-card tap-to-toggle handler lives in
+        js/engine/sme/index.js so the page CSP can drop 'unsafe-inline'.) -->
+ </section>
+
+ <!-- ============================================================
+      WHY WE'RE DIFFERENT — five things only we do.
+      Maps directly to the three service tracks (Cloud / Platform /
+      Connectivity) that show up later, but with a "why only we do
+      this at SME scale" angle: sovereign-grade kit, sized warm.
+      Plus two operational shortcuts that mainstream can't match
+      (one-click everything, plug-in-anything).
+      Roy spec May 2026: 五件事 + 大白话 + 不要忘了 Cloud/Platform/Connectivity.
+ ============================================================ -->
+ <section class="sme-section sme-benefits" id="benefits">
+   <div class="sme-section-head">
+     <h2 class="sme-section-title" data-i18n="sme.benefits.title">Three things only we do.</h2>
+     <p class="sme-section-intro" data-i18n="sme.benefits.intro">
+       The big global vendors hand you the tools and walk away. We do the rest.
+       Here are three things you won't find anywhere else, all in one place.
+     </p>
+   </div>
+
+   <div class="sme-benefit-grid">
+
+     <!-- 1. CLOUD SERVICES — sovereign cloud, SME-sized -->
+     <article class="sme-benefit">
+       <div class="sme-benefit-icon sme-benefit-icon--lark">
+         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+       </div>
+       <h3 class="sme-benefit-title" data-i18n="sme.benefits.b1.title">Cloud built for governments. Run on any cloud you choose.</h3>
+       <p class="sme-benefit-desc" data-i18n="sme.benefits.b1.desc">The same secure cloud we run for governments and central banks — now in an SME-sized package. Run it on our cloud, your private cloud, or any major public cloud you already use: AWS, Azure, Google Cloud, Alibaba, Tencent, Huawei. You only pay for what you use. No two-year contracts. No rip-and-replace when you grow.</p>
+       <ul class="sme-benefit-list">
+         <li data-i18n="sme.benefits.b1.l1">Runs on our cloud, your private cloud, or any major public cloud</li>
+         <li data-i18n="sme.benefits.b1.l2">Same bank-grade compliance posture wherever it runs</li>
+         <li data-i18n="sme.benefits.b1.l3">One-click migration from your current vendor · data, history, templates all come with you</li>
+         <li data-i18n="sme.benefits.b1.l4">Move between clouds later without losing your data</li>
+       </ul>
+     </article>
+
+     <!-- 2. PLATFORM SERVICES — one panel + one-click + connect anything -->
+     <article class="sme-benefit">
+       <div class="sme-benefit-icon sme-benefit-icon--green">
+         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+       </div>
+       <h3 class="sme-benefit-title" data-i18n="sme.benefits.b2.title">One panel runs everything.</h3>
+       <p class="sme-benefit-desc" data-i18n="sme.benefits.b2.desc">SMS, WhatsApp, voice, email, AI chatbot, audit log — all on one screen. One login. One bill. One place to look. Click to install, click to connect any tool you already use, click to deploy. Most vendors give you five dashboards. We give you one.</p>
+       <ul class="sme-benefit-list">
+         <li data-i18n="sme.benefits.b2.l1">One login, every channel · one bill, every region · one audit log for every regulator</li>
+         <li data-i18n="sme.benefits.b2.l2">Click to install · click to go live · click to pause — 20 minutes from sign-up to first message</li>
+         <li data-i18n="sme.benefits.b2.l3">200+ ready-made bridges to your CRM, accounting, store, helpdesk · no engineer needed</li>
+         <li data-i18n="sme.benefits.b2.l4">Two-way auto-sync · no more copy-paste between tools</li>
+       </ul>
+     </article>
+
+     <!-- 3. CONNECTIVITY SERVICES — bank-grade routes, SME prices -->
+     <article class="sme-benefit">
+       <div class="sme-benefit-icon sme-benefit-icon--gold">
+         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+       </div>
+       <h3 class="sme-benefit-title" data-i18n="sme.benefits.b3.title">Bank-grade routes. SME prices.</h3>
+       <p class="sme-benefit-desc" data-i18n="sme.benefits.b3.desc">The same tier-1 carrier routes the regulated banks use — 99.999% uptime — but with no volume floor, no enterprise minimum, and no hidden setup fees. Pay per message. 100+ countries covered. A real human at the other end of the line.</p>
+       <ul class="sme-benefit-list">
+         <li data-i18n="sme.benefits.b3.l1">Same routes the banks file through · 99.999% uptime</li>
+         <li data-i18n="sme.benefits.b3.l2">Sender IDs, short codes, hosted numbers in 100+ countries</li>
+         <li data-i18n="sme.benefits.b3.l3">No volume floor, no enterprise minimum to qualify</li>
+         <li data-i18n="sme.benefits.b3.l4">Pay per message · the number you see is the number you pay</li>
+       </ul>
+     </article>
+
+   </div>
+ </section>
+
+ <!-- ============================================================
+      SURVIVE + GROW — two things every SME owner Googles every
+      week, framed as outcomes our platform actually delivers.
+      Two cards, equal weight, one for each gain.
+      Roy spec May 2026: 大白话 + 搜索最多的两点中小企业最想得到什么.
+ ============================================================ -->
+ <section class="sme-section sme-gains" id="gains" aria-labelledby="sme-gains-heading">
+   <div class="sme-section-head">
+     <h2 class="sme-section-title" id="sme-gains-heading" data-i18n="sme.gains.title">Two wins every SME owner is after.</h2>
+     <p class="sme-section-intro" data-i18n="sme.gains.intro">
+       Sell more. Spend less. The two long-term wins every small-business owner needs at the same time.
+       Here's how we hit both, without choosing one or the other.
+     </p>
+   </div>
+
+   <div class="sme-gain-grid">
+
+     <!-- 1. GROW — sell more without hiring more -->
+     <article class="sme-gain sme-gain--grow">
+       <span class="sme-gain-tag" data-i18n="sme.gains.grow.tag">Grow</span>
+       <h3 class="sme-gain-title" data-i18n="sme.gains.grow.title">Sell more. Without hiring more.</h3>
+       <p class="sme-gain-hook" data-i18n="sme.gains.grow.hook">Open at 2 a.m. Without staying up.</p>
+       <p class="sme-gain-desc" data-i18n="sme.gains.grow.desc">Most SME owners lose half their leads to slow replies. We don't. AI picks up at midnight on every channel — WhatsApp, SMS, voice, email. Bulk-send to your whole list in one click. Auto-recover abandoned carts and unconfirmed bookings while you sleep. Your team only handles the customers who already said yes. Everyone else gets a real answer first.</p>
+       <ul class="sme-gain-list">
+         <li data-i18n="sme.gains.grow.l1">AI answers in 60 seconds — any hour, any channel</li>
+         <li data-i18n="sme.gains.grow.l2">Bulk-send to your list by name, region, language — one click</li>
+         <li data-i18n="sme.gains.grow.l3">Auto-recover abandoned carts and unconfirmed bookings overnight</li>
+         <li data-i18n="sme.gains.grow.l4">See which message and channel brought each sale</li>
+       </ul>
+     </article>
+
+     <!-- 2. SURVIVE — spend less without losing what works -->
+     <article class="sme-gain sme-gain--survive">
+       <span class="sme-gain-tag" data-i18n="sme.gains.survive.tag">Survive</span>
+       <h3 class="sme-gain-title" data-i18n="sme.gains.survive.title">Spend less. Without losing what works.</h3>
+       <p class="sme-gain-hook" data-i18n="sme.gains.survive.hook">Five vendors. One bill.</p>
+       <p class="sme-gain-desc" data-i18n="sme.gains.survive.desc">Pay only for what you actually send. No monthly minimum. No two-year contract. One panel replaces the five vendors you're juggling right now — SMS, WhatsApp, voice, email, audit log. One bill. One support line. One real human to call when something breaks. The number doesn't change whether you have twelve seats or twelve thousand.</p>
+       <ul class="sme-gain-list">
+         <li data-i18n="sme.gains.survive.l1">Pay-as-you-send · no monthly floor, no setup fees</li>
+         <li data-i18n="sme.gains.survive.l2">Five vendors replaced with one · SMS / WhatsApp / voice / email / audit</li>
+         <li data-i18n="sme.gains.survive.l3">Cancel or pause anytime · no penalty</li>
+         <li data-i18n="sme.gains.survive.l4">Same support line, same engineer, whatever your size</li>
+       </ul>
+     </article>
+
+   </div>
+ </section>
+
+ <!-- ============================================================
+      ONE PARTNER — the closer. Holds a "happy everyone" hero photo
+      with the brand-led title overlaid magazine-cover style:
+      "DOLPHLINK. Complex workflows, straight to results."
+      Below the photo, the 3-conversation onboarding path.
+      Roy spec May 2026: title 移到图片上 + 大白话 + 直达目标.
+      Photo: media/sme/happy-everyone.webp (16:9, generated locally).
+ ============================================================ -->
+ <section class="sme-section sme-one" id="one-partner" aria-labelledby="sme-one-heading">
+   <div class="sme-one-card">
+
+     <!-- Hero photo with the brand-led tagline overlaid on top —
+          magazine-cover treatment. Photo is the warm group shot of SME
+          owners + DOLPHLINK team. Title sits over a soft dark scrim
+          at the bottom for readability. Roy spec May 2026: title 移到图片上. -->
+     <figure class="sme-one-photo">
+       <img src="../media/sme/happy-everyone.webp" alt="A small-business team and the DOLPHLINK people working together, smiling mid-conversation" loading="lazy" decoding="async">
+       <div class="sme-one-photo-overlay">
+         <span class="sme-one-tag" data-i18n="sme.one.tag">One Partner</span>
+         <h2 class="sme-one-title" id="sme-one-heading"><span class="sme-one-brand">DOLPHLINK.</span> <span class="sme-one-tagline" data-i18n="sme.one.tagline">Complex workflows, straight to results.</span></h2>
+       </div>
+     </figure>
+
+     <div class="sme-one-content">
+       <p class="sme-one-desc" data-i18n="sme.one.desc">
+         Five vendors. Three logins. Two engineers on call. The complex workflow most SMEs end up with
+         looks nothing like a business — it looks like glue. We collapse all of that into one panel,
+         one bill, one team. Same backbone we run for governments, sized warm for yours. Twelve people
+         or twelve thousand, the line doesn't change.
+       </p>
+
+       <!-- Three conversations onboarding — merged in from the old
+            "How it works" section. Plain numbered cards, light on a
+            translucent panel so they read clearly on the brand-blue. -->
+       <div class="sme-one-journey">
+         <p class="sme-one-journey-eyebrow" data-i18n="sme.one.journey.eyebrow">Three conversations. Then we run.</p>
+         <ol class="sme-one-steps">
+           <li class="sme-one-step">
+             <span class="sme-one-step-num">01</span>
+             <h3 class="sme-one-step-title" data-i18n="sme.one.s1.title">Sit down with us.</h3>
+             <p class="sme-one-step-desc" data-i18n="sme.one.s1.desc">A 30-minute briefing. No slide deck, no NDA on the first call. Tell us your industry, your regulators, the workspace your team already lives in. We map the path.</p>
+             <p class="sme-one-step-time" data-i18n="sme.one.s1.time">First conversation</p>
+           </li>
+           <li class="sme-one-step">
+             <span class="sme-one-step-num">02</span>
+             <h3 class="sme-one-step-title" data-i18n="sme.one.s2.title">We provision quietly.</h3>
+             <p class="sme-one-step-desc" data-i18n="sme.one.s2.desc">Numbers, sender IDs, channels and compliance gates set up in your region. Plugged into the workspace and the ERP your team already uses. No rip-and-replace.</p>
+             <p class="sme-one-step-time" data-i18n="sme.one.s2.time">Within days</p>
+           </li>
+           <li class="sme-one-step">
+             <span class="sme-one-step-num">03</span>
+             <h3 class="sme-one-step-title" data-i18n="sme.one.s3.title">Send and sleep.</h3>
+             <p class="sme-one-step-desc" data-i18n="sme.one.s3.desc">Your team sends from the tools they already know. The audit trail follows automatically. Your dedicated engineer's number sits next to your other emergency contacts. Not behind a ticket queue.</p>
+             <p class="sme-one-step-time" data-i18n="sme.one.s3.time">Live</p>
+           </li>
+         </ol>
+       </div>
+
+       <div class="sme-one-cta">
+         <a href="mailto:Salesmarketing@dolphlink.com?subject=DOLPHLINK%20-%20Partner%20with%20us" class="sme-btn sme-btn--primary nav-cta" data-i18n="sme.one.cta.primary">Partner with us</a>
+         <a href="#industries" class="sme-btn sme-btn--ghost" data-i18n="sme.one.cta.secondary">See your fit</a>
+       </div>
+     </div>
+   </div>
+ </section>
+
+ <!-- ============================================================
+      INDUSTRY PLAYS — 15 small-business kinds we already serve.
+      Plain-language rewrite (Roy spec May 2026: 大白话). Each card
+      pairs a real-life photo, a simple sector tag, and one honest
+      sentence about what we do for them.
+      Images: media/sme/industry-{retail,fnb,clinic,ecomm,schools,
+        logistics,salon,hotel,realestate,auto,travel,property,
+        insurance,manufacturing,professional}.jpg
+ ============================================================ -->
+ <section class="sme-section sme-industry-section" id="industries" aria-labelledby="sme-industry-heading">
+   <div class="sme-section-head">
+     <h2 class="sme-section-title" id="sme-industry-heading" data-i18n="sme.ind.title">The small businesses just like yours.</h2>
+     <p class="sme-section-intro" data-i18n="sme.ind.intro">
+       Yours is probably one of these. We've already served the others. Same warmth,
+       same engineer at the other end of the line. No matter which row you live in.
+     </p>
+   </div>
+
+   <div class="sme-industry-grid">
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-retail.webp" alt="Retail store owner serving a customer" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.retail.tag">Shops · multi-store retail</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.retail.title">Win back customers who left without buying.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.retail.desc">When someone walks away from their cart, we send the right nudge on the right channel. Replies come straight to your team. No app-switching.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-fnb.webp" alt="Restaurant staff preparing for the dinner rush" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.fnb.tag">Restaurants · F&amp;B chains</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.fnb.title">Fewer no-shows. Fuller tables.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.fnb.desc">A friendly reminder goes out 24 hours before the booking. One tap to confirm or reschedule. Your floor manager sees the answer before service starts.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-clinic.webp" alt="Medical clinic receptionist at the front desk" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.clinic.tag">Clinics · group practices</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.clinic.title">Appointment reminders patients actually open.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.clinic.desc">Sent on the same carrier-grade lines the banks use, so they land. If patients want to reschedule, the request lands in your front desk's workspace for triage.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-ecomm.webp" alt="E-commerce small business packing parcels" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.ecomm.tag">E-commerce · cross-border sellers</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.ecomm.title">Order updates in your customer's own language.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.ecomm.desc">Shipped, in customs, out for delivery, arrived. Each step goes out on the channel each region prefers, in their own language. You don't translate anything.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-schools.webp" alt="Teacher with students in a small classroom" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.schools.tag">Schools · tuition centres</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.schools.title">Parents and teachers, one inbox.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.schools.desc">Class announcements go out as a group SMS. Individual chats happen on WhatsApp. Teachers reply from the same workspace. Privacy rules already taken care of.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-logistics.webp" alt="Delivery driver loading a small logistics van" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.logistics.tag">Logistics · delivery &amp; fleet</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.logistics.title">Drivers know what to do. Customers know where you are.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.logistics.desc">Each new job lands on the right driver's phone. The customer gets a live ETA. You stop fielding "where's my parcel" calls.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-salon.webp" alt="Hair stylist working on a client at a salon" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.salon.tag">Salons · beauty &amp; wellness</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.salon.title">Stylists stay busy. Chairs stay full.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.salon.desc">Reminders the day before. Re-booking nudges a month later. Last-minute openings sent to clients who said "next time". Your stylists work, you don't chase.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-hotel.webp" alt="Hotel front-desk staff greeting an arriving guest" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.hotel.tag">Hotels · B&amp;Bs · serviced apartments</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.hotel.title">Welcome them before they walk in.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.hotel.desc">A warm welcome message in their language. Check-in instructions. WiFi password. Local tips. Most guest questions answered before they reach the front desk.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-realestate.webp" alt="Real estate agent showing a property to a couple" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.realestate.tag">Real estate · agents &amp; brokers</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.realestate.title">Viewings confirmed. Offers tracked. Buyers don't slip away.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.realestate.desc">Viewing reminders the day before. New-listing alerts to the right buyer. Offer-status updates to the seller. All in one thread, all from your phone.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-auto.webp" alt="Mechanic working on a car at a small garage" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.auto.tag">Auto · garages &amp; workshops</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.auto.title">"Your car is ready" — straight to their phone.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.auto.desc">Service complete? They know in seconds. Quote ready? They approve with one tap. Annual service due? We remind them. You sell the next service before they forget.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-travel.webp" alt="Travel agent helping a customer plan a trip" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.travel.tag">Travel · tour operators &amp; agencies</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.travel.title">Itinerary, weather, pickup time — all before they fly.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.travel.desc">Booking confirmation. Trip reminder. Pickup details. Weather alert if their flight gets bumped. Nobody arrives confused. Nobody rings you at midnight.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-property.webp" alt="Property manager checking on a building" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.property.tag">Property · facilities &amp; rentals</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.property.title">Tenants ask. You fix. They know.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.property.desc">Maintenance requests come in by SMS or WhatsApp. The team gets the work order. Tenant gets the resolved-status update. No tenant left waiting in silence.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-insurance.webp" alt="Insurance agent meeting a client at the office" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.insurance.tag">Insurance · brokers &amp; agencies</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.insurance.title">Renewals on time. Claims tracked. Clients trust you.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.insurance.desc">Renewal reminders go out 30, 14 and 3 days before. Claim status updates as it moves. Policy documents arrive in their inbox. Your clients always know where things stand.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-manufacturing.webp" alt="Worker on a small manufacturing floor" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.manufacturing.tag">Manufacturing · small factories</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.manufacturing.title">Order in. Made. Shipped. Delivered. Customer notified at every step.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.manufacturing.desc">Every stage of the order updates the customer automatically. Late shipment? They hear it from you first, not from a complaint. Trust kept, even when life happens.</p>
+       </div>
+     </article>
+
+     <article class="sme-industry-card">
+       <div class="sme-photo-slot">
+         <img src="../media/sme/industry-professional.webp" alt="A professional services consultant meeting a client" class="sme-photo-img" loading="lazy" decoding="async">
+       </div>
+       <div class="sme-industry-body">
+         <span class="sme-industry-tag" data-i18n="sme.ind.professional.tag">Professional services · law · accounting · consulting</span>
+         <h3 class="sme-industry-title" data-i18n="sme.ind.professional.title">Appointments, document reminders, status updates — all automated.</h3>
+         <p class="sme-industry-desc" data-i18n="sme.ind.professional.desc">Meeting reminders. "We need this signed" nudges. "Your filing is done" confirmations. The admin work that ate your hours, now ready before you walk into the office.</p>
+       </div>
+     </article>
+
+   </div>
+ </section>
+
+</main>
+
+ <footer class="sme-footer" role="contentinfo">
+   <div class="sme-footer-bar">
+     <span data-i18n="footer.copyright">© 2026 DOLPHLINK by Baiwu Technology Group · Singapore</span>
+   </div>
+ </footer>
+
+ <!-- ============================================================
+      SME floating dock — 5 jumps to the high-conversion sections.
+      Hidden under 540px to free the mobile viewport.
+ ============================================================ -->
+ <aside class="sme-dock" aria-label="Quick navigation">
+  <a href="mailto:Salesmarketing@dolphlink.com?subject=DOLPHLINK%20-%20Partner%20with%20us" class="sme-dock-item sme-dock-item--cta nav-cta" aria-label="Partner with us">
+   <span class="sme-dock-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+   <span class="sme-dock-label" data-i18n="sme.dock.partner">Partner</span>
+  </a>
+  <a href="#gap" data-scroll-to="gap" class="sme-dock-item" aria-label="Jump to The Gap">
+   <span class="sme-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span>
+   <span class="sme-dock-label" data-i18n="sme.dock.gap">Gap</span>
+  </a>
+  <a href="#benefits" data-scroll-to="benefits" class="sme-dock-item" aria-label="Jump to what only we do">
+   <span class="sme-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>
+   <span class="sme-dock-label" data-i18n="sme.dock.whyus">Why us</span>
+  </a>
+  <a href="#one-partner" data-scroll-to="one-partner" class="sme-dock-item" aria-label="Jump to the answer">
+   <span class="sme-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+   <span class="sme-dock-label" data-i18n="sme.dock.answer">Answer</span>
+  </a>
+  <a href="#hero" data-scroll-to="hero" class="sme-dock-item" aria-label="Back to top">
+   <span class="sme-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></span>
+   <span class="sme-dock-label" data-i18n="sme.dock.top">Top</span>
+  </a>
+ </aside>
+</body>
+</html>
