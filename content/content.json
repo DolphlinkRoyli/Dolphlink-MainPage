@@ -1,1 +1,704 @@
-{"_comment":"DOLPHLINK content. Edited directly — the CMS in /cms only covers a subset of these keys. Bump CONTENT_VERSION in js/main.js after any change.","nav":{"brandName":"DOLPHLINK","ctaLabel":"Request Briefing","ctaTip":"Tap for briefing","ctaMailto":"Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com","menuItems":[{"label":"HOME","scrollTo":"h-sec","href":"","target":""},{"label":"RELIABILITY","scrollTo":"r-sec","href":"","target":""},{"label":"TRUST LAYER","scrollTo":"a-sec","href":"","target":""}]},"hero":{"eyebrow":"Operated under Singapore's Cybersecurity Act · IM8-Aligned","h1":"Behind Every Great Customer Experience","h1Line1":"Singapore's Sovereign","h1Line2":"Communications Spine.","tagline":"Dolphlink serves as the international headquarters for Baiwu Technology Group, delivering mission-critical infrastructure for global communications at scale. Licensed in Singapore and operating across 200+ countries, the platform powers secure AI orchestration, carrier-grade routing, and in-region data control, purpose-built for governments, financial institutions, and regulated global enterprises that cannot afford communication failures or governance gaps. Every call, message, and AI-driven action is secured through tamper-evident audit trails, end-to-end encryption, and identity-first access control. The result is global reach with enterprise-grade governance, end to end, from the first policy decision to the auditor's signature, every cycle, in every jurisdiction we operate.","taglineSegA":" serves as the international headquarters for ","taglineSegB":", delivering mission-critical infrastructure for global communications at scale.","taglineSegC":"Licensed in Singapore and operating in 200+ countries, the platform enables secure AI orchestration, global routing, and in-region data control for governments and regulated enterprises. Every action is backed by end-to-end encryption, identity-first access, and tamper-evident auditability.","ctaPrimary":"Request Briefing","ctaPrimaryMailto":"Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&cc=Joycetsam@dolphlink.com","ctaSecondary":"See How It Works","ctaSecondaryScrollTo":"hiw","stats":[{"value":"99.999%","label":"Uptime"},{"value":"1,000+","label":"Tier-1 Routes"},{"value":"200+","label":"Countries"}],"triggerLine":"Detects fragmentation events. Triggers orchestration automatically."},"reliability":{"headerTag":"Performance Dashboard","narrative":{"s1Tail":" uptime","s2Lead":"spans ","s2Tail":" countries","s3Lead":"delivers in ","s3Value":"under 10s","s4Lead":"across the ","s4Value":"Full Life Cycle","s5Lead":"producing a verified ","s5Tail":" open rate"},"stats":[{"key":"sla","icon":"icon_6","value":"99.999%","label":"Uptime","desc":"Five-nines reliability across geo-redundant points of presence. Engineered for mission-critical communications with independently verified SLA and quarterly third-party attestation."},{"key":"loc","icon":"icon_5","value":"200+","label":"Countries","desc":"Routes across 1,000+ tier-1 mobile operators worldwide for unmatched reach and carrier-grade message quality across every region, including last-mile coverage in regulated and emerging markets."},{"key":"lat","icon":"icon_10","value":"<10s","label":"Delivery","desc":"SMS reaches recipients in under 10 seconds via tier-1 carrier routes, verified across global benchmarks, audited quarterly, and continuously optimized through real-time route intelligence."},{"key":"ain","icon":"icon_7","value":"360°","label":"Full Life Cycle","desc":"Coverage spans the full operations life cycle, from policy design and migration through day-to-day execution, audit, and renewal, all on the same platform. Routine traffic runs on its own around the clock: choosing the route, switching carriers when one drops, running compliance checks before send, flagging anything that looks off. When a call actually needs human judgement, it goes to a named reviewer on your side with the full context attached. Built-in migration tooling lets you move legacy workflows onto the new platform at your own pace, and every action at every stage leaves an audit trail you can hand straight to a regulator."},{"key":"zer","icon":"icon_15","value":"0-Trust","label":"Trust (TaaS)","desc":"Trust-as-a-Service (TaaS): every API call, every message, every dashboard click is authenticated, authorized, and audited the moment it happens. Zero implicit trust by default. Every action gets verified regardless of where it originates. Identity-first access (RBAC + MFA), mutual TLS in transit, fast-expiring privileges, step-up authentication for sensitive operations. You don't buy security tools. You buy verified actions and a tamper-evident audit trail you can hand to a regulator."},{"key":"open","icon":"icon_3","value":"98%","label":"Open Rate","desc":"98% verified open rate on transactional SMS across global tier-1 operators. Time-sensitive OTPs, fraud alerts, and high-priority notifications reach customers within seconds, and they actually read them. Engineered routing prioritises transactional traffic ahead of marketing batches, with quarterly third-party measurement audits."}]},"loop":{"headerTag":"How it actually works","title":"We close the loop on every customer interaction your business runs. From policy and delivery through governance and audit, then straight back into the next cycle.","intro":"We close the loop on every customer interaction your business runs. From policy and delivery through governance and audit, then straight back into the next cycle.","subnote":"There are two ways to work with us, and both end at the same place: a closed loop you fully own. Model A is the deep partnership, where we run the full lifecycle alongside your team from policy intake through the auditor's signature. Model B is the plug-in path, where you keep the systems you already trust and we add only the AI and governance layers you need. Either way, your data stays where it is, your governance stays in your hands, and what you learn this cycle carries straight into the next.","subnoteLead":"Two ways to work with us. Both end at the same place: a closed loop you fully own.","subnoteA":"The deep partnership. We run the full lifecycle alongside your team, from policy intake through the auditor's signature.","subnoteAHead":"The deep partnership.","subnoteABody":"We run the full lifecycle alongside your team, from policy intake through the auditor's signature.","subnoteB":"The plug-in path. You keep the systems you already trust, and we add only the AI and governance layers you need.","subnoteBHead":"The plug-in path.","subnoteBBody":"You keep the systems you already trust, and we add only the AI and governance layers you need.","subnoteFoot":"Either way, your data stays where it is, your governance stays in your hands, and what you learn this cycle carries straight into the next.","roleHumanLabel":"Your Team","roleAiLabel":"DOLPHLINK","cadence":{"label":"Sprint cadence","full":"Two-week sprints. All four workstreams run in parallel every sprint, from day one. There is no phase to wait for.","plug":"Activate once, then run and pay run continuously side by side. No staged rollout."},"tracks":{"full":{"tag":"Model A. Full Lifecycle Partnership","name":"End-to-end accountability for high-security, large-scale operations.","sub":"Identity-first, zero-trust, audit-sealed."},"plug":{"tag":"Model B. Operate and Optimize","name":"Plug into the loop on the systems you already run.","sub":"Zero friction, predictable, owned."}},"cards":{"a1":{"title":"Design and Authorize","desc":"Before any traffic flows, we sit down with your team and learn how your compliance world actually works. Your regulators. Your data residency rules. Your internal sign-off chain. Nothing goes live until your name is on the paperwork.","metric":"Signed before traffic flows"},"a2":{"title":"Build, Test, Migrate","desc":"We work in two-week sprints with a green test suite at every demo, so you always know exactly where we are. When it's time to migrate, the new system runs alongside your legacy stack and we shift traffic over gradually. Nobody loses a message during cutover.","metric":"No message lost in cutover"},"a3":{"title":"Run at Scale","desc":"Once you're live, your messages move on tier-1 carrier routes in under ten seconds, and we automatically reroute the moment a channel hiccups. Anything outside the policy you defined gets flagged with full context. Your team makes the call. We hold the conversation steady until you do.","metric":"Your team always makes the call"},"a4":{"title":"Audit and Renew","desc":"At the close of every cycle, your compliance lead receives a single tamper-evident package. Every action, every approval, every signature, in whatever format your auditor wants. They co-sign, and what you learned this cycle goes straight into how we run the next one.","metric":"Auditor signs once, learnings carry forward"},"b1":{"title":"Plug In, Don't Rip Out","desc":"You've spent years building the stack you trust, and the last thing you need is another vendor asking you to rip it all out. Our plugins sit on top of what you already run. Your CRM. Your contact centre. Your messaging gateway. We're usually live the same day we sign. No migration, no retraining, no disruption to the team you've built.","metric":"Live the same day, on the systems you already trust"},"b2":{"title":"Govern the AI","desc":"We know what stops AI projects in their tracks. The security review. So we don't ask your team to take a leap of faith. Every plugin runs inside the policy you wrote, with deterministic guardrails that decide what the model can and can't do before it ever speaks to a customer. Your CISO gets the audit trail. Your operations lead gets the speed. Nobody gets a 2 a.m. surprise.","metric":"Speed your ops team wants, controls your CISO can defend"},"b3":{"title":"Own the Loop","desc":"The honest worry every buyer has is this: what happens to my data and my history if this vendor disappears? So we built it the other way around. Your conversations, your logs, your audit trail all stay in your environment. You can see every efficiency gain in real time, you can export everything in one click, and the kill switch is yours. If we ever stop earning the seat at your table, you walk away with the whole loop intact.","metric":"Your data, your logs, your kill switch. Always yours."}},"stages":{"intake":{"title":"Plan and Authorize","humanRole":"Your team reviews the design package against your internal policies, names the escalation owners on your side, and signs the SOW. That is the only place a human signature is mandatory before traffic flows.","aiRole":"We deliver the complete design package in seventy-two hours. Solution architecture and network topology, capacity model with peak-load redundancy, data residency map by region, regulatory compliance matrix against every applicable framework, number-porting plan, integration design for your CRM and core systems, SLA targets, risk register with mitigations, and a rollback plan if anything goes off-script.","metric":"Design package · In-region residency · Signed SLA"},"orchestrate":{"title":"Build, test, then migrate or deploy","humanRole":"Your product owner joins every sprint demo, signs off on the test results, and gives the green light for the migration cutover or the go-live date.","aiRole":"We work in two-week sprints. Each one ends with a demo and a green test suite. When you are migrating from a legacy gateway, we run alongside it and switch traffic over gradually so nothing drops. For new builds we deploy with zero downtime and a one-command rollback if anything looks off.","metric":"Two-week sprints · Tests green · Gradual cutover"},"resolve":{"title":"Operate at scale","humanRole":"When something gets flagged, your team makes the call in one click. Approve it, override it, or pause the program. Every choice is recorded with the person, the time, and the reason.","aiRole":"We carry the traffic on Tier-1 routes, fall back across channels when something fails, and keep cross-channel state coherent. When an event sits outside the agreed policy, we flag it with full context and hold the conversation steady while your operator picks it up.","metric":"Sub-10s · Tier-1 redundancy · Pre-send compliance"},"audit":{"title":"Audit and Seal","humanRole":"Your compliance lead reviews what we put together and digitally signs the bundle. The auditor reads it and accepts.","aiRole":"We compile a tamper-evident bundle of every action, decision and approval in whatever format your auditor wants, whether that is CSV, JSON or a regulator-specific schema, and seal the decision graph ready for handoff.","metric":"Tamper-evident · Regulator-ready · Two-signature seal"}},"plug":{"signup":{"title":"Sign up and activate","humanRole":"Pick a plan in the console, upload your KYC, and accept the compliance terms.","aiRole":"We provision your numbers, API keys, SDKs and dashboards in seconds, with data residency locked to your region automatically.","metric":"Self-serve · Same-day · Region-locked"},"run":{"title":"Send and run","humanRole":"Compose campaigns in the console or call the API directly. Watch delivery come in on the dashboard.","aiRole":"We deliver on Tier-1 routes, fall back across channels when something fails, and run every message through compliance gates before it leaves.","metric":"Sub-10s · Auto-fallback · Pre-send compliance"},"settle":{"title":"Pay and audit","humanRole":"You receive the monthly invoice and audit log. Compliance reports are there to download whenever you need them.","aiRole":"We meter your usage in real time, generate the invoices, and export audit-ready logs in standard formats.","metric":"Real-time billing · Audit-ready logs · One-click export"}},"fabric":{"tag":"Always-on","name":"A self-running loop. Watching, healing and alerting feed each other around the clock, on both tracks. The platform never stops.","healing":{"title":"Self-healing","desc":"The moment monitoring sees trouble, the platform acts. Routes shift. Requests retry with backoff. Load rebalances. No ticket. No morning meeting. Every fix tunes the watch for next time."},"monitoring":{"title":"Monitoring","desc":"Every send leaves a trace. Latency, delivery, fraud signals and route health stream into one plane, second by second. Twenty-four hours a day, seven days a week. The platform never blinks."},"alerting":{"title":"Alerting","desc":"For the rare cases the platform cannot fix on its own, your named operator is paged in seconds. SMS, email or webhook. Day or night. Every page tightens the threshold for next time."}}},"portfolios":{"headerTag":"System Architecture","intro":"Three layers, nine products, one regulator-licensed platform. The AI Governance Layer carries the strategic weight; the Orchestration Layer executes; the Connectivity Infrastructure carries the traffic underneath.","pillars":[{"key":"governance","name":"AI GOVERNANCE LAYER","tagline":"Regulator-Aligned Command + Migration","desc":"In-region control plane for AI-driven enterprise operations and compliance"},{"key":"orchestration","name":"ORCHESTRATION LAYER","tagline":"Multi-Channel + Developer","desc":"Execution layer for programmable enterprise communications and AI workflows"},{"key":"connectivity","name":"CONNECTIVITY INFRASTRUCTURE","tagline":"Tier-1 Carrier Reach","desc":"Global communications backbone across carrier-grade networks"}],"items":[{"key":"sms","pillar":"connectivity","icon":"icon_4","label":"SMS Platform","tagline":"Global SMS API","recommend":"CORE INFRASTRUCTURE","recommendTier":"gold","desc":"One platform, three audiences. Developers integrate via a clean REST API with unique keys and SDKs across Node, Python, Go, Java, and PHP. Marketers publish through Pages (mobile landing pages embedded inside the SMS) and Campaigns for segmented bulk messaging. Customer service teams handle two-way conversations through one unified inbox.\n\nRoutes across 1,000+ tier-1 mobile operator paths deliver SMS to 200+ countries in under 10 seconds. Verified 98% open rate on transactional traffic. Two-way messaging via Short Codes, Long Numbers, and Opt-in keywords drives interactive campaigns at scale.\n\nEnd-to-end TLS 1.3 encryption with priority routing for OTP and time-sensitive alerts. 24/7 NOC monitoring with automatic carrier failover keeps every message on the fastest available path."},{"key":"voice","pillar":"connectivity","icon":"icon_13","label":"Voice & SIP","tagline":"Enterprise Voice","recommend":"DEPLOYED","recommendTier":"blue","desc":"Geo-redundant SIP trunking with text-to-speech, audio notifications, call forwarding, and DTMF input forms a carrier-grade backbone for any voice workload.\n\nDetailed per-call insights power fraud monitoring and anti-fraud controls. Engineered for contact centers, SMBs, and IP PBX resellers that demand uptime and accountability.\n\nWebRTC bridge for browser-based agent consoles plus full G.711, G.729, and Opus codec support. Tamper-proof call recording, real-time jitter and packet-loss metrics, and one-click DID porting round out the stack."},{"key":"numbers","pillar":"connectivity","icon":"icon_14","label":"Phone Numbers","tagline":"Global DID Numbers","recommend":"DEPLOYED","recommendTier":"blue","desc":"Instant access to local, national, mobile, and toll-free numbers across 100+ countries. Provision a number in one region and another in the next within the same console session.\n\nAlphanumeric Sender IDs, Short Codes, and Hosted Numbers (SMS and Voice on existing landlines without switching carriers) plug into your current operations. Built-in Compliance Intelligence automatically evaluates each region's regulatory requirements.\n\nNumber porting in under 48 hours where supported, plus vanity reservation and instant provisioning. A centralized inventory dashboard tracks usage, billing, and compliance status across every territory in one view."},{"key":"touch","pillar":"orchestration","icon":"icon_11","label":"Dolphlink Touch","tagline":"Multi-Channel Hub","recommend":"DEPLOYED","recommendTier":"blue","desc":"A unified business messaging hub. One platform for SMS, WhatsApp, RCS, Email, and emerging channels: every conversation in one place, no matter where it started.\n\nMarketing-friendly templates, a drag-and-drop campaign builder, and intelligent automatic fallback that switches channels if delivery fails. Built for revenue, marketing, and customer engagement teams that ship fast.\n\nNative WhatsApp Business Platform integration with template approval workflow, dynamic segment targeting from behavior signals, and A/B testing across channels. Conversion analytics measure ROI end-to-end."},{"key":"api","pillar":"orchestration","icon":"icon_8","label":"Dolphlink One-API","tagline":"Developer Platform","recommend":"MISSION-READY","recommendTier":"blue","desc":"One programmable API across SMS, voice, WhatsApp, Email, and emerging channels. Send a message or place a call with a single call regardless of channel.\n\nDrop-in SDK with intelligent automatic fallback that switches channels when primary delivery fails. Engineered for developers building mission-critical workflows where every message must land.\n\nFive language SDKs covering Node, Python, Go, Java, and PHP, an interactive sandbox with live test numbers, and signed webhook delivery with automatic retry. Comprehensive logs and request replay turn days of debugging into minutes."},{"key":"smart","pillar":"orchestration","icon":"icon_12","label":"Dolphlink Smart","tagline":"AI Chatbot Builder","recommend":"ACTIVE","recommendTier":"green","desc":"A no-code conversation builder for human-in-the-loop AI workflows. Drag, configure, and ship without ever touching a deployment pipeline.\n\nBots handle the routine, human agents handle the nuance, and seamless handoffs keep every conversation continuous. Context-aware understanding from your own data, with ISO 27001, GDPR, and RBAC built in for regulated environments.\n\nKnowledge base ingestion from PDF, web, and database sources, fine-tuning for domain terminology, and multilingual conversation across 40+ languages. Sentiment detection escalates sensitive issues to human agents in seconds."},{"key":"nexus","pillar":"governance","icon":"icon_1","label":"Dolphlink Nexus","tagline":"AI Agent Orchestration","recommend":"ACTIVE","recommendTier":"green","desc":"The jurisdiction-aligned command center for agent orchestration. Unify every bot, RPA flow, custom model, and human reviewer into one auditable control plane.\n\nEngineered for governments and regulated enterprises with built-in migration support, full data residency, RBAC, and activity logs. Every action is traceable, every dataset stays where regulation demands.\n\nA visual workflow designer connects any LLM, RPA tool, or human reviewer with conditional logic and approval gates. Tamper-evident audit trails capture every decision and data touch for regulator review, ready out of the box."},{"key":"console","pillar":"governance","icon":"icon_2","label":"Operations Hub","tagline":"Ops Analytics","recommend":"DEPLOYED","recommendTier":"blue","desc":"The Messaging Gateway centralizes API codes and key management. One dashboard for every credential, every channel, every team.\n\nMessage Log delivers full transparency on every message: status, content, and real-time costs. Aggregated insights and real-time trends optimize every communication strategy as data flows in.\n\nThreshold-based alerts notify you when delivery rates drop or costs spike unexpectedly. Cost forecasting projects monthly spend by channel and region, while CSV and Webhook exports feed BI, finance, and compliance pipelines."},{"key":"custom","pillar":"governance","icon":"icon_9","label":"AI-Digital Solutions","tagline":"Migration Services","recommend":"MISSION-READY","recommendTier":"blue","desc":"Tailored AI-Digital migration services for existing infrastructure projects. We meet your stack where it lives: on-prem, hybrid, or sovereign cloud.\n\nWe engineer bespoke integrations between your legacy systems and DOLPHLINK's communications, AI orchestration, and compliance layers, delivered on your timeline, your data residency, and your governance requirements.\n\nA phased rollout begins with a four-week discovery and architecture workshop, followed by parallel-run pilots and gradual cutover. A dedicated solution architect, 24/7 priority support, and custom SLA terms protect mission-critical workflows throughout."}]},"smeBridge":{"eyebrow":"SME · Best-Fit Plans","title":"Built for smaller teams.","intro":"Same enterprise stack, right-sized for SME budgets and speed. Three ready-to-deploy service tracks. Pick a lane and we get you live in days, not quarters.","cta":"Explore","cloud":{"tag":"Cloud Services","desc":"SME-tier regulator-aligned cloud hosting, region-aware data residency, and pay-as-you-grow capacity. No long contracts, no rip-and-replace."},"platform":{"tag":"Platform Services","desc":"Drop-in messaging hub, programmable APIs, and a no-code chatbot builder. Billed per message, scaled by usage. Live in 10 minutes."},"connectivity":{"tag":"Connectivity Services","desc":"SMS, voice, and WhatsApp on tier-1 carrier routes at SME-tier prices. No volume floor, no hidden setup fees, no enterprise overhead."}},"audit":{"title":"The Trust Layer","items":[{"title":"Compliance Certified","desc":"ISO 27001, GDPR, and SOC 2 certified. PDPA Singapore, MAS TRM, IM8, and regional regulatory frameworks supported across ASEAN, EMEA, and the Americas. Independent third-party audits annually, attestation reports available under NDA."},{"title":"Data Sovereignty","desc":"Singapore-rooted infrastructure with regional data residency spanning ASEAN, EMEA, and the Americas. Every customer record stays in the precise jurisdiction your regulator demands. Quarterly third-party attestation with full chain-of-custody."},{"title":"Verified Reliability","desc":"99.999% verified uptime across geo-redundant points of presence. TLS 1.3 in transit, AES-256 at rest, with quarterly third-party penetration testing."},{"title":"Access Governance","desc":"Role-based access control (RBAC) across the entire platform. Fine-grained permissions for every team, tenant, and workflow, with detailed activity logs and SSO integration built in."}]},"industries":{"headerTag":"Industries We Serve","intro":"Built for regulated, mission-critical communications across nine verticals where DOLPHLINK's in-region architecture and agent orchestration deliver measurable advantage.","colSector":"Sector","colCapability":"What we deliver","colCompliance":"Compliance","primaryLabel":"Primary Verticals","secondaryLabel":"Also Serving","items":[{"key":"government","name":"Government & Public Sector","color":"#1F2937","desc":"Citizen alerts, public-service notifications, and emergency broadcasts on jurisdiction-licensed infrastructure. IM8-aligned, audit-ready, and deployable across multiple regulator-licensed jurisdictions in ASEAN, EMEA, and the Americas.","chips":["IM8","Sovereign Cloud","Multi-Jurisdiction"]},{"key":"banking","name":"Banking & FinTech","color":"#0059B3","desc":"Secure 2FA/OTP, real-time fraud alerts, statement delivery, and automated repayment reminders via bulk voice campaigns.","chips":["MAS TRM","PDPA","PCI-DSS"]},{"key":"insurance","name":"Insurance","color":"#7C3AED","desc":"Policy renewal reminders, claim-status notifications, and KYC verification flows. Tamper-evident audit trails for every regulated touchpoint.","chips":["PDPA","GDPR","ISO 27001"]},{"key":"healthcare","name":"Healthcare","color":"#10B981","desc":"Automated appointment reminders and AI chatbot triage cut no-shows. Patient privacy preserved with in-region data residency.","chips":["PDPA","HIPAA-Ready","ISO 27001"]},{"key":"logistics","name":"Logistics","color":"#06B6D4","desc":"Unified inbox across WhatsApp, Email, and Chat with automated tracking notifications. Driver dispatch via voice IVR and SMS confirmations.","chips":["Omnichannel","GDPR"]},{"key":"retail","name":"Retail & E-Commerce","color":"#EC4899","desc":"Personalised engagement from first-party data, real-time order updates, abandoned-cart recovery, and Pages-embedded landings inside SMS.","chips":["GDPR","PDPA"]},{"key":"education","name":"Education","color":"#F59E0B","desc":"Enrolment confirmations, course reminders, and parent-school chat in one inbox. Multilingual support across regional language pairs.","chips":["PDPA","Multi-Lingual"]},{"key":"entertainment","name":"Entertainment & Gaming","color":"#F97316","desc":"International SMS and Voice verification for overseas game publishers and social apps. Country-aware routing handles emerging-market last mile.","chips":["200+ Countries","GDPR"]},{"key":"hospitality","name":"Hospitality","color":"#14B8A6","desc":"Guest engagement on every preferred channel with no-code self-service bots. Pre-arrival, in-stay, and post-stay flows automated end to end.","chips":["No-Code Bots","Multi-Lingual"]}]},"departments":{"headerTag":"Departments We Empower","intro":"Inside every customer organisation, DOLPHLINK serves four distinct teams with shared infrastructure, from front-line operations to bespoke AI-digital builds.","introLead":"Inside every customer organisation, ","introTail":" serves four distinct teams on shared infrastructure, from front-line operations to bespoke AI-digital builds.","personas":{"support":{"quote":"I need to know which tickets need a human in 5 seconds, not 5 minutes.","attr":"Customer Service Lead · Bank"},"growth":{"quote":"I want to A/B test today, not next sprint.","attr":"Marketing Director · Retail"},"ops":{"quote":"I shouldn't have to wake up for a route failover.","attr":"SRE Lead · Insurance"},"innovation":{"quote":"We can't rip-and-replace. It needs to live alongside what we already trust.","attr":"CTO · Government"}},"items":[{"key":"support","name":"Customer Service","desc":"Multi-channel support across every digital touchpoint with AI-Human handoff. Every ticket carries a full audit trail, sentiment scoring, and SLA enforcement. Tier-1 to Tier-3 escalation flows configurable per region."},{"key":"growth","name":"Marketing & Sales","desc":"Convert conversations into revenue across channels. A/B test SMS, WhatsApp, and Email campaigns, segment by behaviour, and measure end-to-end ROI in one console. Pipeline attribution and lifecycle automation built in."},{"key":"ops","name":"IT & Operations","desc":"Streamlined Conversational Commerce on enterprise-grade infrastructure. A single programmable API endpoint replaces dozens of legacy gateway integrations, with priority routing, automatic carrier failover, and 24/7 NOC monitoring."},{"key":"innovation","name":"Digital Transformation","desc":"Bespoke AI-digital projects from greenfield architecture to legacy migration. Solution architects deliver integrations on your stack, timeline, and governance requirements."}]},"charts":{"mapLabel":"Global Connectivity Network","locations":[{"name":"SINGAPORE (Global HQ)","value":[103.8513,1.283],"isHQ":true},{"name":"BEIJING","value":[116.4074,39.9042],"isHQ":false},{"name":"SHANGHAI","value":[121.4737,31.2304],"isHQ":false},{"name":"TOKYO","value":[139.6917,35.6895],"isHQ":false},{"name":"MUMBAI","value":[72.8777,19.076],"isHQ":false},{"name":"SYDNEY","value":[151.2093,-33.8688],"isHQ":false},{"name":"AUCKLAND","value":[174.7633,-36.8485],"isHQ":false},{"name":"FRANKFURT","value":[8.6821,50.1109],"isHQ":false},{"name":"LONDON","value":[-0.1278,51.5074],"isHQ":false},{"name":"SILICON VALLEY","value":[-122.0575,37.3875],"isHQ":false},{"name":"SÃO PAULO","value":[-46.6333,-23.5505],"isHQ":false}]},"footer":{"brandTitle":"DOLPHLINK","brandTagline":"Singapore-headquartered communications spine and migration partner by Baiwu Technology Group. Connecting governments and global enterprises across 200+ countries with mission-critical reliability.","missionLabel":"OUR DOCTRINE","missionText":"Standardize. Secure. Sustain. Engineering communication and orchestration for institutions where reliability is non-negotiable. Every release is audited, every byte is governed, every conversation is accountable.","locationLabel":"HEADQUARTERS","locationLine1":"9 Raffles Place #29-04","locationLine2":"Republic Plaza, Singapore 048619","locationHours":"Weekdays 09:00 – 18:00 SGT","locationMapHref":"https://maps.google.com/?q=9+Raffles+Place+%2329-04+Republic+Plaza+Singapore+048619","locationMapLabel":"View on Google Maps ↗","connectivityLabel":"ENGAGE","salesEmail":"Salesmarketing@dolphlink.com","salesMailto":"Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com","directorEmail":"Joycetsam@dolphlink.com","directorMailto":"Joycetsam@dolphlink.com","directorLabel":"Business Director","officialSiteLabel":"Baiwu Group","officialSiteHref":"https://www.baiwutong.com","installLabel":"Install App","mapHeading":"Global Connectivity Network","mapIntro":"Strategic operational hubs anchoring DOLPHLINK across Asia-Pacific, Europe, the Americas, and Oceania.","vcardEyebrow":"Talk to Sales","vcardHeading":"Book a Briefing","vcardLine1":"Sales · Partnerships · Procurement","vcardLine2":"Scan the QR code to save our contact card and schedule a 30-minute briefing with the team.","vcardScanLabel":"Scan to Save","socialLabel":"Connect","social":[{"name":"LinkedIn","href":"https://www.linkedin.com/","icon":"linkedin"},{"name":"Email Sales","href":"mailto:Salesmarketing@dolphlink.com","icon":"mail"},{"name":"Schedule a Call","href":"mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call","icon":"calendar"}],"legalLinks":[{"label":"Privacy Policy","href":"legal/privacy/"},{"label":"Terms and Conditions","href":"legal/terms/"}],"copyright":"© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED."}}
+{
+  "_comment": "DOLPHLINK content. Edited directly — the CMS in /cms only covers a subset of these keys. Bump CONTENT_VERSION in js/main.js after any change.",
+  "nav": {
+    "brandName": "DOLPHLINK",
+    "ctaLabel": "Request Briefing",
+    "ctaTip": "Tap for briefing",
+    "ctaMailto": "Salesmarketing@dolphlink.com?subject=Briefing Request&cc=Joycetsam@dolphlink.com",
+    "menuItems": [
+      {
+        "label": "HOME",
+        "scrollTo": "h-sec",
+        "href": "",
+        "target": ""
+      },
+      {
+        "label": "RELIABILITY",
+        "scrollTo": "r-sec",
+        "href": "",
+        "target": ""
+      },
+      {
+        "label": "TRUST LAYER",
+        "scrollTo": "a-sec",
+        "href": "",
+        "target": ""
+      }
+    ]
+  },
+  "hero": {
+    "eyebrow": "Operated under Singapore's Cybersecurity Act · IM8-Aligned",
+    "h1": "Behind Every Great Customer Experience",
+    "h1Line1": "Singapore's Sovereign",
+    "h1Line2": "Communications Spine.",
+    "tagline": "Royal LINK -- Dolphlink serves as the international headquarters for Baiwu Technology Group, delivering mission-critical infrastructure for global communications at scale. Licensed in Singapore and operating across 200+ countries, the platform powers secure AI orchestration, carrier-grade routing, and in-region data control, purpose-built for governments, financial institutions, and regulated global enterprises that cannot afford communication failures or governance gaps. Every call, message, and AI-driven action is secured through tamper-evident audit trails, end-to-end encryption, and identity-first access control. The result is global reach with enterprise-grade governance, end to end, from the first policy decision to the auditor's signature, every cycle, in every jurisdiction we operate.",
+    "taglineSegA": " serves as the international headquarters for ",
+    "taglineSegB": ", delivering mission-critical infrastructure for global communications at scale.",
+    "taglineSegC": "Licensed in Singapore and operating in 200+ countries, the platform enables secure AI orchestration, global routing, and in-region data control for governments and regulated enterprises. Every action is backed by end-to-end encryption, identity-first access, and tamper-evident auditability.",
+    "ctaPrimary": "Request Briefing",
+    "ctaPrimaryMailto": "Salesmarketing@dolphlink.com?subject=Briefing%20Request%20%E2%80%94%20DOLPHLINK%20CPaaS&cc=Joycetsam@dolphlink.com",
+    "ctaSecondary": "See How It Works",
+    "ctaSecondaryScrollTo": "hiw",
+    "stats": [
+      {
+        "value": "99.999%",
+        "label": "Uptime"
+      },
+      {
+        "value": "1,000+",
+        "label": "Tier-1 Routes"
+      },
+      {
+        "value": "200+",
+        "label": "Countries"
+      }
+    ],
+    "triggerLine": "Detects fragmentation events. Triggers orchestration automatically."
+  },
+  "reliability": {
+    "headerTag": "Performance Dashboard",
+    "narrative": {
+      "s1Tail": " uptime",
+      "s2Lead": "spans ",
+      "s2Tail": " countries",
+      "s3Lead": "delivers in ",
+      "s3Value": "under 10s",
+      "s4Lead": "across the ",
+      "s4Value": "Full Life Cycle",
+      "s5Lead": "producing a verified ",
+      "s5Tail": " open rate"
+    },
+    "stats": [
+      {
+        "key": "sla",
+        "icon": "icon_6",
+        "value": "99.999%",
+        "label": "Uptime",
+        "desc": "Five-nines reliability across geo-redundant points of presence. Engineered for mission-critical communications with independently verified SLA and quarterly third-party attestation."
+      },
+      {
+        "key": "loc",
+        "icon": "icon_5",
+        "value": "200+",
+        "label": "Countries",
+        "desc": "Routes across 1,000+ tier-1 mobile operators worldwide for unmatched reach and carrier-grade message quality across every region, including last-mile coverage in regulated and emerging markets."
+      },
+      {
+        "key": "lat",
+        "icon": "icon_10",
+        "value": "<10s",
+        "label": "Delivery",
+        "desc": "SMS reaches recipients in under 10 seconds via tier-1 carrier routes, verified across global benchmarks, audited quarterly, and continuously optimized through real-time route intelligence."
+      },
+      {
+        "key": "ain",
+        "icon": "icon_7",
+        "value": "360°",
+        "label": "Full Life Cycle",
+        "desc": "Coverage spans the full operations life cycle, from policy design and migration through day-to-day execution, audit, and renewal, all on the same platform. Routine traffic runs on its own around the clock: choosing the route, switching carriers when one drops, running compliance checks before send, flagging anything that looks off. When a call actually needs human judgement, it goes to a named reviewer on your side with the full context attached. Built-in migration tooling lets you move legacy workflows onto the new platform at your own pace, and every action at every stage leaves an audit trail you can hand straight to a regulator."
+      },
+      {
+        "key": "zer",
+        "icon": "icon_15",
+        "value": "0-Trust",
+        "label": "Trust (TaaS)",
+        "desc": "Trust-as-a-Service (TaaS): every API call, every message, every dashboard click is authenticated, authorized, and audited the moment it happens. Zero implicit trust by default. Every action gets verified regardless of where it originates. Identity-first access (RBAC + MFA), mutual TLS in transit, fast-expiring privileges, step-up authentication for sensitive operations. You don't buy security tools. You buy verified actions and a tamper-evident audit trail you can hand to a regulator."
+      },
+      {
+        "key": "open",
+        "icon": "icon_3",
+        "value": "98%",
+        "label": "Open Rate",
+        "desc": "98% verified open rate on transactional SMS across global tier-1 operators. Time-sensitive OTPs, fraud alerts, and high-priority notifications reach customers within seconds, and they actually read them. Engineered routing prioritises transactional traffic ahead of marketing batches, with quarterly third-party measurement audits."
+      }
+    ]
+  },
+  "loop": {
+    "headerTag": "How it actually works",
+    "title": "We close the loop on every customer interaction your business runs. From policy and delivery through governance and audit, then straight back into the next cycle.",
+    "intro": "We close the loop on every customer interaction your business runs. From policy and delivery through governance and audit, then straight back into the next cycle.",
+    "subnote": "There are two ways to work with us, and both end at the same place: a closed loop you fully own. Model A is the deep partnership, where we run the full lifecycle alongside your team from policy intake through the auditor's signature. Model B is the plug-in path, where you keep the systems you already trust and we add only the AI and governance layers you need. Either way, your data stays where it is, your governance stays in your hands, and what you learn this cycle carries straight into the next.",
+    "subnoteLead": "Two ways to work with us. Both end at the same place: a closed loop you fully own.",
+    "subnoteA": "The deep partnership. We run the full lifecycle alongside your team, from policy intake through the auditor's signature.",
+    "subnoteAHead": "The deep partnership.",
+    "subnoteABody": "We run the full lifecycle alongside your team, from policy intake through the auditor's signature.",
+    "subnoteB": "The plug-in path. You keep the systems you already trust, and we add only the AI and governance layers you need.",
+    "subnoteBHead": "The plug-in path.",
+    "subnoteBBody": "You keep the systems you already trust, and we add only the AI and governance layers you need.",
+    "subnoteFoot": "Either way, your data stays where it is, your governance stays in your hands, and what you learn this cycle carries straight into the next.",
+    "roleHumanLabel": "Your Team",
+    "roleAiLabel": "DOLPHLINK",
+    "cadence": {
+      "label": "Sprint cadence",
+      "full": "Two-week sprints. All four workstreams run in parallel every sprint, from day one. There is no phase to wait for.",
+      "plug": "Activate once, then run and pay run continuously side by side. No staged rollout."
+    },
+    "tracks": {
+      "full": {
+        "tag": "Model A. Full Lifecycle Partnership",
+        "name": "End-to-end accountability for high-security, large-scale operations.",
+        "sub": "Identity-first, zero-trust, audit-sealed."
+      },
+      "plug": {
+        "tag": "Model B. Operate and Optimize",
+        "name": "Plug into the loop on the systems you already run.",
+        "sub": "Zero friction, predictable, owned."
+      }
+    },
+    "cards": {
+      "a1": {
+        "title": "Design and Authorize",
+        "desc": "Before any traffic flows, we sit down with your team and learn how your compliance world actually works. Your regulators. Your data residency rules. Your internal sign-off chain. Nothing goes live until your name is on the paperwork.",
+        "metric": "Signed before traffic flows"
+      },
+      "a2": {
+        "title": "Build, Test, Migrate",
+        "desc": "We work in two-week sprints with a green test suite at every demo, so you always know exactly where we are. When it's time to migrate, the new system runs alongside your legacy stack and we shift traffic over gradually. Nobody loses a message during cutover.",
+        "metric": "No message lost in cutover"
+      },
+      "a3": {
+        "title": "Run at Scale",
+        "desc": "Once you're live, your messages move on tier-1 carrier routes in under ten seconds, and we automatically reroute the moment a channel hiccups. Anything outside the policy you defined gets flagged with full context. Your team makes the call. We hold the conversation steady until you do.",
+        "metric": "Your team always makes the call"
+      },
+      "a4": {
+        "title": "Audit and Renew",
+        "desc": "At the close of every cycle, your compliance lead receives a single tamper-evident package. Every action, every approval, every signature, in whatever format your auditor wants. They co-sign, and what you learned this cycle goes straight into how we run the next one.",
+        "metric": "Auditor signs once, learnings carry forward"
+      },
+      "b1": {
+        "title": "Plug In, Don't Rip Out",
+        "desc": "You've spent years building the stack you trust, and the last thing you need is another vendor asking you to rip it all out. Our plugins sit on top of what you already run. Your CRM. Your contact centre. Your messaging gateway. We're usually live the same day we sign. No migration, no retraining, no disruption to the team you've built.",
+        "metric": "Live the same day, on the systems you already trust"
+      },
+      "b2": {
+        "title": "Govern the AI",
+        "desc": "We know what stops AI projects in their tracks. The security review. So we don't ask your team to take a leap of faith. Every plugin runs inside the policy you wrote, with deterministic guardrails that decide what the model can and can't do before it ever speaks to a customer. Your CISO gets the audit trail. Your operations lead gets the speed. Nobody gets a 2 a.m. surprise.",
+        "metric": "Speed your ops team wants, controls your CISO can defend"
+      },
+      "b3": {
+        "title": "Own the Loop",
+        "desc": "The honest worry every buyer has is this: what happens to my data and my history if this vendor disappears? So we built it the other way around. Your conversations, your logs, your audit trail all stay in your environment. You can see every efficiency gain in real time, you can export everything in one click, and the kill switch is yours. If we ever stop earning the seat at your table, you walk away with the whole loop intact.",
+        "metric": "Your data, your logs, your kill switch. Always yours."
+      }
+    },
+    "stages": {
+      "intake": {
+        "title": "Plan and Authorize",
+        "humanRole": "Your team reviews the design package against your internal policies, names the escalation owners on your side, and signs the SOW. That is the only place a human signature is mandatory before traffic flows.",
+        "aiRole": "We deliver the complete design package in seventy-two hours. Solution architecture and network topology, capacity model with peak-load redundancy, data residency map by region, regulatory compliance matrix against every applicable framework, number-porting plan, integration design for your CRM and core systems, SLA targets, risk register with mitigations, and a rollback plan if anything goes off-script.",
+        "metric": "Design package · In-region residency · Signed SLA"
+      },
+      "orchestrate": {
+        "title": "Build, test, then migrate or deploy",
+        "humanRole": "Your product owner joins every sprint demo, signs off on the test results, and gives the green light for the migration cutover or the go-live date.",
+        "aiRole": "We work in two-week sprints. Each one ends with a demo and a green test suite. When you are migrating from a legacy gateway, we run alongside it and switch traffic over gradually so nothing drops. For new builds we deploy with zero downtime and a one-command rollback if anything looks off.",
+        "metric": "Two-week sprints · Tests green · Gradual cutover"
+      },
+      "resolve": {
+        "title": "Operate at scale",
+        "humanRole": "When something gets flagged, your team makes the call in one click. Approve it, override it, or pause the program. Every choice is recorded with the person, the time, and the reason.",
+        "aiRole": "We carry the traffic on Tier-1 routes, fall back across channels when something fails, and keep cross-channel state coherent. When an event sits outside the agreed policy, we flag it with full context and hold the conversation steady while your operator picks it up.",
+        "metric": "Sub-10s · Tier-1 redundancy · Pre-send compliance"
+      },
+      "audit": {
+        "title": "Audit and Seal",
+        "humanRole": "Your compliance lead reviews what we put together and digitally signs the bundle. The auditor reads it and accepts.",
+        "aiRole": "We compile a tamper-evident bundle of every action, decision and approval in whatever format your auditor wants, whether that is CSV, JSON or a regulator-specific schema, and seal the decision graph ready for handoff.",
+        "metric": "Tamper-evident · Regulator-ready · Two-signature seal"
+      }
+    },
+    "plug": {
+      "signup": {
+        "title": "Sign up and activate",
+        "humanRole": "Pick a plan in the console, upload your KYC, and accept the compliance terms.",
+        "aiRole": "We provision your numbers, API keys, SDKs and dashboards in seconds, with data residency locked to your region automatically.",
+        "metric": "Self-serve · Same-day · Region-locked"
+      },
+      "run": {
+        "title": "Send and run",
+        "humanRole": "Compose campaigns in the console or call the API directly. Watch delivery come in on the dashboard.",
+        "aiRole": "We deliver on Tier-1 routes, fall back across channels when something fails, and run every message through compliance gates before it leaves.",
+        "metric": "Sub-10s · Auto-fallback · Pre-send compliance"
+      },
+      "settle": {
+        "title": "Pay and audit",
+        "humanRole": "You receive the monthly invoice and audit log. Compliance reports are there to download whenever you need them.",
+        "aiRole": "We meter your usage in real time, generate the invoices, and export audit-ready logs in standard formats.",
+        "metric": "Real-time billing · Audit-ready logs · One-click export"
+      }
+    },
+    "fabric": {
+      "tag": "Always-on",
+      "name": "A self-running loop. Watching, healing and alerting feed each other around the clock, on both tracks. The platform never stops.",
+      "healing": {
+        "title": "Self-healing",
+        "desc": "The moment monitoring sees trouble, the platform acts. Routes shift. Requests retry with backoff. Load rebalances. No ticket. No morning meeting. Every fix tunes the watch for next time."
+      },
+      "monitoring": {
+        "title": "Monitoring",
+        "desc": "Every send leaves a trace. Latency, delivery, fraud signals and route health stream into one plane, second by second. Twenty-four hours a day, seven days a week. The platform never blinks."
+      },
+      "alerting": {
+        "title": "Alerting",
+        "desc": "For the rare cases the platform cannot fix on its own, your named operator is paged in seconds. SMS, email or webhook. Day or night. Every page tightens the threshold for next time."
+      }
+    }
+  },
+  "portfolios": {
+    "headerTag": "System Architecture",
+    "intro": "Three layers, nine products, one regulator-licensed platform. The AI Governance Layer carries the strategic weight; the Orchestration Layer executes; the Connectivity Infrastructure carries the traffic underneath.",
+    "pillars": [
+      {
+        "key": "governance",
+        "name": "AI GOVERNANCE LAYER",
+        "tagline": "Regulator-Aligned Command + Migration",
+        "desc": "In-region control plane for AI-driven enterprise operations and compliance"
+      },
+      {
+        "key": "orchestration",
+        "name": "ORCHESTRATION LAYER",
+        "tagline": "Multi-Channel + Developer",
+        "desc": "Execution layer for programmable enterprise communications and AI workflows"
+      },
+      {
+        "key": "connectivity",
+        "name": "CONNECTIVITY INFRASTRUCTURE",
+        "tagline": "Tier-1 Carrier Reach",
+        "desc": "Global communications backbone across carrier-grade networks"
+      }
+    ],
+    "items": [
+      {
+        "key": "sms",
+        "pillar": "connectivity",
+        "icon": "icon_4",
+        "label": "SMS Platform",
+        "tagline": "Global SMS API",
+        "recommend": "CORE INFRASTRUCTURE",
+        "recommendTier": "gold",
+        "desc": "One platform, three audiences. Developers integrate via a clean REST API with unique keys and SDKs across Node, Python, Go, Java, and PHP. Marketers publish through Pages (mobile landing pages embedded inside the SMS) and Campaigns for segmented bulk messaging. Customer service teams handle two-way conversations through one unified inbox.\n\nRoutes across 1,000+ tier-1 mobile operator paths deliver SMS to 200+ countries in under 10 seconds. Verified 98% open rate on transactional traffic. Two-way messaging via Short Codes, Long Numbers, and Opt-in keywords drives interactive campaigns at scale.\n\nEnd-to-end TLS 1.3 encryption with priority routing for OTP and time-sensitive alerts. 24/7 NOC monitoring with automatic carrier failover keeps every message on the fastest available path."
+      },
+      {
+        "key": "voice",
+        "pillar": "connectivity",
+        "icon": "icon_13",
+        "label": "Voice & SIP",
+        "tagline": "Enterprise Voice",
+        "recommend": "DEPLOYED",
+        "recommendTier": "blue",
+        "desc": "Geo-redundant SIP trunking with text-to-speech, audio notifications, call forwarding, and DTMF input forms a carrier-grade backbone for any voice workload.\n\nDetailed per-call insights power fraud monitoring and anti-fraud controls. Engineered for contact centers, SMBs, and IP PBX resellers that demand uptime and accountability.\n\nWebRTC bridge for browser-based agent consoles plus full G.711, G.729, and Opus codec support. Tamper-proof call recording, real-time jitter and packet-loss metrics, and one-click DID porting round out the stack."
+      },
+      {
+        "key": "numbers",
+        "pillar": "connectivity",
+        "icon": "icon_14",
+        "label": "Phone Numbers",
+        "tagline": "Global DID Numbers",
+        "recommend": "DEPLOYED",
+        "recommendTier": "blue",
+        "desc": "Instant access to local, national, mobile, and toll-free numbers across 100+ countries. Provision a number in one region and another in the next within the same console session.\n\nAlphanumeric Sender IDs, Short Codes, and Hosted Numbers (SMS and Voice on existing landlines without switching carriers) plug into your current operations. Built-in Compliance Intelligence automatically evaluates each region's regulatory requirements.\n\nNumber porting in under 48 hours where supported, plus vanity reservation and instant provisioning. A centralized inventory dashboard tracks usage, billing, and compliance status across every territory in one view."
+      },
+      {
+        "key": "touch",
+        "pillar": "orchestration",
+        "icon": "icon_11",
+        "label": "Dolphlink Touch",
+        "tagline": "Multi-Channel Hub",
+        "recommend": "DEPLOYED",
+        "recommendTier": "blue",
+        "desc": "A unified business messaging hub. One platform for SMS, WhatsApp, RCS, Email, and emerging channels: every conversation in one place, no matter where it started.\n\nMarketing-friendly templates, a drag-and-drop campaign builder, and intelligent automatic fallback that switches channels if delivery fails. Built for revenue, marketing, and customer engagement teams that ship fast.\n\nNative WhatsApp Business Platform integration with template approval workflow, dynamic segment targeting from behavior signals, and A/B testing across channels. Conversion analytics measure ROI end-to-end."
+      },
+      {
+        "key": "api",
+        "pillar": "orchestration",
+        "icon": "icon_8",
+        "label": "Dolphlink One-API",
+        "tagline": "Developer Platform",
+        "recommend": "MISSION-READY",
+        "recommendTier": "blue",
+        "desc": "One programmable API across SMS, voice, WhatsApp, Email, and emerging channels. Send a message or place a call with a single call regardless of channel.\n\nDrop-in SDK with intelligent automatic fallback that switches channels when primary delivery fails. Engineered for developers building mission-critical workflows where every message must land.\n\nFive language SDKs covering Node, Python, Go, Java, and PHP, an interactive sandbox with live test numbers, and signed webhook delivery with automatic retry. Comprehensive logs and request replay turn days of debugging into minutes."
+      },
+      {
+        "key": "smart",
+        "pillar": "orchestration",
+        "icon": "icon_12",
+        "label": "Dolphlink Smart",
+        "tagline": "AI Chatbot Builder",
+        "recommend": "ACTIVE",
+        "recommendTier": "green",
+        "desc": "A no-code conversation builder for human-in-the-loop AI workflows. Drag, configure, and ship without ever touching a deployment pipeline.\n\nBots handle the routine, human agents handle the nuance, and seamless handoffs keep every conversation continuous. Context-aware understanding from your own data, with ISO 27001, GDPR, and RBAC built in for regulated environments.\n\nKnowledge base ingestion from PDF, web, and database sources, fine-tuning for domain terminology, and multilingual conversation across 40+ languages. Sentiment detection escalates sensitive issues to human agents in seconds."
+      },
+      {
+        "key": "nexus",
+        "pillar": "governance",
+        "icon": "icon_1",
+        "label": "Dolphlink Nexus",
+        "tagline": "AI Agent Orchestration",
+        "recommend": "ACTIVE",
+        "recommendTier": "green",
+        "desc": "The jurisdiction-aligned command center for agent orchestration. Unify every bot, RPA flow, custom model, and human reviewer into one auditable control plane.\n\nEngineered for governments and regulated enterprises with built-in migration support, full data residency, RBAC, and activity logs. Every action is traceable, every dataset stays where regulation demands.\n\nA visual workflow designer connects any LLM, RPA tool, or human reviewer with conditional logic and approval gates. Tamper-evident audit trails capture every decision and data touch for regulator review, ready out of the box."
+      },
+      {
+        "key": "console",
+        "pillar": "governance",
+        "icon": "icon_2",
+        "label": "Operations Hub",
+        "tagline": "Ops Analytics",
+        "recommend": "DEPLOYED",
+        "recommendTier": "blue",
+        "desc": "The Messaging Gateway centralizes API codes and key management. One dashboard for every credential, every channel, every team.\n\nMessage Log delivers full transparency on every message: status, content, and real-time costs. Aggregated insights and real-time trends optimize every communication strategy as data flows in.\n\nThreshold-based alerts notify you when delivery rates drop or costs spike unexpectedly. Cost forecasting projects monthly spend by channel and region, while CSV and Webhook exports feed BI, finance, and compliance pipelines."
+      },
+      {
+        "key": "custom",
+        "pillar": "governance",
+        "icon": "icon_9",
+        "label": "AI-Digital Solutions",
+        "tagline": "Migration Services",
+        "recommend": "MISSION-READY",
+        "recommendTier": "blue",
+        "desc": "Tailored AI-Digital migration services for existing infrastructure projects. We meet your stack where it lives: on-prem, hybrid, or sovereign cloud.\n\nWe engineer bespoke integrations between your legacy systems and DOLPHLINK's communications, AI orchestration, and compliance layers, delivered on your timeline, your data residency, and your governance requirements.\n\nA phased rollout begins with a four-week discovery and architecture workshop, followed by parallel-run pilots and gradual cutover. A dedicated solution architect, 24/7 priority support, and custom SLA terms protect mission-critical workflows throughout."
+      }
+    ]
+  },
+  "smeBridge": {
+    "eyebrow": "SME · Best-Fit Plans",
+    "title": "Built for smaller teams.",
+    "intro": "Same enterprise stack, right-sized for SME budgets and speed. Three ready-to-deploy service tracks. Pick a lane and we get you live in days, not quarters.",
+    "cta": "Explore",
+    "cloud": {
+      "tag": "Cloud Services",
+      "desc": "SME-tier regulator-aligned cloud hosting, region-aware data residency, and pay-as-you-grow capacity. No long contracts, no rip-and-replace."
+    },
+    "platform": {
+      "tag": "Platform Services",
+      "desc": "Drop-in messaging hub, programmable APIs, and a no-code chatbot builder. Billed per message, scaled by usage. Live in 10 minutes."
+    },
+    "connectivity": {
+      "tag": "Connectivity Services",
+      "desc": "SMS, voice, and WhatsApp on tier-1 carrier routes at SME-tier prices. No volume floor, no hidden setup fees, no enterprise overhead."
+    }
+  },
+  "audit": {
+    "title": "The Trust Layer",
+    "items": [
+      {
+        "title": "Compliance Certified",
+        "desc": "ISO 27001, GDPR, and SOC 2 certified. PDPA Singapore, MAS TRM, IM8, and regional regulatory frameworks supported across ASEAN, EMEA, and the Americas. Independent third-party audits annually, attestation reports available under NDA."
+      },
+      {
+        "title": "Data Sovereignty",
+        "desc": "Singapore-rooted infrastructure with regional data residency spanning ASEAN, EMEA, and the Americas. Every customer record stays in the precise jurisdiction your regulator demands. Quarterly third-party attestation with full chain-of-custody."
+      },
+      {
+        "title": "Verified Reliability",
+        "desc": "99.999% verified uptime across geo-redundant points of presence. TLS 1.3 in transit, AES-256 at rest, with quarterly third-party penetration testing."
+      },
+      {
+        "title": "Access Governance",
+        "desc": "Role-based access control (RBAC) across the entire platform. Fine-grained permissions for every team, tenant, and workflow, with detailed activity logs and SSO integration built in."
+      }
+    ]
+  },
+  "industries": {
+    "headerTag": "Industries We Serve",
+    "intro": "Built for regulated, mission-critical communications across nine verticals where DOLPHLINK's in-region architecture and agent orchestration deliver measurable advantage.",
+    "colSector": "Sector",
+    "colCapability": "What we deliver",
+    "colCompliance": "Compliance",
+    "primaryLabel": "Primary Verticals",
+    "secondaryLabel": "Also Serving",
+    "items": [
+      {
+        "key": "government",
+        "name": "Government & Public Sector",
+        "color": "#1F2937",
+        "desc": "Citizen alerts, public-service notifications, and emergency broadcasts on jurisdiction-licensed infrastructure. IM8-aligned, audit-ready, and deployable across multiple regulator-licensed jurisdictions in ASEAN, EMEA, and the Americas.",
+        "chips": [
+          "IM8",
+          "Sovereign Cloud",
+          "Multi-Jurisdiction"
+        ]
+      },
+      {
+        "key": "banking",
+        "name": "Banking & FinTech",
+        "color": "#0059B3",
+        "desc": "Secure 2FA/OTP, real-time fraud alerts, statement delivery, and automated repayment reminders via bulk voice campaigns.",
+        "chips": [
+          "MAS TRM",
+          "PDPA",
+          "PCI-DSS"
+        ]
+      },
+      {
+        "key": "insurance",
+        "name": "Insurance",
+        "color": "#7C3AED",
+        "desc": "Policy renewal reminders, claim-status notifications, and KYC verification flows. Tamper-evident audit trails for every regulated touchpoint.",
+        "chips": [
+          "PDPA",
+          "GDPR",
+          "ISO 27001"
+        ]
+      },
+      {
+        "key": "healthcare",
+        "name": "Healthcare",
+        "color": "#10B981",
+        "desc": "Automated appointment reminders and AI chatbot triage cut no-shows. Patient privacy preserved with in-region data residency.",
+        "chips": [
+          "PDPA",
+          "HIPAA-Ready",
+          "ISO 27001"
+        ]
+      },
+      {
+        "key": "logistics",
+        "name": "Logistics",
+        "color": "#06B6D4",
+        "desc": "Unified inbox across WhatsApp, Email, and Chat with automated tracking notifications. Driver dispatch via voice IVR and SMS confirmations.",
+        "chips": [
+          "Omnichannel",
+          "GDPR"
+        ]
+      },
+      {
+        "key": "retail",
+        "name": "Retail & E-Commerce",
+        "color": "#EC4899",
+        "desc": "Personalised engagement from first-party data, real-time order updates, abandoned-cart recovery, and Pages-embedded landings inside SMS.",
+        "chips": [
+          "GDPR",
+          "PDPA"
+        ]
+      },
+      {
+        "key": "education",
+        "name": "Education",
+        "color": "#F59E0B",
+        "desc": "Enrolment confirmations, course reminders, and parent-school chat in one inbox. Multilingual support across regional language pairs.",
+        "chips": [
+          "PDPA",
+          "Multi-Lingual"
+        ]
+      },
+      {
+        "key": "entertainment",
+        "name": "Entertainment & Gaming",
+        "color": "#F97316",
+        "desc": "International SMS and Voice verification for overseas game publishers and social apps. Country-aware routing handles emerging-market last mile.",
+        "chips": [
+          "200+ Countries",
+          "GDPR"
+        ]
+      },
+      {
+        "key": "hospitality",
+        "name": "Hospitality",
+        "color": "#14B8A6",
+        "desc": "Guest engagement on every preferred channel with no-code self-service bots. Pre-arrival, in-stay, and post-stay flows automated end to end.",
+        "chips": [
+          "No-Code Bots",
+          "Multi-Lingual"
+        ]
+      }
+    ]
+  },
+  "departments": {
+    "headerTag": "Departments We Empower",
+    "intro": "Inside every customer organisation, DOLPHLINK serves four distinct teams with shared infrastructure, from front-line operations to bespoke AI-digital builds.",
+    "introLead": "Inside every customer organisation, ",
+    "introTail": " serves four distinct teams on shared infrastructure, from front-line operations to bespoke AI-digital builds.",
+    "personas": {
+      "support": {
+        "quote": "I need to know which tickets need a human in 5 seconds, not 5 minutes.",
+        "attr": "Customer Service Lead · Bank"
+      },
+      "growth": {
+        "quote": "I want to A/B test today, not next sprint.",
+        "attr": "Marketing Director · Retail"
+      },
+      "ops": {
+        "quote": "I shouldn't have to wake up for a route failover.",
+        "attr": "SRE Lead · Insurance"
+      },
+      "innovation": {
+        "quote": "We can't rip-and-replace. It needs to live alongside what we already trust.",
+        "attr": "CTO · Government"
+      }
+    },
+    "items": [
+      {
+        "key": "support",
+        "name": "Customer Service",
+        "desc": "Multi-channel support across every digital touchpoint with AI-Human handoff. Every ticket carries a full audit trail, sentiment scoring, and SLA enforcement. Tier-1 to Tier-3 escalation flows configurable per region."
+      },
+      {
+        "key": "growth",
+        "name": "Marketing & Sales",
+        "desc": "Convert conversations into revenue across channels. A/B test SMS, WhatsApp, and Email campaigns, segment by behaviour, and measure end-to-end ROI in one console. Pipeline attribution and lifecycle automation built in."
+      },
+      {
+        "key": "ops",
+        "name": "IT & Operations",
+        "desc": "Streamlined Conversational Commerce on enterprise-grade infrastructure. A single programmable API endpoint replaces dozens of legacy gateway integrations, with priority routing, automatic carrier failover, and 24/7 NOC monitoring."
+      },
+      {
+        "key": "innovation",
+        "name": "Digital Transformation",
+        "desc": "Bespoke AI-digital projects from greenfield architecture to legacy migration. Solution architects deliver integrations on your stack, timeline, and governance requirements."
+      }
+    ]
+  },
+  "charts": {
+    "mapLabel": "Global Connectivity Network",
+    "locations": [
+      {
+        "name": "SINGAPORE (Global HQ)",
+        "value": [
+          103.8513,
+          1.283
+        ],
+        "isHQ": true
+      },
+      {
+        "name": "BEIJING",
+        "value": [
+          116.4074,
+          39.9042
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "SHANGHAI",
+        "value": [
+          121.4737,
+          31.2304
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "TOKYO",
+        "value": [
+          139.6917,
+          35.6895
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "MUMBAI",
+        "value": [
+          72.8777,
+          19.076
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "SYDNEY",
+        "value": [
+          151.2093,
+          -33.8688
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "AUCKLAND",
+        "value": [
+          174.7633,
+          -36.8485
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "FRANKFURT",
+        "value": [
+          8.6821,
+          50.1109
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "LONDON",
+        "value": [
+          -0.1278,
+          51.5074
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "SILICON VALLEY",
+        "value": [
+          -122.0575,
+          37.3875
+        ],
+        "isHQ": false
+      },
+      {
+        "name": "SÃO PAULO",
+        "value": [
+          -46.6333,
+          -23.5505
+        ],
+        "isHQ": false
+      }
+    ]
+  },
+  "footer": {
+    "brandTitle": "DOLPHLINK",
+    "brandTagline": "Singapore-headquartered communications spine and migration partner by Baiwu Technology Group. Connecting governments and global enterprises across 200+ countries with mission-critical reliability.",
+    "missionLabel": "OUR DOCTRINE",
+    "missionText": "Standardize. Secure. Sustain. Engineering communication and orchestration for institutions where reliability is non-negotiable. Every release is audited, every byte is governed, every conversation is accountable.",
+    "locationLabel": "HEADQUARTERS",
+    "locationLine1": "9 Raffles Place #29-04",
+    "locationLine2": "Republic Plaza, Singapore 048619",
+    "locationHours": "Weekdays 09:00 – 18:00 SGT",
+    "locationMapHref": "https://maps.google.com/?q=9+Raffles+Place+%2329-04+Republic+Plaza+Singapore+048619",
+    "locationMapLabel": "View on Google Maps ↗",
+    "connectivityLabel": "ENGAGE",
+    "salesEmail": "Salesmarketing@dolphlink.com",
+    "salesMailto": "Salesmarketing@dolphlink.com?cc=Joycetsam@dolphlink.com",
+    "directorEmail": "Joycetsam@dolphlink.com",
+    "directorMailto": "Joycetsam@dolphlink.com",
+    "directorLabel": "Business Director",
+    "officialSiteLabel": "Baiwu Group",
+    "officialSiteHref": "https://www.baiwutong.com",
+    "installLabel": "Install App",
+    "mapHeading": "Global Connectivity Network",
+    "mapIntro": "Strategic operational hubs anchoring DOLPHLINK across Asia-Pacific, Europe, the Americas, and Oceania.",
+    "vcardEyebrow": "Talk to Sales",
+    "vcardHeading": "Book a Briefing",
+    "vcardLine1": "Sales · Partnerships · Procurement",
+    "vcardLine2": "Scan the QR code to save our contact card and schedule a 30-minute briefing with the team.",
+    "vcardScanLabel": "Scan to Save",
+    "socialLabel": "Connect",
+    "social": [
+      {
+        "name": "LinkedIn",
+        "href": "https://www.linkedin.com/",
+        "icon": "linkedin"
+      },
+      {
+        "name": "Email Sales",
+        "href": "mailto:Salesmarketing@dolphlink.com",
+        "icon": "mail"
+      },
+      {
+        "name": "Schedule a Call",
+        "href": "mailto:Salesmarketing@dolphlink.com?subject=Schedule%20a%20Call",
+        "icon": "calendar"
+      }
+    ],
+    "legalLinks": [
+      {
+        "label": "Privacy Policy",
+        "href": "legal/privacy/"
+      },
+      {
+        "label": "Terms and Conditions",
+        "href": "legal/terms/"
+      }
+    ],
+    "copyright": "© 2026 DOLPHLINK BY BAIWU TECHNOLOGY GROUP. ALL RIGHTS RESERVED."
+  }
+}
