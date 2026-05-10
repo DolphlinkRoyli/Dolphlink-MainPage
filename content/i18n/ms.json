@@ -6,7 +6,6 @@
   "home.hero.cta.auto": "Cara Ia Berfungsi",
 
   "nav.home": "Laman Utama",
-  "nav.sme": "PKS",
   "nav.pains": "Empat Kesakitan",
   "nav.whatwedo": "Apa Kami Buat",
   "nav.wins": "Dua Kemenangan",
@@ -94,8 +93,6 @@
   "sme.benefits.b3.l2": "ID Pengirim, kod pendek, nombor dihos di 100+ negara",
   "sme.benefits.b3.l3": "Tiada jumlah minimum, tiada syarat perusahaan minimum",
   "sme.benefits.b3.l4": "Bayar setiap mesej · nombor yang anda lihat ialah yang anda bayar",
-  "sme.benefits.cta.label": "Bina platform semua-dalam-satu anda sendiri",
-  "sme.benefits.cta.note": "Pilih cebisan. Kami susun di sekitar perniagaan anda, bukan sebaliknya.",
 
   "sme.gains.title": "Dua kemenangan setiap pemilik PKS kejar.",
   "sme.gains.intro": "Jual lebih banyak. Belanja kurang. Dua kemenangan jangka panjang yang setiap pemilik perniagaan kecil perlukan serentak. Inilah cara kami capai kedua-duanya, tanpa pilih satu.",
@@ -205,7 +202,6 @@
   "build.crumb.sme": "PKS",
   "build.crumb.current": "Bina platform semua-dalam-satu anda sendiri",
 
-  "build.hero.eyebrow": "Bina platform semua-dalam-satu anda sendiri",
   "build.hero.title.l1": "Tiga langkah.",
   "build.hero.title.l2": "Pilih apa yang anda perlukan.",
   "build.hero.title.l3": "Kami susun di sekitar perniagaan anda.",

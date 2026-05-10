@@ -6,7 +6,6 @@
   "home.hero.cta.auto": "Cómo funciona",
 
   "nav.home": "Inicio",
-  "nav.sme": "PYMES",
   "nav.pains": "Los dolores",
   "nav.whatwedo": "Lo que hacemos",
   "nav.wins": "Las ganancias",
@@ -94,8 +93,6 @@
   "sme.benefits.b3.l2": "IDs de remitente, códigos cortos y números alojados en 100+ países",
   "sme.benefits.b3.l3": "Sin volumen mínimo, sin mínimo empresarial",
   "sme.benefits.b3.l4": "Pago por mensaje · el número que ves es el que pagas",
-  "sme.benefits.cta.label": "Construye tu propia plataforma todo-en-uno",
-  "sme.benefits.cta.note": "Elige las piezas. Las armamos alrededor de tu negocio, no al revés.",
 
   "sme.gains.title": "Dos ganancias que persigue todo dueño de PYME.",
   "sme.gains.intro": "Vender más. Gastar menos. Las dos victorias de largo plazo que toda dueña o dueño de pequeño negocio necesita al mismo tiempo. Aquí está cómo logramos ambas, sin elegir entre una u otra.",
@@ -205,7 +202,6 @@
   "build.crumb.sme": "PYMES",
   "build.crumb.current": "Construye tu propia plataforma todo-en-uno",
 
-  "build.hero.eyebrow": "Construye tu propia plataforma todo-en-uno",
   "build.hero.title.l1": "Tres pasos.",
   "build.hero.title.l2": "Elige lo que necesitas.",
   "build.hero.title.l3": "Lo armamos alrededor de tu negocio.",

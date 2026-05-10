@@ -6,7 +6,6 @@
   "home.hero.cta.auto": "了解运作机制",
 
   "nav.home": "首页",
-  "nav.sme": "中小企业",
   "nav.pains": "四大痛点",
   "nav.whatwedo": "我们做什么",
   "nav.wins": "两大成果",
@@ -94,8 +93,6 @@
   "sme.benefits.b3.l2": "100+ 国家可签发 Sender ID、短代码、托管号码",
   "sme.benefits.b3.l3": "无最低用量、无企业级门槛",
   "sme.benefits.b3.l4": "按条计费 · 看到的就是您要付的",
-  "sme.benefits.cta.label": "定制您的一体化平台",
-  "sme.benefits.cta.note": "您选积木。我们围绕您的业务搭起来——而不是反过来。",
 
   "sme.gains.title": "中小企业老板想要的两大成果。",
   "sme.gains.intro": "卖更多。花更少。这是每位老板同时追求的两件事。我们告诉您，怎么把两件事都拿下，不必二选一。",
@@ -205,7 +202,6 @@
   "build.crumb.sme": "中小企业",
   "build.crumb.current": "定制您的一体化平台",
 
-  "build.hero.eyebrow": "定制您的一体化平台",
   "build.hero.title.l1": "三步走。",
   "build.hero.title.l2": "挑您需要的。",
   "build.hero.title.l3": "我们围绕您的业务搭起来。",

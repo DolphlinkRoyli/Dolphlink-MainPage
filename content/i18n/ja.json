@@ -6,7 +6,6 @@
   "home.hero.cta.auto": "仕組みを見る",
 
   "nav.home": "ホーム",
-  "nav.sme": "中小企業",
   "nav.pains": "4つの悩み",
   "nav.whatwedo": "提供内容",
   "nav.wins": "2つの成果",
@@ -94,8 +93,6 @@
   "sme.benefits.b3.l2": "100か国以上で送信者ID、ショートコード、ホスティング番号",
   "sme.benefits.b3.l3": "ボリューム下限なし、企業最低額なし",
   "sme.benefits.b3.l4": "1通単位 · 表示価格がそのまま支払額",
-  "sme.benefits.cta.label": "あなただけのオールインワンを構築",
-  "sme.benefits.cta.note": "部品を選んでください。私たちが御社の業務に合わせて組み立てます。逆ではなく。",
 
   "sme.gains.title": "中小企業オーナーが追う2つの成果。",
   "sme.gains.intro": "売上を増やす。コストを減らす。中小企業オーナーが同時に求める2つの長期的な勝ち。両方を、二者択一せずに獲る方法をお伝えします。",
@@ -205,7 +202,6 @@
   "build.crumb.sme": "中小企業",
   "build.crumb.current": "あなただけのオールインワンを構築",
 
-  "build.hero.eyebrow": "あなただけのオールインワンを構築",
   "build.hero.title.l1": "3ステップ。",
   "build.hero.title.l2": "必要なものを選ぶ。",
   "build.hero.title.l3": "私たちが御社業務に合わせて組み立てます。",
