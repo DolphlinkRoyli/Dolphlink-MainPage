@@ -42,6 +42,49 @@ function wireHeroDots() {
   });
 }
 
+/* Touch-swipe support for the hero slideshow. On mobile, swiping
+   left/right inside .sme-hero advances the photo by 1, just like
+   tapping a dot — same `is-paused` + `data-active` model. The auto
+   cross-fade pauses (until user clicks the active dot to resume). */
+function wireHeroSwipe() {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+
+  const TOTAL_SLIDES = 7;          // matches 7 hero-bg / hero-card / dots
+  const MIN_DISTANCE  = 40;        // px — under this is treated as a tap
+  const MAX_VERT      = 60;        // px — vertical movement bigger than this = scroll, not swipe
+
+  let startX = 0, startY = 0, tracking = false;
+
+  hero.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    tracking = true;
+  }, { passive: true });
+
+  hero.addEventListener('touchend', (e) => {
+    if (!tracking) return;
+    tracking = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    if (Math.abs(dy) > MAX_VERT) return;          // vertical scroll, ignore
+    if (Math.abs(dx) < MIN_DISTANCE) return;      // too small, just a tap
+
+    /* Read current slide; default to 1 if not paused yet. */
+    const cur = parseInt(hero.getAttribute('data-active') || '1', 10) || 1;
+    const dir = dx < 0 ? +1 : -1;                 // swipe-left → next slide
+    let next = cur + dir;
+    if (next > TOTAL_SLIDES) next = 1;
+    if (next < 1)            next = TOTAL_SLIDES;
+
+    hero.classList.add('is-paused');
+    hero.setAttribute('data-active', String(next));
+  }, { passive: true });
+}
+
 /* Gap-card click + keyboard toggle. Adds `.is-saved` so the CSS swaps
    the photo from pain → saved and reveals the saver line. */
 function wireGapCards() {
@@ -68,5 +111,6 @@ export default async function setupSmePage() {
      first dispatch even if the page module re-runs (e.g. after a soft
      reload during dev). */
   wireHeroDots();
+  wireHeroSwipe();
   wireGapCards();
 }
