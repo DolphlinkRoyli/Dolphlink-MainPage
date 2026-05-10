@@ -301,10 +301,10 @@ button { font: inherit; }
    into "The Pain" — total mobile gap ~64px instead of 120px. */
 @media (max-width: 720px) {
   .sme-hero {
-    padding-bottom: 28px;
+    padding-bottom: 8px;
   }
   .sme-gap-section {
-    padding-top: 36px;
+    padding-top: 28px;
   }
   /* Hide the desktop scroll-down nudge on mobile — it sits in the
      bottom of the hero gradient and visually inflates the
@@ -1681,8 +1681,25 @@ button { font: inherit; }
   color: var(--sme-blue-deep);
 }
 @media (max-width: 720px) {
-  .sme-one-photo { aspect-ratio: 16 / 9; }
+  .sme-one-photo { aspect-ratio: 4 / 3; }
   .sme-one-steps { grid-template-columns: 1fr; gap: 18px; }
+  /* Title was overflowing photo on phones — shrink everything in the
+     overlay so the photo stays readable and the headline doesn't drown
+     the people in the picture. */
+  .sme-one-photo-overlay {
+    padding: 18px 20px;
+  }
+  .sme-one-tag {
+    padding: 4px 10px;
+    margin-bottom: 10px;
+    font-size: 9.5px;
+    letter-spacing: 1.4px;
+  }
+  .sme-one-title {
+    font-size: 17px;
+    line-height: 1.22;
+    letter-spacing: -0.2px;
+  }
 }
 
 /* ============================================================================
