@@ -306,6 +306,12 @@ button { font: inherit; }
   .sme-gap-section {
     padding-top: 36px;
   }
+  /* Hide the desktop scroll-down nudge on mobile — it sits in the
+     bottom of the hero gradient and visually inflates the
+     visual-to-section gap. Mobile users scroll naturally. */
+  .sme-hero-scrollcue {
+    display: none;
+  }
 }
 .sme-hero-inner { max-width: 600px; }
 .sme-eyebrow {
