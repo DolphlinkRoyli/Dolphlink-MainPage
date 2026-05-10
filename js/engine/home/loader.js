@@ -17,7 +17,7 @@
  */
 import { yieldToMain } from './utils.js';
 
-export const CONTENT_VERSION = '20260510-cms-cachebust';
+export const CONTENT_VERSION = '20260510-212202-cms';
 
 const _cache = new Map();        /* lang code â†’ resolved content object */
 const _inflight = new Map();     /* lang code â†’ in-flight fetch promise */
