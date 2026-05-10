@@ -103,3 +103,10 @@ coverage/
 # ---- Reorganization scripts (one-time use) --------------------------------
 reorganize-local.ps1
 reorganize-local.bat
+
+build/google.sn
+_local/
+
+
+build/google.sn
+

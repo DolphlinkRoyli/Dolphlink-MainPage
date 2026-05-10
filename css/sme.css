@@ -308,9 +308,11 @@ button { font: inherit; }
   }
   /* Hide the desktop scroll-down nudge on mobile — it sits in the
      bottom of the hero gradient and visually inflates the
-     visual-to-section gap. Mobile users scroll naturally. */
-  .sme-hero-scrollcue {
-    display: none;
+     visual-to-section gap. !important to defeat any inline / specificity
+     override (e.g. .sme-hero.is-paused .sme-hero-scrollcue { opacity }). */
+  .sme-hero-scrollcue,
+  a.sme-hero-scrollcue {
+    display: none !important;
   }
 }
 .sme-hero-inner { max-width: 600px; }
@@ -580,7 +582,10 @@ button { font: inherit; }
 
 /* Hero — warm cream backdrop, big title, clear flowchart preview. */
 .build-hero {
-  padding: clamp(48px, 6vw, 80px) clamp(20px, 5vw, 56px) clamp(28px, 4vw, 56px);
+  /* Top padding accounts for the fixed global nav (72-76px) PLUS hero
+     breathing room. Without this, multi-line CJK titles get clipped
+     under the nav (Chinese / Japanese hero line 1 was being eaten). */
+  padding: calc(var(--nav-height, 72px) + clamp(28px, 4vw, 56px)) clamp(20px, 5vw, 56px) clamp(28px, 4vw, 56px);
   background: linear-gradient(180deg, #FFF8E8 0%, #FFFCEF 60%, var(--sme-bg-soft) 100%);
   border-bottom: 1px solid rgba(217, 178, 87, 0.22);
 }
