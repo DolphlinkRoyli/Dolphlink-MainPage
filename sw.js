@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v500';
+const CACHE_VERSION = 'dolphlink-v502';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -57,6 +57,9 @@ const PRECACHE = [
   SCOPE + 'js/engine/core/clipboard.js',
   SCOPE + 'js/engine/core/url.js',          // safeHttpUrl â€” XSS shield for href= sites
   SCOPE + 'js/engine/core/i18n.js',         // runtime locale swap (zh/ja/es/ms/hi)
+  SCOPE + 'js/engine/core/runtime.js',      // page-init utilities used by every dispatched module
+  SCOPE + 'js/engine/core/prefetch.js',     // hover/idle prefetch of next-page modules
+  SCOPE + 'js/engine/core/lazy-section.js', // IntersectionObserver-based section reveal
   SCOPE + 'content/i18n/zh.json',
   SCOPE + 'content/i18n/ja.json',
   SCOPE + 'content/i18n/es.json',

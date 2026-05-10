@@ -3546,3 +3546,55 @@ button { font: inherit; }
   .sme-track-card--featured { order: -1; }
   .sme-track-flag { left: 20px; }
 }
+
+/* ============================================================================
+ * Mobile fixes — May 2026
+ *
+ * 1) Cinema hero on phones — the desktop frame uses
+ *    `height: clamp(520px, 76vh, 760px)` which on a phone (where viewport
+ *    width is narrow but height is still 700-800px) renders as a near
+ *    full-screen-tall portrait that dwarfs the headline. Cap at a more
+ *    cinematic 4:5-ish aspect on phones.
+ *
+ * 2) Bottom CTA "Partner with us" button — has class `nav-cta` so the JS
+ *    register-modal hook fires (every .nav-cta on the page wires to the
+ *    same Tell-us-about-you modal). On mobile, the global nav-cta rule
+ *    in style.css collapses ANY .nav-cta to a 36×36 icon-only button —
+ *    intended only for the top nav. Override here for the bottom CTA
+ *    case (when nav-cta is also a .sme-btn) so it stays full-width pill.
+ * ========================================================================== */
+@media (max-width: 720px) {
+  /* (1) hero — drop the 76vh height and use a phone-friendly aspect ratio */
+  .sme-hero-frame {
+    height: auto;
+    aspect-ratio: 4 / 5;
+    min-height: 380px;
+    max-height: 560px;
+    border-radius: 14px;
+    padding: clamp(28px, 5vh, 48px) clamp(20px, 5vw, 32px);
+  }
+  /* Tighten the outer section padding too — was clamp(96px..140px) top */
+  .sme-hero--cinema,
+  .sme-hero--rotating {
+    padding: clamp(72px, 8vh, 96px) clamp(16px, 4vw, 28px) clamp(32px, 4vh, 48px);
+  }
+}
+@media (max-width: 640px) {
+  /* (2) bottom CTA — restore wide-button look when nav-cta is reused as
+     a JS hook on a sme-btn. Visual styling stays sme-btn--primary. */
+  .sme-btn.nav-cta {
+    width: auto;
+    height: auto;
+    padding: 14px 24px;
+    border-radius: var(--sme-radius-sm);
+    background: var(--sme-blue);
+    border: 1.5px solid transparent;
+    box-shadow: 0 6px 18px var(--sme-blue-mid);
+    overflow: visible;
+    gap: 8px;
+  }
+  /* The nav-cta tip ("Tap to partner" floating below the icon) is also
+     auto-injected by JS for every .nav-cta — hide it on the wide bottom
+     CTA where it would float into the next section. */
+  .sme-btn.nav-cta .nav-cta-tip { display: none; }
+}
