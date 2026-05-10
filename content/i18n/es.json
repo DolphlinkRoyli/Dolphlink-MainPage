@@ -6,11 +6,10 @@
   "home.hero.cta.auto": "Cómo funciona",
 
   "nav.home": "Inicio",
-  "nav.pains": "Los dolores",
-  "nav.whatwedo": "Lo que hacemos",
-  "nav.wins": "Las ganancias",
-  "nav.answer": "La respuesta",
-  "nav.industries": "Sectores",
+  "nav.wins": "Ganancias",
+  "nav.answer": "Respuesta",
+  "nav.sme": "PYME",
+  "nav.app": "App",
   "nav.cta.partner": "Asociarse con nosotros",
   "nav.cta.partner.tip": "Toca para asociarte",
 

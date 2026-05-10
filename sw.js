@@ -12,7 +12,7 @@
  * ============================================================================
  */
 
-const CACHE_VERSION = 'dolphlink-v502';
+const CACHE_VERSION = 'dolphlink-v601';
 const SCOPE = self.registration && self.registration.scope
   ? new URL(self.registration.scope).pathname
   : '/Dolphlink-MainPage/';
@@ -100,6 +100,7 @@ const PRECACHE = [
   SCOPE + 'js/engine/home/modules/dept-explorer.js',
   SCOPE + 'js/engine/home/register.js',          // Request-Briefing modal
   SCOPE + 'js/engine/home/register-scanner.js',  // QR scanner (lazy)
+  SCOPE + 'js/engine/home/chatbot.js',           // Floating sales-assistant widget
 
   // ---- Card-page tree (loaded only when <html data-page="card">) ----
   SCOPE + 'js/engine/card/index.js',

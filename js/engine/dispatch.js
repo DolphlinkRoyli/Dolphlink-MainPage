@@ -66,6 +66,15 @@ export async function dispatch() {
 
     dlpk.perf.measure('dispatch', 'dispatch:start');
     dlpk.events.emit('page:ready', { name });
+
+    /* Lazy-mount the chatbot ~1.5s after page is interactive, so it never
+       competes with first-paint. The module itself decides which pages
+       it appears on (skips card/build/legal). */
+    setTimeout(() => {
+      import('./home/chatbot.js')
+        .then(m => m.default && m.default())
+        .catch(e => console.warn('[chatbot] load failed:', e));
+    }, 1500);
   } catch (err) {
     console.error('[dispatch] page setup failed:', name, err);
     dlpk.events.emit('page:error', { name, error: err });

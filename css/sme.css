@@ -295,6 +295,18 @@ button { font: inherit; }
 @media (max-width: 880px) {
   .sme-hero { grid-template-columns: 1fr; }
 }
+/* Mobile: tighten the visual-to-next-section gap. Default hero bottom padding
+   (~64px) + .sme-gap-section top padding (~56px) was ~120px on small screens.
+   Reduce hero bottom + tighten gap section top so the image flows naturally
+   into "The Pain" — total mobile gap ~64px instead of 120px. */
+@media (max-width: 720px) {
+  .sme-hero {
+    padding-bottom: 28px;
+  }
+  .sme-gap-section {
+    padding-top: 36px;
+  }
+}
 .sme-hero-inner { max-width: 600px; }
 .sme-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
