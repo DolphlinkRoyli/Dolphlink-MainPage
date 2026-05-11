@@ -1152,22 +1152,6 @@
    filter: saturate(1.35) brightness(1.08) drop-shadow(0 4px 10px rgba(0, 89, 179, 0.22));
  }
 
- /* Custom stat icon images (replacing the old generic 3D icons). Square,
-    rounded corners, cover-fit, no mask. Path: media/stats/stat-<key>.webp */
- .stat-icon-img {
-   width: 76px !important;
-   height: 76px !important;
-   object-fit: cover !important;
-   border-radius: 14px;
-   -webkit-mask-image: none !important;
-   mask-image: none !important;
-   filter: none !important;
-   box-shadow: 0 4px 12px rgba(0, 45, 92, 0.10);
- }
- .stat-card:hover .stat-icon-img {
-   transform: scale(1.05);
-   box-shadow: 0 6px 16px rgba(0, 89, 179, 0.20);
- }
  /* portfolio-icon: multiply blends into white. Sized smaller than stat
     icons because the 3×3 grid has more cards per row — overly large
     icons make the section feel inflated. Restrained colour boost. */

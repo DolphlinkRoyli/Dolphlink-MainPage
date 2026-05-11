@@ -2904,25 +2904,24 @@ button { font: inherit; }
        viewport on mobile, no whitespace bars on the sides. */
     padding: 92px 0 0 !important;
   }
-  /* Photo frame: full-viewport-bleed on mobile.  Uses the 100vw +
-     negative-margin trick to escape any parent's max-width / padding
-     constraint and bleed all the way to the screen edges. */
+  /* Photo frame — full-viewport-bleed on mobile.
+     • 100vw + negative margin: escape parent max-width / padding to
+       reach the absolute screen edges (covers any layout container).
+     • No border-radius / shadow: the photo runs flat to the edges,
+       no visible "card" border.
+     • Height ~70vh: real mobile-hero presence; combined with
+       background-size: cover the image fills the entire frame.
+     • Padding-bottom 56px: reserve space inside the frame so the
+       text/quote area sits comfortably above the absolutely-positioned
+       pagination dots (.sme-hero-dots @ bottom: 20px). */
   .sme-hero-frame {
     border-radius: 0 !important;
     box-shadow: none !important;
     max-width: none !important;
     width: 100vw !important;
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: calc(50% - 50vw) !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  /* Bigger photo — bump the frame to ~70vh so the hero card has real
-     presence on mobile.  Combined with object-fit: cover on the photo,
-     the image now fills a much larger area than the previous 420-540px
-     range. */
-  .sme-hero-frame {
+    margin: 0 calc(50% - 50vw) !important;
     height: clamp(520px, 70vh, 680px) !important;
+    padding-bottom: 56px !important;
   }
   /* Shrink the 7 pagination dots so all 7 fit inside the narrow mobile
      frame. Default: 7 × 36px + 6 × 10px gap = 312px which overflows the
@@ -2975,13 +2974,6 @@ button { font: inherit; }
         rgba(11, 27, 48, 0.55) 68%,
         rgba(11, 27, 48, 0.90) 85%,
         rgba(11, 27, 48, 0.97) 100%) !important;
-  }
-  /* Push the frame's text content UP off the pagination dots — default
-     bottom padding (40px) puts text descender right on top of the dots
-     row (which sits at 20-24px from the bottom). Give 56px so the dot
-     row has clear breathing room below the last line of text. */
-  .sme-hero-frame {
-    padding-bottom: 56px !important;
   }
   /* Move bottom-right corner bracket up so it doesn't sit on the dots. */
   .sme-hero-bracket--br {
@@ -3722,26 +3714,12 @@ button { font: inherit; }
  *    intended only for the top nav. Override here for the bottom CTA
  *    case (when nav-cta is also a .sme-btn) so it stays full-width pill.
  * ========================================================================== */
-@media (max-width: 720px) {
-  /* (1) hero — drop the 76vh height and use a phone-friendly aspect ratio.
-     Shorter on small screens so visitors aren't burning a full viewport
-     scroll before the first content section. */
-  .sme-hero-frame {
-    height: auto;
-    aspect-ratio: 4 / 5;
-    min-height: 340px;
-    max-height: 480px;       /* was 560 */
-    border-radius: 14px;
-    padding: clamp(24px, 4vh, 40px) clamp(18px, 4vw, 28px);
-  }
-  /* Tighten the outer section padding too — top was clamp(72..96).
-     CRITICAL: bottom must stay 0 (overridden by the earlier @720px
-     rule with !important) so the gap section starts flush. */
-  .sme-hero--cinema,
-  .sme-hero--rotating {
-    padding: clamp(28px, 5vh, 56px) clamp(16px, 4vw, 28px) 0;
-  }
-}
+/* (Legacy @720px block deleted — every declaration was dead-on-arrival,
+   silently overridden by the earlier @720px block at line ~2897 which
+   uses !important on every property.  Frame height, aspect-ratio,
+   border-radius, padding, cinema section padding — all set by the
+   earlier block.  Keeping a fresh @640 block below for nav-cta tweaks
+   that don't conflict.) */
 @media (max-width: 640px) {
   /* (2) bottom CTA — restore wide-button look when nav-cta is reused as
      a JS hook on a sme-btn. Visual styling stays sme-btn--primary. */
