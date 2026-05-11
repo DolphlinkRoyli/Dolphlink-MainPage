@@ -2912,6 +2912,53 @@ button { font: inherit; }
   .sme-hero-frame {
     height: clamp(420px, 58vh, 540px) !important;
   }
+  /* Shrink the 7 pagination dots so all 7 fit inside the narrow mobile
+     frame. Default: 7 × 36px + 6 × 10px gap = 312px which overflows the
+     ~250px wide content area inside the frame, clipping the rightmost
+     dots. New: 7 × 22px + 6 × 6px = 190px — fits with margin. */
+  .sme-hero-dots {
+    gap: 6px !important;
+    bottom: 20px !important;
+  }
+  .sme-hero-dot {
+    width: 22px !important;
+    height: 4px !important;
+  }
+  /* Hero photo: desktop uses background-size: cover which on a narrow
+     mobile portrait frame crops the wide landscape source ~30% off each
+     side, losing important content on the right (fabric rolls / context
+     props). Switch to contain so the full photo is visible; position it
+     to the top so the bottom strip can hold the text + dots without the
+     photo crowding them.  The frame's dark blue background fills the
+     letterbox area below the photo, which actually reads well — magazine
+     "photo-on-top / quote-below" composition. */
+  .sme-hero-bg {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: top center !important;
+    /* Anchor the photo to the top half so text below has solid dark
+       backing rather than overlapping the photo's edge. */
+    height: 60% !important;
+    bottom: auto !important;
+  }
+  /* Without the photo behind the bottom half, lift the text-area overlay
+     so the "It answers first." gradient is still readable. */
+  .sme-hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(11, 27, 48, 0) 0%, rgba(11, 27, 48, 0.85) 55%, rgba(11, 27, 48, 0.95) 100%) !important;
+  }
+  /* Push the frame's text content UP off the pagination dots — default
+     bottom padding (40px) puts text descender right on top of the dots
+     row (which sits at 20-24px from the bottom). Give 56px so the dot
+     row has clear breathing room below the last line of text. */
+  .sme-hero-frame {
+    padding-bottom: 56px !important;
+  }
+  /* Move bottom-right corner bracket up so it doesn't sit on the dots. */
+  .sme-hero-bracket--br {
+    right: 16px !important;
+    bottom: 40px !important;
+  }
   .sme-gap-section {
     padding-top: 20px !important;
   }
