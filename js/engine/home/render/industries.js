@@ -85,12 +85,26 @@ function buildCard(it) {
   const chips = (it.chips || [])
     .map(c => `<span class="industry-chip">${escapeHtml(c)}</span>`)
     .join('');
+  const key = escapeHtml(it.key);
+  /* Photo at top of card (clean, no overlay). Icon moves to the LEFT
+     of the industry name inside the body — better legibility than the
+     translucent badge overlay, and the icon stays crisp on a white
+     background instead of competing with photo content. */
   return `
-    <article class="industry-card" data-industry="${escapeHtml(it.key)}">
-      <span class="industry-icon" aria-hidden="true">${icon}</span>
-      <h3 class="industry-name">${escapeHtml(it.name)}</h3>
-      <p class="industry-desc">${escapeHtml(it.desc)}</p>
-      <div class="industry-chips">${chips}</div>
+    <article class="industry-card" data-industry="${key}">
+      <figure class="industry-photo">
+        <img src="media/industries/industry-${key}.webp"
+             alt="${escapeHtml(it.name)} sector"
+             loading="lazy" decoding="async">
+      </figure>
+      <div class="industry-body">
+        <div class="industry-header">
+          <span class="industry-icon" aria-hidden="true">${icon}</span>
+          <h3 class="industry-name">${escapeHtml(it.name)}</h3>
+        </div>
+        <p class="industry-desc">${escapeHtml(it.desc)}</p>
+        <div class="industry-chips">${chips}</div>
+      </div>
     </article>`;
 }
 

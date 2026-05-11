@@ -1423,15 +1423,16 @@
  .btn-portfolio {
    position: relative;
    display: flex; flex-direction: column;
-   align-items: center; justify-content: center;
-   gap: 6px;
-   padding: 16px 12px 32px;     /* a touch of bottom space for click-hint */
+   align-items: stretch; justify-content: flex-start;
+   gap: 0;
+   padding: 0;                  /* now padding lives inside .portfolio-body */
    background: var(--baiwu-white);
    /* Floating mini-card — brand-blue subtle border + soft shadow,
       matching `.stat-card` so the 9 items (3 pillars × 3) read as a
       coherent grid of distinct cards. */
    border: 1px solid rgba(0, 89, 179, 0.14);
    border-radius: 6px;
+   overflow: hidden;            /* clip photo to card radius */
    box-shadow:
      0 1px 3px rgba(0, 45, 92, 0.04),
      0 4px 14px rgba(0, 45, 92, 0.05);
@@ -1441,6 +1442,51 @@
    color: inherit;
    font: inherit;
    min-height: 142px;
+ }
+
+ /* Top-of-card product photo. Path: media/portfolio/portfolio-<key>.webp.
+    Falls back to the brand-blue gradient + icon overlay if image fails. */
+ .portfolio-photo {
+   position: relative;
+   display: block;
+   aspect-ratio: 16 / 9;
+   overflow: hidden;
+   background: linear-gradient(135deg, rgba(0,89,179,0.10), rgba(0,89,179,0.02));
+ }
+ .portfolio-photo img {
+   width: 100%; height: 100%;
+   object-fit: cover;
+   display: block;
+   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+ }
+ .btn-portfolio:hover .portfolio-photo img { transform: scale(1.06); }
+
+ /* Icon as overlay badge on the photo (bottom-left). Smaller version
+    of the original icon-wrap, no radial-gradient halo. */
+ .portfolio-icon--overlay {
+   position: absolute !important;
+   left: 12px; bottom: 12px;
+   width: 40px !important; height: 40px !important;
+   background: rgba(255, 255, 255, 0.95);
+   border-radius: 8px;
+   box-shadow: 0 4px 10px rgba(0, 30, 60, 0.18);
+   backdrop-filter: blur(4px);
+   -webkit-backdrop-filter: blur(4px);
+   z-index: 2;
+ }
+ .portfolio-icon--overlay::before { display: none !important; }
+ .portfolio-icon--overlay .portfolio-icon {
+   width: 24px; height: 24px;
+   transform: none !important;
+ }
+
+ /* Text body below the photo */
+ .portfolio-body {
+   display: flex; flex-direction: column;
+   align-items: center;
+   gap: 4px;
+   padding: 14px 12px 26px;
+   flex: 1;
  }
  .btn-portfolio:hover,
  .stat-card:hover {
@@ -1982,16 +2028,83 @@
    position: relative;
    display: flex;
    flex-direction: column;
-   gap: 12px;
-   padding: 24px 24px 20px;
+   gap: 0;
+   padding: 0;
    background: var(--baiwu-white);
    border: 1px solid rgba(0, 89, 179, 0.12);
    border-radius: 10px;
    min-height: 240px;
+   overflow: hidden;
    transition:
      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
      box-shadow 0.3s ease,
      border-color 0.3s ease;
+ }
+
+ /* Top photo on each industry card — 16:9 cinematic crop with the
+    line-art icon as a small badge overlay in the bottom-left corner.
+    Image path: media/industries/industry-<key>.webp */
+ .industry-photo {
+   position: relative;
+   margin: 0;
+   aspect-ratio: 16 / 9;
+   background: linear-gradient(135deg, rgba(0,89,179,0.06), rgba(0,89,179,0.02));
+   overflow: hidden;
+ }
+ .industry-photo img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: block;
+   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+   /* If image fails to load, hide it so the gradient bg shows + icon
+      still visible. No broken-image icon visible to user. */
+ }
+ .industry-photo img:not([src]),
+ .industry-photo img[src=""],
+ .industry-photo img[alt][src*="undefined"] { display: none; }
+ .industry-card:hover .industry-photo img {
+   transform: scale(1.06);
+ }
+ /* Text body below the photo */
+ .industry-body {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   padding: 18px 22px 16px;
+   flex: 1;
+ }
+
+ /* Header row: line-art icon LEFT of industry name. Replaces the
+    older translucent-overlay-on-photo treatment — much crisper on
+    white background and not competing with photo content. */
+ .industry-header {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+ }
+ .industry-header .industry-icon {
+   flex-shrink: 0;
+   width: 36px;
+   height: 36px;
+   border-radius: 9px;
+   background: rgba(0, 89, 179, 0.08);
+   color: var(--baiwu-blue-primary);
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   transition: background 0.3s ease;
+ }
+ .industry-header .industry-icon svg {
+   width: 20px;
+   height: 20px;
+ }
+ .industry-header .industry-name {
+   margin: 0;
+   line-height: 1.25;
+ }
+ .industry-card:hover .industry-header .industry-icon {
+   background: rgba(0, 89, 179, 0.14);
  }
 
  /* Leading icon — line-art SVG (industries.js renders one per key)
@@ -2305,7 +2418,10 @@
    }
    .industry-card {
      min-height: auto;
-     padding: 20px 20px 18px;
+     padding: 0;        /* keep 0 — body has its own padding now */
+   }
+   .industry-body {
+     padding: 16px 18px 14px;
    }
  }
  @media (max-width: 600px) {
@@ -2314,7 +2430,8 @@
  @media (max-width: 600px) {
    .industries-section,
    .departments-section { padding: 40px 4%; }
-   .industry-card { padding: 16px 18px; }
+   .industry-card { padding: 0; }
+   .industry-body { padding: 14px 16px 12px; }
    .department-card { padding: 16px 18px; }
    .footer { padding: 40px 4% 0; }
    .footer-info-col {
@@ -3089,9 +3206,10 @@
       breakpoint. Pillar header padding tightens. */
    .portfolio-pillar-head { padding: 20px 20px 8px; gap: 12px; }
    .portfolio-pillar-desc { padding: 0 20px 12px; }
-   .btn-portfolio { padding: 24px 12px 32px; min-height: 44px; }
-   .portfolio-icon-wrap { width: 100px; height: 100px; }
-   .portfolio-icon { width: 88px; height: 88px; }
+   /* btn-portfolio padding stays 0 — body has its own padding now.
+      DO NOT scale icon-wrap (overlay badge is fixed-size 40×40). */
+   .btn-portfolio { padding: 0; min-height: 44px; }
+   .portfolio-body { padding: 12px 14px 24px; }
    .audit-section { padding: 40px 4%; }
    /* .sec-title font-size now handled by clamp() at the base rule —
       no override needed at this breakpoint. */
@@ -3212,7 +3330,9 @@
      padding-left: 0 !important;
      border-left: none !important;
    }
-   .btn-portfolio { padding: 24px 16px 32px; min-height: 44px; }
+   /* btn-portfolio padding stays 0 on mobile too (body has its own padding). */
+   .btn-portfolio { padding: 0; min-height: 44px; }
+   .portfolio-body { padding: 14px 16px 26px; }
    /* Mobile: tagline becomes an in-flow subtitle below the label (not a top
       pill), so it doesn't dominate the card or collide with the NEW badge. */
    .portfolio-tagline {
@@ -3245,9 +3365,16 @@
       cards live inside individual 3-card pillar grids. */
    .portfolio-pillar-grid { grid-template-columns: 1fr; }
    .portfolio-pillar-grid > .btn-portfolio { border-right: none; }
-   .portfolio-pillar-grid > .btn-portfolio:not(:last-child) { border-bottom: 1px solid rgba(0, 89, 179, 0.14); }
-   .portfolio-icon-wrap { width: 84px; height: 84px; }
-   .portfolio-icon { width: 72px; height: 72px; }
+   .portfolio-pillar-grid > .btn-portfolio:not(:last-child) { margin-bottom: 12px; }
+   /* Overlay badge stays fixed size on mobile — DO NOT scale up to the
+      old 84px icon-wrap dimensions which were for the icon-forward layout
+      we replaced with the photo + overlay design. */
+   .portfolio-icon-wrap.portfolio-icon--overlay {
+     width: 36px !important; height: 36px !important;
+   }
+   .portfolio-icon-wrap.portfolio-icon--overlay .portfolio-icon {
+     width: 22px !important; height: 22px !important;
+   }
    .portfolio-label { font-size: var(--fs-xs); letter-spacing: 1.2px; }
    .hero-content h1 { font-size: var(--fs-2xl); }
    /* Mobile reading comfort — tagline / subTagline got dense at small

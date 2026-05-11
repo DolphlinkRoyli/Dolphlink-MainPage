@@ -104,12 +104,9 @@ coverage/
 reorganize-local.ps1
 reorganize-local.bat
 
-build/google.sn
-_local/
-
-
-build/google.sn
-
-
-build/google.sn
-
+# ---- Local-only image backups (we keep originals locally for re-processing) -
+# Any folder ending in _old_backup or _archive — never push these to the
+# public site. Created by generate_sme_images.py rotation / manual backup.
+**/_old_backup/
+**/_archive/
+**/_old/

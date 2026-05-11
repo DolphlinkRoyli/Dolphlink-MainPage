@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-page="sme">
-<head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Qvs/MYH5NgMInq3lPLn9u0l9OUeNrax9M+NJfICovvE=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- script-src: 'self' for our modules, plus 2 sha256 pinning the dev-server (VS Code Live Server) hot-reload inline script so dev doesn't break. In production neither hash matches anything injected, so they cost nothing. script-src-attr 'none' blocks ALL inline event handlers (onclick=, onerror=, etc.) defense-in-depth. frame-ancestors / X-Frame-Options must be HTTP response headers (the browser ignores them inside <meta>); see /_headers for the real clickjacking lock. --><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Qvs/MYH5NgMInq3lPLn9u0l9OUeNrax9M+NJfICovvE=' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self' https://dolphlink-api.roygto2013.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- script-src: 'self' for our modules, plus 2 sha256 pinning the dev-server (VS Code Live Server) hot-reload inline script so dev doesn't break. In production neither hash matches anything injected, so they cost nothing. script-src-attr 'none' blocks ALL inline event handlers (onclick=, onerror=, etc.) defense-in-depth. frame-ancestors / X-Frame-Options must be HTTP response headers (the browser ignores them inside <meta>); see /_headers for the real clickjacking lock. --><meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>DOLPHLINK for SME · Carrier-grade communications, no minimums, served warm</title>
  <meta name="description" content="Carrier-grade communications and AI orchestration for SMEs. Complex workflows, straight to results. The same backbone we run for governments — no enterprise minimum, no long contract, same engineer at 2 a.m.">
  <meta name="author" content="Baiwu Technology Group">
@@ -234,11 +234,8 @@
  </a>
  <div class="nav-right">
  <div class="fixed-menu">
-   <a href="../" class="menu-item" data-i18n="nav.home">HOME</a>
    <a href="#gains" class="menu-item" data-i18n="nav.wins">THE WINS</a>
    <a href="#one-partner" class="menu-item" data-i18n="nav.answer">THE ANSWER</a>
-   <a href="../sme/" class="menu-item" data-i18n="nav.sme">SME</a>
-   <a href="../sme/build/" class="menu-item" data-i18n="nav.app">APP</a>
  </div>
  <a href="mailto:Salesmarketing@dolphlink.com?subject=DOLPHLINK%20-%20Partner%20with%20us" class="nav-cta" aria-label="Partner with us">
  <svg class="nav-cta-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

@@ -2889,6 +2889,23 @@ button { font: inherit; }
   color: var(--sme-ink);
   gap: 0;
 }
+/* Mobile: tighten the cinema-hero ↔ next-section gap.
+   Default has 48-80px bottom + 56px section-top + section-head margins,
+   total ~110-160px on small screens which felt floaty. Kill the cinema
+   bottom padding and shrink the next-section top padding so the card
+   flows naturally into "Four pains every SME owner knows". */
+@media (max-width: 720px) {
+  .sme-hero--cinema,
+  .sme-hero--rotating {
+    padding-bottom: 0 !important;
+  }
+  .sme-gap-section {
+    padding-top: 24px !important;
+  }
+  .sme-section-head {
+    margin-bottom: 24px !important;
+  }
+}
 /* The card-style frame the photo lives in — sits on the page with breathing
    room around it, gold inner stroke, soft drop-shadow, slight rounded
    corners. Roy spec May 2026: "exquisite + warm + framed". */

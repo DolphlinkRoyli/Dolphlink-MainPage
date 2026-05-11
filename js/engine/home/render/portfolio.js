@@ -6,22 +6,34 @@ import { getContent } from '../hydrate.js';
 import { iconHTML }   from './icon-html.js';
 
 export function buildPortfolioCard(p) {
+  const key = escapeHtml(p.key);
   const tagline = p.tagline ? `<span class="portfolio-tagline">${escapeHtml(p.tagline)}</span>` : '';
   const recommend = p.recommend
     ? `<span class="portfolio-badge" data-tier="${escapeHtml(p.recommendTier || 'gold')}">${escapeHtml(p.recommend)}</span>`
     : '';
+  /* Product photo at the top of each card. File path:
+     media/portfolio/portfolio-<key>.webp (16:9, ~120 KB). The line-art
+     icon stays as a small overlay badge so identity is visible before
+     image loads + remains scannable in the modal afterwards. */
   return `
-    <button type="button" class="btn-portfolio" data-portfolio="${escapeHtml(p.key)}"
+    <button type="button" class="btn-portfolio" data-portfolio="${key}"
             data-modal-icon="${escapeHtml(p.icon)}"
             data-modal-eyebrow="${escapeHtml(p.tagline || '')}"
             data-modal-title="${escapeHtml(p.label)}"
             data-modal-text="${escapeHtml(p.desc)}"
             aria-haspopup="dialog">
       ${recommend}
-      ${tagline}
-      <span class="portfolio-icon-wrap">${iconHTML(p.icon, 72, 'portfolio-icon')}</span>
-      <span class="portfolio-label">${escapeHtml(p.label)}</span>
-      <span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span>
+      <span class="portfolio-photo">
+        <img src="media/portfolio/portfolio-${key}.webp"
+             alt="${escapeHtml(p.label)}"
+             loading="lazy" decoding="async">
+        <span class="portfolio-icon-wrap portfolio-icon--overlay">${iconHTML(p.icon, 28, 'portfolio-icon')}</span>
+      </span>
+      <span class="portfolio-body">
+        ${tagline}
+        <span class="portfolio-label">${escapeHtml(p.label)}</span>
+        <span class="click-hint" aria-hidden="true">View details <span class="hint-arrow">&rarr;</span></span>
+      </span>
     </button>
   `;
 }
