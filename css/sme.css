@@ -3621,19 +3621,23 @@ button { font: inherit; }
  *    case (when nav-cta is also a .sme-btn) so it stays full-width pill.
  * ========================================================================== */
 @media (max-width: 720px) {
-  /* (1) hero — drop the 76vh height and use a phone-friendly aspect ratio */
+  /* (1) hero — drop the 76vh height and use a phone-friendly aspect ratio.
+     Shorter on small screens so visitors aren't burning a full viewport
+     scroll before the first content section. */
   .sme-hero-frame {
     height: auto;
     aspect-ratio: 4 / 5;
-    min-height: 380px;
-    max-height: 560px;
+    min-height: 340px;
+    max-height: 480px;       /* was 560 */
     border-radius: 14px;
-    padding: clamp(28px, 5vh, 48px) clamp(20px, 5vw, 32px);
+    padding: clamp(24px, 4vh, 40px) clamp(18px, 4vw, 28px);
   }
-  /* Tighten the outer section padding too — was clamp(96px..140px) top */
+  /* Tighten the outer section padding too — top was clamp(72..96).
+     CRITICAL: bottom must stay 0 (overridden by the earlier @720px
+     rule with !important) so the gap section starts flush. */
   .sme-hero--cinema,
   .sme-hero--rotating {
-    padding: clamp(72px, 8vh, 96px) clamp(16px, 4vw, 28px) clamp(32px, 4vh, 48px);
+    padding: clamp(28px, 5vh, 56px) clamp(16px, 4vw, 28px) 0;
   }
 }
 @media (max-width: 640px) {

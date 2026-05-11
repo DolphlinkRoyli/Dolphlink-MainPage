@@ -1000,10 +1000,9 @@
 
  .stat-card {
    position: relative;
-   /* 5 cards in a row need vertical stacking — horizontal layout's
-      icon (100px) + meta (110px+) per card was overflowing the
-      ~240px column width on 1280px viewports. Stack icon on top,
-      value/label/stars centered below. */
+   /* 6 cards in a row — stacked layout: 76px icon block on top, then
+      value / label / stars centred below.  Padding leaves room for the
+      absolute "View details" click-hint at the bottom of the card. */
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -1152,6 +1151,23 @@
    transition: transform 0.3s ease;
    filter: saturate(1.35) brightness(1.08) drop-shadow(0 4px 10px rgba(0, 89, 179, 0.22));
  }
+
+ /* Custom stat icon images (replacing the old generic 3D icons). Square,
+    rounded corners, cover-fit, no mask. Path: media/stats/stat-<key>.webp */
+ .stat-icon-img {
+   width: 76px !important;
+   height: 76px !important;
+   object-fit: cover !important;
+   border-radius: 14px;
+   -webkit-mask-image: none !important;
+   mask-image: none !important;
+   filter: none !important;
+   box-shadow: 0 4px 12px rgba(0, 45, 92, 0.10);
+ }
+ .stat-card:hover .stat-icon-img {
+   transform: scale(1.05);
+   box-shadow: 0 6px 16px rgba(0, 89, 179, 0.20);
+ }
  /* portfolio-icon: multiply blends into white. Sized smaller than stat
     icons because the 3×3 grid has more cards per row — overly large
     icons make the section feel inflated. Restrained colour boost. */
@@ -1255,8 +1271,7 @@
  }
 
  /* Stat meta — vertical-stacked layout under the icon, fully centered.
-    Removed the left blue divider and left padding (these belonged to
-    the old horizontal icon-then-meta layout). */
+    Card itself owns the padding; meta just lays out value / label / stars. */
  .stat-meta {
    display: flex; flex-direction: column; align-items: center; gap: 6px;
    line-height: 1; min-width: 0;
@@ -1266,10 +1281,6 @@
  }
 
  .stat-value {
-   /* Inter (variable, already loaded) replaces JetBrains Mono — second
-      font wasn't worth the extra request for one numeric line. Tight
-      letter-spacing keeps the digit-heavy "99.999%" / "1,000+" feeling
-      compact and tabular-ish even in a proportional face. */
    font-family: 'Inter', system-ui, sans-serif;
    font-feature-settings: 'tnum' 1, 'lnum' 1;
    font-size: var(--fs-lg); font-weight: 800;
@@ -3168,8 +3179,7 @@
     =========================== */
  @media (max-width: 1180px) {
    .menu-item { padding: 0 11px; }
-   /* Stat cards stay vertically stacked at this breakpoint — same as
-      base. Reduce icon/padding slightly for narrower viewports. */
+   /* Tighten icon + card padding slightly for narrower viewports. */
    .stat-icon-wrap { width: 68px; height: 68px; }
    .stat-icon { width: 56px; height: 56px; }
    .stat-card { padding: 20px 8px 24px; }
@@ -3192,9 +3202,8 @@
      justify-content: center;
      min-height: 108px;
    }
-   /* 5 stats in 2 columns = 3 rows; the right column of each row has no
-      right border, and the last card (5th, alone in the 3rd row) has no
-      bottom border. */
+   /* 6 stats in 2 columns = 3 rows; the right column of each row has no
+      right border, and the last card has no bottom border. */
    .stat-card:nth-child(2n) { border-right: none; }
    .stat-card:last-child { border-bottom: none; }
    .stat-meta { flex: 0 0 auto; }
@@ -3313,18 +3322,15 @@
      border-right: none !important;
      padding: 20px 16px;
      gap: 16px;
-     justify-content: flex-start;     /* Left-align */
+     justify-content: flex-start;
      min-height: 96px;
    }
-   /* :not(:last-child) raises specificity to override the 1024px rule that
-      stripped border-bottom from cards 3/4 (intended for the 2x2 layout). */
    .stat-card:not(:last-child) { border-bottom: 1px solid rgba(0, 89, 179, 0.14); }
    .stat-card:last-child { border-bottom: none; }
    .stat-icon-wrap { width: 84px; height: 84px; }
    .stat-icon { width: 72px; height: 72px; }
    .stat-value { font-size: var(--fs-xl); }
    .stat-label { font-size: var(--fs-xs); }
-   /* Single-column layout — drop the divider, let meta sit flush with icon */
    .stat-meta {
      flex: 0 0 auto !important;
      padding-left: 0 !important;
@@ -4764,10 +4770,9 @@
 /* 11-column grid: 6 cards + 5 connector slots.  TaaS (data-stat="zer")
    is the visual CENTREPIECE at 2.2fr — sovereign credential anchor.
    OUTCOME (Open Rate, data-stat="open") at 1.4fr is the downstream
-   result: emphasized but subordinate to TaaS.  All 5 connectors are
-   the SAME width — the TaaS→Open chevron is differentiated by COLOUR
-   (green tint, set further down) instead of width, so card spacing
-   stays visually uniform across the row. */
+   result: emphasized but subordinate to TaaS.  Cards use icon-top
+   layout (NOT photo with fixed aspect-ratio), so unequal column
+   widths no longer break row-height uniformity. */
 .stat-strip {
   grid-template-columns:
     minmax(0, 1fr) clamp(16px, 1.1vw, 22px)
@@ -4821,9 +4826,9 @@
    label.  The OUTCOME card now uses the SAME typography + shadow as
    the other 4 cards, which makes it feel confident rather than shouty
    and lets the wider column + green accents do the work. */
-.stat-strip > .stat-card[data-stat="open"] {
-  justify-content: center;
-}
+/* OUTCOME card — used to vertical-center its content because the card
+   had a different (wider) column.  Now all 6 cards share the same 1fr
+   column, photo sits at top, meta below — same as every other card. */
 /* stat-value font-size on the outcome card now inherits from the base
    .stat-value rule (--fs-lg). Green colour + ✓ stamp do the work. */
 
