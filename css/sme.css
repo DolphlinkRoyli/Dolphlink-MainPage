@@ -2897,20 +2897,32 @@ button { font: inherit; }
 @media (max-width: 720px) {
   .sme-hero--cinema,
   .sme-hero--rotating {
-    /* Top: clear fixed nav (~76px) PLUS the "Tap to partner" floating
-       tooltip that hangs ~30px below the nav-cta button. Total safe
-       zone: ~120px from page top. We give 132px so .sme-hero-captions
-       (positioned 14px inside the frame) lands at ~146px clear of
-       the tooltip. */
-    padding-top: 132px !important;
-    /* Bottom: zero so frame flows directly into next section. */
-    padding-bottom: 0 !important;
+    /* Top: nav (~76px) + 16px breathing → frame top at y=92.
+       Bottom: 0 so frame meets next section directly (symmetric with
+       the bottom gap-section padding-top of 16px).
+       Horizontal padding: 0 — frame stretches edge-to-edge of the
+       viewport on mobile, no whitespace bars on the sides. */
+    padding: 92px 0 0 !important;
   }
-  /* Reduce the frame height on mobile so the dark hero card doesn't
-     hog the viewport (was 520px floor — too tall) and the page can
-     scroll into the next section faster. */
+  /* Photo frame: full-viewport-bleed on mobile.  Uses the 100vw +
+     negative-margin trick to escape any parent's max-width / padding
+     constraint and bleed all the way to the screen edges. */
   .sme-hero-frame {
-    height: clamp(420px, 58vh, 540px) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    max-width: none !important;
+    width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  /* Bigger photo — bump the frame to ~70vh so the hero card has real
+     presence on mobile.  Combined with object-fit: cover on the photo,
+     the image now fills a much larger area than the previous 420-540px
+     range. */
+  .sme-hero-frame {
+    height: clamp(520px, 70vh, 680px) !important;
   }
   /* Shrink the 7 pagination dots so all 7 fit inside the narrow mobile
      frame. Default: 7 × 36px + 6 × 10px gap = 312px which overflows the
@@ -2924,28 +2936,45 @@ button { font: inherit; }
     width: 22px !important;
     height: 4px !important;
   }
-  /* Hero photo: desktop uses background-size: cover which on a narrow
-     mobile portrait frame crops the wide landscape source ~30% off each
-     side, losing important content on the right (fabric rolls / context
-     props). Switch to contain so the full photo is visible; position it
-     to the top so the bottom strip can hold the text + dots without the
-     photo crowding them.  The frame's dark blue background fills the
-     letterbox area below the photo, which actually reads well — magazine
-     "photo-on-top / quote-below" composition. */
+  /* Hero photo — full-bleed cover (no dark strips on sides) + soft
+     bottom mask fade so the photo melts into the dark text area with
+     NO hard rectangular line.  Position is right-biased (35% from
+     left) so the visually-anchor subject (which sits on the left of
+     these photos) stays in frame while the right side context props
+     (fabric rolls / cityscape / labelled SMS bubbles) are preserved.
+     This trades a tiny left crop for the right-side legibility the
+     user explicitly asked for. */
   .sme-hero-bg {
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: top center !important;
-    /* Anchor the photo to the top half so text below has solid dark
-       backing rather than overlapping the photo's edge. */
-    height: 60% !important;
-    bottom: auto !important;
+    background-size: cover !important;
+    background-position: 35% center !important;
+    /* Soft fade: photo is fully opaque top 55%, gradually softens
+       through 55-95%, becomes transparent at the very bottom so the
+       transition into the text-area's deep blue is invisible. */
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 55%,
+      rgba(0, 0, 0, 0.55) 78%,
+      rgba(0, 0, 0, 0) 100%
+    ) !important;
+    mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 55%,
+      rgba(0, 0, 0, 0.55) 78%,
+      rgba(0, 0, 0, 0) 100%
+    ) !important;
   }
-  /* Without the photo behind the bottom half, lift the text-area overlay
-     so the "It answers first." gradient is still readable. */
+  /* Stronger bottom darken so the masked photo blends into a solid
+     deep-navy panel where the quote + bracket + dots sit. */
   .sme-hero-overlay {
     background:
-      linear-gradient(180deg, rgba(11, 27, 48, 0) 0%, rgba(11, 27, 48, 0.85) 55%, rgba(11, 27, 48, 0.95) 100%) !important;
+      linear-gradient(180deg,
+        rgba(11, 27, 48, 0) 0%,
+        rgba(11, 27, 48, 0) 50%,
+        rgba(11, 27, 48, 0.55) 68%,
+        rgba(11, 27, 48, 0.90) 85%,
+        rgba(11, 27, 48, 0.97) 100%) !important;
   }
   /* Push the frame's text content UP off the pagination dots — default
      bottom padding (40px) puts text descender right on top of the dots
@@ -2960,7 +2989,7 @@ button { font: inherit; }
     bottom: 40px !important;
   }
   .sme-gap-section {
-    padding-top: 20px !important;
+    padding-top: 16px !important;
   }
   .sme-section-head {
     margin-bottom: 20px !important;
@@ -3543,7 +3572,20 @@ button { font: inherit; }
 }
 @media (max-width: 600px) {
   .sme-hero--cinema,
-  .sme-hero--rotating { min-height: clamp(560px, 86vh, 720px); padding: 110px 22px 72px; }
+  .sme-hero--rotating {
+    /* Don't force a min-height taller than the frame — it was leaving
+       ~30-80px of empty white space below the frame on mid-height
+       phones, asymmetric with the small gap above the frame.  Let the
+       cinema shrink to fit the frame exactly. */
+    min-height: 0 !important;
+    /* Padding shorthand from the legacy rule (110/22/72) overrode my
+       720px-block padding-bottom: 0 for horizontal slots because it
+       was applying via shorthand at higher source order. Rewrite the
+       shorthand to match the 720px override: top = 96 (clear nav),
+       horizontal = 16 (slightly tighter than the legacy 22), bottom
+       = 0 (frame flows directly into next section). */
+    padding: 92px 0 0 !important;
+  }
   .sme-hero-card { font-size: clamp(36px, 8vw, 52px); }
 }
 
